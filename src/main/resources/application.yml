@@ -1,0 +1,53 @@
+##------------------------------------------------------------------
+##------SERVICE CONFIGURATION---------------------------------------
+##------------------------------------------------------------------
+server:
+  port: 8087
+spring:
+  application:
+    name: trading-boot
+  servlet:
+    multipart:
+      max-request-size: 50MB
+      max-file-size: 50MB
+##------------------------------------------------------------------
+##------GQL CONFIGURATION-------------------------------------------
+##------------------------------------------------------------------
+graphql:
+  spqr:
+    relay:
+      connection-check-relaxed: true
+    gui:
+      enabled: true
+      endpoint: /
+##------------------------------------------------------------------
+##------NLP CONFIGURATION-------------------------------------------
+##------------------------------------------------------------------
+nlp:
+  sentiment:
+      annotators: tokenize, cleanxml, ssplit, parse, sentiment
+#      annotators: tokenize,cleanxml,ssplit,pos,lemma,ner,parse,depparse,coref,natlog,openie,kbp,entitylink
+##------------------------------------------------------------------
+##------PROVIDERS CONFIGURATION-------------------------------------
+##------------------------------------------------------------------
+providers:
+  webull:
+    account:
+      id: 8973825
+    auth:
+      key: access_token
+      secret: dc_us_tech1.1838ee5dd4e-203f9a0e58434b9593b9e220a940c10a
+##------------------------------------------------------------------
+##------LOGGER CONFIGURATION----------------------------------------
+##------------------------------------------------------------------
+logging:
+  file:
+    name: logs/app.log
+    max-size: 10MB
+  level:
+    com.mg: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.boot: ERROR
+
+
