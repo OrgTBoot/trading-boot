@@ -1,19 +1,16 @@
 package com.mg.trading.boot.strategy.goldencross;
 
-import com.mg.trading.boot.data.Interval;
-import com.mg.trading.boot.data.TradingPeriod;
+import com.mg.trading.boot.models.Interval;
+import com.mg.trading.boot.models.TradingPeriod;
 import com.mg.trading.boot.strategy.indicators.AfterMarketHoursIndicator;
 import com.mg.trading.boot.strategy.indicators.MarketHoursIndicator;
 import lombok.extern.log4j.Log4j2;
-import org.codehaus.groovy.runtime.callsite.BooleanReturningMethodInvoker;
 import org.ta4j.core.*;
 import org.ta4j.core.indicators.EMAIndicator;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
-import org.ta4j.core.indicators.helpers.FixedBooleanIndicator;
 import org.ta4j.core.rules.*;
 
 import java.math.BigDecimal;
-import java.time.ZonedDateTime;
 
 
 /**
@@ -40,7 +37,7 @@ public class GoldenCrossStrategyInitializer {
         BooleanIndicatorRule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series)); //enter only during market hours
         Rule enterRule = crossedUpEMA.and(marketHours);
 
-        //exit rules
+        //exit rules - stop loss/gain at X% OR if we are in after hours and position is positive
         StopLossRule stopLoss = new StopLossRule(closePrice, parameters.getStopLossPercent());
         StopGainRule stopGain = new StopGainRule(closePrice, parameters.getStopGainPercent());
         BooleanIndicatorRule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));

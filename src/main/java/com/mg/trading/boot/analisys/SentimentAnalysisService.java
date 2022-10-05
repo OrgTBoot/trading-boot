@@ -1,10 +1,10 @@
 package com.mg.trading.boot.analisys;
 
-import com.mg.trading.boot.data.TickerNewsArticle;
-import com.mg.trading.boot.data.npl.Sentiment;
-import com.mg.trading.boot.data.npl.SentimentRecord;
-import com.mg.trading.boot.data.npl.SentimentSummary;
-import com.mg.trading.boot.data.npl.TickerSentiment;
+import com.mg.trading.boot.models.TickerNewsArticle;
+import com.mg.trading.boot.models.npl.Sentiment;
+import com.mg.trading.boot.models.npl.SentimentRecord;
+import com.mg.trading.boot.models.npl.SentimentSummary;
+import com.mg.trading.boot.models.npl.TickerSentiment;
 import edu.stanford.nlp.ling.CoreAnnotations;
 import edu.stanford.nlp.neural.rnn.RNNCoreAnnotations;
 import edu.stanford.nlp.pipeline.Annotation;

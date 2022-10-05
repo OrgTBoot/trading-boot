@@ -28,10 +28,7 @@ public class MarketHoursIndicator extends CachedIndicator<Boolean> {
         Bar bar = getBarSeries().getBar(index);
         ZonedDateTime lastBarDateTime = bar.getEndTime();
         int hour = lastBarDateTime.getHour();
-        int minute = lastBarDateTime.getMinute();
 
-        log.info("bar idx={} market={}, close={}, dt={}", index, (hour >= 4 && hour < 16), bar.getClosePrice(), bar.getEndTime());
-//        return (hour > 9 || hour == 9 && minute > 30) && hour < 16;
         return (hour >= 4 && hour < 16);
     }
 }

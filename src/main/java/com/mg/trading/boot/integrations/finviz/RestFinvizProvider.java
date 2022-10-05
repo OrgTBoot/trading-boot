@@ -1,6 +1,6 @@
 package com.mg.trading.boot.integrations.finviz;
 
-import com.mg.trading.boot.data.Ticker;
+import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.integrations.utils.Mapper;
 import com.mg.trading.boot.integrations.ScreeningProvider;
 import de.vandermeer.asciitable.AT_Row;
@@ -30,8 +30,8 @@ public class RestFinvizProvider implements ScreeningProvider {
 
     @Override
     @SneakyThrows
-    public List<Ticker> getTopGaines() {
-        final String url = FinvizEndpoints.SMALL_PLUS_CAP_TOP_GAINERS.value;
+    public List<Ticker> getUnusualVolume() {
+        final String url = FinvizEndpoints.UNUSUAL_VOLUME.value;
 
         Document doc = Jsoup.connect(url).get();
         Map<String, Integer> headers = getHeaders(doc);
@@ -43,14 +43,14 @@ public class RestFinvizProvider implements ScreeningProvider {
         final List<Ticker> sortedTickers = tickers.stream()
                 .sorted(volumeComparator.thenComparing(changeComparator))
                 .collect(Collectors.toList());
-        log.info("Extracted Trading UP tickers with Unusual Volume: {}", url);
+        log.info("Screening {}: {}", FinvizEndpoints.UNUSUAL_VOLUME.name(), url);
         log.info("\n" + buildTable(sortedTickers).render());
 
         return sortedTickers;
     }
 
     @Override
-    public List<Ticker> getUnusualVolume() {
+    public List<Ticker> getTopGaines() {
         return null;
     }
 

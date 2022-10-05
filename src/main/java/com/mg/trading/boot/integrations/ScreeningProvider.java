@@ -1,6 +1,6 @@
 package com.mg.trading.boot.integrations;
 
-import com.mg.trading.boot.data.Ticker;
+import com.mg.trading.boot.models.Ticker;
 
 import java.util.List;
 

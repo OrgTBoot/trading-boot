@@ -1,7 +1,7 @@
 package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.data.Interval;
-import com.mg.trading.boot.data.TradingPeriod;
+import com.mg.trading.boot.models.Interval;
+import com.mg.trading.boot.models.TradingPeriod;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

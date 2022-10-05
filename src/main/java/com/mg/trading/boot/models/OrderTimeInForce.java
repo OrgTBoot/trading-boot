@@ -1,4 +1,4 @@
-package com.mg.trading.boot.data;
+package com.mg.trading.boot.models;
 
 /**
  * A day order is an order to buy or sell a stock that automatically expires if not executed on the day the order was

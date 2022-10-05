@@ -1,6 +1,6 @@
 package com.mg.trading.boot.strategy;
 
-import com.mg.trading.boot.data.StrategyContext;
+import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.TickerQuoteExtractor;
 import lombok.extern.log4j.Log4j2;

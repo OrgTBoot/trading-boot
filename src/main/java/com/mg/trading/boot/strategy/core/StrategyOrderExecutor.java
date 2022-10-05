@@ -1,6 +1,6 @@
 package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.data.*;
+import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.utils.TradingRecordUtils;
 import lombok.extern.log4j.Log4j2;
@@ -41,8 +41,7 @@ public class StrategyOrderExecutor {
             List<Position> positions = this.brokerProvider.getPositionsBySymbol(symbol);
 
             if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
-                log.warn("Skipping order placement. There are open orders[{}] or positions[{}],"
-                        + " close before entering again.", openOrders.size(), positions.size());
+                log.warn("Skipping order placement. There are open orders[{}] or positions[{}].", openOrders.size(), positions.size());
                 return;
             }
         }
@@ -62,6 +61,7 @@ public class StrategyOrderExecutor {
         log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());
 
         if (OrderAction.BUY.equals(action)) {
+            //TODO: endIdx is not a valid value for trading record - it should be it's own idx schema
             tradingRecord.enter(endIndex, DecimalNum.valueOf(orderRequest.getLmtPrice()), DecimalNum.valueOf(quantity));
         } else if (OrderAction.SELL.equals(action)) {
             tradingRecord.exit(endIndex, DecimalNum.valueOf(orderRequest.getLmtPrice()), DecimalNum.valueOf(quantity));

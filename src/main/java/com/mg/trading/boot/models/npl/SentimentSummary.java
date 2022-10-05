@@ -1,4 +1,4 @@
-package com.mg.trading.boot.data.npl;//package com.mg.trading.boot.data.npl;
+package com.mg.trading.boot.models.npl;//package com.mg.trading.boot.data.npl;
 
 import lombok.*;
 

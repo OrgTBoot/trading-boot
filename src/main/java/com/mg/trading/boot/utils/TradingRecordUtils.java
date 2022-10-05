@@ -1,12 +1,11 @@
 package com.mg.trading.boot.utils;
 
-import com.mg.trading.boot.data.TradingMetrics;
+import com.mg.trading.boot.models.TradingMetrics;
 import de.vandermeer.asciitable.AT_Row;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import lombok.extern.log4j.Log4j2;
-import org.apache.lucene.util.CollectionUtil;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBarSeries;
@@ -16,7 +15,6 @@ import org.ta4j.core.criteria.*;
 import org.ta4j.core.criteria.pnl.GrossReturnCriterion;
 import org.ta4j.core.criteria.pnl.ProfitLossCriterion;
 import org.ta4j.core.criteria.pnl.ProfitLossPercentageCriterion;
-import org.ta4j.core.num.DecimalNum;
 import org.ta4j.core.num.Num;
 
 import java.math.BigDecimal;

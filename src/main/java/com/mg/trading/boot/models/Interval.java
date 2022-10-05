@@ -1,4 +1,4 @@
-package com.mg.trading.boot.data;
+package com.mg.trading.boot.models;
 
 public enum Interval {
     ONE_MINUTE("m1", 60L),

@@ -1,4 +1,4 @@
-package com.mg.trading.boot.data;
+package com.mg.trading.boot.models;
 
 public enum TradingPeriod {
     EXTENDED("1"),

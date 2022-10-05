@@ -1,4 +1,4 @@
-package com.mg.trading.boot.data;
+package com.mg.trading.boot.models;
 
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.TickerQuoteExtractor;

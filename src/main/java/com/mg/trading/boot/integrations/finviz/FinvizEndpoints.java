@@ -1,10 +1,7 @@
 package com.mg.trading.boot.integrations.finviz;
 
 public enum FinvizEndpoints {
-    /**
-     * See <a href="https://www.youtube.com/watch?v=zzaN91gcJOI&t=325s">Screening for Unusual Volume</a>
-     */
-    SMALL_PLUS_CAP_UNUSUAL_VOLUME("https://finviz.com/screener.ashx?v=111&s=ta_unusualvolume&f=cap_smallover,geo_usa,ind_stocksonly,sh_avgvol_o200,sh_price_o5,ta_perf_dup&ft=4&ta=0&o=-volume"),
+    UNUSUAL_VOLUME("https://finviz.com/screener.ashx?v=111&s=ta_unusualvolume&f=cap_smallover,geo_usa,ind_stocksonly,sh_avgvol_o400,sh_price_u10,ta_perf_dup,ta_volatility_wo4&ft=4&ta=0&o=-volume"),
     /**
      * See <a href="https://www.youtube.com/watch?v=7xKOo6vNaq8"></a>
      */

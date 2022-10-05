@@ -1,7 +1,7 @@
 package com.mg.trading.boot.integrations;
 
-import com.mg.trading.boot.data.*;
-import com.mg.trading.boot.data.npl.TickerSentiment;
+import com.mg.trading.boot.models.*;
+import com.mg.trading.boot.models.npl.TickerSentiment;
 
 import java.util.List;
 

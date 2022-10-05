@@ -1,6 +1,6 @@
 package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.data.TickerQuote;
+import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;

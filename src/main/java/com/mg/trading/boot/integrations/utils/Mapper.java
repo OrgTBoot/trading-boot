@@ -1,6 +1,6 @@
 package com.mg.trading.boot.integrations.utils;
 
-import com.mg.trading.boot.data.*;
+import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.exceptions.ModelMappingException;
 import com.mg.trading.boot.integrations.webull.data.*;
 import lombok.extern.log4j.Log4j2;

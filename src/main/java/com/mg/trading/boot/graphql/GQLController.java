@@ -1,8 +1,8 @@
 package com.mg.trading.boot.graphql;
 
 
-import com.mg.trading.boot.data.*;
-import com.mg.trading.boot.data.npl.TickerSentiment;
+import com.mg.trading.boot.models.*;
+import com.mg.trading.boot.models.npl.TickerSentiment;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreeningProvider;
 import com.mg.trading.boot.strategy.*;
@@ -84,7 +84,7 @@ public class GQLController {
 
     @GraphQLQuery
     public List<Ticker> runScreening() {
-        return this.screeningProvider.getTopGaines();
+        return this.screeningProvider.getUnusualVolume();
     }
 
     @GraphQLQuery

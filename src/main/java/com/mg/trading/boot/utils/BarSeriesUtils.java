@@ -1,6 +1,6 @@
 package com.mg.trading.boot.utils;
 
-import com.mg.trading.boot.data.TickerQuote;
+import com.mg.trading.boot.models.TickerQuote;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBar;

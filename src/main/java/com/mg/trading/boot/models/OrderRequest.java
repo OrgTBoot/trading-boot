@@ -1,4 +1,4 @@
-package com.mg.trading.boot.data;
+package com.mg.trading.boot.models;
 
 import lombok.*;
 
@@ -9,15 +9,11 @@ import java.math.BigDecimal;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
-    private String id;
+public class OrderRequest {
+    private String symbol;
     private OrderAction action;
     private OrderType orderType;
     private OrderTimeInForce timeInForce;
-    private BigDecimal totalQuantity;
-    private BigDecimal filledQuantity;
+    private BigDecimal quantity;
     private BigDecimal lmtPrice;
-    private String placedTime;
-    private OrderStatus status;
-    private Ticker ticker;
 }
