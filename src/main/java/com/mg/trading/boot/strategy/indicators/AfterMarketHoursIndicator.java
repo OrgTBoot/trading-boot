@@ -1,11 +1,13 @@
 package com.mg.trading.boot.strategy.indicators;
 
+import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.CachedIndicator;
 
 import java.time.ZonedDateTime;
 
+@Log4j2
 public class AfterMarketHoursIndicator extends CachedIndicator<Boolean> {
 
     public AfterMarketHoursIndicator(BarSeries series) {
@@ -14,6 +16,7 @@ public class AfterMarketHoursIndicator extends CachedIndicator<Boolean> {
 
     @Override
     protected Boolean calculate(int index) {
+//        log.debug("{} AfterMarketHoursIndicator: {}", index, isAfterMarketHours(index));
         return isAfterMarketHours(index);
     }
 

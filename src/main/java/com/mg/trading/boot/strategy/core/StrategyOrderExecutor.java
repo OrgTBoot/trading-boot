@@ -2,7 +2,7 @@ package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.utils.TradingRecordUtils;
+import com.mg.trading.boot.utils.ConsoleUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
@@ -73,7 +73,7 @@ public class StrategyOrderExecutor {
     }
 
     private void printStats() {
-        TradingRecordUtils.printTradingRecords(symbol, tradingRecord);
-        TradingRecordUtils.printTradingMetrics(TradingRecordUtils.buildTradingMetrics(symbol, series, tradingRecord));
+        ConsoleUtils.printTradingRecords(symbol, tradingRecord);
+        ConsoleUtils.printTradingMetrics(symbol, series, tradingRecord);
     }
 }

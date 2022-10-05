@@ -1,24 +1,25 @@
 package com.mg.trading.boot.graphql;
 
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.models.npl.TickerSentiment;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreeningProvider;
 import com.mg.trading.boot.strategy.*;
-import com.mg.trading.boot.strategy.core.StrategySeriesInitializer;
-import com.mg.trading.boot.strategy.core.StrategyTickerListenerInitializer;
-import com.mg.trading.boot.strategy.core.StrategyTradingRecordInitializer;
-import com.mg.trading.boot.strategy.goldencross.GoldenCrossStrategyInitializer;
-import com.mg.trading.boot.strategy.goldencross.GoldenCrossStrategyParameters;
-import com.mg.trading.boot.strategy.core.TickerQuoteExtractor;
+import com.mg.trading.boot.strategy.core.*;
+import com.mg.trading.boot.strategy.goldencross.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.goldencross.EMAParameters;
+import com.mg.trading.boot.strategy.goldencross.EMAStrategyProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
+import com.mg.trading.boot.utils.ConsoleUtils;
 import com.mg.trading.boot.utils.TradingRecordUtils;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -55,11 +56,11 @@ public class GQLController {
         return brokerProvider.getTickerSentimentByNews(symbol, daysAgoRelevance);
     }
 
+    @SneakyThrows
     @GraphQLQuery
     public TradingMetrics runBackTrackingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
-        GoldenCrossStrategyParameters parameters = GoldenCrossStrategyInitializer.params(symbol).toBuilder()
-                .quotesRollingLimit(360)//6 HOURS of quotes aggregated by minute
-                .build();
+        DEMAStrategyProvider strategyProvider = new DEMAStrategyProvider(symbol);
+        StrategyParameters parameters = strategyProvider.getParameters();
 
         List<TickerQuote> quotes = this.brokerProvider.getTickerQuotes(
                 parameters.getSymbol(),
@@ -67,19 +68,21 @@ public class GQLController {
                 parameters.getTradingPeriod(),
                 parameters.getQuotesRollingLimit());
 
+        log.info("Quotes: {}", new ObjectMapper().writeValueAsString(quotes));
+
         BarSeries series = new BaseBarSeries();
         BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
 
-        Strategy strategy = GoldenCrossStrategyInitializer.init(parameters, series);
+        Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
         BarSeriesManager seriesManager = new BarSeriesManager(series);
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
-        TradingMetrics tradingMetrics = TradingRecordUtils.buildTradingMetrics(symbol, series, tradingRecord);
 
-        TradingRecordUtils.printTradingRecords(symbol, tradingRecord);
-        TradingRecordUtils.printTradingMetrics(tradingMetrics);
+        TradingMetrics metrics = TradingRecordUtils.buildTradingMetrics(symbol, series, tradingRecord);
+        ConsoleUtils.printTradingRecords(symbol, tradingRecord);
+        ConsoleUtils.printTradingMetrics(metrics);
 
-        return tradingMetrics;
+        return metrics;
     }
 
     @GraphQLQuery
@@ -96,10 +99,12 @@ public class GQLController {
     @GraphQLMutation
     public String startTradingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
         log.info("Initializing strategy...");
-        final GoldenCrossStrategyParameters params = GoldenCrossStrategyInitializer.params(symbol);
+        final DEMAStrategyProvider strategyProvider = new DEMAStrategyProvider(symbol);
+        final StrategyParameters params = strategyProvider.getParameters();
+
         final BarSeries series = StrategySeriesInitializer.init(brokerProvider, params);
         final TradingRecord tradingRecord = StrategyTradingRecordInitializer.init(brokerProvider, params);
-        final Strategy strategy = GoldenCrossStrategyInitializer.init(params, series);
+        final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
         final TickerQuoteExtractor quoteListener = StrategyTickerListenerInitializer.init(brokerProvider, params, strategy, series, tradingRecord);
 
         StrategyContext context = StrategyContext.builder()

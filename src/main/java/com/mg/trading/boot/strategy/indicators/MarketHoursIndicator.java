@@ -14,6 +14,7 @@ public class MarketHoursIndicator extends CachedIndicator<Boolean> {
 
     @Override
     protected Boolean calculate(int index) {
+//        log.debug("{} MarketHoursIndicator: {}", index, isMarketHours(index));
         return isMarketHours(index);
     }
 
