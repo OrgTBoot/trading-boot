@@ -35,7 +35,7 @@ providers:
     account:
       id: <redacted>
     auth:
-      key: access_token
+      key: <redacted>
       secret: <redacted>
 ##------------------------------------------------------------------
 ##------LOGGER CONFIGURATION----------------------------------------
