@@ -6,8 +6,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.retry.annotation.Backoff;
-import org.springframework.retry.annotation.Retryable;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -20,7 +18,6 @@ public abstract class AbstractRestProvider {
         this.restTemplate = restTemplate;
     }
 
-    @Retryable(value = Throwable.class, maxAttempts = 3, backoff = @Backoff(delay = 500L))
     protected ResponseEntity<?> get(String url,
                                     ParameterizedTypeReference<?> typeReference) {
         return exchange(url, HttpMethod.GET, null, typeReference);

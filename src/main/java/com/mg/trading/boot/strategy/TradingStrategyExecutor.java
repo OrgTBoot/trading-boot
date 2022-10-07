@@ -1,6 +1,5 @@
 package com.mg.trading.boot.strategy;
 
-import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.TickerQuoteExtractor;
 import lombok.extern.log4j.Log4j2;
@@ -13,11 +12,11 @@ import java.util.concurrent.TimeUnit;
 @Log4j2
 public class TradingStrategyExecutor implements StrategyExecutor {
 
-    private final StrategyContext context;
+    private final com.mg.trading.boot.models.StrategyContext context;
     private final ScheduledExecutorService executor;
 
 
-    public TradingStrategyExecutor(StrategyContext context) {
+    public TradingStrategyExecutor(com.mg.trading.boot.models.StrategyContext context) {
         this.context = context;
         this.executor = Executors.newSingleThreadScheduledExecutor();
     }
@@ -44,7 +43,7 @@ public class TradingStrategyExecutor implements StrategyExecutor {
                 context.getParameters().getSymbol());
     }
 
-    private void validateContext(StrategyContext context) {
+    private void validateContext(com.mg.trading.boot.models.StrategyContext context) {
         Assert.notNull(context, "Strategy context should not be null");
         Assert.notNull(context.getSeries(), "Series should not be null");
         Assert.isTrue(!context.getSeries().isEmpty(), "Series should not be empty");
@@ -60,9 +59,9 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         Assert.isTrue(stopGain.doubleValue() > stopLoss.doubleValue(), "Parameters stop loss < gain");
         Assert.notNull(context.getParameters().getSymbol(), "Parameters symbol should not be null");
         Assert.notNull(context.getParameters().getSharesQty(), "Parameters shares qty should not be null");
-        Assert.notNull(context.getParameters().getTradingPeriod(), "Parameters trading period should not be null");
+        Assert.notNull(context.getParameters().getQuotesRange(), "Parameters range should not be null");
         Assert.notNull(context.getParameters().getQuotesInterval(), "Parameters interval should not be null");
-        Assert.notNull(context.getParameters().getQuotesPullLimit(), "Parameters pull limit should not be null");
+        Assert.notNull(context.getParameters().getQuotesPullRange(), "Parameters pull interval should not be null");
         Assert.notNull(context.getParameters().getQuotesRollingLimit(), "Parameters rolling limit should not be null");
         Assert.notNull(context.getParameters().getQuotesPullFrequencyInSec(), "Parameters pull frequency should not be null");
     }

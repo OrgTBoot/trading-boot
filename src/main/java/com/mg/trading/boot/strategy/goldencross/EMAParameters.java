@@ -1,7 +1,7 @@
 package com.mg.trading.boot.strategy.goldencross;
 
 import com.mg.trading.boot.models.Interval;
-import com.mg.trading.boot.models.TradingPeriod;
+import com.mg.trading.boot.models.Range;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -28,10 +28,11 @@ public class EMAParameters extends StrategyParameters {
                 .stopGainPercent(3)
                 .longBarCount(30)
                 .shortBarCount(5)
-                .tradingPeriod(TradingPeriod.EXTENDED)
+                .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE) //bar interval, ex: open-close interval of the bar is 1 minute
-                .quotesRollingLimit(360) //keep total of 360 rolling bars, 360=6hours.
-                .quotesPullLimit(5) // limit quotes pull to 5 elements. In other words last 5 minutes, 5 bars/quotes
+                .quotesRollingLimit(1000) //keep total of 1k rolling bars.
+                .quotesPullRange(Range.FIFE_MINUTES) // limit quotes pull to 5 elements. In other words last 5 minutes, 5
+                // bars/quotes
                 .quotesPullFrequencyInSec(10) // pull refreshed quotes each 10 seconds
                 .build();
     }

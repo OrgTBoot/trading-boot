@@ -19,6 +19,7 @@ import java.util.UUID;
 @Configuration
 public class BeanConfig {
     public final static String WEBULL_REST_TEMPLATE = "webull_rest_template";
+    public final static String YAHOO_REST_TEMPLATE = "yahoo_rest_template";
 
     @Bean
     @Primary
@@ -27,6 +28,12 @@ public class BeanConfig {
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         return objectMapper;
+    }
+
+    @Bean
+    @Qualifier(YAHOO_REST_TEMPLATE)
+    public RestTemplate getYahooRestTemplate() {
+        return new RestTemplate();
     }
 
     @Bean

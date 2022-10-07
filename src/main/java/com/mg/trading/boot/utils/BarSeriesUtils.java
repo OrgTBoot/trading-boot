@@ -19,7 +19,11 @@ public class BarSeriesUtils {
     }
 
     public static void addBar(BarSeries barSeries, TickerQuote quote, Duration duration) {
-        barSeries.addBar(mapToBar(quote, duration));
+        //usually last quote of the day comes with volume and price as 0.
+        boolean emptyQuote = quote.getVolume() == 0 && quote.getOpenPrice().doubleValue() == 0;
+        if (!emptyQuote) {
+            barSeries.addBar(mapToBar(quote, duration));
+        }
     }
 
     public static void addBarSeries(BarSeries barSeries, List<TickerQuote> quotes, Duration duration) {
@@ -39,7 +43,6 @@ public class BarSeriesUtils {
 
     public static ZonedDateTime getZonedDateTime(TickerQuote quote) {
         return Instant.ofEpochSecond(quote.getTimeStamp()).atZone(ZoneId.of(quote.getTimeZone()));
-
     }
 
 

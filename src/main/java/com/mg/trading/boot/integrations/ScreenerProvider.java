@@ -4,7 +4,7 @@ import com.mg.trading.boot.models.Ticker;
 
 import java.util.List;
 
-public interface ScreeningProvider {
+public interface ScreenerProvider {
 
     List<Ticker> getTopGaines();
 

@@ -1,93 +1,152 @@
 package com.mg.trading.boot;
 
 import com.mg.trading.boot.models.TickerQuote;
-import com.mg.trading.boot.models.TradingMetrics;
 import com.mg.trading.boot.strategy.goldencross.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.goldencross.EMAStrategyProvider;
 import com.mg.trading.boot.strategy.goldencross.StrategyProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import com.mg.trading.boot.utils.ConsoleUtils;
-import com.mg.trading.boot.utils.TradingRecordUtils;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
 import org.ta4j.core.*;
+import org.ta4j.core.reports.TradingStatement;
 
 import java.time.Duration;
 import java.util.List;
 
+import static com.mg.trading.boot.utils.ConsoleUtils.getWinningRatio;
+import static com.mg.trading.boot.utils.NumberUtils.toRndBigDecimal;
+
 @Log4j2
 public class StrategyTest {
 
+    /**
+     * Running two data sets through the same strategy.
+     * <p>
+     * WB data seems to be of a better quality.
+     * This confirms that for day trading, it is better to use WB as a source for quotes.
+     */
     @Test
-    public void testGainScenario_INVT() {
-        String symbol = "IMVT";
-        TradingMetrics emaMetrics = testStrategy(symbol, new EMAStrategyProvider(symbol));
+    public void testIMVT_same_period_different_providers() {
+        String symbolWB = "IMVT_WB_1DAY_1MIN";
+        TradingStatement weboll = testStrategy(symbolWB, new DEMAStrategyProvider(symbolWB));
 
-        Assert.assertEquals(1.0, emaMetrics.getWinningPositionsRatio().doubleValue(), 0);
-        Assert.assertEquals(4.88, emaMetrics.getTotalPercentReturn().doubleValue(), 0);
-        Assert.assertEquals(2, emaMetrics.getTotalPositions(), 0);
-        Assert.assertEquals(0.401, emaMetrics.getTotalReturn().doubleValue(), 0);
-        Assert.assertEquals(2, emaMetrics.getTotalWinningPositions().doubleValue(), 0);
-        Assert.assertEquals(0, emaMetrics.getTotalLoosingPositions().doubleValue(), 0);
+        String symbolYO = "IMVT_YO_1DAY_1MIN";
+        TradingStatement yahoo = testStrategy(symbolYO, new DEMAStrategyProvider(symbolYO));
 
-
-        TradingMetrics demaMetrics = testStrategy(symbol, new DEMAStrategyProvider(symbol));
-
-        Assert.assertEquals(1.0, demaMetrics.getWinningPositionsRatio().doubleValue(), 0);
-        Assert.assertEquals(9.01, demaMetrics.getTotalPercentReturn().doubleValue(), 0);
-        Assert.assertEquals(3, demaMetrics.getTotalPositions(), 0);
-        Assert.assertEquals(0.731, demaMetrics.getTotalReturn().doubleValue(), 0);
-        Assert.assertEquals(3, demaMetrics.getTotalWinningPositions().doubleValue(), 0);
-        Assert.assertEquals(0, demaMetrics.getTotalLoosingPositions().doubleValue(), 0);
-
-        assertFirstTradingMetricBeatsSecond(demaMetrics, emaMetrics);
+        assertFirstTradingStatementBeatsSecond(weboll, yahoo);
     }
 
     @Test
-    public void testGainScenario_LADR() {
-        String symbol = "LADR";
-        TradingMetrics emaMetrics = testStrategy(symbol, new EMAStrategyProvider(symbol));
-        TradingMetrics demaMetrics = testStrategy(symbol, new DEMAStrategyProvider(symbol));
-        assertFirstTradingMetricBeatsSecond(demaMetrics, emaMetrics);
+    public void testINVT_gainScenario() {
+        String symbol = "IMVT_1DAY_1MIN";
+        TradingStatement emaStatement = testStrategy(symbol, new EMAStrategyProvider(symbol));
+        Assert.assertEquals(0.6667, winningRatio(emaStatement), 0);
+        Assert.assertEquals(2, winsCount(emaStatement), 0);
+        Assert.assertEquals(1, lossesCount(emaStatement), 0);
+        Assert.assertEquals(4.568, totalInPercent(emaStatement), 0);
+        Assert.assertEquals(0.4200, totalInDollars(emaStatement), 0);
+
+        TradingStatement demaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+        Assert.assertEquals(0.75, winningRatio(demaStatement), 0);
+        Assert.assertEquals(3, winsCount(demaStatement), 0);
+        Assert.assertEquals(1, lossesCount(demaStatement), 0);
+        Assert.assertEquals(7.551, totalInPercent(demaStatement), 0);
+        Assert.assertEquals(0.7000, totalInDollars(demaStatement), 0);
+
+        assertFirstTradingStatementBeatsSecond(demaStatement, emaStatement);
     }
 
-
     @Test
-    public void testGainScenario_OPEN() {
+    public void testOPEN_lossScenario() {
         String symbol = "OPEN";
-        TradingMetrics emaMetrics = testStrategy(symbol, new EMAStrategyProvider(symbol));
+        TradingStatement emaStatement = testStrategy(symbol, new EMAStrategyProvider(symbol));
+        Assert.assertEquals(0.5, winningRatio(emaStatement), 0);
+        Assert.assertEquals(1, winsCount(emaStatement), 0);
+        Assert.assertEquals(1, lossesCount(emaStatement), 0);
+        Assert.assertEquals(-1.486, totalInPercent(emaStatement), 0);
+        Assert.assertEquals(-0.05099, totalInDollars(emaStatement), 0);
 
-        Assert.assertEquals(0.5, emaMetrics.getWinningPositionsRatio().doubleValue(), 0);
-        Assert.assertEquals(-1.48, emaMetrics.getTotalPercentReturn().doubleValue(), 0);
-        Assert.assertEquals(2, emaMetrics.getTotalPositions(), 0);
-        Assert.assertEquals(-0.0509, emaMetrics.getTotalReturn().doubleValue(), 0);
-        Assert.assertEquals(1, emaMetrics.getTotalWinningPositions().doubleValue(), 0);
-        Assert.assertEquals(1, emaMetrics.getTotalLoosingPositions().doubleValue(), 0);
+        TradingStatement demaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+        Assert.assertEquals(0.5, winningRatio(demaStatement), 0);
+        Assert.assertEquals(1, winsCount(demaStatement), 0);
+        Assert.assertEquals(1, lossesCount(demaStatement), 0);
+        Assert.assertEquals(-0.9259, totalInPercent(demaStatement), 0);
+        Assert.assertEquals(-0.03200, totalInDollars(demaStatement), 0);
 
-
-        TradingMetrics demaMetrics = testStrategy(symbol, new DEMAStrategyProvider(symbol));
-
-        Assert.assertEquals(0.5, demaMetrics.getWinningPositionsRatio().doubleValue(), 0);
-        Assert.assertEquals(-1.33, demaMetrics.getTotalPercentReturn().doubleValue(), 0);
-        Assert.assertEquals(2, demaMetrics.getTotalPositions(), 0);
-        Assert.assertEquals(-0.046, demaMetrics.getTotalReturn().doubleValue(), 0);
-        Assert.assertEquals(1, demaMetrics.getTotalWinningPositions().doubleValue(), 0);
-        Assert.assertEquals(1, demaMetrics.getTotalLoosingPositions().doubleValue(), 0);
-
-        assertFirstTradingMetricBeatsSecond(demaMetrics, emaMetrics);
+        assertFirstTradingStatementBeatsSecond(demaStatement, emaStatement);
     }
 
-    void assertFirstTradingMetricBeatsSecond(TradingMetrics first, TradingMetrics second) {
-        Assert.assertTrue(first.getTotalPercentReturn().doubleValue() >= second.getTotalPercentReturn().doubleValue());
-        Assert.assertTrue(first.getTotalReturn().doubleValue() >= second.getTotalReturn().doubleValue());
-        Assert.assertTrue(first.getTotalPositions() >= second.getTotalPositions());
-        Assert.assertTrue(first.getWinningPositionsRatio().doubleValue() >= second.getWinningPositionsRatio().doubleValue());
-        Assert.assertTrue(first.getWinningPositionsRatio().doubleValue() >= 0.5);
+
+    @Test
+    public void testAMPY_noOpenPosition() {
+        String symbol = "AMPY_1DAY_1MIN";
+        TradingStatement ema = testStrategy(symbol, new EMAStrategyProvider(symbol));
+        TradingStatement dema = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+
+        assertFirstTradingStatementBeatsSecond(dema, ema);
     }
 
-    //    private TradingMetrics testStrategy(StrategyParameters parameters, StrategyProvider strategyProvider) {
-    private TradingMetrics testStrategy(String symbol, StrategyProvider strategyProvider) {
+    @Test
+    public void testPNT_gainScenario() {
+        String symbol = "PNT_1DAY_1MIN";
+        TradingStatement ema = testStrategy(symbol, new EMAStrategyProvider(symbol));
+        TradingStatement dema = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+
+        assertFirstTradingStatementBeatsSecond(dema, ema);
+    }
+
+    @Test
+    public void testEGY_gainScenario() {
+        String symbol = "EGY_1DAY_1MIN";
+        TradingStatement ema = testStrategy(symbol, new EMAStrategyProvider(symbol));
+        TradingStatement dema = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+
+        assertFirstTradingStatementBeatsSecond(dema, ema);
+    }
+
+
+    private static void assertFirstTradingStatementBeatsSecond(TradingStatement first, TradingStatement second) {
+        final double lossCount1 = lossesCount(first);
+        final double winCount1 = winsCount(first);
+        final double winningRatio1 = winningRatio(first);
+        final double totalProfitLoss1 = totalInDollars(first);
+        final double totalProfitLossPercentage1 = totalInPercent(first);
+
+        final double lossCount2 = lossesCount(second);
+        final double winCount2 = winsCount(second);
+        final double winningRatio2 = winningRatio(second);
+        final double totalProfitLoss2 = totalInDollars(second);
+        final double totalProfitLossPercentage2 = totalInPercent(second);
+
+        Assert.assertTrue("Profit of the first (" + totalProfitLossPercentage1 + ") < second (" + totalProfitLossPercentage2 + ")", totalProfitLossPercentage1 >= totalProfitLossPercentage2);
+        Assert.assertTrue(totalProfitLoss1 >= totalProfitLoss2);
+        Assert.assertTrue(winningRatio1 >= 0.5 || winningRatio1 == 0);
+        Assert.assertTrue("Winning ration of the first (" + winningRatio1 + ") < second (" + winningRatio2 + ")", winningRatio1 >= winningRatio2);
+    }
+
+    private static Double winningRatio(TradingStatement statement) {
+        return getWinningRatio(statement).doubleValue();
+    }
+
+    private static Double winsCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getProfitCount().doubleValue();
+    }
+
+    private static Double lossesCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getLossCount().doubleValue();
+    }
+
+    private static Double totalInPercent(TradingStatement statement) {
+        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLossPercentage()).doubleValue();
+    }
+
+    private static Double totalInDollars(TradingStatement statement) {
+        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLoss()).doubleValue();
+    }
+
+    private static TradingStatement testStrategy(String symbol, StrategyProvider strategyProvider) {
 
         List<TickerQuote> quotes = TestDataProvider.getQuotesFromFile(symbol + ".json");
         BarSeries series = new BaseBarSeries();
@@ -98,11 +157,10 @@ public class StrategyTest {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        log.info(strategy.getName());
-        TradingMetrics metrics = TradingRecordUtils.buildTradingMetrics(symbol, series, tradingRecord);
+        TradingStatement tradingStatement = ConsoleUtils.getTradingStatement(strategy, tradingRecord, series);
         ConsoleUtils.printTradingRecords(symbol, tradingRecord);
-        ConsoleUtils.printTradingMetrics(metrics);
-        return metrics;
+        ConsoleUtils.printTradingStatement(symbol, tradingStatement);
+        return tradingStatement;
     }
 
 }

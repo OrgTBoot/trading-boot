@@ -1,8 +1,7 @@
 package com.mg.trading.boot.integrations.finviz;
 
+import com.mg.trading.boot.integrations.ScreenerProvider;
 import com.mg.trading.boot.models.Ticker;
-import com.mg.trading.boot.integrations.utils.Mapper;
-import com.mg.trading.boot.integrations.ScreeningProvider;
 import de.vandermeer.asciitable.AT_Row;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
@@ -21,11 +20,12 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
+import static com.mg.trading.boot.utils.NumberUtils.toBigDecimal;
 
 @Log4j2
 @Service
 @Qualifier(REST_FINVIZ_PROVIDER)
-public class RestFinvizProvider implements ScreeningProvider {
+public class RestFinvizProvider implements ScreenerProvider {
     public static final String REST_FINVIZ_PROVIDER = "finviz";
 
     @Override
@@ -36,7 +36,7 @@ public class RestFinvizProvider implements ScreeningProvider {
         Document doc = Jsoup.connect(url).get();
         Map<String, Integer> headers = getHeaders(doc);
         List<Map<String, String>> rows = getMappedRows(doc, headers);
-        final List<Ticker> tickers = Mapper.toTickers(rows);
+        final List<Ticker> tickers = toTickers(rows);
 
         Comparator<Ticker> volumeComparator = Comparator.comparing(Ticker::getVolume, Comparator.reverseOrder());
         Comparator<Ticker> changeComparator = Comparator.comparing(Ticker::getChange, Comparator.reverseOrder());
@@ -109,4 +109,24 @@ public class RestFinvizProvider implements ScreeningProvider {
         table.getRenderer().setCWC(new CWC_LongestLine());
         return table;
     }
+
+
+    private static List<Ticker> toTickers(List<Map<String, String>> listOfFinVizMaps) {
+        return listOfFinVizMaps.stream().map(it ->
+                        Ticker.builder()
+                                .externalId(it.get("No."))
+                                .symbol(it.get("Ticker"))
+                                .company(it.get("Company"))
+                                .industry(it.get("Industry"))
+                                .sector(it.get("Sector"))
+                                .country(it.get("Country"))
+                                .marketCap(it.get("Market Cap"))
+                                .peRatio(toBigDecimal(it.get("P/E")))
+                                .price(toBigDecimal(it.get("Price")))
+                                .change(toBigDecimal(it.get("Change")))
+                                .volume(toBigDecimal(it.get("Volume")))
+                                .build())
+                .collect(Collectors.toList());
+    }
+
 }

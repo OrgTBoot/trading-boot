@@ -9,19 +9,6 @@ public interface BrokerProvider {
 
     Ticker getTicker(String symbol);
 
-    /**
-     * Get ticker day quotes
-     *
-     * @param symbol        - ticker symbol
-     * @param interval      - interval of the aggregated information of each quote
-     * @param tradingPeriod - day trading period
-     * @param limit         - quotes limit
-     * @return - a list of ticker quotes
-     */
-    List<TickerQuote> getTickerQuotes(String symbol,
-                                      Interval interval,
-                                      TradingPeriod tradingPeriod,
-                                      Integer limit);
 
     List<TickerNewsArticle> getTickerNews(String symbol, Long daysAgoRelevance);
 

@@ -46,8 +46,9 @@ logging:
     max-size: 10MB
   level:
     com.mg: DEBUG
-    org.springframework.web: INFO
-    org.springframework.security: INFO
+    org.apache.catalina: WARN
+    org.springframework.web: WARN
+    org.springframework.security: WARN
     org.springframework.boot: ERROR
 
 

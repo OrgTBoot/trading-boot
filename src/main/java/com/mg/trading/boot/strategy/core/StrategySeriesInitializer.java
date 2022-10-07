@@ -1,7 +1,7 @@
 package com.mg.trading.boot.strategy.core;
 
+import com.mg.trading.boot.integrations.TickerQuoteProvider;
 import com.mg.trading.boot.models.TickerQuote;
-import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
@@ -14,17 +14,16 @@ import java.util.List;
 @Log4j2
 public class StrategySeriesInitializer {
 
-    public static BarSeries init(BrokerProvider brokerProvider, StrategyParameters params) {
+    public static BarSeries init(TickerQuoteProvider quoteProvider, StrategyParameters params) {
         BaseBarSeries series = new BaseBarSeriesBuilder()
                 .withName(params.getSymbol())
                 .withMaxBarCount(params.getQuotesRollingLimit())
                 .build();
 
-        List<TickerQuote> quotes = brokerProvider.getTickerQuotes(
+        List<TickerQuote> quotes = quoteProvider.getTickerQuotes(
                 params.getSymbol(),
-                params.getQuotesInterval(),
-                params.getTradingPeriod(),
-                params.getQuotesRollingLimit());
+                params.getQuotesRange(),
+                params.getQuotesInterval());
 
         Duration quoteDuration = getTickerDuration(quotes);
 
@@ -32,11 +31,12 @@ public class StrategySeriesInitializer {
 //            throw new RuntimeException("Extracted quotes interval " + quoteDuration.getSeconds()
 //                    + " are not consistent with expected interval " + params.getQuotesInterval().seconds);
 //        }
+
         BarSeriesUtils.addBarSeries(series, quotes, quoteDuration);
-        log.info("\tInitialized {} series. Interval {}, period {} - OK",
+        log.info("\tInitialized {} series. range {}, interval {} - OK",
                 series.getBarCount(),
-                params.getQuotesInterval(),
-                params.getTradingPeriod());
+                params.getQuotesRange(),
+                params.getQuotesInterval());
         return series;
     }
 

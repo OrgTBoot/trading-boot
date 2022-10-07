@@ -25,8 +25,8 @@ public class DEMAStrategyProvider implements StrategyProvider {
     private final DEMAParameters parameters;
     private Strategy strategy;
 
-    public DEMAStrategyProvider(DEMAParameters parameters) {
-        this.parameters = parameters;
+    public DEMAStrategyProvider(DEMAParameters strategyContext) {
+        this.parameters = strategyContext;
     }
 
     public DEMAStrategyProvider(String symbol) {

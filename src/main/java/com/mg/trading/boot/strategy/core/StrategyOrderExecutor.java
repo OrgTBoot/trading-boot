@@ -1,12 +1,13 @@
 package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.integrations.BrokerProvider;
+import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.utils.ConsoleUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
+import org.ta4j.core.Strategy;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.num.DecimalNum;
 
@@ -16,17 +17,20 @@ import java.util.List;
 @Log4j2
 public class StrategyOrderExecutor {
     private BrokerProvider brokerProvider;
+    private Strategy strategy;
     private TradingRecord tradingRecord;
     private BarSeries series;
     private String symbol;
 
 
     public StrategyOrderExecutor(final BrokerProvider brokerProvider,
+                                 final Strategy strategy,
                                  final TradingRecord tradingRecord,
                                  final BarSeries series,
                                  final String symbol) {
         this.brokerProvider = brokerProvider;
         this.tradingRecord = tradingRecord;
+        this.strategy = strategy;
         this.series = series;
         this.symbol = symbol;
     }
@@ -41,7 +45,8 @@ public class StrategyOrderExecutor {
             List<Position> positions = this.brokerProvider.getPositionsBySymbol(symbol);
 
             if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
-                log.warn("Skipping order placement. There are open orders[{}] or positions[{}].", openOrders.size(), positions.size());
+                log.warn("Skipping {} order placement. There are open orders[{}] or positions[{}].",
+                        action, openOrders.size(), positions.size());
                 return;
             }
         }
@@ -61,7 +66,6 @@ public class StrategyOrderExecutor {
         log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());
 
         if (OrderAction.BUY.equals(action)) {
-            //TODO: endIdx is not a valid value for trading record - it should be it's own idx schema
             tradingRecord.enter(endIndex, DecimalNum.valueOf(orderRequest.getLmtPrice()), DecimalNum.valueOf(quantity));
         } else if (OrderAction.SELL.equals(action)) {
             tradingRecord.exit(endIndex, DecimalNum.valueOf(orderRequest.getLmtPrice()), DecimalNum.valueOf(quantity));
@@ -74,6 +78,6 @@ public class StrategyOrderExecutor {
 
     private void printStats() {
         ConsoleUtils.printTradingRecords(symbol, tradingRecord);
-        ConsoleUtils.printTradingMetrics(symbol, series, tradingRecord);
+        ConsoleUtils.printTradingStatement(symbol, strategy, tradingRecord, series);
     }
 }

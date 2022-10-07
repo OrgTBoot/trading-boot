@@ -25,7 +25,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
-        log.info("Initializing Security configuration...");
         http.cors()
                 .and().authorizeRequests()
                 .anyRequest().permitAll()

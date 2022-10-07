@@ -1,19 +1,19 @@
 package com.mg.trading.boot.graphql;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mg.trading.boot.models.*;
-import com.mg.trading.boot.models.npl.TickerSentiment;
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.integrations.ScreeningProvider;
-import com.mg.trading.boot.strategy.*;
+import com.mg.trading.boot.integrations.ScreenerProvider;
+import com.mg.trading.boot.integrations.TickerQuoteProvider;
+import com.mg.trading.boot.models.StrategyContext;
+import com.mg.trading.boot.models.Ticker;
+import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.models.npl.TickerSentiment;
+import com.mg.trading.boot.strategy.StrategyExecutor;
+import com.mg.trading.boot.strategy.TradingStrategyExecutor;
 import com.mg.trading.boot.strategy.core.*;
 import com.mg.trading.boot.strategy.goldencross.DEMAStrategyProvider;
-import com.mg.trading.boot.strategy.goldencross.EMAParameters;
-import com.mg.trading.boot.strategy.goldencross.EMAStrategyProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import com.mg.trading.boot.utils.ConsoleUtils;
-import com.mg.trading.boot.utils.TradingRecordUtils;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
@@ -32,21 +32,27 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
-import static com.mg.trading.boot.integrations.webull.RestWebullProvider.REST_WEBULL_PROVIDER;
+import static com.mg.trading.boot.integrations.webull.WebullBrokerProvider.REST_WEBULL_PROVIDER;
+import static com.mg.trading.boot.integrations.webull.WebullTickerQuoteProvider.WEBULL_QUOTE_PROVIDER;
+import static com.mg.trading.boot.integrations.yahoo.YahooTickerQuoteProvider.YAHOO_QUOTE_PROVIDER;
 
 @Log4j2
 @Service
 @GraphQLApi
 public class GQLController {
     private final BrokerProvider brokerProvider;
-    private final ScreeningProvider screeningProvider;
+    private final TickerQuoteProvider tickerQuoteProvider;
+    private final ScreenerProvider screeningProvider;
     private final Map<String, StrategyExecutor> runningStrategiesMap = new HashMap<>();
 
 
     public GQLController(@Qualifier(REST_WEBULL_PROVIDER) final BrokerProvider brokerProvider,
-                         @Qualifier(REST_FINVIZ_PROVIDER) final ScreeningProvider screeningProvider) {
+                         @Qualifier(REST_FINVIZ_PROVIDER) final ScreenerProvider screeningProvider,
+                         @Qualifier(WEBULL_QUOTE_PROVIDER) final TickerQuoteProvider tickerQuoteProvider) {
+//                         @Qualifier(YAHOO_QUOTE_PROVIDER) final TickerQuoteProvider tickerQuoteProvider) {
         this.brokerProvider = brokerProvider;
         this.screeningProvider = screeningProvider;
+        this.tickerQuoteProvider = tickerQuoteProvider;
     }
 
     @GraphQLQuery
@@ -58,31 +64,29 @@ public class GQLController {
 
     @SneakyThrows
     @GraphQLQuery
-    public TradingMetrics runBackTrackingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
+    public String runBackTrackingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
         DEMAStrategyProvider strategyProvider = new DEMAStrategyProvider(symbol);
         StrategyParameters parameters = strategyProvider.getParameters();
 
-        List<TickerQuote> quotes = this.brokerProvider.getTickerQuotes(
+        List<TickerQuote> quotes = this.tickerQuoteProvider.getTickerQuotes(
                 parameters.getSymbol(),
-                parameters.getQuotesInterval(),
-                parameters.getTradingPeriod(),
-                parameters.getQuotesRollingLimit());
+                parameters.getQuotesRange(),
+                parameters.getQuotesInterval());
 
         log.info("Quotes: {}", new ObjectMapper().writeValueAsString(quotes));
 
         BarSeries series = new BaseBarSeries();
-        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
+        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(parameters.getQuotesInterval().seconds));
 
         Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
         BarSeriesManager seriesManager = new BarSeriesManager(series);
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        TradingMetrics metrics = TradingRecordUtils.buildTradingMetrics(symbol, series, tradingRecord);
         ConsoleUtils.printTradingRecords(symbol, tradingRecord);
-        ConsoleUtils.printTradingMetrics(metrics);
+        ConsoleUtils.printTradingStatement(symbol, strategy, tradingRecord, series);
 
-        return metrics;
+        return "OK";
     }
 
     @GraphQLQuery
@@ -102,10 +106,12 @@ public class GQLController {
         final DEMAStrategyProvider strategyProvider = new DEMAStrategyProvider(symbol);
         final StrategyParameters params = strategyProvider.getParameters();
 
-        final BarSeries series = StrategySeriesInitializer.init(brokerProvider, params);
+        final BarSeries series = StrategySeriesInitializer.init(tickerQuoteProvider, params);
         final TradingRecord tradingRecord = StrategyTradingRecordInitializer.init(brokerProvider, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
-        final TickerQuoteExtractor quoteListener = StrategyTickerListenerInitializer.init(brokerProvider, params, strategy, series, tradingRecord);
+        final TickerQuoteExtractor quoteListener = StrategyTickerListenerInitializer.init(tickerQuoteProvider,
+                brokerProvider, params,
+                strategy, series, tradingRecord);
 
         StrategyContext context = StrategyContext.builder()
                 .tradingRecord(tradingRecord)

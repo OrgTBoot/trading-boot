@@ -29,6 +29,7 @@ public class TickerQuoteExtractor implements Runnable {
     @Override
     public void run() {
         try {
+            //todo: currently it extracts all the quotes available - revisit, see if possible to extract only X last quotes
             List<TickerQuote> quotes = quotesSupplier.get();
             Duration duration = getDuration(series);
             for (TickerQuote quote : quotes) {
@@ -66,7 +67,9 @@ public class TickerQuoteExtractor implements Runnable {
     private boolean shouldAdd(BarSeries series, TickerQuote quote) {
         Bar lastBar = series.getLastBar();
         long latestBarTimeStamp = lastBar.getEndTime().toInstant().getEpochSecond();
-        return quote.getTimeStamp() > latestBarTimeStamp;
+        boolean hasVolume = quote.getVolume() != 0;
+
+        return quote.getTimeStamp() > latestBarTimeStamp && hasVolume;
     }
 
     private Duration getDuration(BarSeries series) {

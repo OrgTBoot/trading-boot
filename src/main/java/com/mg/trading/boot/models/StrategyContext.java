@@ -13,6 +13,7 @@ import org.ta4j.core.TradingRecord;
 @Builder
 @ToString
 public class StrategyContext {
+    private String symbol;
     private BarSeries series;
     private TradingRecord tradingRecord;
     private Strategy strategy;
