@@ -28,4 +28,5 @@ out/
 .vscode/
 
 ### Project
+/logs
 /src/main/resources/application-default.yml

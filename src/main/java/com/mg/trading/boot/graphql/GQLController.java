@@ -55,12 +55,12 @@ public class GQLController {
         this.tickerQuoteProvider = tickerQuoteProvider;
     }
 
-    @GraphQLQuery
-    public TickerSentiment findTickerSentiment(
-            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-            @GraphQLArgument(name = "daysAgoRelevance") @GraphQLNonNull final Long daysAgoRelevance) {
-        return brokerProvider.getTickerSentimentByNews(symbol, daysAgoRelevance);
-    }
+//    @GraphQLQuery
+//    public TickerSentiment findTickerSentiment(
+//            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+//            @GraphQLArgument(name = "daysAgoRelevance") @GraphQLNonNull final Long daysAgoRelevance) {
+//        return brokerProvider.getTickerSentimentByNews(symbol, daysAgoRelevance);
+//    }
 
     @SneakyThrows
     @GraphQLQuery
@@ -93,12 +93,6 @@ public class GQLController {
     public List<Ticker> runScreening() {
         return this.screeningProvider.getUnusualVolume();
     }
-
-    @GraphQLQuery
-    public Set<String> showRunningStrategies() {
-        return this.runningStrategiesMap.keySet();
-    }
-
 
     @GraphQLMutation
     public String startTradingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
@@ -141,6 +135,11 @@ public class GQLController {
             this.runningStrategiesMap.remove(name);
         }
         return "Strategy is stopped " + name;
+    }
+
+    @GraphQLQuery
+    public Set<String> showRunningStrategies() {
+        return this.runningStrategiesMap.keySet();
     }
 
 }
