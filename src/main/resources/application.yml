@@ -33,10 +33,10 @@ nlp:
 providers:
   webull:
     account:
-      id: 8973825
+      id: <redacted>
     auth:
       key: access_token
-      secret: dc_us_tech1.1838ee5dd4e-203f9a0e58434b9593b9e220a940c10a
+      secret: <redacted>
 ##------------------------------------------------------------------
 ##------LOGGER CONFIGURATION----------------------------------------
 ##------------------------------------------------------------------
