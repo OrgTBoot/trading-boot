@@ -16,12 +16,14 @@
         <graphql.sprq.version>0.0.6</graphql.sprq.version>
         <graphql.version>5.0.2</graphql.version>
         <swagger.version>2.9.2</swagger.version>
+        <ta4j.version>0.15</ta4j.version>
+        <npl.version>4.5.1</npl.version>
     </properties>
 
     <scm>
-        <url>https://github.com/maimas/mg-robinhood-boot</url>
-        <connection>scm:git:https://github.com/maimas/mg-robinhood-boot.git</connection>
-        <developerConnection>scm:git:https://github.com/maimas/mg-robinhood-boot.git
+        <url>https://github.com/maimas/trading-boot</url>
+        <connection>scm:git:https://github.com/maimas/trading-boot.git</connection>
+        <developerConnection>scm:git:https://github.com/maimas/trading-boot.git
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
@@ -30,12 +32,12 @@
         <dependency>
             <groupId>org.ta4j</groupId>
             <artifactId>ta4j-core</artifactId>
-            <version>0.15</version>
+            <version>${ta4j.version}</version>
         </dependency>
         <dependency>
             <groupId>org.ta4j</groupId>
             <artifactId>ta4j-examples</artifactId>
-            <version>0.15</version>
+            <version>${ta4j.version}</version>
         </dependency>
 
         <dependency>
@@ -48,8 +50,7 @@
             <artifactId>jsoup</artifactId>
             <version>1.14.3</version>
         </dependency>
-
-        <!--Spring {-->
+        <!--Spring-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
@@ -61,23 +62,17 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-aspects</artifactId>
-            <!--            <version>5.2.8.RELEASE</version>-->
         </dependency>
         <dependency>
             <groupId>org.springframework.retry</groupId>
             <artifactId>spring-retry</artifactId>
-            <!--            <version>1.2.5.RELEASE</version>-->
         </dependency>
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-core</artifactId>
-            <!--                    <version>3.4.16</version>-->
             <version>3.4.23</version>
         </dependency>
-
-        <!--Spring }-->
-
-        <!-- GraphQL {-->
+        <!-- GraphQL -->
         <dependency>
             <groupId>com.graphql-java</groupId>
             <artifactId>graphql-spring-boot-starter</artifactId>
@@ -93,86 +88,48 @@
             <artifactId>graphql-spqr-spring-boot-starter</artifactId>
             <version>${graphql.sprq.version}</version>
         </dependency>
-        <!-- GraphQL }-->
-
-        <!-- NPL {-->
+        <!-- NPL-->
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.1</version>
+            <version>${npl.version}</version>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.1</version>
+            <version>${npl.version}</version>
             <classifier>javadoc</classifier>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.1</version>
+            <version>${npl.version}</version>
             <classifier>sources</classifier>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.1</version>
+            <version>${npl.version}</version>
             <classifier>models</classifier>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.1</version>
+            <version>${npl.version}</version>
             <classifier>models-english</classifier>
         </dependency>
         <dependency>
             <groupId>edu.stanford.nlp</groupId>
             <artifactId>stanford-corenlp</artifactId>
-            <version>4.5.1</version>
+            <version>${npl.version}</version>
             <classifier>models-english-kbp</classifier>
         </dependency>
-        <!-- NPL }-->
-
-        <!-- Console Utils { -->
+        <!-- Misc -->
         <dependency>
             <groupId>de.vandermeer</groupId>
             <artifactId>asciitable</artifactId>
             <version>0.3.2</version>
         </dependency>
-        <!-- Console Utils } -->
-
-        <!--        &lt;!&ndash;Swagger {&ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.springfox</groupId>-->
-        <!--            <artifactId>springfox-swagger2</artifactId>-->
-        <!--            <version>${swagger.version}</version>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>io.springfox</groupId>-->
-        <!--            <artifactId>springfox-swagger-ui</artifactId>-->
-        <!--            <version>${swagger.version}</version>-->
-        <!--        </dependency>-->
-        <!--        &lt;!&ndash;Swagger }&ndash;&gt;-->
-
-        <!--Misc {-->
-<!--        <dependency>-->
-<!--            <groupId>org.apache.commons</groupId>-->
-<!--            <artifactId>commons-lang3</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.projectlombok</groupId>-->
-<!--            <artifactId>lombok</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.valid4j</groupId>-->
-<!--            <artifactId>valid4j</artifactId>-->
-<!--            <version>0.5.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>com.google.guava</groupId>-->
-<!--            <artifactId>guava</artifactId>-->
-<!--        </dependency>-->
-        <!--Misc }-->
     </dependencies>
 
     <dependencyManagement>

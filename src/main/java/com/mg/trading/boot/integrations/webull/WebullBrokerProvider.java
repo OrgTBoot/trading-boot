@@ -1,6 +1,7 @@
 package com.mg.trading.boot.integrations.webull;
 
 import com.mg.trading.boot.analisys.SentimentAnalysisService;
+import com.mg.trading.boot.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.webull.data.*;
@@ -43,6 +44,10 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
     @Override
     public Ticker getTicker(String symbol) {
         WbTicker wbTicker = this.getTickerBySymbol(symbol);
+
+        if (wbTicker == null) {
+            throw new ValidationException("Ticker not found :" + symbol);
+        }
 
         return mapToTicker(wbTicker);
     }
