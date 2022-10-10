@@ -111,6 +111,7 @@ public class StrategyTest {
     @Test
     public void testMultipleStocks() {
         List<String> symbols = new ArrayList<>();
+        symbols.add("PRVB_10_10_2022");
         symbols.add("IMVT_10_08_2022");
         symbols.add("ETMB_1DAY_1MIN");
         symbols.add("IMVT_1DAY_1MIN");

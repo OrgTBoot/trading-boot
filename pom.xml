@@ -2,22 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <artifactId>mg-robinhood-boot</artifactId>
+    <groupId>com.mg.platform</groupId>
+    <artifactId>trading-boot</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <parent>
-        <groupId>com.mg.platform</groupId>
-        <artifactId>sr-parent</artifactId>
-        <version>2.3</version>
-        <relativePath/>
-    </parent>
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.plugin.version>3.8.1</maven.compiler.plugin.version>
+        <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
+        <sprinb-boot.version>2.3.0.RELEASE</sprinb-boot.version>
         <graphql.sprq.version>0.0.6</graphql.sprq.version>
         <graphql.version>5.0.2</graphql.version>
-        <swagger.version>2.9.2</swagger.version>
         <ta4j.version>0.15</ta4j.version>
         <npl.version>4.5.1</npl.version>
+        <opencsv.version>4.1</opencsv.version>
+        <jsoup.version>1.14.3</jsoup.version>
     </properties>
 
     <scm>
@@ -27,6 +28,25 @@
         </developerConnection>
         <tag>HEAD</tag>
     </scm>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>${sprinb-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -39,16 +59,15 @@
             <artifactId>ta4j-examples</artifactId>
             <version>${ta4j.version}</version>
         </dependency>
-
         <dependency>
             <groupId>com.opencsv</groupId>
             <artifactId>opencsv</artifactId>
-            <version>4.1</version>
+            <version>${opencsv.version}</version>
         </dependency>
         <dependency>
             <groupId>org.jsoup</groupId>
             <artifactId>jsoup</artifactId>
-            <version>1.14.3</version>
+            <version>${jsoup.version}</version>
         </dependency>
         <!--Spring-->
         <dependency>
@@ -130,91 +149,21 @@
             <artifactId>asciitable</artifactId>
             <version>0.3.2</version>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <build>
         <plugins>
-            <!--Code quality {-->
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
+                <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <logViolationsToConsole>true</logViolationsToConsole>
-                    <configLocation>build/check-style/checkstyle-checker.xml</configLocation>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
-            </plugin>
-            <!--Code quality }-->
-
-            <!--Docker {-->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.2</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <outputDirectory>${project.build.directory}/libs</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <configuration>
-                            <target>
-                                <!--Copy docker files-->
-                                <copy file="target/${project.artifactId}-${project.version}.jar"
-                                      tofile="target/app.jar"/>
-                            </target>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.spotify</groupId>
-                <artifactId>dockerfile-maven-plugin</artifactId>
-                <configuration>
-                    <tag>${project.version}</tag>
-                </configuration>
-            </plugin>
-            <!--Docker }-->
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>repackage</goal>
-                        </goals>
-                    </execution>
-                </executions>
+                <version>${maven.compiler.plugin.version}</version>
             </plugin>
         </plugins>
     </build>
