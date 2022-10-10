@@ -26,7 +26,7 @@ public class StrategyTickerListenerInitializer {
                                             TradingRecord tradingRecord) {
         Supplier<List<TickerQuote>> quoteSupplier = () -> quoteProvider.getTickerQuotes(
                 params.getSymbol(),
-                params.getQuotesPullRange(),
+                params.getQuotesRange(),
                 params.getQuotesInterval());
 
         Supplier<Void> onChangeDecisionSupplier = () ->
@@ -34,7 +34,7 @@ public class StrategyTickerListenerInitializer {
 
         TickerQuoteExtractor task = new TickerQuoteExtractor(quoteSupplier, onChangeDecisionSupplier, series);
         log.info("\tQuotes pull task initialized  range={}, interval={} - OK",
-                params.getQuotesPullRange(),
+                params.getQuotesRange(),
                 params.getQuotesInterval());
         return task;
     }

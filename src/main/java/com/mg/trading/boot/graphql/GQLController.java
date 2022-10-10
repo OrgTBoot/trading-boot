@@ -1,17 +1,19 @@
 package com.mg.trading.boot.graphql;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mg.trading.boot.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
 import com.mg.trading.boot.integrations.TickerQuoteProvider;
 import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.models.TickerQuote;
-import com.mg.trading.boot.models.npl.TickerSentiment;
 import com.mg.trading.boot.strategy.StrategyExecutor;
 import com.mg.trading.boot.strategy.TradingStrategyExecutor;
 import com.mg.trading.boot.strategy.core.*;
-import com.mg.trading.boot.strategy.goldencross.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.dema.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
+import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import com.mg.trading.boot.utils.ConsoleUtils;
 import io.leangen.graphql.annotations.GraphQLArgument;
@@ -34,7 +36,6 @@ import java.util.Set;
 import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
 import static com.mg.trading.boot.integrations.webull.WebullBrokerProvider.REST_WEBULL_PROVIDER;
 import static com.mg.trading.boot.integrations.webull.WebullTickerQuoteProvider.WEBULL_QUOTE_PROVIDER;
-import static com.mg.trading.boot.integrations.yahoo.YahooTickerQuoteProvider.YAHOO_QUOTE_PROVIDER;
 
 @Log4j2
 @Service
@@ -49,7 +50,6 @@ public class GQLController {
     public GQLController(@Qualifier(REST_WEBULL_PROVIDER) final BrokerProvider brokerProvider,
                          @Qualifier(REST_FINVIZ_PROVIDER) final ScreenerProvider screeningProvider,
                          @Qualifier(WEBULL_QUOTE_PROVIDER) final TickerQuoteProvider tickerQuoteProvider) {
-//                         @Qualifier(YAHOO_QUOTE_PROVIDER) final TickerQuoteProvider tickerQuoteProvider) {
         this.brokerProvider = brokerProvider;
         this.screeningProvider = screeningProvider;
         this.tickerQuoteProvider = tickerQuoteProvider;
@@ -64,8 +64,9 @@ public class GQLController {
 
     @SneakyThrows
     @GraphQLQuery
-    public String runBackTrackingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
-        DEMAStrategyProvider strategyProvider = new DEMAStrategyProvider(symbol);
+    public String runBackTrackingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+                                          @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
+        StrategyProvider strategyProvider = selectStrategy(name, symbol);
         StrategyParameters parameters = strategyProvider.getParameters();
 
         List<TickerQuote> quotes = this.tickerQuoteProvider.getTickerQuotes(
@@ -95,17 +96,17 @@ public class GQLController {
     }
 
     @GraphQLMutation
-    public String startTradingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol) {
+    public String startTradingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+                                       @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
         log.info("Initializing strategy...");
-        final DEMAStrategyProvider strategyProvider = new DEMAStrategyProvider(symbol);
+        final StrategyProvider strategyProvider = selectStrategy(name, symbol);
         final StrategyParameters params = strategyProvider.getParameters();
 
         final BarSeries series = StrategySeriesInitializer.init(tickerQuoteProvider, params);
         final TradingRecord tradingRecord = StrategyTradingRecordInitializer.init(brokerProvider, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
-        final TickerQuoteExtractor quoteListener = StrategyTickerListenerInitializer.init(tickerQuoteProvider,
-                brokerProvider, params,
-                strategy, series, tradingRecord);
+        final TickerQuoteExtractor quoteListener = StrategyTickerListenerInitializer.init(
+                tickerQuoteProvider, brokerProvider, params, strategy, series, tradingRecord);
 
         StrategyContext context = StrategyContext.builder()
                 .tradingRecord(tradingRecord)
@@ -142,4 +143,14 @@ public class GQLController {
         return this.runningStrategiesMap.keySet();
     }
 
+    private StrategyProvider selectStrategy(TradingStrategies name, String symbol) {
+        switch (name) {
+            case EMA:
+                return new EMAStrategyProvider(symbol);
+            case DEMA:
+                return new DEMAStrategyProvider(symbol);
+            default:
+                throw new ValidationException("Strategy not supported");
+        }
+    }
 }

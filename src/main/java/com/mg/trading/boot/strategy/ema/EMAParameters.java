@@ -1,4 +1,4 @@
-package com.mg.trading.boot.strategy.goldencross;
+package com.mg.trading.boot.strategy.ema;
 
 import com.mg.trading.boot.models.Interval;
 import com.mg.trading.boot.models.Range;
@@ -15,23 +15,23 @@ import java.math.BigDecimal;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class DEMAParameters extends StrategyParameters {
+public class EMAParameters extends StrategyParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
+    private Number stopGainPercent;
 
-    public static DEMAParameters optimal(String symbol) {
-        return DEMAParameters.builder()
+
+    public static EMAParameters optimal(String symbol) {
+        return EMAParameters.builder()
                 .symbol(symbol.toUpperCase())
                 .sharesQty(BigDecimal.ONE)
-                .stopLossPercent(1.5)
+                .stopLossPercent(2)
                 .stopGainPercent(3)
-                .longBarCount(60)
+                .longBarCount(30)
                 .shortBarCount(5)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE) //bar interval, ex: open-close interval of the bar is 1 minute
                 .quotesRollingLimit(1000) //keep total of 1k rolling bars.
-                .quotesPullRange(Range.FIFE_MINUTES) // limit quotes pull to 5 elements. In other words last 5 minutes, 5
-                // bars/quotes
                 .quotesPullFrequencyInSec(10) // pull refreshed quotes each 10 seconds
                 .build();
     }

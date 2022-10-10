@@ -1,6 +1,5 @@
-package com.mg.trading.boot.strategy.goldencross;
+package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.strategy.core.StrategyParameters;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Strategy;
 

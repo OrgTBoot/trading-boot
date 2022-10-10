@@ -1,5 +1,6 @@
-package com.mg.trading.boot.strategy.goldencross;
+package com.mg.trading.boot.strategy.ema;
 
+import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.indicators.AfterMarketHoursIndicator;
 import com.mg.trading.boot.strategy.indicators.MarketHoursIndicator;
 import lombok.extern.log4j.Log4j2;

@@ -2,6 +2,7 @@ package com.mg.trading.boot.models;
 
 public enum Range {
     FIFE_MINUTES(5, "m", 5 * 60L),
+    THREE_MINUTES(3, "m", 3 * 60L),
     TEN_MINUTES(10, "m", 10 * 60L),
     ONE_DAY(1, "d", 12 * 60 * 60L),
     FIFE_DAYS(5, "d", 5 * 12 * 60 * 60L);

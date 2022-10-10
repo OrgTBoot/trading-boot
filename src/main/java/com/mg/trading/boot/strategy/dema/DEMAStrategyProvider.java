@@ -1,8 +1,8 @@
-package com.mg.trading.boot.strategy.goldencross;
+package com.mg.trading.boot.strategy.dema;
 
 import com.mg.trading.boot.strategy.core.StrategyParameters;
-import com.mg.trading.boot.strategy.indicators.AfterMarketHoursIndicator;
-import com.mg.trading.boot.strategy.indicators.MarketHoursIndicator;
+import com.mg.trading.boot.strategy.core.StrategyProvider;
+import com.mg.trading.boot.strategy.indicators.*;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
@@ -17,7 +17,7 @@ import org.ta4j.core.rules.StopLossRule;
 
 
 /**
- * For more details see: <a href="https://www.youtube.com/watch?v=g-PLctW8aU0">Double EMA Cross</a>
+ * For more details see: <a href="https://www.youtube.com/watch?v=Jd1JVF7Oy_A">Double EMA Cross</a>
  */
 @Log4j2
 public class DEMAStrategyProvider implements StrategyProvider {
@@ -46,21 +46,28 @@ public class DEMAStrategyProvider implements StrategyProvider {
     @Override
     public StrategyProvider buildStrategy(BarSeries series) {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-
-        //ENTER RULES
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, parameters.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, parameters.getLongBarCount());
-        CrossedUpIndicatorRule crossedUp = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
-        BooleanIndicatorRule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series)); //enter only during market hours
+
+
+        //ENTER RULES
+        Rule crossedUp = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
+        Rule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series));
         Rule enterRule = crossedUp.and(marketHours);
 
         //EXIT RULES
-        StopLossRule stopLoss = new StopLossRule(closePrice, parameters.getStopLossPercent());
-        StopGainRule stopGain = new StopGainRule(closePrice, parameters.getStopGainPercent());
-        BooleanIndicatorRule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
-        StopGainRule hasProfit = new StopGainRule(closePrice, 0.3);
+        Rule stopLoss = new StopLossRule(closePrice, parameters.getStopLossPercent());
+        Rule stopGain = new StopGainRule(closePrice, parameters.getStopGainPercent());
+        Rule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
+        Rule hasProfit = new StopGainRule(closePrice, 0.3);
+        Rule sell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, parameters.getShortBarCount()));
+        Rule notGreenTrend = new BooleanIndicatorRule(new SuperTrendGreenIndicator(series, parameters.getShortBarCount())).negation();
 
-        Rule exitRule = stopLoss.or(stopGain).or(afterMarketHours.and(hasProfit));
+
+        Rule exitRule = stopGain.and(notGreenTrend)
+                .or(afterMarketHours.and(hasProfit))
+                .or(sell)
+                .or(stopLoss); // todo: test more with this criteria, run it on more stocks
 
         String strategyName = getClass().getSimpleName() + "_" + parameters.getSymbol();
 

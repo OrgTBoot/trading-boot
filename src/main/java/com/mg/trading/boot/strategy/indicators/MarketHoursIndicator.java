@@ -32,4 +32,11 @@ public class MarketHoursIndicator extends CachedIndicator<Boolean> {
 
         return (hour >= 4 && hour < 16);
     }
+
+    private boolean isPremarket(ZonedDateTime time) {
+        int hour = time.getHour();
+        int minute = time.getMinute();
+
+        return ((hour > 9) || (hour == 9 && minute <= 30)) && hour < 16;
+    }
 }

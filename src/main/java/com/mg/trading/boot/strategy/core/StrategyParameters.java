@@ -16,7 +16,6 @@ public abstract class StrategyParameters {
     private BrokerProvider brokerProvider;
     private TickerQuoteProvider quoteProvider;
 
-    private Number stopGainPercent;
     private Number stopLossPercent;
     /**
      * Quotes range to extract. Ex 1 day range.
@@ -29,7 +28,6 @@ public abstract class StrategyParameters {
     private Interval quotesInterval;
     private Integer quotesRollingLimit;
     private Integer quotesPullFrequencyInSec;
-    private Range quotesPullRange;
-    private String symbol;
     private BigDecimal sharesQty;
+    private String symbol;
 }

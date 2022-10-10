@@ -8,15 +8,12 @@ import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.*;
 import org.ta4j.core.criteria.pnl.ProfitLossPercentageCriterion;
 import org.ta4j.core.num.Num;
-import org.ta4j.core.reports.PerformanceReport;
-import org.ta4j.core.reports.PositionStatsReport;
 import org.ta4j.core.reports.TradingStatement;
 import org.ta4j.core.reports.TradingStatementGenerator;
 
 import java.math.BigDecimal;
 import java.util.stream.IntStream;
 
-import static com.mg.trading.boot.utils.NumberUtils.defaultToZero;
 import static com.mg.trading.boot.utils.NumberUtils.toRndBigDecimal;
 
 @Log4j2
@@ -37,24 +34,16 @@ public class ConsoleUtils {
 
     public static void printTradingStatement(String symbol, TradingStatement statement) {
         log.info("TRADING STATEMENT FOR STRATEGY: {}", statement.getStrategy().getName());
-        PerformanceReport perf = statement.getPerformanceReport();
-        PositionStatsReport stats = statement.getPositionStatsReport();
-
-        final Num lossCount = stats.getLossCount();
-        final Num winnCount = stats.getProfitCount().plus(stats.getBreakEvenCount());
-        final Num totalCount = winnCount.plus(lossCount);
-        final BigDecimal totalProfitLoss = toRndBigDecimal(perf.getTotalProfitLoss());
-        final BigDecimal totalProfitLossPercentage = toRndBigDecimal(perf.getTotalProfitLossPercentage());
-
         AsciiTable table = new AsciiTable();
         table.addRule();
         table.addRow("SYMBOL", "METRIC", "VALUE").setTextAlignment(TextAlignment.CENTER);
         table.addRule();
-        table.addRow(symbol, "Total return", totalProfitLossPercentage + "% | " + totalProfitLoss + "$");
+        table.addRow(symbol, "Total return", totalInPercent(statement) + "% | " + totalInDollars(statement) + "$");
         table.addRule();
-        table.addRow(symbol, "Winning positions ratio", getWinningRatio(statement));
+        table.addRow(symbol, "Winning positions ratio", winningRatio(statement));
         table.addRule();
-        table.addRow(symbol, "Total positions | ↑ wins | ↓ losses ", totalCount + " | ↑" + winnCount + " | ↓" + lossCount);
+        table.addRow(symbol, "Total positions | ↑ wins | ↓ losses | ~even ",
+                totalCount(statement) + " | ↑" + winsCount(statement) + " | ↓" + lossesCount(statement) + " | ~" + breakEvenCount(statement));
         table.addRule();
 
         table.getRenderer().setCWC(new CWC_LongestLine());
@@ -87,21 +76,46 @@ public class ConsoleUtils {
         log.info("\n" + table.render());
     }
 
-    public static BigDecimal getWinningRatio(TradingStatement statement) {
+    public static Double winningRatio(TradingStatement statement) {
         final Num profitCount = statement.getPositionStatsReport().getProfitCount();
         final Num evenCount = statement.getPositionStatsReport().getBreakEvenCount();
         final Num lossCount = statement.getPositionStatsReport().getLossCount();
 
         final Num totalCount = profitCount.plus(lossCount).plus(evenCount);
         if (totalCount == null) {
-            return BigDecimal.ZERO;
+            return 0D;
         }
         final Num ratio = profitCount.dividedBy(totalCount);
-        return toRndBigDecimal(ratio);
+        return toRndBigDecimal(ratio).doubleValue();
+    }
+
+    public static Double winsCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getProfitCount().doubleValue();
+    }
+
+    public static Double totalCount(TradingStatement statement) {
+        return winsCount(statement) + lossesCount(statement);
+    }
+
+    public static Double lossesCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getLossCount().doubleValue();
+    }
+
+    public static Double breakEvenCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getBreakEvenCount().doubleValue();
+    }
+
+    public static Double totalInPercent(TradingStatement statement) {
+        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLossPercentage()).doubleValue();
+    }
+
+    public static Double totalInDollars(TradingStatement statement) {
+        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLoss()).doubleValue();
     }
 
     private static BigDecimal getPositionProfitInPercent(Position position) {
         Num percent = new ProfitLossPercentageCriterion().calculate(new BaseBarSeries(), position);
         return toRndBigDecimal(percent);
     }
+
 }

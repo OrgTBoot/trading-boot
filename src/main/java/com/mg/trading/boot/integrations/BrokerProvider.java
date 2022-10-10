@@ -18,8 +18,6 @@ public interface BrokerProvider {
 
     void cancelOrder(String orderId);
 
-//    Order getOrderById(String id);
-
     List<Order> getOpenOrders();
 
     List<Position> getPositions();
@@ -27,9 +25,5 @@ public interface BrokerProvider {
     List<Position> getPositionsBySymbol(String symbol);
 
     List<Order> getOpenOrdersBySymbol(String symbol);
-
-//    Order getOpenOrderById(String id);
-
-    //----------------------REVISIT BELLOW ONES
 
 }
