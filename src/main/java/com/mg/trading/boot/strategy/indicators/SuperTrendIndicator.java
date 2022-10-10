@@ -1,6 +1,5 @@
 package com.mg.trading.boot.strategy.indicators;
 
-import com.mg.trading.boot.models.OrderAction;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.ATRIndicator;
 
@@ -151,6 +150,7 @@ public class SuperTrendIndicator {
     }
 
     public boolean getIsGreen(int index) {
+        calculate();
         return isGreen.get(index);
     }
 
