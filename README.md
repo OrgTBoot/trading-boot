@@ -16,7 +16,7 @@ You need to have a WB account with Paper Trading enabled.
 ### GQL query and mutation examples
 
 ```
-# This will execute screening and provide a list of stocks recmended for day trading.
+# This will execute screening and provide a list of stocks recommended for day trading.
 query runScreening {
   runScreening {
     symbol
