@@ -53,7 +53,7 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         Assert.notNull(context.getQuoteExtractor(), "Quotes Listener should not be null");
         Assert.notNull(context.getTradingRecord(), "Trading record should not be null");
 
-        Number stopLoss = context.getParameters().getStopLossPercent();
+        Number stopLoss = context.getParameters().getPositionStopLossPercent();
 //        Number stopGain = context.getParameters().getStopGainPercent();
 //        Assert.notNull(stopGain, "Parameters stop gain should not be null");
         Assert.notNull(stopLoss, "Parameters stop loss should not be null");

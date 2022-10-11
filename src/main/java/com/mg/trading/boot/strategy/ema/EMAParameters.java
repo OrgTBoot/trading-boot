@@ -25,7 +25,7 @@ public class EMAParameters extends StrategyParameters {
         return EMAParameters.builder()
                 .symbol(symbol.toUpperCase())
                 .sharesQty(BigDecimal.ONE)
-                .stopLossPercent(2)
+                .positionStopLossPercent(2)
                 .stopGainPercent(3)
                 .longBarCount(30)
                 .shortBarCount(5)

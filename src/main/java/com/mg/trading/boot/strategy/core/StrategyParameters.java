@@ -16,7 +16,14 @@ public abstract class StrategyParameters {
     private BrokerProvider brokerProvider;
     private TickerQuoteProvider quoteProvider;
 
-    private Number stopLossPercent;
+    /**
+     * Total loss percentage strategy should tolerate.
+     * Use for scenarios when you want to prevent entry in to a stock that performed poor for previous entries
+     * and reached X% loss.
+     */
+    private Number totalLossTolerancePercent;
+
+    private Number positionStopLossPercent;
     /**
      * Quotes range to extract. Ex 1 day range.
      */

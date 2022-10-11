@@ -3,7 +3,6 @@ package com.mg.trading.boot;
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.dema.DEMAStrategyProvider;
-import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
@@ -108,32 +107,50 @@ public class StrategyTest {
 //        assertFirstTradingStatementBeatsSecond(dema, ema);
 //    }
 
+    /**
+     * If allowed to be traded without a total loss tolerance threshold there is a risk we can lose too much.
+     * To avoid such scenario we apply a total loss tolerance of X%, when the threashold is reached
+     * we prevent us from entering in to new position. It's a bad day/stock!!!
+     * Ex:
+     * ┌──────┬────────────────────────────────────────────┬──────────────────────────┐
+     * │SYMBOL│                   METRIC                   │          VALUE           │
+     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
+     * │SYTA  │Total return                                │-23.09% | -0.03139$       │
+     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
+     * │SYTA  │Winning positions ratio                     │0.09091                   │
+     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
+     * │SYTA  │Total positions | ↑ wins | ↓ losses | ~even │11.0 | ↑1.0 | ↓10.0 | ~0.0│
+     * └──────┴────────────────────────────────────────────┴──────────────────────────┘
+     */
+    @Test
+    public void testStrategyTotalLossTolerance() {
+        String symbol = "SYTA_loss_tolerance";
+        TradingStatement emaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+        Assert.assertEquals(-4.008, totalInPercent(emaStatement), 0);
+    }
+
     @Test
     public void testMultipleStocks() {
         List<String> symbols = new ArrayList<>();
+        symbols.add("OPEN");
         symbols.add("PRVB_10_10_2022");
         symbols.add("IMVT_10_08_2022");
-        symbols.add("ETMB_1DAY_1MIN");
         symbols.add("IMVT_1DAY_1MIN");
+        symbols.add("ETMB_1DAY_1MIN");
         symbols.add("TELL_1DAY_1MIN");
-        symbols.add("WTI_1DAY_IMIN_BERISH");
-        symbols.add("OPEN");
-        symbols.add("WTI_1DAY_IMIN_BERISH");
         symbols.add("AMPY_1DAY_1MIN");
+        symbols.add("WTI_1DAY_IMIN_BERISH");
+        symbols.add("SYTA_loss_tolerance");
 
 
         symbols.forEach(s -> testStrategy(s, new DEMAStrategyProvider(s)));
     }
 
     private static void assertFirstTradingStatementBeatsSecond(TradingStatement first, TradingStatement second) {
-        final double lossCount1 = lossesCount(first);
-        final double winCount1 = winsCount(first);
         final double winningRatio1 = winningRatio(first);
         final double totalProfitLoss1 = totalInDollars(first);
         final double totalProfitLossPercentage1 = totalInPercent(first);
 
-        final double lossCount2 = lossesCount(second);
-        final double winCount2 = winsCount(second);
         final double winningRatio2 = winningRatio(second);
         final double totalProfitLoss2 = totalInDollars(second);
         final double totalProfitLossPercentage2 = totalInPercent(second);
@@ -156,9 +173,9 @@ public class StrategyTest {
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
         TradingStatement tradingStatement = getTradingStatement(strategy, tradingRecord, series);
-        printTradingRecords(symbol, tradingRecord);
+//        printTradingRecords(symbol, tradingRecord);
         printTradingStatement(symbol, tradingStatement);
-        System.out.println(strategyProvider.getParameters());
+
         return tradingStatement;
     }
 

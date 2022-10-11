@@ -3,6 +3,7 @@ package com.mg.trading.boot.strategy.dema;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.indicators.*;
+import com.mg.trading.boot.strategy.rules.TotalLossToleranceRule;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
@@ -53,16 +54,17 @@ public class DEMAStrategyProvider implements StrategyProvider {
         //ENTER RULES
         Rule crossedUp = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
         Rule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series));
-        Rule enterRule = crossedUp.and(marketHours);
+        Rule sessionLossTolerance = new TotalLossToleranceRule(series, 3);
+
+        Rule enterRule = crossedUp.and(marketHours).and(sessionLossTolerance);
 
         //EXIT RULES
-        Rule stopLoss = new StopLossRule(closePrice, parameters.getStopLossPercent());
-        Rule stopGain = new StopGainRule(closePrice, parameters.getStopGainPercent());
+        Rule stopLoss = new StopLossRule(closePrice, parameters.getPositionStopLossPercent());
+        Rule stopGain = new StopGainRule(closePrice, parameters.getPositionStopGainPercent());
         Rule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
         Rule hasProfit = new StopGainRule(closePrice, 0.3);
         Rule sell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, parameters.getShortBarCount()));
         Rule notGreenTrend = new BooleanIndicatorRule(new SuperTrendGreenIndicator(series, parameters.getShortBarCount())).negation();
-
 
         Rule exitRule = stopGain.and(notGreenTrend)
                 .or(afterMarketHours.and(hasProfit))

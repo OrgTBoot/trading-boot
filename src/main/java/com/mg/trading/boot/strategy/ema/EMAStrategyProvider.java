@@ -61,7 +61,7 @@ public class EMAStrategyProvider implements StrategyProvider {
         Rule enterRule = crossedUpEMA.and(marketHours);
 
         //exit rules - stop loss/gain at X% OR if we are in after hours and position is positive
-        StopLossRule stopLoss = new StopLossRule(closePrice, parameters.getStopLossPercent());
+        StopLossRule stopLoss = new StopLossRule(closePrice, parameters.getPositionStopLossPercent());
         StopGainRule stopGain = new StopGainRule(closePrice, parameters.getStopGainPercent());
         BooleanIndicatorRule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
         StopGainRule hasProfit = new StopGainRule(closePrice, 0.3);

@@ -18,20 +18,21 @@ import java.math.BigDecimal;
 public class DEMAParameters extends StrategyParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
-    private Number stopGainPercent;
+    private Number positionStopGainPercent;
 
     public static DEMAParameters optimal(String symbol) {
         return DEMAParameters.builder()
                 .symbol(symbol.toUpperCase())
                 .sharesQty(BigDecimal.ONE)
-                .stopLossPercent(2)
-                .stopGainPercent(3)
+                .totalLossTolerancePercent(3)
+                .positionStopLossPercent(2)
+                .positionStopGainPercent(3)
                 .longBarCount(60)
                 .shortBarCount(5)
                 .quotesRange(Range.ONE_DAY)
-                .quotesInterval(Interval.ONE_MINUTE) //bar interval, ex: open-close interval of the bar is 1 minute
+                .quotesInterval(Interval.ONE_MINUTE)
                 .quotesRollingLimit(1000)
-                .quotesPullFrequencyInSec(5) // pull refreshed quotes each X seconds
+                .quotesPullFrequencyInSec(5)
                 .build();
     }
 }
