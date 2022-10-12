@@ -1,6 +1,5 @@
 package com.mg.trading.boot;
 
-import com.mg.trading.boot.strategy.indicators.SuperTrendBuyIndicator;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -14,7 +13,7 @@ import org.jfree.ui.RefineryUtilities;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Indicator;
-import org.ta4j.core.indicators.ChandelierExitShortIndicator;
+import org.ta4j.core.indicators.ChandelierExitLongIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.num.Num;
@@ -62,51 +61,21 @@ public class IndicatorsToChart {
     }
 
     public static void main(String[] args) {
-
-        /*
-         * Getting bar series
-         */
-        String fileName = "IMVT_10_08_2022.json";
+        String fileName = "BHG_10_11_2022.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
 
-        /*
-         * Creating indicators
-         */
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        DoubleEMAIndicator longDEMA = new DoubleEMAIndicator(closePrice, 60);
-        DoubleEMAIndicator shortDEMA = new DoubleEMAIndicator(closePrice, 10);
-        SuperTrendBuyIndicator buyTrend = new SuperTrendBuyIndicator(series, 10);
+        DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, 60);
+        DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, 10);
+        ChandelierExitLongIndicator chandelierLong = new ChandelierExitLongIndicator(series, 10, 3);
 
-        ChandelierExitShortIndicator shortChandelierExit = new ChandelierExitShortIndicator(series, 5, 3);
-//        ChandelierExitLongIndicator longChandelierExit = new ChandelierExitLongIndicator(series, 5, 3);
-
-        // Bollinger bands
-//        SMAIndicator smaIndicator = new SMAIndicator(closePrice, 15);
-//        StandardDeviationIndicator sd14 = new StandardDeviationIndicator(closePrice, 20);
-//
-//        BollingerBandsMiddleIndicator middleBBand = new BollingerBandsMiddleIndicator(smaIndicator);
-//        BollingerBandsLowerIndicator lowBBand = new BollingerBandsLowerIndicator(middleBBand, sd14);
-//        BollingerBandsUpperIndicator upBBand = new BollingerBandsUpperIndicator(middleBBand, sd14);
-
-        /*
-         * Building chart dataset
-         */
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(buildChartBarSeries(series, closePrice, fileName));
-        dataset.addSeries(buildChartBarSeries(series, longDEMA, "Long DEMA"));
-        dataset.addSeries(buildChartBarSeries(series, shortDEMA, "Short DEMA"));
-        dataset.addSeries(buildChartBarSeries(series, shortChandelierExit, "ShortChandelierExit"));
-//        dataset.addSeries(buildChartBarSeries(series, buyTrend, "BuyTrend"));
-//        dataset.addSeries(buildChartBarSeries(series, shortChandelierExit, "Chandelier Short"));
-//        dataset.addSeries(buildChartBarSeries(series, longChandelierExit, "Chandelier Long"));
-//        dataset.addSeries(buildChartBarSeries(series, lowBBand, "Low Bollinger Band"));
-//        dataset.addSeries(buildChartBarSeries(series, middleBBand, "Middle Bollinger Band"));
-//        dataset.addSeries(buildChartBarSeries(series, upBBand, "High Bollinger Band"));
+        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA Long"));
+        dataset.addSeries(buildChartBarSeries(series, shortIndicator, "DEMA Short"));
+        dataset.addSeries(buildChartBarSeries(series, chandelierLong, "Chand"));
 
-        /*
-         * Creating the chart
-         */
-        JFreeChart chart = ChartFactory.createTimeSeriesChart("IMVT_10_08_2022.json", // title
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(fileName, // title
                 "Date", // x-axis label
                 "Price Per Unit", // y-axis label
                 dataset, // data
@@ -118,9 +87,6 @@ public class IndicatorsToChart {
         DateAxis axis = (DateAxis) plot.getDomainAxis();
         axis.setDateFormatOverride(new SimpleDateFormat("yyyy-MM-dd"));
 
-        /*
-         * Displaying the chart
-         */
         displayChart(chart);
     }
 }

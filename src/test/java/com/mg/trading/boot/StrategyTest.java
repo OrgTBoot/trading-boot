@@ -110,7 +110,7 @@ public class StrategyTest {
     /**
      * If allowed to be traded without a total loss tolerance threshold there is a risk we can lose too much.
      * To avoid such scenario we apply a total loss tolerance of X%, when the threashold is reached
-     * we prevent us from entering in to new position. It's a bad day/stock!!!
+     * we prevent us from entering in to new position. It's a bad day/stock - STOP!!!
      * Ex:
      * ┌──────┬────────────────────────────────────────────┬──────────────────────────┐
      * │SYMBOL│                   METRIC                   │          VALUE           │
@@ -141,6 +141,7 @@ public class StrategyTest {
         symbols.add("AMPY_1DAY_1MIN");
         symbols.add("WTI_1DAY_IMIN_BERISH");
         symbols.add("SYTA_loss_tolerance");
+        symbols.add("BHG_10_11_2022");
 
 
         symbols.forEach(s -> testStrategy(s, new DEMAStrategyProvider(s)));
@@ -173,7 +174,7 @@ public class StrategyTest {
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
         TradingStatement tradingStatement = getTradingStatement(strategy, tradingRecord, series);
-//        printTradingRecords(symbol, tradingRecord);
+        printTradingRecords(symbol, tradingRecord);
         printTradingStatement(symbol, tradingStatement);
 
         return tradingStatement;
