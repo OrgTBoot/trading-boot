@@ -73,7 +73,7 @@ public class WebullTickerQuoteProvider extends AbstractRestProvider implements T
             wbQuotes.forEach(it -> quotes.addAll(toTickerQuotes(it)));
         }
 
-        log.info("WB Extracted {} quotes for range={}, interval={}, url={}", quotes.size(), range, interval, url);
+        log.debug("WB Extracted {} quotes for range={}, interval={}, url={}", quotes.size(), range, interval, url);
 
         return quotes.stream()
                 .sorted(Comparator.comparing(TickerQuote::getTimeStamp))
