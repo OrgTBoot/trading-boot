@@ -5,7 +5,7 @@ You need to have a WB account with Paper Trading enabled.
 ### Setup:
 
 1. Clone this repo.
-2. Edit `application-default.yaml`, provide your account information.
+2. Edit `application-default.yaml`, provide your account information (see in browser network calls).
 
 ### Run
 
