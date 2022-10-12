@@ -28,7 +28,7 @@ public class DEMAParameters extends StrategyParameters {
                 .positionStopLossPercent(2)
                 .positionStopGainPercent(3)
                 .longBarCount(60)
-                .shortBarCount(5)
+                .shortBarCount(10)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesRollingLimit(1000)

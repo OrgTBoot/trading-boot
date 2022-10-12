@@ -46,12 +46,12 @@ public class DEMAStrategyProvider implements StrategyProvider {
 
     @Override
     public StrategyProvider buildStrategy(BarSeries series) {
+        //INDICATORS
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, parameters.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, parameters.getLongBarCount());
 
-
-        //ENTER RULES
+        //ENTRY RULES
         Rule crossedUp = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
         Rule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series));
         Rule sessionLossTolerance = new TotalLossToleranceRule(series, 3);
@@ -69,7 +69,7 @@ public class DEMAStrategyProvider implements StrategyProvider {
         Rule exitRule = stopGain.and(notGreenTrend)
                 .or(afterMarketHours.and(hasProfit))
                 .or(sell)
-                .or(stopLoss); // todo: test more with this criteria, run it on more stocks
+                .or(stopLoss);
 
         String strategyName = getClass().getSimpleName() + "_" + parameters.getSymbol();
 
