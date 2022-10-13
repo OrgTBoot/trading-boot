@@ -7,6 +7,7 @@ import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.webull.data.*;
 import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.models.npl.TickerSentiment;
+import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,17 +17,23 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
+import org.ta4j.core.BaseTradingRecord;
+import org.ta4j.core.TradingRecord;
+import org.ta4j.core.num.Num;
 
 import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.config.BeanConfig.WEBULL_REST_TEMPLATE;
 import static com.mg.trading.boot.integrations.webull.WebullBrokerProvider.REST_WEBULL_PROVIDER;
-import static com.mg.trading.boot.integrations.webull.WebullEndpoints.TICKER_BY_NAME;
-import static com.mg.trading.boot.integrations.webull.WebullEndpoints.TICKER_NEWS;
+import static com.mg.trading.boot.integrations.webull.WebullEndpoints.*;
 import static com.mg.trading.boot.utils.NumberUtils.toBigDecimal;
+import static com.mg.trading.boot.utils.NumberUtils.toDecimalNum;
 
 @Log4j2
 @Component
@@ -100,19 +107,56 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
     }
 
     @Override
-    public List<Order> getOpenOrdersBySymbol(String symbol) {
+    public List<Order> getOpenOrders(String symbol) {
         return getOpenOrders().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<Position> getPositions() {
+    public List<Order> getOrdersHistory(String symbol, Integer daysRange) {
+        ZonedDateTime date = Instant.now().atZone(BarSeriesUtils.getDefaultZone()).minus(daysRange, ChronoUnit.DAYS);
+        String dateParam = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(date);
+
+        String url = String.format(PAPER_FILLED_ORDERS_HISTORY.value, accountId, dateParam);
+        ParameterizedTypeReference<List<WbOrder>> type = new ParameterizedTypeReference<List<WbOrder>>() {
+        };
+        List<WbOrder> response = (List<WbOrder>) get(url, type).getBody();
+
+        List<Order> orders = Optional.ofNullable(response)
+                .orElse(new ArrayList<>()).stream()
+                .filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
+                .map(WebullBrokerProvider::mapToOrder)
+                .sorted(Comparator.comparing(Order::getFilledTime))// sort ascending
+                .collect(Collectors.toList());
+
+        return orders;
+    }
+
+    @Override
+    public TradingRecord getTickerTradingRecord(String symbol, Integer daysRange) {
+        List<Order> orders = getOrdersHistory(symbol, daysRange);
+        log.debug("Extracted {} historical orders", orders.size());
+
+        TradingRecord tradingRecord = new BaseTradingRecord();
+        AtomicInteger index = new AtomicInteger();
+        orders.forEach(order -> {
+            int idx = index.getAndIncrement();
+            Num price = toDecimalNum(order.getAvgFilledPrice());
+            Num qty = toDecimalNum(order.getFilledQuantity());
+
+            tradingRecord.operate(idx, price, qty);
+        });
+        return tradingRecord;
+    }
+
+    @Override
+    public List<Position> getOpenPositions() {
         return Optional.ofNullable(getAccount().getPositions()).orElse(new ArrayList<>());
     }
 
     @Override
-    public List<Position> getPositionsBySymbol(String symbol) {
-        return getPositions().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
+    public List<Position> getOpenPositions(String symbol) {
+        return getOpenPositions().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
                 .collect(Collectors.toList());
     }
 
@@ -172,8 +216,10 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
                 .action(mapWbOrderAction(wbOrder.getAction()))
                 .timeInForce(mapWbOrderTimeInForce(wbOrder.getTimeInForce()))
                 .status(mapWbOrderStatus(wbOrder.getStatus()))
+                .filledTime(wbOrder.getFilledTime0())
                 .placedTime(wbOrder.getPlacedTime())
                 .lmtPrice(toBigDecimal(wbOrder.getLmtPrice()))
+                .avgFilledPrice(toBigDecimal(wbOrder.getAvgFilledPrice()))
                 .filledQuantity(toBigDecimal(wbOrder.getFilledQuantity()))
                 .totalQuantity(toBigDecimal(wbOrder.getTotalQuantity()))
                 .ticker(mapToTicker(wbOrder.getTicker()))
@@ -331,5 +377,4 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
                                 .build())
                 .collect(Collectors.toList());
     }
-
 }

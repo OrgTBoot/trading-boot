@@ -16,7 +16,6 @@ You need to have a WB account with Paper Trading enabled.
 ### GQL query and mutation examples
 
 ```
-# This will execute screening and provide a list of stocks recommended for day trading.
 query runScreening {
   runScreening {
     symbol
@@ -32,15 +31,30 @@ query runScreening {
   }
 }
 
-# This will run a simultation of the trading strategy.
-query runBackTracking {
-  runBackTrackingStrategy(symbol: "IMVT")
+query runBackTrackingStrategy($symbol: String!, $strategy: TradingStrategies!) {
+  runBackTrackingStrategy(symbol: $symbol, strategy: $strategy)
 }
 
-# This will start the trading strategy for a specific ticker. 
-# Note that currently it execute all the BUY / SELL orders in your paper trading account.
-mutation startTrading {
-  startTradingStrategy(symbol: "IMVT")
+query runningStrategyKeys{
+  runningStrategyKeys
 }
 
+mutation startTradingStrategy($symbol: String!, $strategy: TradingStrategies!) {
+  startTradingStrategy(symbol: $symbol, strategy: $strategy)
+}
+
+mutation stopTradingStrategy($strategyKey: String!) {
+  stopTradingStrategy(strategyKey: $strategyKey)
+}
+
+```
+
+Variables for the above queries - simplifies query management.
+
+```
+{
+  "symbol": "CYXT",
+  "strategy": "DEMA",
+  "strategyKey":"CYXT_DEMA_CYXT"
+}
 ```

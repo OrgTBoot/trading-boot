@@ -6,9 +6,6 @@ import java.util.List;
 
 public interface ScreenerProvider {
 
-    List<Ticker> getTopGaines();
-
     List<Ticker> getUnusualVolume();
 
-    List<Ticker> getTopLosers();
 }

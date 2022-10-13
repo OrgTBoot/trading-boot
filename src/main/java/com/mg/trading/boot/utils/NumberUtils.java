@@ -1,6 +1,7 @@
 package com.mg.trading.boot.utils;
 
 import org.apache.commons.lang3.StringUtils;
+import org.ta4j.core.num.DecimalNum;
 import org.ta4j.core.num.NaN;
 import org.ta4j.core.num.Num;
 
@@ -45,6 +46,10 @@ public class NumberUtils {
         } catch (Exception e) {
             throw new RuntimeException("Failed to convert value '" + value + "' to BigDecimal", e);
         }
+    }
+
+    public static DecimalNum toDecimalNum(BigDecimal value) {
+        return DecimalNum.valueOf(value);
     }
 
     //----------------------------------------------------

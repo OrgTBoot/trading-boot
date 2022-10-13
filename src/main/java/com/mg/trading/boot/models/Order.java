@@ -3,6 +3,7 @@ package com.mg.trading.boot.models;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 
 @Data
 @Builder
@@ -17,7 +18,9 @@ public class Order {
     private BigDecimal totalQuantity;
     private BigDecimal filledQuantity;
     private BigDecimal lmtPrice;
+    private BigDecimal avgFilledPrice;
     private String placedTime;
+    private Instant filledTime;
     private OrderStatus status;
     private Ticker ticker;
 }

@@ -1,10 +1,9 @@
 package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.integrations.TickerQuoteProvider;
 import com.mg.trading.boot.models.Interval;
 import com.mg.trading.boot.models.Range;
-import lombok.*;
+import lombok.Getter;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
@@ -13,8 +12,6 @@ import java.math.BigDecimal;
 @SuperBuilder(toBuilder = true)
 @ToString(callSuper = true)
 public abstract class StrategyParameters {
-    private BrokerProvider brokerProvider;
-    private TickerQuoteProvider quoteProvider;
 
     /**
      * Total loss percentage strategy should tolerate.

@@ -49,16 +49,6 @@ public class RestFinvizProvider implements ScreenerProvider {
         return sortedTickers;
     }
 
-    @Override
-    public List<Ticker> getTopGaines() {
-        return null;
-    }
-
-    @Override
-    public List<Ticker> getTopLosers() {
-        return null;
-    }
-
     //----------------------------------------------------------
     //-------------Private Methods------------------------------
     //----------------------------------------------------------
