@@ -2,14 +2,12 @@ package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.models.*;
-import com.mg.trading.boot.utils.ConsoleUtils;
+import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
-import org.ta4j.core.Strategy;
 import org.ta4j.core.TradingRecord;
-import org.ta4j.core.num.DecimalNum;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -17,40 +15,43 @@ import java.util.List;
 @Log4j2
 public class StrategyOrderExecutor {
     private BrokerProvider brokerProvider;
-    private Strategy strategy;
-    private TradingRecord tradingRecord;
     private BarSeries series;
     private String symbol;
+    private TradingReportGenerator reporting;
 
 
-    public StrategyOrderExecutor(final BrokerProvider brokerProvider,
-                                 final Strategy strategy,
-                                 final TradingRecord tradingRecord,
+    public StrategyOrderExecutor(final TradingReportGenerator reporting,
+                                 final BrokerProvider brokerProvider,
                                  final BarSeries series,
                                  final String symbol) {
+        this.reporting = reporting;
         this.brokerProvider = brokerProvider;
-        this.tradingRecord = tradingRecord;
-        this.strategy = strategy;
         this.series = series;
         this.symbol = symbol;
     }
 
-    private StrategyOrderExecutor() {
+    public void placeBuy(BigDecimal quantity) {
+        List<Order> openOrders = this.brokerProvider.getOpenOrders(symbol);
+        List<Position> positions = this.brokerProvider.getOpenPositions(symbol);
+
+        if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
+            log.warn("Skipping BUY order placement. There are open orders[{}] or positions[{}].", openOrders.size(), positions.size());
+            return;
+        }
+        place(OrderAction.BUY, quantity);
     }
 
+    public void placeSell() {
+        log.info("Placing SELL order...");
+        cancelActiveOrders();
 
-    public void place(OrderAction action, BigDecimal quantity) {
-        if (action.equals(OrderAction.BUY)) {
-            List<Order> openOrders = this.brokerProvider.getOpenOrdersBySymbol(symbol);
-            List<Position> positions = this.brokerProvider.getPositionsBySymbol(symbol);
+        List<Position> openPositions = this.brokerProvider.getOpenPositions(symbol);
+        openPositions.forEach(position -> {
+            place(OrderAction.SELL, position.getQuantity());
+        });
+    }
 
-            if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
-                log.warn("Skipping {} order placement. There are open orders[{}] or positions[{}].",
-                        action, openOrders.size(), positions.size());
-                return;
-            }
-        }
-
+    private void place(OrderAction action, BigDecimal quantity) {
         int endIndex = series.getEndIndex();
         Bar endBar = series.getBar(endIndex);
         OrderRequest orderRequest = OrderRequest.builder()
@@ -65,19 +66,28 @@ public class StrategyOrderExecutor {
         this.brokerProvider.placeOrder(orderRequest);
         log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());
 
-        if (OrderAction.BUY.equals(action)) {
-            tradingRecord.enter(endIndex, DecimalNum.valueOf(orderRequest.getLmtPrice()), DecimalNum.valueOf(quantity));
-        } else if (OrderAction.SELL.equals(action)) {
-            tradingRecord.exit(endIndex, DecimalNum.valueOf(orderRequest.getLmtPrice()), DecimalNum.valueOf(quantity));
-        } else {
-            throw new RuntimeException("Unexpected action received. This should never happen! " + action);
-        }
-
+//        DecimalNum price = toDecimalNum(orderRequest.getLmtPrice());
+//        DecimalNum qty = toDecimalNum(orderRequest.getQuantity());
+//        tradingRecord.operate(endIndex, price, qty);
+//
         printStats();
     }
 
-    private void printStats() {
-        ConsoleUtils.printTradingRecords(symbol, tradingRecord);
-        ConsoleUtils.printTradingStatement(symbol, strategy, tradingRecord, series);
+
+    private void cancelActiveOrders() {
+        List<Order> openOrders = this.brokerProvider.getOpenOrders(symbol);
+        openOrders.forEach(order -> {
+            this.brokerProvider.cancelOrder(order.getId());
+            log.warn("Canceling active {} order for symbol {}. ID={}, BarEndTime={}",
+                    order.getAction(), symbol, order.getId(), series.getLastBar().getEndTime());
+        });
     }
+
+    private void printStats() {
+        Integer today = 1;
+        TradingRecord tradingRecord = brokerProvider.getTickerTradingRecord(symbol, today);
+        reporting.printTradingRecords(tradingRecord);
+        reporting.printTradingSummary(tradingRecord, series);
+    }
+
 }

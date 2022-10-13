@@ -10,8 +10,9 @@ public enum WebullEndpoints {
     ACCOUNT("https://act.webullfintech.com"),
     PAPER_ACCOUNT(ACCOUNT.value + "/webull-paper-center/api/paper/1/acc/%s"),
     PAPER_PLACE_ORDER(ACCOUNT.value + "/webull-paper-center/api/paper/1/acc/%s/orderop/place/%s"),
-    PAPER_CANCEL_ORDER(ACCOUNT.value + "/webull-paper-center/api/paper/1/acc/%s/orderop/cancel/%s");
-
+    PAPER_CANCEL_ORDER(ACCOUNT.value + "/webull-paper-center/api/paper/1/acc/%s/orderop/cancel/%s"),
+    PAPER_FILLED_ORDERS_HISTORY(ACCOUNT.value + "/webull-paper-center/api/paper/1/acc/%s/order?dateType=FILLED" +
+            "&pageSize=1000&startTime=%s&lastCreateTime0=0&status=Filled");
     public final String value;
 
     WebullEndpoints(String value) {

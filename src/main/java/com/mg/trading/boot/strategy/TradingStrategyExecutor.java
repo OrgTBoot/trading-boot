@@ -1,14 +1,17 @@
 package com.mg.trading.boot.strategy;
 
 import com.mg.trading.boot.models.StrategyContext;
-import com.mg.trading.boot.strategy.core.StrategyParameters;
+import com.mg.trading.boot.strategy.core.StrategyTickerListenerInitializer;
 import com.mg.trading.boot.strategy.core.TickerQuoteExtractor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.util.Assert;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+
+import static com.google.common.base.Preconditions.checkNotNull;
+import static com.google.common.base.Preconditions.checkState;
 
 @Log4j2
 public class TradingStrategyExecutor implements StrategyExecutor {
@@ -18,25 +21,24 @@ public class TradingStrategyExecutor implements StrategyExecutor {
 
 
     public TradingStrategyExecutor(StrategyContext context) {
+        validateContext(context);
         this.context = context;
-        this.executor = Executors.newSingleThreadScheduledExecutor();
+        this.executor = getScheduledExecutorService();
     }
 
     @Override
     public void start() {
-        validateContext(context);
         log.info("\tParameters: {}", context.getParameters());
 
-        StrategyParameters parameters = context.getParameters();
-        Integer frequency = parameters.getQuotesPullFrequencyInSec();
-        String strategyName = context.getStrategy().getName();
-        TickerQuoteExtractor listener = context.getQuoteExtractor();
+        Integer frequency = context.getParameters().getQuotesPullFrequencyInSec();
+        TickerQuoteExtractor listener = getQuoteListener();
 
         executor.scheduleAtFixedRate(listener, 0, frequency, TimeUnit.SECONDS);
-        log.info("\tStrategy {} is running...", strategyName);
+        log.info("\tStrategy {} is running...", context.getStrategy().getName());
         log.info("------------------------------------------------");
     }
 
+    @Override
     public void stop() {
         executor.shutdownNow();
         log.info("Trading strategy {} for symbol {} is stopped",
@@ -44,25 +46,43 @@ public class TradingStrategyExecutor implements StrategyExecutor {
                 context.getParameters().getSymbol());
     }
 
-    private void validateContext(com.mg.trading.boot.models.StrategyContext context) {
-        Assert.notNull(context, "Strategy context should not be null");
-        Assert.notNull(context.getSeries(), "Series should not be null");
-        Assert.isTrue(!context.getSeries().isEmpty(), "Series should not be empty");
-        Assert.notNull(context.getStrategy(), "Strategy should not be null");
-        Assert.notNull(context.getParameters(), "Parameters should not be null");
-        Assert.notNull(context.getQuoteExtractor(), "Quotes Listener should not be null");
-        Assert.notNull(context.getTradingRecord(), "Trading record should not be null");
+    @Override
+    public StrategyContext getContext() {
+        return this.context;
+    }
+
+    private void validateContext(StrategyContext context) {
+        checkNotNull(context, "Strategy context should not be null");
+        checkNotNull(context, "Strategy context should not be null");
+        checkNotNull(context.getBroker(), "Broker should not be null");
+        checkNotNull(context.getQuoteProvider(), "Quotes provide should not be null");
+        checkNotNull(context.getSeries(), "Series should not be null");
+        checkState(!context.getSeries().isEmpty(), "Series should not be empty");
+        checkNotNull(context.getStrategy(), "Strategy should not be null");
+        checkNotNull(context.getParameters(), "Parameters should not be null");
+//        checkNotNull(context.getQuoteExtractor(), "Quotes Listener should not be null");
 
         Number stopLoss = context.getParameters().getPositionStopLossPercent();
-//        Number stopGain = context.getParameters().getStopGainPercent();
-//        Assert.notNull(stopGain, "Parameters stop gain should not be null");
-        Assert.notNull(stopLoss, "Parameters stop loss should not be null");
-//        Assert.isTrue(stopGain.doubleValue() > stopLoss.doubleValue(), "Parameters stop loss < gain");
-        Assert.notNull(context.getParameters().getSymbol(), "Parameters symbol should not be null");
-        Assert.notNull(context.getParameters().getSharesQty(), "Parameters shares qty should not be null");
-        Assert.notNull(context.getParameters().getQuotesRange(), "Parameters range should not be null");
-        Assert.notNull(context.getParameters().getQuotesInterval(), "Parameters interval should not be null");
-        Assert.notNull(context.getParameters().getQuotesRollingLimit(), "Parameters rolling limit should not be null");
-        Assert.notNull(context.getParameters().getQuotesPullFrequencyInSec(), "Parameters pull frequency should not be null");
+        checkNotNull(stopLoss, "Parameters stop loss should not be null");
+        checkNotNull(context.getParameters().getSymbol(), "Parameters symbol should not be null");
+        checkNotNull(context.getParameters().getSharesQty(), "Parameters shares qty should not be null");
+        checkNotNull(context.getParameters().getQuotesRange(), "Parameters range should not be null");
+        checkNotNull(context.getParameters().getQuotesInterval(), "Parameters interval should not be null");
+        checkNotNull(context.getParameters().getQuotesRollingLimit(), "Parameters rolling limit should not be null");
+        checkNotNull(context.getParameters().getQuotesPullFrequencyInSec(), "Parameters pull frequency should not be null");
+    }
+
+    private TickerQuoteExtractor getQuoteListener() {
+        return StrategyTickerListenerInitializer.init(
+                context.getQuoteProvider(),
+                context.getBroker(),
+                context.getParameters(),
+                context.getStrategy(),
+                context.getSeries());
+    }
+
+    private ScheduledExecutorService getScheduledExecutorService() {
+        ThreadFactory threadFactory = runnable -> new Thread(runnable, context.getStrategy().getName());
+        return Executors.newSingleThreadScheduledExecutor(threadFactory);
     }
 }

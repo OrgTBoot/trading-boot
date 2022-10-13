@@ -68,7 +68,7 @@ public class EMAStrategyProvider implements StrategyProvider {
 
         Rule exitRule = stopLoss.or(stopGain).or(afterMarketHours.and(hasProfit));
 
-        String strategyName = getClass().getSimpleName() + "_" + parameters.getSymbol();
+        String strategyName = "EMA" + "_" + parameters.getSymbol();
         this.strategy = new BaseStrategy(strategyName, enterRule, exitRule);
         return this;
     }

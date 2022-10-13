@@ -3,6 +3,7 @@ package com.mg.trading.boot;
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.dema.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
@@ -14,7 +15,8 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.mg.trading.boot.utils.ConsoleUtils.*;
+import static com.mg.trading.boot.strategy.reporting.TradingReportGenerator.*;
+
 
 @Log4j2
 public class StrategyTest {
@@ -173,11 +175,11 @@ public class StrategyTest {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        TradingStatement tradingStatement = getTradingStatement(strategy, tradingRecord, series);
-        printTradingRecords(symbol, tradingRecord);
-        printTradingStatement(symbol, tradingStatement);
+        TradingReportGenerator reporting = new TradingReportGenerator(symbol, strategy);
+        reporting.printTradingRecords(tradingRecord);
+        reporting.printTradingSummary(tradingRecord, series);
 
-        return tradingStatement;
+        return reporting.getTradingStatement(tradingRecord, series);
     }
 
 }

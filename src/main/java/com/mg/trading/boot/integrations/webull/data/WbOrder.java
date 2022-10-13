@@ -18,7 +18,9 @@ public class WbOrder {
     private WbOrderTimeInForce timeInForce;
     private WbOrderType orderType;
     private String lmtPrice;
+    private String avgFilledPrice;
     private Instant createTime0;
+    private Instant filledTime0;
     private WbOrderStatus status;
     private WbTicker ticker;
 }

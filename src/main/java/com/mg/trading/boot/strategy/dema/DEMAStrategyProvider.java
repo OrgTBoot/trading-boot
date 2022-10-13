@@ -71,7 +71,7 @@ public class DEMAStrategyProvider implements StrategyProvider {
                 .or(sell)
                 .or(stopLoss);
 
-        String strategyName = getClass().getSimpleName() + "_" + parameters.getSymbol();
+        String strategyName = "DEMA" + "_" + parameters.getSymbol();
 
         this.strategy = new BaseStrategy(strategyName, enterRule, exitRule);
         return this;

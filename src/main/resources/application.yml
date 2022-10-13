@@ -45,7 +45,7 @@ logging:
     name: logs/app.log
     max-size: 10MB
   level:
-    com.mg: INFO
+    com.mg: DEBUG
     org.apache.catalina: WARN
     org.springframework.web: WARN
     org.springframework.security: WARN

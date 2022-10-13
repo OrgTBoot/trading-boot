@@ -10,12 +10,13 @@ import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.StrategyExecutor;
 import com.mg.trading.boot.strategy.TradingStrategyExecutor;
-import com.mg.trading.boot.strategy.core.*;
+import com.mg.trading.boot.strategy.core.StrategyParameters;
+import com.mg.trading.boot.strategy.core.StrategyProvider;
+import com.mg.trading.boot.strategy.core.StrategySeriesInitializer;
 import com.mg.trading.boot.strategy.dema.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
-import com.mg.trading.boot.strategy.core.StrategyProvider;
+import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
-import com.mg.trading.boot.utils.ConsoleUtils;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
@@ -28,9 +29,7 @@ import org.springframework.stereotype.Service;
 import org.ta4j.core.*;
 
 import java.time.Duration;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
@@ -44,7 +43,6 @@ public class GQLController {
     private final BrokerProvider brokerProvider;
     private final TickerQuoteProvider tickerQuoteProvider;
     private final ScreenerProvider screeningProvider;
-    private final Map<String, StrategyExecutor> runningStrategiesMap = new HashMap<>();
 
 
     public GQLController(@Qualifier(REST_WEBULL_PROVIDER) final BrokerProvider brokerProvider,
@@ -84,64 +82,54 @@ public class GQLController {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        ConsoleUtils.printTradingRecords(symbol, tradingRecord);
-        ConsoleUtils.printTradingStatement(symbol, strategy, tradingRecord, series);
+        TradingReportGenerator reporting = new TradingReportGenerator(symbol, strategy);
+        reporting.printTradingRecords(tradingRecord);
+        reporting.printTradingSummary(tradingRecord, series);
 
-        return "OK";
+        return "Completed. Please see details in console.";
     }
 
-    @GraphQLQuery
+    @GraphQLQuery(description = "Run Screening with a predefined criteria.")
     public List<Ticker> runScreening() {
         return this.screeningProvider.getUnusualVolume();
     }
 
-    @GraphQLMutation
+    @GraphQLMutation(description = "Start trading strategy for the given symbol.")
     public String startTradingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
                                        @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
-        log.info("Initializing strategy...");
+        log.info("Initializing {} strategy for {}...", name, symbol);
         final StrategyProvider strategyProvider = selectStrategy(name, symbol);
         final StrategyParameters params = strategyProvider.getParameters();
-
         final BarSeries series = StrategySeriesInitializer.init(tickerQuoteProvider, params);
-        final TradingRecord tradingRecord = StrategyTradingRecordInitializer.init(brokerProvider, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
-        final TickerQuoteExtractor quoteListener = StrategyTickerListenerInitializer.init(
-                tickerQuoteProvider, brokerProvider, params, strategy, series, tradingRecord);
 
         StrategyContext context = StrategyContext.builder()
-                .tradingRecord(tradingRecord)
+                .broker(brokerProvider)
+                .quoteProvider(tickerQuoteProvider)
                 .parameters(params)
                 .strategy(strategy)
                 .series(series)
-                .quoteExtractor(quoteListener)
                 .build();
 
         StrategyExecutor strategyExecutor = new TradingStrategyExecutor(context);
+        RunningStrategiesHolder.add(strategyExecutor);
 
-        String key = symbol + "_" + strategyExecutor.getClass().getSimpleName();
-        if (!this.runningStrategiesMap.containsKey(key)) {
-            strategyExecutor.start();
-            this.runningStrategiesMap.put(key, strategyExecutor);
-            return "Strategy is running: " + key;
-        } else {
-            return "This strategy is already running. Key: " + key;
-        }
+        strategyExecutor.start();
+
+        return "Strategy is running...";
     }
 
-    @GraphQLMutation
-    public String stopTradingStrategy(@GraphQLArgument(name = "name") @GraphQLNonNull final String name) {
-        StrategyExecutor strategyExecutor = this.runningStrategiesMap.get(name);
-        if (strategyExecutor != null) {
-            strategyExecutor.stop();
-            this.runningStrategiesMap.remove(name);
-        }
-        return "Strategy is stopped " + name;
+    @GraphQLMutation(description = "Stops trading strategy execution.")
+    public String stopTradingStrategy(@GraphQLArgument(name = "strategyKey") @GraphQLNonNull final String strategyKey) {
+        RunningStrategiesHolder.remove(strategyKey);
+        return "Strategy removed " + strategyKey;
     }
 
-    @GraphQLQuery
-    public Set<String> showRunningStrategies() {
-        return this.runningStrategiesMap.keySet();
+    @GraphQLQuery(description = "Returns a list keys for all the running strategies.")
+    public Set<String> getRunningStrategyKeys() {
+        return RunningStrategiesHolder.getRunningKeys();
     }
+
 
     private StrategyProvider selectStrategy(TradingStrategies name, String symbol) {
         switch (name) {

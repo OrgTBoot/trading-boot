@@ -44,9 +44,6 @@ public class TickerQuoteExtractor implements Runnable {
                     this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
 
                 }
-//                else {
-//                    log.debug("Ignored quote {}", quote);
-//                }
             }
         } catch (Throwable e) {
             log.error("Error in quote processing: " + e.getMessage(), e);

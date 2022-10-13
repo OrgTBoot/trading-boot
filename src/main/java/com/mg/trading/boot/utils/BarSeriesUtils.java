@@ -45,5 +45,9 @@ public class BarSeriesUtils {
         return Instant.ofEpochSecond(quote.getTimeStamp()).atZone(ZoneId.of(quote.getTimeZone()));
     }
 
+    public static ZoneId getDefaultZone() {
+        return ZoneId.of("America/New_York");
+    }
+
 
 }
