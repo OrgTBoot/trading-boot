@@ -1,3 +1,6 @@
+features:
+  paper-trading-enabled: true
+
 providers:
   webull:
     trade-account:

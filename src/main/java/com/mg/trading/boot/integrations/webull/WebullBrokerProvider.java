@@ -44,7 +44,7 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
     private final Long accountId;
 
     public WebullBrokerProvider(@Qualifier(WEBULL_REST_TEMPLATE) final RestTemplate restTemplate,
-                                @Value("${features.paper-trading-enabled}") Boolean paperTradingEnabled,
+                                @Value("${features.paper-trading-enabled:true}") Boolean paperTradingEnabled,
                                 @Value("${providers.webull.trade-account.id}") Long tradeAccountId,
                                 @Value("${providers.webull.paper-account.id}") Long paperAccountId) {
         super(restTemplate);
