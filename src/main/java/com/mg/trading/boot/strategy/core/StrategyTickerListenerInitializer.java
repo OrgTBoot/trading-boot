@@ -38,10 +38,14 @@ public class StrategyTickerListenerInitializer {
         StrategyOrderExecutor orderExecutor = new StrategyOrderExecutor(reporting, brokerProvider, series, params.getSymbol());
 
         int lastBarIdx = series.getEndIndex();
-        if (strategy.shouldEnter(lastBarIdx)) {
+        boolean shouldEnter = strategy.shouldEnter(lastBarIdx);
+        boolean shouldExit = strategy.shouldExit(lastBarIdx);
+
+        log.debug("Should enter={} | Should exit={}", shouldEnter, shouldExit);
+        if (shouldEnter) {
             orderExecutor.placeBuy(params.getSharesQty());
 
-        } else if (strategy.shouldExit(lastBarIdx)) {
+        } else if (shouldExit) {
             orderExecutor.placeSell();
         }
         return null;

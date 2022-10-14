@@ -13,10 +13,10 @@ public interface BrokerProvider {
     Ticker getTicker(String symbol);
 
     @Retryable(value = Throwable.class)
-    List<TickerNewsArticle> getTickerNews(String symbol, Long daysAgoRelevance);
+    List<TickerNewsArticle> getTickerNews(String symbol, Integer daysRange);
 
     @Retryable(value = Throwable.class)
-    TickerSentiment getTickerSentimentByNews(String symbol, Long daysAgoRelevance);
+    TickerSentiment getTickerSentimentByNews(String symbol, Integer daysRange);
 
     void placeOrder(OrderRequest orderRequest);
 

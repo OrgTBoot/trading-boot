@@ -1,5 +1,6 @@
 package com.mg.trading.boot.graphql;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.BrokerProvider;
@@ -22,11 +23,11 @@ import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.*;
+import org.ta4j.core.rules.BooleanRule;
 
 import java.time.Duration;
 import java.util.List;
@@ -53,17 +54,38 @@ public class GQLController {
         this.tickerQuoteProvider = tickerQuoteProvider;
     }
 
-//    @GraphQLQuery
-//    public TickerSentiment findTickerSentiment(
-//            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-//            @GraphQLArgument(name = "daysAgoRelevance") @GraphQLNonNull final Long daysAgoRelevance) {
-//        return brokerProvider.getTickerSentimentByNews(symbol, daysAgoRelevance);
-//    }
+    @GraphQLQuery(description = "Run Screening with a predefined criteria.")
+    public List<Ticker> fetchScreenedTickers() {
+        return this.screeningProvider.getUnusualVolume();
+    }
 
-    @SneakyThrows
-    @GraphQLQuery
-    public String runBackTrackingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-                                          @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
+
+    @GraphQLQuery(description = "Print trading records for a given symbol.")
+    public String fetchTradingRecords(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+                                      @GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
+
+        BooleanRule dummyRule = new BooleanRule(false);
+        BaseBarSeries dummySeries = new BaseBarSeries();
+        BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN STRATEGY (REPORTING)", dummyRule, dummyRule);
+        TradingReportGenerator reportGenerator = new TradingReportGenerator(symbol, dummyStrategy);
+
+        TradingRecord tradingRecord = this.brokerProvider.getTickerTradingRecord(symbol, daysRange);
+        reportGenerator.printTradingRecords(tradingRecord);
+        reportGenerator.printTradingSummary(tradingRecord, dummySeries);
+
+        return "Completed. Please see details in console.";
+    }
+
+    @GraphQLQuery(description = "Returns a list keys for all the running strategies.")
+    public Set<String> fetchRunningStrategyKeys() {
+        return RunningStrategiesHolder.getRunningKeys();
+    }
+
+    @GraphQLMutation
+    public String triggerBackTracking(
+            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+            @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws JsonProcessingException {
+
         StrategyProvider strategyProvider = selectStrategy(name, symbol);
         StrategyParameters parameters = strategyProvider.getParameters();
 
@@ -89,14 +111,11 @@ public class GQLController {
         return "Completed. Please see details in console.";
     }
 
-    @GraphQLQuery(description = "Run Screening with a predefined criteria.")
-    public List<Ticker> runScreening() {
-        return this.screeningProvider.getUnusualVolume();
-    }
+    @GraphQLMutation(description = "Start trading strategy for the given symbol. Strategy will run in background until stopped.")
+    public String triggerLiveTrading(
+            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+            @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
 
-    @GraphQLMutation(description = "Start trading strategy for the given symbol.")
-    public String startTradingStrategy(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-                                       @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
         log.info("Initializing {} strategy for {}...", name, symbol);
         final StrategyProvider strategyProvider = selectStrategy(name, symbol);
         final StrategyParameters params = strategyProvider.getParameters();
@@ -120,16 +139,19 @@ public class GQLController {
     }
 
     @GraphQLMutation(description = "Stops trading strategy execution.")
-    public String stopTradingStrategy(@GraphQLArgument(name = "strategyKey") @GraphQLNonNull final String strategyKey) {
+    public String triggerLiveTradingStop(
+            @GraphQLArgument(name = "strategyKey") @GraphQLNonNull final String strategyKey) {
+
         RunningStrategiesHolder.remove(strategyKey);
         return "Strategy removed " + strategyKey;
     }
 
-    @GraphQLQuery(description = "Returns a list keys for all the running strategies.")
-    public Set<String> getRunningStrategyKeys() {
-        return RunningStrategiesHolder.getRunningKeys();
-    }
-
+//    @GraphQLQuery
+//    public TickerSentiment findTickerSentiment(
+//            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+//            @GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
+//        return brokerProvider.getTickerSentimentByNews(symbol, daysRange);
+//    }
 
     private StrategyProvider selectStrategy(TradingStrategies name, String symbol) {
         switch (name) {

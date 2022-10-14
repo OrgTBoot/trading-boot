@@ -60,7 +60,6 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         checkState(!context.getSeries().isEmpty(), "Series should not be empty");
         checkNotNull(context.getStrategy(), "Strategy should not be null");
         checkNotNull(context.getParameters(), "Parameters should not be null");
-//        checkNotNull(context.getQuoteExtractor(), "Quotes Listener should not be null");
 
         Number stopLoss = context.getParameters().getPositionStopLossPercent();
         checkNotNull(stopLoss, "Parameters stop loss should not be null");

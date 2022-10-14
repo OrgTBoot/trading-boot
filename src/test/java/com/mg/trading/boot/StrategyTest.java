@@ -144,6 +144,7 @@ public class StrategyTest {
         symbols.add("WTI_1DAY_IMIN_BERISH");
         symbols.add("SYTA_loss_tolerance");
         symbols.add("BHG_10_11_2022");
+        symbols.add("AMD_10_13_2022");
 
 
         symbols.forEach(s -> testStrategy(s, new DEMAStrategyProvider(s)));

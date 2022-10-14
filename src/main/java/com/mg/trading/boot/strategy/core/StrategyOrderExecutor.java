@@ -14,10 +14,10 @@ import java.util.List;
 
 @Log4j2
 public class StrategyOrderExecutor {
-    private BrokerProvider brokerProvider;
-    private BarSeries series;
-    private String symbol;
-    private TradingReportGenerator reporting;
+    private final BrokerProvider brokerProvider;
+    private final BarSeries series;
+    private final String symbol;
+    private final TradingReportGenerator reporting;
 
 
     public StrategyOrderExecutor(final TradingReportGenerator reporting,
@@ -66,10 +66,6 @@ public class StrategyOrderExecutor {
         this.brokerProvider.placeOrder(orderRequest);
         log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());
 
-//        DecimalNum price = toDecimalNum(orderRequest.getLmtPrice());
-//        DecimalNum qty = toDecimalNum(orderRequest.getQuantity());
-//        tradingRecord.operate(endIndex, price, qty);
-//
         printStats();
     }
 
