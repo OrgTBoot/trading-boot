@@ -10,3 +10,7 @@ providers:
     auth:
       key: access_token
       secret: <redacted>
+
+logging:
+  level:
+    com.mg: INFO
