@@ -11,6 +11,7 @@ import org.junit.Test;
 import org.ta4j.core.*;
 import org.ta4j.core.reports.TradingStatement;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
@@ -127,7 +128,7 @@ public class StrategyTest {
     @Test
     public void testStrategyTotalLossTolerance() {
         String symbol = "SYTA_loss_tolerance";
-        TradingStatement emaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol));
+        TradingStatement emaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol, BigDecimal.ONE));
         Assert.assertEquals(-4.008, totalInPercent(emaStatement), 0);
     }
 
@@ -147,7 +148,7 @@ public class StrategyTest {
         symbols.add("AMD_10_13_2022");
 
 
-        symbols.forEach(s -> testStrategy(s, new DEMAStrategyProvider(s)));
+        symbols.forEach(s -> testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE)));
     }
 
     private static void assertFirstTradingStatementBeatsSecond(TradingStatement first, TradingStatement second) {

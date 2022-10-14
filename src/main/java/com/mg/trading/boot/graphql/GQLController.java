@@ -29,6 +29,7 @@ import org.springframework.stereotype.Service;
 import org.ta4j.core.*;
 import org.ta4j.core.rules.BooleanRule;
 
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,8 @@ import java.util.Set;
 import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
 import static com.mg.trading.boot.integrations.webull.WebullBrokerProvider.REST_WEBULL_PROVIDER;
 import static com.mg.trading.boot.integrations.webull.WebullTickerQuoteProvider.WEBULL_QUOTE_PROVIDER;
+import static com.mg.trading.boot.utils.NumberUtils.toDecimalNum;
+import static org.ta4j.core.Trade.TradeType.BUY;
 
 @Log4j2
 @Service
@@ -84,9 +87,10 @@ public class GQLController {
     @GraphQLMutation
     public String triggerBackTracking(
             @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-            @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws JsonProcessingException {
+            @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name,
+            @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) throws JsonProcessingException {
 
-        StrategyProvider strategyProvider = selectStrategy(name, symbol);
+        StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
         StrategyParameters parameters = strategyProvider.getParameters();
 
         List<TickerQuote> quotes = this.tickerQuoteProvider.getTickerQuotes(
@@ -102,7 +106,7 @@ public class GQLController {
         Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
         BarSeriesManager seriesManager = new BarSeriesManager(series);
 
-        TradingRecord tradingRecord = seriesManager.run(strategy);
+        TradingRecord tradingRecord = seriesManager.run(strategy, BUY, toDecimalNum(parameters.getSharesQty()));
 
         TradingReportGenerator reporting = new TradingReportGenerator(parameters.getSymbol(), strategy);
         reporting.printTradingRecords(tradingRecord);
@@ -114,10 +118,11 @@ public class GQLController {
     @GraphQLMutation(description = "Start trading strategy for the given symbol. Strategy will run in background until stopped.")
     public String triggerLiveTrading(
             @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-            @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
+            @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name,
+            @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) {
 
         log.info("Initializing {} strategy for {}...", name, symbol);
-        final StrategyProvider strategyProvider = selectStrategy(name, symbol);
+        final StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
         final StrategyParameters params = strategyProvider.getParameters();
         final BarSeries series = StrategySeriesInitializer.init(tickerQuoteProvider, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
@@ -153,12 +158,12 @@ public class GQLController {
 //        return brokerProvider.getTickerSentimentByNews(symbol, daysRange);
 //    }
 
-    private StrategyProvider selectStrategy(TradingStrategies name, String symbol) {
+    private StrategyProvider selectStrategy(TradingStrategies name, String symbol, BigDecimal sharesQty) {
         switch (name) {
             case EMA:
-                return new EMAStrategyProvider(symbol);
+                return new EMAStrategyProvider(symbol, sharesQty);
             case DEMA:
-                return new DEMAStrategyProvider(symbol);
+                return new DEMAStrategyProvider(symbol, sharesQty);
             default:
                 throw new ValidationException("Strategy not supported");
         }

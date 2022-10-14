@@ -15,6 +15,8 @@ import org.ta4j.core.rules.CrossedUpIndicatorRule;
 import org.ta4j.core.rules.StopGainRule;
 import org.ta4j.core.rules.StopLossRule;
 
+import java.math.BigDecimal;
+
 
 /**
  * Apply two moving averages to a chart: one longer and one shorter.
@@ -34,8 +36,8 @@ public class EMAStrategyProvider implements StrategyProvider {
         this.parameters = parameters;
     }
 
-    public EMAStrategyProvider(String symbol) {
-        this.parameters = EMAParameters.optimal(symbol);
+    public EMAStrategyProvider(String symbol, BigDecimal sharesQty) {
+        this.parameters = EMAParameters.optimal(symbol, sharesQty);
     }
 
     @Override

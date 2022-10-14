@@ -9,6 +9,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 
 @Getter
@@ -21,10 +22,10 @@ public class EMAParameters extends StrategyParameters {
     private Number stopGainPercent;
 
 
-    public static EMAParameters optimal(String symbol) {
+    public static EMAParameters optimal(String symbol, BigDecimal sharesQty) {
         return EMAParameters.builder()
                 .symbol(symbol.toUpperCase())
-                .sharesQty(BigDecimal.ONE)
+                .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
                 .positionStopLossPercent(2)
                 .stopGainPercent(3)
                 .longBarCount(30)

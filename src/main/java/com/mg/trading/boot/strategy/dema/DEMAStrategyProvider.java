@@ -16,6 +16,8 @@ import org.ta4j.core.rules.CrossedUpIndicatorRule;
 import org.ta4j.core.rules.StopGainRule;
 import org.ta4j.core.rules.StopLossRule;
 
+import java.math.BigDecimal;
+
 
 /**
  * For more details see: <a href="https://www.youtube.com/watch?v=Jd1JVF7Oy_A">Double EMA Cross</a>
@@ -30,8 +32,8 @@ public class DEMAStrategyProvider implements StrategyProvider {
         this.parameters = strategyContext;
     }
 
-    public DEMAStrategyProvider(String symbol) {
-        this.parameters = DEMAParameters.optimal(symbol);
+    public DEMAStrategyProvider(String symbol, BigDecimal sharesQty) {
+        this.parameters = DEMAParameters.optimal(symbol, sharesQty);
     }
 
     @Override

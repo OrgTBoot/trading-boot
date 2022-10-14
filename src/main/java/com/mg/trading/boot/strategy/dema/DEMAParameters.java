@@ -9,6 +9,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 
 @Getter
@@ -20,10 +21,10 @@ public class DEMAParameters extends StrategyParameters {
     private Integer shortBarCount;
     private Number positionStopGainPercent;
 
-    public static DEMAParameters optimal(String symbol) {
+    public static DEMAParameters optimal(String symbol, BigDecimal sharesQty) {
         return DEMAParameters.builder()
                 .symbol(symbol.toUpperCase())
-                .sharesQty(BigDecimal.ONE)
+                .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
                 .totalLossTolerancePercent(3)
                 .positionStopLossPercent(2)
                 .positionStopGainPercent(3)
