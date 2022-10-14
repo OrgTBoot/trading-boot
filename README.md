@@ -16,35 +16,43 @@ You need to have a WB account with Paper Trading enabled.
 ### GQL query and mutation examples
 
 ```
-query runScreening {
-  runScreening {
-    symbol
-    change
-    company
-    country
-    externalId
-    industry
-    marketCap
-    peRatio
-    price
-    volume
+query fetchScreenedTickers {
+  fetchScreenedTickers {
+    ...TickerFragment
   }
 }
 
-query runBackTrackingStrategy($symbol: String!, $strategy: TradingStrategies!) {
-  runBackTrackingStrategy(symbol: $symbol, strategy: $strategy)
+query fetchRunningStrategyKeys {
+  fetchRunningStrategyKeys
 }
 
-query runningStrategyKeys{
-  runningStrategyKeys
+query fetchTradingRecords($symbol: String!, $daysRange: Int!) {
+  fetchTradingRecords(symbol: $symbol, daysRange: $daysRange)
 }
 
-mutation startTradingStrategy($symbol: String!, $strategy: TradingStrategies!) {
-  startTradingStrategy(symbol: $symbol, strategy: $strategy)
+mutation triggerBackTracking($symbol: String!, $strategy: TradingStrategies!) {
+  triggerBackTracking(symbol: $symbol, strategy: $strategy)
 }
 
-mutation stopTradingStrategy($strategyKey: String!) {
-  stopTradingStrategy(strategyKey: $strategyKey)
+mutation triggerLiveTrading($symbol: String!, $strategy: TradingStrategies!) {
+  triggerLiveTrading(symbol: $symbol, strategy: $strategy)
+}
+
+mutation triggerLiveTradingStop($strategyKey: String!) {
+  triggerLiveTradingStop(strategyKey: $strategyKey)
+}
+
+fragment TickerFragment on Ticker {
+  symbol
+  change
+  company
+  country
+  externalId
+  industry
+  marketCap
+  peRatio
+  price
+  volume
 }
 
 ```
@@ -53,8 +61,9 @@ Variables for the above queries - simplifies query management.
 
 ```
 {
-  "symbol": "CYXT",
+  "symbol": "AMD",
   "strategy": "DEMA",
-  "strategyKey":"CYXT_DEMA_CYXT"
+  "strategyKey":"CYXT_DEMA_CYXT",
+  "daysRange": 30
 }
 ```
