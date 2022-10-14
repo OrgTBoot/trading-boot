@@ -161,7 +161,7 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
     }
 
     @Override
-    public List<TickerNewsArticle> getTickerNews(String symbol, Long daysAgoRelevance) {
+    public List<TickerNewsArticle> getTickerNews(String symbol, Integer daysRange) {
         WbTicker ticker = getTickerBySymbol(symbol);
         if (ticker == null) {
             return new ArrayList<>();
@@ -175,13 +175,13 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
         ResponseEntity<List<WbNewsArticle>> response = (ResponseEntity<List<WbNewsArticle>>) get(url, type);
 
         return toNewsArticles(response.getBody()).stream()
-                .filter(it -> it.getNewsDaysAgo() <= daysAgoRelevance)
+                .filter(it -> it.getNewsDaysAgo() <= daysRange)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public TickerSentiment getTickerSentimentByNews(String symbol, Long daysAgoRelevance) {
-        List<TickerNewsArticle> news = getTickerNews(symbol, daysAgoRelevance);
+    public TickerSentiment getTickerSentimentByNews(String symbol, Integer daysRange) {
+        List<TickerNewsArticle> news = getTickerNews(symbol, daysRange);
         final SentimentAnalysisService analysisService = new SentimentAnalysisService();
         return analysisService.getSentimentByTickerArticles(news);
     }

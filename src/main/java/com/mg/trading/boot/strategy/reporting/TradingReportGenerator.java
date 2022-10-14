@@ -73,16 +73,6 @@ public class TradingReportGenerator {
         printTable(table);
     }
 
-
-    //--------------------------------------------------------
-    //-------------Private Methods----------------------------
-    //--------------------------------------------------------
-
-    private void printTable(AsciiTable table) {
-        table.getRenderer().setCWC(new CWC_LongestLine());
-        log.info("\nSTRATEGY: " + strategy.getName() + "\n" + table.render());
-    }
-
     public static Double winningRatio(TradingStatement statement) {
         final Num profitCount = statement.getPositionStatsReport().getProfitCount();
         final Num evenCount = statement.getPositionStatsReport().getBreakEvenCount();
@@ -118,6 +108,15 @@ public class TradingReportGenerator {
 
     public static Double totalInDollars(TradingStatement statement) {
         return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLoss()).doubleValue();
+    }
+
+    //--------------------------------------------------------
+    //-------------Private Methods----------------------------
+    //--------------------------------------------------------
+
+    private void printTable(AsciiTable table) {
+        table.getRenderer().setCWC(new CWC_LongestLine());
+        log.info("\nSTRATEGY: " + strategy.getName() + "\n" + table.render());
     }
 
     private static BigDecimal getPositionProfitInPercent(Position position) {

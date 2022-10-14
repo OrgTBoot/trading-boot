@@ -33,6 +33,6 @@ public class RunningStrategiesHolder {
     }
 
     private synchronized static String getStrategyKey(StrategyExecutor executor) {
-        return executor.getContext().getParameters().getSymbol() + "_" + executor.getContext().getStrategy().getName();
+        return executor.getContext().getStrategy().getName();
     }
 }

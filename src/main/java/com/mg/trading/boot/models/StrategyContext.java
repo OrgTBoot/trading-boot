@@ -15,7 +15,6 @@ import org.ta4j.core.Strategy;
 public class StrategyContext {
     private BrokerProvider broker;
     private TickerQuoteProvider quoteProvider;
-//    private String symbol;
     private BarSeries series;
     private Strategy strategy;
     private StrategyParameters parameters;
