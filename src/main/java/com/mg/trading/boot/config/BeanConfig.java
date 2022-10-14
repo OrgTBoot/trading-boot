@@ -4,7 +4,6 @@ package com.mg.trading.boot.config;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -50,20 +49,11 @@ public class BeanConfig {
             headers.add("appid", "wb_web_app");
             headers.add("device-type", "Web");
             headers.add("ver", "3.39.23");
+            headers.add("platform", "web");
+            headers.add("tz", "America/Los_Angeles");
 
             return clientHttpRequestExecution.execute(request, body);
         });
         return restTemplate;
     }
-
-//
-//    @Bean
-//    public MethodValidationPostProcessor methodValidationPostProcessor() {
-//        return new MethodValidationPostProcessor();
-//    }
-//
-//    @Bean
-//    public ThreadPoolTaskScheduler taskScheduler(TaskSchedulerBuilder builder) {
-//        return builder.build();
-//    }
 }

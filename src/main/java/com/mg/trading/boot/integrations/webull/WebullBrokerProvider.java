@@ -29,6 +29,7 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
+import static com.google.common.base.Preconditions.checkState;
 import static com.mg.trading.boot.config.BeanConfig.WEBULL_REST_TEMPLATE;
 import static com.mg.trading.boot.integrations.webull.WebullBrokerProvider.REST_WEBULL_PROVIDER;
 import static com.mg.trading.boot.integrations.webull.WebullEndpoints.*;
@@ -43,9 +44,15 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
     private final Long accountId;
 
     public WebullBrokerProvider(@Qualifier(WEBULL_REST_TEMPLATE) final RestTemplate restTemplate,
-                                @Value("${providers.webull.account.id}") Long accountId) {
+                                @Value("${features.paper-trading-enabled}") Boolean paperTradingEnabled,
+                                @Value("${providers.webull.trade-account.id}") Long tradeAccountId,
+                                @Value("${providers.webull.paper-account.id}") Long paperAccountId) {
         super(restTemplate);
-        this.accountId = accountId;
+        this.accountId = paperTradingEnabled ? paperAccountId : tradeAccountId;
+        String mode = paperTradingEnabled ? "$$$ REAL TRADING ENABLED $$$" : "PAPER TRADING ENABLED";
+        log.warn("---------------------------------------------------------------");
+        log.warn("-------------------{}------------------", mode);
+        log.warn("---------------------------------------------------------------");
     }
 
     @Override
@@ -77,7 +84,7 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
                 .serialId(UUID.randomUUID().toString())
                 .build();
 
-//        log.info("Placing order: {}", wbOrderRequest);
+        log.info("Placing order: {}", wbOrderRequest);
         String url = String.format(WebullEndpoints.PAPER_PLACE_ORDER.value, accountId, tickerId);
         ParameterizedTypeReference<WbOrder> type = new ParameterizedTypeReference<WbOrder>() {
         };
@@ -193,7 +200,12 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
         ResponseEntity<WbTickerData> response = (ResponseEntity<WbTickerData>) get(url, type);
 
         List<WbTicker> data = Optional.ofNullable(response.getBody()).map(WbTickerData::getData).orElse(null);
-        return CollectionUtils.isEmpty(data) ? null : data.get(0);
+        final WbTicker ticker = CollectionUtils.isEmpty(data) ? null : data.get(0);
+
+        if (ticker != null) {
+            checkState(symbol.equalsIgnoreCase(ticker.getSymbol()), "Unexpected ticker extracted.");
+        }
+        return ticker;
     }
 
     private Account getAccount() {

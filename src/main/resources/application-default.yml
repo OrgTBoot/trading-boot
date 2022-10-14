@@ -1,7 +1,9 @@
 providers:
   webull:
-    account:
+    trade-account:
+      id: <redacted>
+    paper-account:
       id: <redacted>
     auth:
-      key: <redacted>
+      key: access_token
       secret: <redacted>

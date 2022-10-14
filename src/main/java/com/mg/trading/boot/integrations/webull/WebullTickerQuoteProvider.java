@@ -8,7 +8,6 @@ import com.mg.trading.boot.models.Range;
 import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.models.TickerQuote;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Assert;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
@@ -22,9 +21,7 @@ import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.config.BeanConfig.WEBULL_REST_TEMPLATE;
 import static com.mg.trading.boot.integrations.webull.WebullEndpoints.TICKER_MINUTE_QUOTES;
-import static com.mg.trading.boot.integrations.webull.WebullEndpoints.TICKER_QUOTES;
 import static com.mg.trading.boot.integrations.webull.WebullTickerQuoteProvider.WEBULL_QUOTE_PROVIDER;
-import static com.mg.trading.boot.models.TradingPeriod.EXTENDED;
 import static com.mg.trading.boot.utils.NumberUtils.toBigDecimal;
 
 @Log4j2

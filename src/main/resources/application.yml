@@ -25,14 +25,22 @@ graphql:
 ##------------------------------------------------------------------
 nlp:
   sentiment:
-      annotators: tokenize, cleanxml, ssplit, parse, sentiment
+    annotators: tokenize, cleanxml, ssplit, parse, sentiment
 #      annotators: tokenize,cleanxml,ssplit,pos,lemma,ner,parse,depparse,coref,natlog,openie,kbp,entitylink
+
+##------------------------------------------------------------------
+##------FEATURES CONFIGURATION--------------------------------------
+##------------------------------------------------------------------
+features:
+  paper-trading-enabled: false
 ##------------------------------------------------------------------
 ##------PROVIDERS CONFIGURATION-------------------------------------
 ##------------------------------------------------------------------
 providers:
   webull:
-    account:
+    trade-account:
+      id: <redacted>
+    paper-account:
       id: <redacted>
     auth:
       key: <redacted>
