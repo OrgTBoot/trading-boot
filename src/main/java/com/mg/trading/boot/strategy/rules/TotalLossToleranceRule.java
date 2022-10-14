@@ -27,7 +27,7 @@ public class TotalLossToleranceRule implements Rule {
         boolean satisfied = lossTolerance.doubleValue() <= currentLoss.doubleValue();
 
         if (!satisfied) {
-            log.debug("You've reached total loss tolerance threshold. Current {}, allowed is {}. Idx={}",
+            log.warn("You've reached total loss tolerance threshold. Current {}, allowed is {}. Idx={}",
                     currentLoss.doubleValue(),
                     lossTolerance.doubleValue(),
                     index);

@@ -42,7 +42,6 @@ public class StrategyOrderExecutor {
     }
 
     public void placeSell() {
-        log.info("Placing SELL order...");
         cancelActiveOrders();
 
         List<Position> openPositions = this.brokerProvider.getOpenPositions(symbol);
