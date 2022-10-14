@@ -49,7 +49,7 @@ public class WebullBrokerProvider extends AbstractRestProvider implements Broker
                                 @Value("${providers.webull.paper-account.id}") Long paperAccountId) {
         super(restTemplate);
         this.accountId = paperTradingEnabled ? paperAccountId : tradeAccountId;
-        String mode = paperTradingEnabled ? "$$$ REAL TRADING ENABLED $$$" : "PAPER TRADING ENABLED";
+        String mode = paperTradingEnabled ?  "MODE - PAPER TRADING" : "$$$ MODE - LIVE TRADING $$$";
         log.warn("---------------------------------------------------------------");
         log.warn("-------------------{}------------------", mode);
         log.warn("---------------------------------------------------------------");

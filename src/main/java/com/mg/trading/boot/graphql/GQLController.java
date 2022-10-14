@@ -104,7 +104,7 @@ public class GQLController {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        TradingReportGenerator reporting = new TradingReportGenerator(symbol, strategy);
+        TradingReportGenerator reporting = new TradingReportGenerator(parameters.getSymbol(), strategy);
         reporting.printTradingRecords(tradingRecord);
         reporting.printTradingSummary(tradingRecord, series);
 
