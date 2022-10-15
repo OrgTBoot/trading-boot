@@ -12,21 +12,19 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
 import static com.mg.trading.boot.utils.NumberUtils.toBigDecimal;
 
 @Log4j2
 @Service
-@Qualifier(REST_FINVIZ_PROVIDER)
+@ConditionalOnProperty(value = "features.screener", havingValue = "finviz")
 public class RestFinvizProvider implements ScreenerProvider {
-    public static final String REST_FINVIZ_PROVIDER = "finviz";
 
     @Override
     @SneakyThrows

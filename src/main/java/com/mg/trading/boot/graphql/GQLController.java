@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
-import com.mg.trading.boot.integrations.TickerQuoteProvider;
 import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.models.TickerQuote;
@@ -24,7 +23,6 @@ import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.*;
 import org.ta4j.core.rules.BooleanRule;
@@ -34,9 +32,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Set;
 
-import static com.mg.trading.boot.integrations.finviz.RestFinvizProvider.REST_FINVIZ_PROVIDER;
-import static com.mg.trading.boot.integrations.webull.WebullBrokerProvider.REST_WEBULL_PROVIDER;
-import static com.mg.trading.boot.integrations.webull.WebullTickerQuoteProvider.WEBULL_QUOTE_PROVIDER;
 import static com.mg.trading.boot.utils.NumberUtils.toDecimalNum;
 import static org.ta4j.core.Trade.TradeType.BUY;
 
@@ -45,21 +40,18 @@ import static org.ta4j.core.Trade.TradeType.BUY;
 @GraphQLApi
 public class GQLController {
     private final BrokerProvider brokerProvider;
-    private final TickerQuoteProvider tickerQuoteProvider;
     private final ScreenerProvider screeningProvider;
 
 
-    public GQLController(@Qualifier(REST_WEBULL_PROVIDER) final BrokerProvider brokerProvider,
-                         @Qualifier(REST_FINVIZ_PROVIDER) final ScreenerProvider screeningProvider,
-                         @Qualifier(WEBULL_QUOTE_PROVIDER) final TickerQuoteProvider tickerQuoteProvider) {
+    public GQLController(final BrokerProvider brokerProvider,
+                         final ScreenerProvider screeningProvider) {
         this.brokerProvider = brokerProvider;
         this.screeningProvider = screeningProvider;
-        this.tickerQuoteProvider = tickerQuoteProvider;
     }
 
     @GraphQLQuery(description = "Run Screening with a predefined criteria.")
     public List<Ticker> fetchScreenedTickers() {
-        return this.screeningProvider.getUnusualVolume();
+        return screeningProvider.getUnusualVolume();
     }
 
 
@@ -72,7 +64,7 @@ public class GQLController {
         BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN STRATEGY (REPORTING)", dummyRule, dummyRule);
         TradingReportGenerator reportGenerator = new TradingReportGenerator(symbol, dummyStrategy);
 
-        TradingRecord tradingRecord = this.brokerProvider.getTickerTradingRecord(symbol, daysRange);
+        TradingRecord tradingRecord = brokerProvider.account().getTickerTradingRecord(symbol, daysRange);
         reportGenerator.printTradingRecords(tradingRecord);
         reportGenerator.printTradingSummary(tradingRecord, dummySeries);
 
@@ -93,7 +85,7 @@ public class GQLController {
         StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
         StrategyParameters parameters = strategyProvider.getParameters();
 
-        List<TickerQuote> quotes = this.tickerQuoteProvider.getTickerQuotes(
+        List<TickerQuote> quotes = brokerProvider.ticker().getTickerQuotes(
                 parameters.getSymbol(),
                 parameters.getQuotesRange(),
                 parameters.getQuotesInterval());
@@ -124,12 +116,11 @@ public class GQLController {
         log.info("Initializing {} strategy for {}...", name, symbol);
         final StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
         final StrategyParameters params = strategyProvider.getParameters();
-        final BarSeries series = StrategySeriesInitializer.init(tickerQuoteProvider, params);
+        final BarSeries series = StrategySeriesInitializer.init(brokerProvider, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
 
         StrategyContext context = StrategyContext.builder()
                 .broker(brokerProvider)
-                .quoteProvider(tickerQuoteProvider)
                 .parameters(params)
                 .strategy(strategy)
                 .series(series)

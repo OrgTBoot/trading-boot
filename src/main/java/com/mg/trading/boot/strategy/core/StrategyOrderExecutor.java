@@ -14,25 +14,25 @@ import java.util.List;
 
 @Log4j2
 public class StrategyOrderExecutor {
-    private final BrokerProvider brokerProvider;
+    private final BrokerProvider broker;
     private final BarSeries series;
     private final String symbol;
     private final TradingReportGenerator reporting;
 
 
     public StrategyOrderExecutor(final TradingReportGenerator reporting,
-                                 final BrokerProvider brokerProvider,
+                                 final BrokerProvider broker,
                                  final BarSeries series,
                                  final String symbol) {
         this.reporting = reporting;
-        this.brokerProvider = brokerProvider;
+        this.broker = broker;
         this.series = series;
         this.symbol = symbol;
     }
 
     public void placeBuy(BigDecimal quantity) {
-        List<Order> openOrders = this.brokerProvider.getOpenOrders(symbol);
-        List<Position> positions = this.brokerProvider.getOpenPositions(symbol);
+        List<Order> openOrders = this.broker.account().getOpenOrders(symbol);
+        List<Position> positions = this.broker.account().getOpenPositions(symbol);
 
         if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
             log.warn("Skipping BUY order placement. There are open orders[{}] or positions[{}].", openOrders.size(), positions.size());
@@ -44,7 +44,7 @@ public class StrategyOrderExecutor {
     public void placeSell() {
         cancelActiveOrders();
 
-        List<Position> openPositions = this.brokerProvider.getOpenPositions(symbol);
+        List<Position> openPositions = this.broker.account().getOpenPositions(symbol);
         openPositions.forEach(position -> {
             place(OrderAction.SELL, position.getQuantity());
         });
@@ -62,7 +62,7 @@ public class StrategyOrderExecutor {
                 .quantity(quantity)
                 .build();
 
-        this.brokerProvider.placeOrder(orderRequest);
+        this.broker.account().placeOrder(orderRequest);
         log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());
 
         printStats();
@@ -70,9 +70,9 @@ public class StrategyOrderExecutor {
 
 
     private void cancelActiveOrders() {
-        List<Order> openOrders = this.brokerProvider.getOpenOrders(symbol);
+        List<Order> openOrders = this.broker.account().getOpenOrders(symbol);
         openOrders.forEach(order -> {
-            this.brokerProvider.cancelOrder(order.getId());
+            this.broker.account().cancelOrder(order.getId());
             log.warn("Canceling active {} order for symbol {}. ID={}, BarEndTime={}",
                     order.getAction(), symbol, order.getId(), series.getLastBar().getEndTime());
         });
@@ -80,7 +80,7 @@ public class StrategyOrderExecutor {
 
     private void printStats() {
         Integer today = 1;
-        TradingRecord tradingRecord = brokerProvider.getTickerTradingRecord(symbol, today);
+        TradingRecord tradingRecord = broker.account().getTickerTradingRecord(symbol, today);
         reporting.printTradingRecords(tradingRecord);
         reporting.printTradingSummary(tradingRecord, series);
     }

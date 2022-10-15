@@ -1,5 +1,8 @@
 package com.mg.trading.boot.integrations.webull.data;
 
 public enum WbOrderComboType {
-    NORMAL
+    NORMAL,
+    MASTER,
+    STOP_PROFIT,
+    STOP_LOSS,
 }
