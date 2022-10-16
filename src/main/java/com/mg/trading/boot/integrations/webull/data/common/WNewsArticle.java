@@ -1,4 +1,4 @@
-package com.mg.trading.boot.integrations.webull.data;
+package com.mg.trading.boot.integrations.webull.data.common;
 
 import lombok.*;
 
@@ -9,7 +9,7 @@ import java.time.Instant;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class WbNewsArticle {
+public class WNewsArticle {
     private long id;
     private String title;
     private String sourceName;

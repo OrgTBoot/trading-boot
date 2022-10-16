@@ -22,7 +22,7 @@ public interface AccountProvider {
     List<Order> getOpenOrders(String symbol);
 
     @Retryable(value = Throwable.class)
-    List<Order> getOrdersHistory(String symbol, Integer daysRange);
+    List<Order> getFilledOrdersHistory(String symbol, Integer daysRange);
 
     @Retryable(value = Throwable.class)
     List<Position> getOpenPositions(String symbol);

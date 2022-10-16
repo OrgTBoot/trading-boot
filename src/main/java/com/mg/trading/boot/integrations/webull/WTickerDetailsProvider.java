@@ -4,10 +4,10 @@ import com.mg.trading.boot.analisys.SentimentAnalysisService;
 import com.mg.trading.boot.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.TickerDetailsProvider;
-import com.mg.trading.boot.integrations.webull.data.WbNewsArticle;
-import com.mg.trading.boot.integrations.webull.data.WbTicker;
-import com.mg.trading.boot.integrations.webull.data.WbTickerData;
-import com.mg.trading.boot.integrations.webull.data.WbTickerQuote;
+import com.mg.trading.boot.integrations.webull.data.common.WNewsArticle;
+import com.mg.trading.boot.integrations.webull.data.common.WTicker;
+import com.mg.trading.boot.integrations.webull.data.common.WTickerData;
+import com.mg.trading.boot.integrations.webull.data.common.WTickerQuote;
 import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.models.npl.TickerSentiment;
 import lombok.extern.log4j.Log4j2;
@@ -42,13 +42,13 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
 
     @Override
     public Ticker getTicker(String symbol) {
-        WbTicker wbTicker = this.getTickerBySymbol(symbol);
+        WTicker wTicker = this.getTickerBySymbol(symbol);
 
-        if (wbTicker == null) {
+        if (wTicker == null) {
             throw new ValidationException("Ticker not found :" + symbol);
         }
 
-        return mapToTicker(wbTicker);
+        return mapToTicker(wTicker);
     }
 
     @Override
@@ -65,9 +65,9 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 throw new RuntimeException("Unsupported interval. Consider adding it.: " + interval);
         }
 
-        ParameterizedTypeReference<List<WbTickerQuote>> type = new ParameterizedTypeReference<List<WbTickerQuote>>() {
+        ParameterizedTypeReference<List<WTickerQuote>> type = new ParameterizedTypeReference<List<WTickerQuote>>() {
         };
-        List<WbTickerQuote> wbQuotes = (List<WbTickerQuote>) get(url, type).getBody();
+        List<WTickerQuote> wbQuotes = (List<WTickerQuote>) get(url, type).getBody();
 
         List<TickerQuote> quotes = new ArrayList<>();
         if (wbQuotes != null) {
@@ -83,15 +83,15 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
 
     @Override
     public List<TickerNewsArticle> getTickerNews(String symbol, Integer daysRange) {
-        WbTicker ticker = getTickerBySymbol(symbol);
+        WTicker ticker = getTickerBySymbol(symbol);
         if (ticker == null) {
             return new ArrayList<>();
         }
 
         String url = WUrls.news(ticker.getTickerId(), 100);
-        ParameterizedTypeReference<List<WbNewsArticle>> type = new ParameterizedTypeReference<List<WbNewsArticle>>() {
+        ParameterizedTypeReference<List<WNewsArticle>> type = new ParameterizedTypeReference<List<WNewsArticle>>() {
         };
-        ResponseEntity<List<WbNewsArticle>> response = (ResponseEntity<List<WbNewsArticle>>) get(url, type);
+        ResponseEntity<List<WNewsArticle>> response = (ResponseEntity<List<WNewsArticle>>) get(url, type);
 
         return mapToNewsArticles(response.getBody()).stream()
                 .filter(it -> it.getNewsDaysAgo() <= daysRange)
@@ -106,7 +106,7 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
     }
 
 
-    private List<TickerQuote> toTickerQuotes(WbTickerQuote quotes) {
+    private List<TickerQuote> toTickerQuotes(WTickerQuote quotes) {
         return quotes.getData().stream().map(it -> {
                     String[] values = it.split(",");
                     Long timestamp = Long.parseLong(values[0]);
@@ -129,14 +129,14 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 .collect(Collectors.toList());
     }
 
-    private WbTicker getTickerBySymbol(String symbol) {
+    private WTicker getTickerBySymbol(String symbol) {
         String url = WUrls.ticker(symbol);
-        ParameterizedTypeReference<WbTickerData> type = new ParameterizedTypeReference<WbTickerData>() {
+        ParameterizedTypeReference<WTickerData> type = new ParameterizedTypeReference<WTickerData>() {
         };
-        ResponseEntity<WbTickerData> response = (ResponseEntity<WbTickerData>) get(url, type);
+        ResponseEntity<WTickerData> response = (ResponseEntity<WTickerData>) get(url, type);
 
-        List<WbTicker> data = Optional.ofNullable(response.getBody()).map(WbTickerData::getData).orElse(null);
-        final WbTicker ticker = CollectionUtils.isEmpty(data) ? null : data.get(0);
+        List<WTicker> data = Optional.ofNullable(response.getBody()).map(WTickerData::getData).orElse(null);
+        final WTicker ticker = CollectionUtils.isEmpty(data) ? null : data.get(0);
 
         if (ticker != null) {
             checkState(symbol.equalsIgnoreCase(ticker.getSymbol()), "Unexpected ticker extracted.");
@@ -144,7 +144,7 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
         return ticker;
     }
 
-    public static Ticker mapToTicker(WbTicker ticker) {
+    public static Ticker mapToTicker(WTicker ticker) {
         if (ticker == null) {
             return null;
         }
@@ -153,10 +153,11 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 .externalId(String.valueOf(ticker.getTickerId()))
                 .symbol(ticker.getSymbol())
                 .company(ticker.getName())
+                .assetType(ticker.getTemplate())
                 .build();
     }
 
-    private List<TickerNewsArticle> mapToNewsArticles(List<WbNewsArticle> articles) {
+    private List<TickerNewsArticle> mapToNewsArticles(List<WNewsArticle> articles) {
         if (CollectionUtils.isEmpty(articles)) {
             return new ArrayList<>();
         }

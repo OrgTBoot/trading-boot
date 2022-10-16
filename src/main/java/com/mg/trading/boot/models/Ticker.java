@@ -22,4 +22,5 @@ public class Ticker {
     private BigDecimal price;
     private BigDecimal change;
     private BigDecimal volume;
+    private String assetType;
 }

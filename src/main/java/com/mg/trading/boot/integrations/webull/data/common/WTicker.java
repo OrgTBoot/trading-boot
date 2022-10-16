@@ -1,4 +1,4 @@
-package com.mg.trading.boot.integrations.webull.data;
+package com.mg.trading.boot.integrations.webull.data.common;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import lombok.*;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class WbTicker {
+public class WTicker {
     private long tickerId;
     private String name;
     private String currencyCode;

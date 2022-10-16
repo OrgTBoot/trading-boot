@@ -1,4 +1,4 @@
-package com.mg.trading.boot.integrations.webull.data;
+package com.mg.trading.boot.integrations.webull.data.common;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class WbTickerData {
-    private List<WbTicker> data;
+public class WTickerData {
+    private List<WTicker> data;
     private boolean hasMore;
 }
