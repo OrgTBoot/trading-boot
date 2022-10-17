@@ -13,7 +13,7 @@ import com.mg.trading.boot.strategy.TradingStrategyExecutor;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.core.StrategySeriesInitializer;
-import com.mg.trading.boot.strategy.dema.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
 import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
@@ -62,11 +62,11 @@ public class GQLController {
         BooleanRule dummyRule = new BooleanRule(false);
         BaseBarSeries dummySeries = new BaseBarSeries();
         BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN STRATEGY (REPORTING)", dummyRule, dummyRule);
-        TradingReportGenerator reportGenerator = new TradingReportGenerator(symbol, dummyStrategy);
+        TradingReportGenerator reportGenerator = new TradingReportGenerator(symbol, dummyStrategy, dummySeries);
 
         TradingRecord tradingRecord = brokerProvider.account().getTickerTradingRecord(symbol, daysRange);
         reportGenerator.printTradingRecords(tradingRecord);
-        reportGenerator.printTradingSummary(tradingRecord, dummySeries);
+        reportGenerator.printTradingSummary(tradingRecord);
 
         return "Completed. Please see details in console.";
     }
@@ -100,9 +100,9 @@ public class GQLController {
 
         TradingRecord tradingRecord = seriesManager.run(strategy, BUY, toDecimalNum(parameters.getSharesQty()));
 
-        TradingReportGenerator reporting = new TradingReportGenerator(parameters.getSymbol(), strategy);
+        TradingReportGenerator reporting = new TradingReportGenerator(parameters.getSymbol(), strategy, series);
         reporting.printTradingRecords(tradingRecord);
-        reporting.printTradingSummary(tradingRecord, series);
+        reporting.printTradingSummary(tradingRecord);
 
         return "Completed. Please see details in console.";
     }

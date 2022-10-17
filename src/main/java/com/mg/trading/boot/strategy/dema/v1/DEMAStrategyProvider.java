@@ -1,4 +1,4 @@
-package com.mg.trading.boot.strategy.dema;
+package com.mg.trading.boot.strategy.dema.v1;
 
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
@@ -30,8 +30,8 @@ public class DEMAStrategyProvider implements StrategyProvider {
     private final DEMAParameters params;
     private Strategy strategy;
 
-    public DEMAStrategyProvider(DEMAParameters strategyContext) {
-        this.params = strategyContext;
+    public DEMAStrategyProvider(DEMAParameters params) {
+        this.params = params;
     }
 
     public DEMAStrategyProvider(String symbol, BigDecimal sharesQty) {

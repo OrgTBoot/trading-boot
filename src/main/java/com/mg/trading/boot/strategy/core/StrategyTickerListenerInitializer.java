@@ -32,7 +32,7 @@ public class StrategyTickerListenerInitializer {
     }
 
     private static Void onTickerChange(BrokerProvider brokerProvider, StrategyParameters params, Strategy strategy, BarSeries series) {
-        TradingReportGenerator reporting = new TradingReportGenerator(params.getSymbol(), strategy);
+        TradingReportGenerator reporting = new TradingReportGenerator(params.getSymbol(), strategy, series);
         StrategyOrderExecutor orderExecutor = new StrategyOrderExecutor(reporting, brokerProvider, series, params.getSymbol());
 
         int lastBarIdx = series.getEndIndex();

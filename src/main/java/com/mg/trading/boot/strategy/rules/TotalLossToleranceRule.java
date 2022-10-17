@@ -22,13 +22,12 @@ public class TotalLossToleranceRule implements Rule {
 
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
-        boolean underThreshold = true;
-
         if (tradingRecord == null) {
-            return underThreshold;
+            return true;
         }
+
         Num currentLoss = new ProfitLossPercentageCriterion().calculate(series, tradingRecord);
-        underThreshold = lossTolerance.doubleValue() <= currentLoss.doubleValue();
+        boolean underThreshold = lossTolerance.doubleValue() <= currentLoss.doubleValue();
 
         if (!underThreshold) {
             log.warn("You've reached total loss tolerance threshold. Current {}, allowed is {}. Idx={}",

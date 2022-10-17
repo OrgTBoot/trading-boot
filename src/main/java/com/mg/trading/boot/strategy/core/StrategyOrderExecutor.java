@@ -82,7 +82,7 @@ public class StrategyOrderExecutor {
         Integer today = 1;
         TradingRecord tradingRecord = broker.account().getTickerTradingRecord(symbol, today);
         reporting.printTradingRecords(tradingRecord);
-        reporting.printTradingSummary(tradingRecord, series);
+        reporting.printTradingSummary(tradingRecord);
     }
 
 }

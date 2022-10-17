@@ -2,7 +2,7 @@ package com.mg.trading.boot;
 
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
-import com.mg.trading.boot.strategy.dema.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
@@ -177,11 +177,11 @@ public class StrategyTest {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        TradingReportGenerator reporting = new TradingReportGenerator(symbol, strategy);
+        TradingReportGenerator reporting = new TradingReportGenerator(symbol, strategy, series);
         reporting.printTradingRecords(tradingRecord);
-        reporting.printTradingSummary(tradingRecord, series);
+        reporting.printTradingSummary(tradingRecord);
 
-        return reporting.getTradingStatement(tradingRecord, series);
+        return reporting.getTradingStatement(tradingRecord);
     }
 
 }

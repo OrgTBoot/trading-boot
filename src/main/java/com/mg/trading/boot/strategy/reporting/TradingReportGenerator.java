@@ -12,6 +12,7 @@ import org.ta4j.core.reports.TradingStatement;
 import org.ta4j.core.reports.TradingStatementGenerator;
 
 import java.math.BigDecimal;
+import java.time.ZonedDateTime;
 import java.util.stream.IntStream;
 
 import static com.mg.trading.boot.utils.NumberUtils.toRndBigDecimal;
@@ -20,28 +21,30 @@ import static com.mg.trading.boot.utils.NumberUtils.toRndBigDecimal;
 public class TradingReportGenerator {
     private final String symbol;
     private final Strategy strategy;
+    private final BarSeries series;
 
-    public TradingReportGenerator(String symbol, Strategy strategy) {
+    public TradingReportGenerator(String symbol, Strategy strategy, BarSeries series) {
         this.symbol = symbol;
         this.strategy = strategy;
+        this.series = series;
     }
 
-    public TradingStatement getTradingStatement(TradingRecord tradingRecord, BarSeries series) {
+    public TradingStatement getTradingStatement(TradingRecord tradingRecord) {
         return new TradingStatementGenerator().generate(strategy, tradingRecord, series);
     }
 
     public void printTradingRecords(TradingRecord tradingRecord) {
         AsciiTable table = new AsciiTable();
         table.addRule();
-        table.addRow("SYMBOL", "ENTER IDX", "EXIT IDX", "SHARES BOUGHT", "SHARES SOLD", "ENTER PRICE", "EXIT PRICE",
+        table.addRow("SYMBOL", "RANGE", "ENTER", "EXIT", "SHARES +", "SHARES -", "ENTER PRICE", "EXIT PRICE",
                 "PROFIT $", "PROFIT %").setTextAlignment(TextAlignment.CENTER);
         table.addRule();
 
         tradingRecord.getPositions().forEach(it -> {
-            AT_Row row = table.addRow(
-                    symbol,
-                    it.getEntry().getIndex(),
-                    it.getExit().getIndex(),
+            AT_Row row = table.addRow(symbol,
+                    getRange(it),
+                    getActionTime(it.getEntry().getIndex()),
+                    getActionTime(it.getExit().getIndex()),
                     toRndBigDecimal(it.getEntry().getAmount()),
                     toRndBigDecimal(it.getExit().getAmount()),
                     toRndBigDecimal(it.getEntry().getNetPrice()) + "$",
@@ -51,15 +54,26 @@ public class TradingReportGenerator {
 
 
             //align numbers to the left
-            IntStream.of(3, 4, 5, 6, 7).forEach(colIdx -> row.getCells().get(colIdx).getContext().setTextAlignment(TextAlignment.RIGHT));
+            IntStream.of(2, 3, 4, 5, 6, 7).forEach(colIdx -> row.getCells().get(colIdx).getContext().setTextAlignment(TextAlignment.RIGHT));
             table.addRule();
         });
 
         printTable(table);
     }
 
-    public void printTradingSummary(TradingRecord tradingRecord, BarSeries series) {
-        TradingStatement statement = getTradingStatement(tradingRecord, series);
+    private String getRange(Position it) {
+        return it.getEntry().getIndex() + "-" + it.getExit().getIndex();
+    }
+
+    private String getActionTime(int idx) {
+        final Bar bar = series.getBar(idx);
+        final ZonedDateTime endTime = bar.getEndTime();
+
+        return String.format("%s:%s", endTime.getHour(), endTime.getMinute());
+    }
+
+    public void printTradingSummary(TradingRecord tradingRecord) {
+        TradingStatement statement = getTradingStatement(tradingRecord);
 
         AsciiTable table = new AsciiTable();
         table.addRule();
