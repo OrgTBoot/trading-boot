@@ -1,7 +1,6 @@
 package com.mg.trading.boot.strategy.rules;
 
 import lombok.extern.log4j.Log4j2;
-import org.springframework.util.CollectionUtils;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Rule;
 import org.ta4j.core.TradingRecord;
@@ -23,19 +22,20 @@ public class TotalLossToleranceRule implements Rule {
 
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
+        boolean underThreshold = true;
+
         if (tradingRecord == null) {
-            return false;
+            return underThreshold;
         }
         Num currentLoss = new ProfitLossPercentageCriterion().calculate(series, tradingRecord);
+        underThreshold = lossTolerance.doubleValue() <= currentLoss.doubleValue();
 
-        boolean satisfied = lossTolerance.doubleValue() <= currentLoss.doubleValue();
-
-        if (!satisfied) {
+        if (!underThreshold) {
             log.warn("You've reached total loss tolerance threshold. Current {}, allowed is {}. Idx={}",
                     currentLoss.doubleValue(),
                     lossTolerance.doubleValue(),
                     index);
         }
-        return satisfied;
+        return underThreshold;
     }
 }
