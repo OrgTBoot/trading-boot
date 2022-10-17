@@ -1,7 +1,6 @@
 package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.integrations.TickerQuoteProvider;
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
 import lombok.extern.log4j.Log4j2;
@@ -14,17 +13,16 @@ import java.util.function.Supplier;
 @Log4j2
 public class StrategyTickerListenerInitializer {
 
-    public static TickerQuoteExtractor init(TickerQuoteProvider quoteProvider,
-                                            BrokerProvider brokerProvider,
+    public static TickerQuoteExtractor init(BrokerProvider broker,
                                             StrategyParameters params,
                                             Strategy strategy,
                                             BarSeries series) {
-        Supplier<List<TickerQuote>> quoteSupplier = () -> quoteProvider.getTickerQuotes(
+        Supplier<List<TickerQuote>> quoteSupplier = () -> broker.ticker().getTickerQuotes(
                 params.getSymbol(),
                 params.getQuotesRange(),
                 params.getQuotesInterval());
 
-        Supplier<Void> onChangeDecisionSupplier = () -> onTickerChange(brokerProvider, params, strategy, series);
+        Supplier<Void> onChangeDecisionSupplier = () -> onTickerChange(broker, params, strategy, series);
 
         TickerQuoteExtractor task = new TickerQuoteExtractor(quoteSupplier, onChangeDecisionSupplier, series);
         log.info("\tQuotes pull task initialized  range={}, interval={} - OK",

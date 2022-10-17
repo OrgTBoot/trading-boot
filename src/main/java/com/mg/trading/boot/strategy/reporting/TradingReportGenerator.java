@@ -33,7 +33,8 @@ public class TradingReportGenerator {
     public void printTradingRecords(TradingRecord tradingRecord) {
         AsciiTable table = new AsciiTable();
         table.addRule();
-        table.addRow("SYMBOL", "ENTER IDX", "EXIT IDX", "SHARES", "ENTER PRICE", "EXIT PRICE", "PROFIT $", "PROFIT %").setTextAlignment(TextAlignment.CENTER);
+        table.addRow("SYMBOL", "ENTER IDX", "EXIT IDX", "SHARES BOUGHT", "SHARES SOLD", "ENTER PRICE", "EXIT PRICE",
+                "PROFIT $", "PROFIT %").setTextAlignment(TextAlignment.CENTER);
         table.addRule();
 
         tradingRecord.getPositions().forEach(it -> {
@@ -42,9 +43,10 @@ public class TradingReportGenerator {
                     it.getEntry().getIndex(),
                     it.getExit().getIndex(),
                     toRndBigDecimal(it.getEntry().getAmount()),
-                    toRndBigDecimal(it.getEntry().getNetPrice()),
-                    toRndBigDecimal(it.getExit().getNetPrice()),
-                    toRndBigDecimal(it.getProfit()),
+                    toRndBigDecimal(it.getExit().getAmount()),
+                    toRndBigDecimal(it.getEntry().getNetPrice()) + "$",
+                    toRndBigDecimal(it.getExit().getNetPrice()) + "$",
+                    toRndBigDecimal(it.getProfit()) + "$",
                     getPositionProfitInPercent(it) + "%");
 
 

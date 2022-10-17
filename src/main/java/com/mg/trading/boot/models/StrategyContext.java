@@ -1,7 +1,6 @@
 package com.mg.trading.boot.models;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.integrations.TickerQuoteProvider;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,7 +13,6 @@ import org.ta4j.core.Strategy;
 @ToString
 public class StrategyContext {
     private BrokerProvider broker;
-    private TickerQuoteProvider quoteProvider;
     private BarSeries series;
     private Strategy strategy;
     private StrategyParameters parameters;

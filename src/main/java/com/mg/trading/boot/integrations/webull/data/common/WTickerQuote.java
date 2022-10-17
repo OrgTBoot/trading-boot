@@ -1,4 +1,4 @@
-package com.mg.trading.boot.integrations.webull.data;
+package com.mg.trading.boot.integrations.webull.data.common;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import java.util.List;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class WbTickerQuote {
+public class WTickerQuote {
     private String tickerId;
     private String timeZone;
     private List<String> data;

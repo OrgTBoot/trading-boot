@@ -55,7 +55,6 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         checkNotNull(context, "Strategy context should not be null");
         checkNotNull(context, "Strategy context should not be null");
         checkNotNull(context.getBroker(), "Broker should not be null");
-        checkNotNull(context.getQuoteProvider(), "Quotes provide should not be null");
         checkNotNull(context.getSeries(), "Series should not be null");
         checkState(!context.getSeries().isEmpty(), "Series should not be empty");
         checkNotNull(context.getStrategy(), "Strategy should not be null");
@@ -73,7 +72,6 @@ public class TradingStrategyExecutor implements StrategyExecutor {
 
     private TickerQuoteExtractor getQuoteListener() {
         return StrategyTickerListenerInitializer.init(
-                context.getQuoteProvider(),
                 context.getBroker(),
                 context.getParameters(),
                 context.getStrategy(),

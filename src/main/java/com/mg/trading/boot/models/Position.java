@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class Position {
     private String id;
-    private String accountId;
+//    private String accountId;
     private BigDecimal cost;
     private BigDecimal costPrice;
     private BigDecimal lastPrice;
