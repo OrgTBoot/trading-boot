@@ -3,20 +3,23 @@ package com.mg.trading.boot.integrations.webull;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.webull.data.common.*;
 import com.mg.trading.boot.integrations.webull.data.paper.WPOrderRequest;
-import com.mg.trading.boot.integrations.webull.data.paper.WTEntrustType;
 import com.mg.trading.boot.models.*;
+import com.mg.trading.boot.utils.TradingRecordUtils;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import org.ta4j.core.BaseTradingRecord;
-import org.ta4j.core.Trade;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.num.Num;
 
 import java.math.BigDecimal;
-import java.util.*;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -32,10 +35,15 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
     }
 
     protected TradingRecord getTickerTradingRecord(List<Order> orders) {
-        //todo: revisit this logic - will not work correctly for BUY, BUY, SEL scenarios
+        List<Order> aggOrders = TradingRecordUtils.aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
+
+        if (orders.size() != aggOrders.size()) {
+            log.warn("There was a need to aggregate some of the orders, was {}, became {}", orders.size(), aggOrders.size());
+        }
+
         TradingRecord tradingRecord = new BaseTradingRecord();
         AtomicInteger index = new AtomicInteger();
-        orders.forEach(order -> {
+        aggOrders.forEach(order -> {
             int idx = index.getAndIncrement();
             Num price = toDecimalNum(order.getAvgFilledPrice());
             Num qty = toDecimalNum(order.getFilledQuantity());
@@ -225,7 +233,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
 
     protected List<Order> filterBySymbolSortAsc(List<WOrder> orders, String symbol) {
         return orders.stream()
-                .filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
+                .filter(it -> StringUtils.equalsIgnoreCase(it.getTicker().getSymbol(), symbol))
                 .map(WAbstractAccountProvider::mapToOrder)
                 .sorted(Comparator.comparing(Order::getFilledTime))// sort ascending
                 .collect(Collectors.toList());
