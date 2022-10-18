@@ -14,8 +14,9 @@ import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.core.StrategySeriesInitializer;
 import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
+import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
 import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
-import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
+import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
@@ -62,7 +63,7 @@ public class GQLController {
         BooleanRule dummyRule = new BooleanRule(false);
         BaseBarSeries dummySeries = new BaseBarSeries();
         BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN STRATEGY (REPORTING)", dummyRule, dummyRule);
-        TradingReportGenerator reportGenerator = new TradingReportGenerator(symbol, dummyStrategy, dummySeries);
+        ReportGenerator reportGenerator = new ReportGenerator(symbol, dummyStrategy, dummySeries);
 
         TradingRecord tradingRecord = brokerProvider.account().getTickerTradingRecord(symbol, daysRange);
         reportGenerator.printTradingRecords(tradingRecord);
@@ -100,7 +101,7 @@ public class GQLController {
 
         TradingRecord tradingRecord = seriesManager.run(strategy, BUY, toDecimalNum(parameters.getSharesQty()));
 
-        TradingReportGenerator reporting = new TradingReportGenerator(parameters.getSymbol(), strategy, series);
+        ReportGenerator reporting = new ReportGenerator(parameters.getSymbol(), strategy, series);
         reporting.printTradingRecords(tradingRecord);
         reporting.printTradingSummary(tradingRecord);
 
@@ -155,6 +156,8 @@ public class GQLController {
                 return new EMAStrategyProvider(symbol, sharesQty);
             case DEMA:
                 return new DEMAStrategyProvider(symbol, sharesQty);
+            case DEMA_V2:
+                return new DEMAStrategyProviderV2(symbol, sharesQty);
             default:
                 throw new ValidationException("Strategy not supported");
         }

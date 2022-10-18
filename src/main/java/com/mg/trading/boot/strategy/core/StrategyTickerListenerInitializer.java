@@ -2,7 +2,7 @@ package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.models.TickerQuote;
-import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
+import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Strategy;
@@ -32,7 +32,7 @@ public class StrategyTickerListenerInitializer {
     }
 
     private static Void onTickerChange(BrokerProvider brokerProvider, StrategyParameters params, Strategy strategy, BarSeries series) {
-        TradingReportGenerator reporting = new TradingReportGenerator(params.getSymbol(), strategy, series);
+        ReportGenerator reporting = new ReportGenerator(params.getSymbol(), strategy, series);
         StrategyOrderExecutor orderExecutor = new StrategyOrderExecutor(reporting, brokerProvider, series, params.getSymbol());
 
         int lastBarIdx = series.getEndIndex();

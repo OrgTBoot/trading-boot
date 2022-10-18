@@ -3,8 +3,12 @@ package com.mg.trading.boot;
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
-import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
+import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
+import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
+import de.vandermeer.asciitable.AsciiTable;
+import de.vandermeer.asciitable.CWC_LongestLine;
+import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
@@ -15,8 +19,9 @@ import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 
-import static com.mg.trading.boot.strategy.reporting.TradingReportGenerator.*;
+import static com.mg.trading.boot.strategy.reporting.ReportGenerator.*;
 
 
 @Log4j2
@@ -110,27 +115,27 @@ public class StrategyTest {
 //        assertFirstTradingStatementBeatsSecond(dema, ema);
 //    }
 
-    /**
-     * If allowed to be traded without a total loss tolerance threshold there is a risk we can lose too much.
-     * To avoid such scenario we apply a total loss tolerance of X%, when the threashold is reached
-     * we prevent us from entering in to new position. It's a bad day/stock - STOP!!!
-     * Ex:
-     * ┌──────┬────────────────────────────────────────────┬──────────────────────────┐
-     * │SYMBOL│                   METRIC                   │          VALUE           │
-     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
-     * │SYTA  │Total return                                │-23.09% | -0.03139$       │
-     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
-     * │SYTA  │Winning positions ratio                     │0.09091                   │
-     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
-     * │SYTA  │Total positions | ↑ wins | ↓ losses | ~even │11.0 | ↑1.0 | ↓10.0 | ~0.0│
-     * └──────┴────────────────────────────────────────────┴──────────────────────────┘
-     */
-    @Test
-    public void testStrategyTotalLossTolerance() {
-        String symbol = "SYTA_loss_tolerance";
-        TradingStatement emaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol, BigDecimal.ONE));
-        Assert.assertEquals(-4.008, totalInPercent(emaStatement), 0);
-    }
+//    /**
+//     * If allowed to be traded without a total loss tolerance threshold there is a risk we can lose too much.
+//     * To avoid such scenario we apply a total loss tolerance of X%, when the threashold is reached
+//     * we prevent us from entering in to new position. It's a bad day/stock - STOP!!!
+//     * Ex:
+//     * ┌──────┬────────────────────────────────────────────┬──────────────────────────┐
+//     * │SYMBOL│                   METRIC                   │          VALUE           │
+//     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
+//     * │SYTA  │Total return                                │-23.09% | -0.03139$       │
+//     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
+//     * │SYTA  │Winning positions ratio                     │0.09091                   │
+//     * ├──────┼────────────────────────────────────────────┼──────────────────────────┤
+//     * │SYTA  │Total positions | ↑ wins | ↓ losses | ~even │11.0 | ↑1.0 | ↓10.0 | ~0.0│
+//     * └──────┴────────────────────────────────────────────┴──────────────────────────┘
+//     */
+//    @Test
+//    public void testStrategyTotalLossToleranceDEMA() {
+//        String symbol = "SYTA_loss_tolerance";
+//        TradingStatement emaStatement = testStrategy(symbol, new DEMAStrategyProvider(symbol, BigDecimal.ONE));
+//        Assert.assertEquals(-4.008, totalInPercent(emaStatement), 0);
+//    }
 
     @Test
     public void testMultipleStocks() {
@@ -146,24 +151,22 @@ public class StrategyTest {
         symbols.add("SYTA_loss_tolerance");
         symbols.add("BHG_10_11_2022");
         symbols.add("AMD_10_13_2022");
+        symbols.add("NET_10_17_2022");
+        symbols.add("REI_10_17_2022");
 
+        List<TradingStatement> statementsDEMA = new ArrayList<>();
+//        symbols.forEach(s -> {
+//            TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
+//            statementsDEMA.add(dema);
+//        });
 
-        symbols.forEach(s -> testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE)));
-    }
+        List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
+        symbols.forEach(s -> {
+            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyProviderV2(s, BigDecimal.ONE));
+            statementsDEMAv2.add(demaV2);
+        });
 
-    private static void assertFirstTradingStatementBeatsSecond(TradingStatement first, TradingStatement second) {
-        final double winningRatio1 = winningRatio(first);
-        final double totalProfitLoss1 = totalInDollars(first);
-        final double totalProfitLossPercentage1 = totalInPercent(first);
-
-        final double winningRatio2 = winningRatio(second);
-        final double totalProfitLoss2 = totalInDollars(second);
-        final double totalProfitLossPercentage2 = totalInPercent(second);
-
-        Assert.assertTrue("Profit of the first (" + totalProfitLossPercentage1 + ") < second (" + totalProfitLossPercentage2 + ")", totalProfitLossPercentage1 >= totalProfitLossPercentage2);
-        Assert.assertTrue(totalProfitLoss1 >= totalProfitLoss2);
-        Assert.assertTrue(winningRatio1 >= 0.5 || winningRatio1 == 0);
-        Assert.assertTrue("Winning ration of the first (" + winningRatio1 + ") < second (" + winningRatio2 + ")", winningRatio1 >= winningRatio2);
+        printTradingSummaries("DEMA", statementsDEMA, "DEMAv2", statementsDEMAv2);
     }
 
     private static TradingStatement testStrategy(String symbol, StrategyProvider strategyProvider) {
@@ -177,11 +180,49 @@ public class StrategyTest {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        TradingReportGenerator reporting = new TradingReportGenerator(symbol, strategy, series);
+        ReportGenerator reporting = new ReportGenerator(symbol, strategy, series);
         reporting.printTradingRecords(tradingRecord);
         reporting.printTradingSummary(tradingRecord);
 
         return reporting.getTradingStatement(tradingRecord);
     }
+
+    private static void printTradingSummaries(String name1,
+                                              List<TradingStatement> list1,
+                                              String name2,
+                                              List<TradingStatement> list2) {
+        Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
+        Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
+        Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();
+        Function<List<TradingStatement>, Double> total = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
+
+
+        AsciiTable table = new AsciiTable();
+        table.addRule();
+        table.addRow("STRATEGY", "DATA SETS", "GAIN %", "POSITIONS", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+        table.addRule();
+        table.addRow(name1, list1.size(), percent.apply(list1) + "%", positions.apply(list1), winning.apply(list1) / total.apply(list1));
+        table.addRule();
+        table.addRow(name2, list2.size(), percent.apply(list2) + "%", positions.apply(list2), winning.apply(list2) / total.apply(list2));
+        table.addRule();
+        table.getRenderer().setCWC(new CWC_LongestLine());
+        log.info("\n" + table.render());
+    }
+
+
+//    private static void assertFirstTradingStatementBeatsSecond(TradingStatement first, TradingStatement second) {
+//        final double winningRatio1 = winningRatio(first);
+//        final double totalProfitLoss1 = totalInDollars(first);
+//        final double totalProfitLossPercentage1 = totalInPercent(first);
+//
+//        final double winningRatio2 = winningRatio(second);
+//        final double totalProfitLoss2 = totalInDollars(second);
+//        final double totalProfitLossPercentage2 = totalInPercent(second);
+//
+//        Assert.assertTrue("Profit of the first (" + totalProfitLossPercentage1 + ") < second (" + totalProfitLossPercentage2 + ")", totalProfitLossPercentage1 >= totalProfitLossPercentage2);
+//        Assert.assertTrue(totalProfitLoss1 >= totalProfitLoss2);
+//        Assert.assertTrue(winningRatio1 >= 0.5 || winningRatio1 == 0);
+//        Assert.assertTrue("Winning ration of the first (" + winningRatio1 + ") < second (" + winningRatio2 + ")", winningRatio1 >= winningRatio2);
+//    }
 
 }

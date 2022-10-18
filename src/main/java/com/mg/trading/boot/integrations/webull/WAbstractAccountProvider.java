@@ -4,7 +4,7 @@ import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.webull.data.common.*;
 import com.mg.trading.boot.integrations.webull.data.paper.WPOrderRequest;
 import com.mg.trading.boot.models.*;
-import com.mg.trading.boot.utils.TradingRecordUtils;
+import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
@@ -35,7 +35,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
     }
 
     protected TradingRecord getTickerTradingRecord(List<Order> orders) {
-        List<Order> aggOrders = TradingRecordUtils.aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
+        List<Order> aggOrders = ReportGenerator.aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
 
         if (orders.size() != aggOrders.size()) {
             log.warn("There was a need to aggregate some of the orders, was {}, became {}", orders.size(), aggOrders.size());

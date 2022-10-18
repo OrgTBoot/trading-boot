@@ -8,7 +8,7 @@ import org.ta4j.core.criteria.pnl.ProfitLossPercentageCriterion;
 import org.ta4j.core.num.Num;
 
 /**
- * Rule is considered satisfied if total loss from all the trades is under the loss tolerance threshold.
+ * Rule is considered satisfied if total loss is under predefined threshold.
  */
 @Log4j2
 public class TotalLossToleranceRule implements Rule {

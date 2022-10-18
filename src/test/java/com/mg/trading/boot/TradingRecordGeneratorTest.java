@@ -4,7 +4,7 @@ import com.mg.trading.boot.models.Order;
 import com.mg.trading.boot.models.OrderAction;
 import com.mg.trading.boot.models.OrderStatus;
 import com.mg.trading.boot.models.OrderType;
-import com.mg.trading.boot.utils.TradingRecordUtils;
+import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;
@@ -51,7 +51,7 @@ public class TradingRecordGeneratorTest {
                 .status(OrderStatus.FILLED)
                 .build());
 
-        List<Order> aggOrders = TradingRecordUtils.aggregateOrders(originalOrders);
+        List<Order> aggOrders = ReportGenerator.aggregateOrders(originalOrders);
         Assert.assertEquals(2, aggOrders.size());
         //agg buy record
         Assert.assertEquals("1_agg_2", aggOrders.get(0).getId());

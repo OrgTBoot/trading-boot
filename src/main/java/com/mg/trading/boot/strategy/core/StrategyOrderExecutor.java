@@ -2,7 +2,7 @@ package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.models.*;
-import com.mg.trading.boot.strategy.reporting.TradingReportGenerator;
+import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
@@ -17,10 +17,10 @@ public class StrategyOrderExecutor {
     private final BrokerProvider broker;
     private final BarSeries series;
     private final String symbol;
-    private final TradingReportGenerator reporting;
+    private final ReportGenerator reporting;
 
 
-    public StrategyOrderExecutor(final TradingReportGenerator reporting,
+    public StrategyOrderExecutor(final ReportGenerator reporting,
                                  final BrokerProvider broker,
                                  final BarSeries series,
                                  final String symbol) {
