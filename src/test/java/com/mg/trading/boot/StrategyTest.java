@@ -155,10 +155,10 @@ public class StrategyTest {
         symbols.add("REI_10_17_2022");
 
         List<TradingStatement> statementsDEMA = new ArrayList<>();
-//        symbols.forEach(s -> {
-//            TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
-//            statementsDEMA.add(dema);
-//        });
+        symbols.forEach(s -> {
+            TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
+            statementsDEMA.add(dema);
+        });
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
         symbols.forEach(s -> {
