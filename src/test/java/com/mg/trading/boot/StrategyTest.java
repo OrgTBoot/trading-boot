@@ -4,6 +4,7 @@ import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
+import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
 import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import de.vandermeer.asciitable.AsciiTable;
@@ -154,6 +155,13 @@ public class StrategyTest {
         symbols.add("NET_10_17_2022");
         symbols.add("REI_10_17_2022");
 
+
+        List<TradingStatement> statementsEMA = new ArrayList<>();
+        symbols.forEach(s -> {
+            TradingStatement ema = testStrategy(s, new EMAStrategyProvider(s, BigDecimal.ONE));
+            statementsEMA.add(ema);
+        });
+
         List<TradingStatement> statementsDEMA = new ArrayList<>();
         symbols.forEach(s -> {
             TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
@@ -166,7 +174,7 @@ public class StrategyTest {
             statementsDEMAv2.add(demaV2);
         });
 
-        printTradingSummaries("DEMA", statementsDEMA, "DEMAv2", statementsDEMAv2);
+        printTradingSummaries("EMA", statementsEMA, "DEMA", statementsDEMA, "DEMAv2", statementsDEMAv2);
     }
 
     private static TradingStatement testStrategy(String symbol, StrategyProvider strategyProvider) {
@@ -190,7 +198,9 @@ public class StrategyTest {
     private static void printTradingSummaries(String name1,
                                               List<TradingStatement> list1,
                                               String name2,
-                                              List<TradingStatement> list2) {
+                                              List<TradingStatement> list2,
+                                              String name3,
+                                              List<TradingStatement> list3) {
         Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
         Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
         Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();
@@ -204,6 +214,8 @@ public class StrategyTest {
         table.addRow(name1, list1.size(), percent.apply(list1) + "%", positions.apply(list1), winning.apply(list1) / total.apply(list1));
         table.addRule();
         table.addRow(name2, list2.size(), percent.apply(list2) + "%", positions.apply(list2), winning.apply(list2) / total.apply(list2));
+        table.addRule();
+        table.addRow(name3, list3.size(), percent.apply(list3) + "%", positions.apply(list3), winning.apply(list3) / total.apply(list3));
         table.addRule();
         table.getRenderer().setCWC(new CWC_LongestLine());
         log.info("\n" + table.render());
