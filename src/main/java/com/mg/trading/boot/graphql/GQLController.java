@@ -8,6 +8,7 @@ import com.mg.trading.boot.integrations.ScreenerProvider;
 import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.models.TradingLog;
 import com.mg.trading.boot.strategy.StrategyExecutor;
 import com.mg.trading.boot.strategy.TradingStrategyExecutor;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
@@ -26,7 +27,6 @@ import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.*;
-import org.ta4j.core.rules.BooleanRule;
 
 import java.math.BigDecimal;
 import java.time.Duration;
@@ -60,14 +60,9 @@ public class GQLController {
     public String fetchTradingRecords(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
                                       @GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
 
-        BooleanRule dummyRule = new BooleanRule(false);
-        BaseBarSeries dummySeries = new BaseBarSeries();
-        BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN STRATEGY (REPORTING)", dummyRule, dummyRule);
-        ReportGenerator reportGenerator = new ReportGenerator(symbol, dummyStrategy, dummySeries);
-
-        TradingRecord tradingRecord = brokerProvider.account().getTickerTradingRecord(symbol, daysRange);
-        reportGenerator.printTradingRecords(tradingRecord);
-        reportGenerator.printTradingSummary(tradingRecord);
+        TradingLog tradingLog = brokerProvider.account().getTradingLog(symbol, daysRange);
+        ReportGenerator.printTradingRecords(tradingLog);
+        ReportGenerator.printTradingSummary(tradingLog);
 
         return "Completed. Please see details in console.";
     }
@@ -101,10 +96,8 @@ public class GQLController {
 
         TradingRecord tradingRecord = seriesManager.run(strategy, BUY, toDecimalNum(parameters.getSharesQty()));
 
-        ReportGenerator reporting = new ReportGenerator(parameters.getSymbol(), strategy, series);
-        reporting.printTradingRecords(tradingRecord);
-        reporting.printTradingSummary(tradingRecord);
-
+        ReportGenerator.printTradingRecords(tradingRecord, symbol);
+        ReportGenerator.printTradingSummary(tradingRecord, symbol);
         return "Completed. Please see details in console.";
     }
 

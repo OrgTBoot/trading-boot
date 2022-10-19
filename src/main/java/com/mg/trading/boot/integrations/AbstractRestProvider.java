@@ -51,11 +51,6 @@ public abstract class AbstractRestProvider {
             throw new RuntimeException("Unexpected status code on order placement: " + response.getStatusCode());
         }
 
-        if (response.getBody() == null) {
-            log.error("Remote service error, response body is null");
-            throw new RuntimeException("Unexpected response body: " + response.getBody());
-        }
-
         return response;
     }
 

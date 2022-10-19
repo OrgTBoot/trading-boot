@@ -69,7 +69,7 @@ public class DEMAStrategyProviderV2 implements StrategyProvider {
         //EXIT RULES
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bandFacade.upper());
         Rule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
-        Rule hasProfit = new StopGainRule(closePrice, 0.3);
+        Rule hasProfit = new StopGainRule(closePrice, 0.3); //todo: this is not working when strategy is restarted
         Rule superTrendSell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, params.getShortBarCount()));
 
         Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);

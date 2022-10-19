@@ -188,11 +188,10 @@ public class StrategyTest {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
-        ReportGenerator reporting = new ReportGenerator(symbol, strategy, series);
-        reporting.printTradingRecords(tradingRecord);
-        reporting.printTradingSummary(tradingRecord);
+        ReportGenerator.printTradingRecords(tradingRecord, symbol);
+        ReportGenerator.printTradingSummary(tradingRecord, symbol);
 
-        return reporting.getTradingStatement(tradingRecord);
+        return ReportGenerator.buildTradingStatement(tradingRecord);
     }
 
     private static void printTradingSummaries(String name1,

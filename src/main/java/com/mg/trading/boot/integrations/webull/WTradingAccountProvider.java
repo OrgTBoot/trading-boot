@@ -109,11 +109,14 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
     }
 
     @Override
-    public TradingRecord getTickerTradingRecord(String symbol, Integer daysRange) {
-        List<Order> orders = getFilledOrdersHistory(symbol, daysRange);
-        log.debug("Extracted {} historical orders", orders.size());
-
-        return super.getTickerTradingRecord(orders);
+    public TradingLog getTradingLog(String symbol, Integer daysRange) {
+        return TradingLog.builder()
+                .symbol(symbol)
+                .daysRange(daysRange)
+                .filledOrders(getFilledOrdersHistory(symbol, daysRange))
+                .openOrders(getOpenOrders(symbol))
+                .positions(getOpenPositions(symbol))
+                .build();
     }
 
     @Override

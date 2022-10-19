@@ -4,53 +4,28 @@ import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.webull.data.common.*;
 import com.mg.trading.boot.integrations.webull.data.paper.WPOrderRequest;
 import com.mg.trading.boot.models.*;
-import com.mg.trading.boot.strategy.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
-import org.ta4j.core.BaseTradingRecord;
-import org.ta4j.core.TradingRecord;
-import org.ta4j.core.num.Num;
 
 import java.math.BigDecimal;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.integrations.webull.WTickerDetailsProvider.mapToTicker;
 import static com.mg.trading.boot.utils.NumberUtils.toBigDecimal;
-import static com.mg.trading.boot.utils.NumberUtils.toDecimalNum;
 
 @Log4j2
 public abstract class WAbstractAccountProvider extends AbstractRestProvider {
 
     public WAbstractAccountProvider(RestTemplate restTemplate) {
         super(restTemplate);
-    }
-
-    protected TradingRecord getTickerTradingRecord(List<Order> orders) {
-        List<Order> aggOrders = ReportGenerator.aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
-
-        if (orders.size() != aggOrders.size()) {
-            log.warn("There was a need to aggregate some of the orders, was {}, became {}", orders.size(), aggOrders.size());
-        }
-
-        TradingRecord tradingRecord = new BaseTradingRecord();
-        AtomicInteger index = new AtomicInteger();
-        aggOrders.forEach(order -> {
-            int idx = index.getAndIncrement();
-            Num price = toDecimalNum(order.getAvgFilledPrice());
-            Num qty = toDecimalNum(order.getFilledQuantity());
-
-            tradingRecord.operate(idx, price, qty);
-        });
-        return tradingRecord;
     }
 
     public void placeOrder(Ticker ticker, OrderRequest orderRequest, String url) {
@@ -89,6 +64,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
     protected static Order mapToOrder(WOrder wOrder) {
         WOrderStatus wStatus = Optional.ofNullable(wOrder.getStatus()).orElse(wOrder.getStatusCode());
         String limitPrice = Optional.ofNullable(wOrder.getLmtPrice()).orElse(wOrder.getAvgFilledPrice());
+        BigDecimal avgFilledPrice = toBigDecimal(Optional.ofNullable(wOrder.getAvgFilledPrice()).orElse("0"));
 
         return Order.builder()
                 .id(String.valueOf(wOrder.getOrderId()))
@@ -99,7 +75,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
                 .filledTime(wOrder.getFilledTime0())
                 .placedTime(wOrder.getPlacedTime())
                 .lmtPrice(toBigDecimal(limitPrice))
-                .avgFilledPrice(toBigDecimal(wOrder.getAvgFilledPrice()))
+                .avgFilledPrice(avgFilledPrice)
                 .filledQuantity(toBigDecimal(wOrder.getFilledQuantity()))
                 .totalQuantity(toBigDecimal(wOrder.getTotalQuantity()))
                 .ticker(mapToTicker(wOrder.getTicker()))
@@ -141,6 +117,8 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
             return null;
         }
         switch (status) {
+            case PendingCancel:
+                return OrderStatus.PENDING_CANCEL;
             case Cancelled:
                 return OrderStatus.CANCELED;
             case Working:

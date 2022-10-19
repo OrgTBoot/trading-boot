@@ -19,8 +19,9 @@ public class WOrder {
     private WOrderType orderType;
     private String lmtPrice;
     private String avgFilledPrice;
-    private Instant createTime0;
-    private Instant filledTime0;
+    private Long createTime0;
+    private Long filledTime0;
+    private String filledTime;
     private WOrderStatus status;
     private WOrderStatus statusCode;
     private WTicker ticker;

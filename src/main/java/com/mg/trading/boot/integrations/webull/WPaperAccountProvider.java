@@ -13,7 +13,6 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.ta4j.core.TradingRecord;
 
 import java.time.Instant;
 import java.time.ZonedDateTime;
@@ -86,9 +85,14 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
     }
 
     @Override
-    public TradingRecord getTickerTradingRecord(String symbol, Integer daysRange) {
-        List<Order> orders = getFilledOrdersHistory(symbol, daysRange);
-        return super.getTickerTradingRecord(orders);
+    public TradingLog getTradingLog(String symbol, Integer daysRange) {
+        return TradingLog.builder()
+                .symbol(symbol)
+                .daysRange(daysRange)
+                .filledOrders(getFilledOrdersHistory(symbol, daysRange))
+                .openOrders(getOpenOrders(symbol))
+                .positions(getOpenPositions(symbol))
+                .build();
     }
 
     @Override

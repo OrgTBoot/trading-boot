@@ -1,5 +1,6 @@
 package com.mg.trading.boot.strategy.core;
 
+import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.models.*;
 import com.mg.trading.boot.strategy.reporting.ReportGenerator;
@@ -7,24 +8,20 @@ import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
-import org.ta4j.core.TradingRecord;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Log4j2
 public class StrategyOrderExecutor {
     private final BrokerProvider broker;
     private final BarSeries series;
     private final String symbol;
-    private final ReportGenerator reporting;
 
-
-    public StrategyOrderExecutor(final ReportGenerator reporting,
-                                 final BrokerProvider broker,
+    public StrategyOrderExecutor(final BrokerProvider broker,
                                  final BarSeries series,
                                  final String symbol) {
-        this.reporting = reporting;
         this.broker = broker;
         this.series = series;
         this.symbol = symbol;
@@ -35,19 +32,25 @@ public class StrategyOrderExecutor {
         List<Position> positions = this.broker.account().getOpenPositions(symbol);
 
         if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
-            log.warn("Skipping BUY order placement. There are open orders[{}] or positions[{}].", openOrders.size(), positions.size());
+            log.warn("Skipping {} BUY order placement. There are open orders[{}] or positions[{}].",
+                    symbol, openOrders.size(), positions.size());
             return;
         }
         place(OrderAction.BUY, quantity);
     }
 
     public void placeSell() {
-        cancelActiveOrders();
+        AccountProvider account = this.broker.account();
+        List<Position> openPositions = account.getOpenPositions(symbol);
+        List<String> symbolsInSell = account.getOpenOrders(symbol).stream()
+                .filter(it -> OrderAction.SELL.equals(it.getAction())).map(it -> it.getTicker().getSymbol())
+                .collect(Collectors.toList());
 
-        List<Position> openPositions = this.broker.account().getOpenPositions(symbol);
-        openPositions.forEach(position -> {
-            place(OrderAction.SELL, position.getQuantity());
-        });
+        List<Position> positionsToClose = openPositions.stream()
+                .filter(it -> !symbolsInSell.contains(it.getTicker().getSymbol()))
+                .collect(Collectors.toList());
+
+        positionsToClose.forEach(position -> place(OrderAction.SELL, position.getQuantity()));
     }
 
     private void place(OrderAction action, BigDecimal quantity) {
@@ -69,7 +72,7 @@ public class StrategyOrderExecutor {
     }
 
 
-    private void cancelActiveOrders() {
+    private void cancelActiveBuyOrders() {
         List<Order> openOrders = this.broker.account().getOpenOrders(symbol);
         openOrders.forEach(order -> {
             this.broker.account().cancelOrder(order.getId());
@@ -80,9 +83,9 @@ public class StrategyOrderExecutor {
 
     private void printStats() {
         Integer today = 1;
-        TradingRecord tradingRecord = broker.account().getTickerTradingRecord(symbol, today);
-        reporting.printTradingRecords(tradingRecord);
-        reporting.printTradingSummary(tradingRecord);
+        TradingLog tradingLog = broker.account().getTradingLog(symbol, today);
+        ReportGenerator.printTradingRecords(tradingLog);
+        ReportGenerator.printTradingSummary(tradingLog);
     }
 
 }

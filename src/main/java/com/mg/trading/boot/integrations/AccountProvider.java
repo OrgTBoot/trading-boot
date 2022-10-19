@@ -1,11 +1,7 @@
 package com.mg.trading.boot.integrations;
 
-import com.mg.trading.boot.models.Account;
-import com.mg.trading.boot.models.Order;
-import com.mg.trading.boot.models.OrderRequest;
-import com.mg.trading.boot.models.Position;
+import com.mg.trading.boot.models.*;
 import org.springframework.retry.annotation.Retryable;
-import org.ta4j.core.TradingRecord;
 
 import java.util.List;
 
@@ -31,7 +27,7 @@ public interface AccountProvider {
     List<Position> getOpenPositions();
 
     @Retryable(value = Throwable.class)
-    TradingRecord getTickerTradingRecord(String symbol, Integer daysRange);
+    TradingLog getTradingLog(String symbol, Integer daysRange);
 
     void placeOrder(OrderRequest orderRequest);
 

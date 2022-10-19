@@ -28,7 +28,7 @@ public abstract class WUrls {
 
     public static String quotesByMinute(String tickerId, Range range) {
         String period = range.unit + range.value;
-        return String.format("%s/api/quote/charts/queryMinutes?tickerIds=%s&period=%s", quotesBase, tickerId, period);
+        return String.format("%s/api/quote/charts/queryMinutes?tickerIds=%s&period=%s&extendTrading=1", quotesBase, tickerId, period);
     }
 
     //------------Paper Trading---------------

@@ -1,6 +1,8 @@
 package com.mg.trading.boot.strategy.reporting;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.mg.trading.boot.models.Order;
+import com.mg.trading.boot.models.TradingLog;
 import de.vandermeer.asciitable.AT_Row;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
@@ -12,44 +14,37 @@ import org.ta4j.core.criteria.pnl.ProfitLossPercentageCriterion;
 import org.ta4j.core.num.Num;
 import org.ta4j.core.reports.TradingStatement;
 import org.ta4j.core.reports.TradingStatementGenerator;
+import org.ta4j.core.rules.BooleanRule;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
+import static com.mg.trading.boot.utils.NumberUtils.toDecimalNum;
 import static com.mg.trading.boot.utils.NumberUtils.toRndBigDecimal;
 
 @Log4j2
 public class ReportGenerator {
-    private final String symbol;
-    private final Strategy strategy;
-    private final BarSeries series;
 
-    public ReportGenerator(String symbol, Strategy strategy, BarSeries series) {
-        this.symbol = symbol;
-        this.strategy = strategy;
-        this.series = series;
+    public static void printTradingRecords(TradingLog tradingLog) {
+        log.info("Trading records for the last {} day(s)", tradingLog.getDaysRange());
+        TradingRecord tradingRecord = buildTradingRecord(tradingLog.getFilledOrders());
+        printTradingRecords(tradingRecord, tradingLog.getSymbol());
     }
 
-    public TradingStatement getTradingStatement(TradingRecord tradingRecord) {
-        return new TradingStatementGenerator().generate(strategy, tradingRecord, series);
-    }
-
-    public void printTradingRecords(TradingRecord tradingRecord) {
+    public static void printTradingRecords(TradingRecord tradingRecord, String symbol) {
         AsciiTable table = new AsciiTable();
         table.addRule();
-        table.addRow("SYMBOL", "RANGE", "ENTER", "EXIT", "SHARES +", "SHARES -", "ENTER PRICE", "EXIT PRICE",
-                "PROFIT $", "PROFIT %").setTextAlignment(TextAlignment.CENTER);
+        table.addRow("SYMBOL", "ENTER", "EXIT", "SHARES +", "SHARES -", "ENTER PRICE", "EXIT PRICE", "PROFIT $", "PROFIT %").setTextAlignment(TextAlignment.CENTER);
         table.addRule();
 
         tradingRecord.getPositions().forEach(it -> {
             AT_Row row = table.addRow(symbol,
-                    getRange(it),
-                    getActionTime(it.getEntry().getIndex()),
-                    getActionTime(it.getExit().getIndex()),
+                    it.getEntry().getIndex(),
+                    it.getExit().getIndex(),
                     toRndBigDecimal(it.getEntry().getAmount()),
                     toRndBigDecimal(it.getExit().getAmount()),
                     toRndBigDecimal(it.getEntry().getNetPrice()) + "$",
@@ -59,15 +54,25 @@ public class ReportGenerator {
 
 
             //align numbers to the left
-            IntStream.of(2, 3, 4, 5, 6, 7).forEach(colIdx -> row.getCells().get(colIdx).getContext().setTextAlignment(TextAlignment.RIGHT));
+            IntStream.of(3, 4, 5, 6, 7, 8).forEach(colIdx -> row.getCells().get(colIdx).getContext().setTextAlignment(TextAlignment.RIGHT));
             table.addRule();
         });
-
         printTable(table);
     }
 
-    public void printTradingSummary(TradingRecord tradingRecord) {
-        TradingStatement statement = getTradingStatement(tradingRecord);
+    public static void printTradingSummary(TradingLog tradingLog) {
+        log.info("Trading summary for the last {} day(s)", tradingLog.getDaysRange());
+        TradingRecord tradingRecord = buildTradingRecord(tradingLog.getFilledOrders());
+        TradingStatement statement = buildTradingStatement(tradingRecord);
+        printTradingSummary(statement, tradingLog.getSymbol());
+    }
+
+    public static void printTradingSummary(TradingRecord tradingRecord, String symbol) {
+        TradingStatement statement = buildTradingStatement(tradingRecord);
+        printTradingSummary(statement, symbol);
+    }
+
+    public static void printTradingSummary(TradingStatement statement, String symbol) {
 
         AsciiTable table = new AsciiTable();
         table.addRule();
@@ -82,6 +87,7 @@ public class ReportGenerator {
 
         printTable(table);
     }
+
 
     public static Double winningRatio(TradingStatement statement) {
         final Num profitCount = statement.getPositionStatsReport().getProfitCount();
@@ -127,6 +133,7 @@ public class ReportGenerator {
      * @param orders - orders for aggregation
      * @return - aggregated list of orders
      */
+    @VisibleForTesting
     public static List<Order> aggregateOrders(List<Order> orders) {
         List<Order> aggRecords = new ArrayList<>();
 
@@ -169,9 +176,28 @@ public class ReportGenerator {
     //-------------Private Methods----------------------------
     //--------------------------------------------------------
 
-    private void printTable(AsciiTable table) {
+    private static TradingRecord buildTradingRecord(List<Order> orders) {
+        List<Order> aggOrders = aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
+
+        if (orders.size() != aggOrders.size()) {
+            log.warn("There was a need to aggregate some of the orders, was {}, became {}", orders.size(), aggOrders.size());
+        }
+
+        TradingRecord tradingRecord = new BaseTradingRecord();
+        AtomicInteger index = new AtomicInteger();
+        aggOrders.forEach(order -> {
+            int idx = index.getAndIncrement();
+            Num price = toDecimalNum(order.getAvgFilledPrice());
+            Num qty = toDecimalNum(order.getFilledQuantity());
+
+            tradingRecord.operate(idx, price, qty);
+        });
+        return tradingRecord;
+    }
+
+    private static void printTable(AsciiTable table) {
         table.getRenderer().setCWC(new CWC_LongestLine());
-        log.info("\nSTRATEGY: " + strategy.getName() + "\n" + table.render());
+        log.info("\n" + table.render());
     }
 
     private static BigDecimal getPositionProfitInPercent(Position position) {
@@ -179,14 +205,31 @@ public class ReportGenerator {
         return toRndBigDecimal(percent);
     }
 
-    private String getRange(Position it) {
-        return it.getEntry().getIndex() + "-" + it.getExit().getIndex();
+//    private String getRange(Position it) {
+//        return it.getEntry().getIndex() + "-" + it.getExit().getIndex();
+//    }
+
+//    private String getActionTime(int idx) {
+//        final Bar bar = series.getBar(idx);
+//        final ZonedDateTime endTime = bar.getEndTime();
+//
+//        return String.format("%s:%s", endTime.getHour(), endTime.getMinute());
+//    }
+
+
+//    private static String actionTime(Order order) {
+//        ZonedDateTime time = Instant.ofEpochSecond(order.getFilledTime()).atZone(BarSeriesUtils.getDefaultZone());
+//
+//        return String.format("%s %s:%s", order.getAction(), time.getHour(), time.getMinute());
+//    }
+
+    @VisibleForTesting
+    public static TradingStatement buildTradingStatement(TradingRecord tradingRecord) {
+        BooleanRule dummyRule = new BooleanRule(false);
+        BaseBarSeries dummySeries = new BaseBarSeries();
+        BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN (REPORTING)", dummyRule, dummyRule);
+        return new TradingStatementGenerator().generate(dummyStrategy, tradingRecord, dummySeries);
     }
 
-    private String getActionTime(int idx) {
-        final Bar bar = series.getBar(idx);
-        final ZonedDateTime endTime = bar.getEndTime();
 
-        return String.format("%s:%s", endTime.getHour(), endTime.getMinute());
-    }
 }

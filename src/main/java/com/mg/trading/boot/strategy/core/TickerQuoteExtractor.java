@@ -36,15 +36,17 @@ public class TickerQuoteExtractor implements Runnable {
                 if (shouldReplace(series, quote)) {
                     BarSeriesUtils.addBar(series, quote, duration, Boolean.TRUE);
                     log.info("Replaced Quote : {}", quote);
-                    this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
+//                    this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
 
                 } else if (shouldAdd(series, quote)) {
                     BarSeriesUtils.addBar(series, quote, duration, Boolean.FALSE);
                     log.info("Added Quote : {}", quote);
-                    this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
+//                    this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
 
                 }
             }
+            this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
+
         } catch (Throwable e) {
             log.error("Error in quote processing: " + e.getMessage(), e);
         }
