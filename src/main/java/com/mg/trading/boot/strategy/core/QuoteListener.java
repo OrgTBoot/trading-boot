@@ -11,15 +11,15 @@ import java.util.List;
 import java.util.function.Supplier;
 
 @Log4j2
-public class TickerQuoteExtractor implements Runnable {
+public class QuoteListener implements Runnable {
 
     private final Supplier<List<TickerQuote>> quotesSupplier;
     private final Supplier<Void> onChangeDecisionSupplier;
     private final BarSeries series;
 
-    public TickerQuoteExtractor(final Supplier<List<TickerQuote>> quotesSupplier,
-                                final Supplier<Void> onChangeDecisionSupplier,
-                                final BarSeries series) {
+    public QuoteListener(final Supplier<List<TickerQuote>> quotesSupplier,
+                         final Supplier<Void> onChangeDecisionSupplier,
+                         final BarSeries series) {
         this.quotesSupplier = quotesSupplier;
         this.onChangeDecisionSupplier = onChangeDecisionSupplier;
         this.series = series;

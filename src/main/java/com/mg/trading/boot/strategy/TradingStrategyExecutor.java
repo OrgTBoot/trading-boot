@@ -2,7 +2,7 @@ package com.mg.trading.boot.strategy;
 
 import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.strategy.core.StrategyTickerListenerInitializer;
-import com.mg.trading.boot.strategy.core.TickerQuoteExtractor;
+import com.mg.trading.boot.strategy.core.QuoteListener;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.concurrent.Executors;
@@ -31,7 +31,7 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         log.info("\tParameters: {}", context.getParameters());
 
         Integer frequency = context.getParameters().getQuotesPullFrequencyInSec();
-        TickerQuoteExtractor listener = getQuoteListener();
+        QuoteListener listener = getQuoteListener();
 
         executor.scheduleAtFixedRate(listener, 0, frequency, TimeUnit.SECONDS);
         log.info("\tStrategy {} is running...", context.getStrategy().getName());
@@ -70,7 +70,7 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         checkNotNull(context.getParameters().getQuotesPullFrequencyInSec(), "Parameters pull frequency should not be null");
     }
 
-    private TickerQuoteExtractor getQuoteListener() {
+    private QuoteListener getQuoteListener() {
         return StrategyTickerListenerInitializer.init(
                 context.getBroker(),
                 context.getParameters(),

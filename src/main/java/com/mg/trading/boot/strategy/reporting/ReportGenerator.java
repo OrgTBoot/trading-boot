@@ -1,6 +1,5 @@
 package com.mg.trading.boot.strategy.reporting;
 
-import com.google.common.annotations.VisibleForTesting;
 import com.mg.trading.boot.models.Order;
 import com.mg.trading.boot.models.TradingLog;
 import de.vandermeer.asciitable.AT_Row;
@@ -88,44 +87,6 @@ public class ReportGenerator {
         printTable(table);
     }
 
-
-    public static Double winningRatio(TradingStatement statement) {
-        final Num profitCount = statement.getPositionStatsReport().getProfitCount();
-        final Num evenCount = statement.getPositionStatsReport().getBreakEvenCount();
-        final Num lossCount = statement.getPositionStatsReport().getLossCount();
-
-        final Num totalCount = profitCount.plus(lossCount).plus(evenCount);
-        if (totalCount == null) {
-            return 0D;
-        }
-        final Num ratio = profitCount.dividedBy(totalCount);
-        return toRndBigDecimal(ratio).doubleValue();
-    }
-
-    public static Double winPositionsCount(TradingStatement statement) {
-        return statement.getPositionStatsReport().getProfitCount().doubleValue();
-    }
-
-    public static Double totalPositionsCount(TradingStatement statement) {
-        return winPositionsCount(statement) + lossPositionsCount(statement) + breakEvenPositionsCount(statement);
-    }
-
-    public static Double lossPositionsCount(TradingStatement statement) {
-        return statement.getPositionStatsReport().getLossCount().doubleValue();
-    }
-
-    public static Double breakEvenPositionsCount(TradingStatement statement) {
-        return statement.getPositionStatsReport().getBreakEvenCount().doubleValue();
-    }
-
-    public static Double totalInPercent(TradingStatement statement) {
-        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLossPercentage()).doubleValue();
-    }
-
-    public static Double totalInDollars(TradingStatement statement) {
-        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLoss()).doubleValue();
-    }
-
     /**
      * Aggregates orders that have more than one same consecutive action.
      * For example a list of orders [BUY, BUY, SELL, BUY] will result in an aggregated list [BUY, SELL, BUY]
@@ -133,7 +94,6 @@ public class ReportGenerator {
      * @param orders - orders for aggregation
      * @return - aggregated list of orders
      */
-    @VisibleForTesting
     public static List<Order> aggregateOrders(List<Order> orders) {
         List<Order> aggRecords = new ArrayList<>();
 
@@ -172,11 +132,14 @@ public class ReportGenerator {
         return aggRecords;
     }
 
-    //--------------------------------------------------------
-    //-------------Private Methods----------------------------
-    //--------------------------------------------------------
+    public static TradingStatement buildTradingStatement(TradingRecord tradingRecord) {
+        BooleanRule dummyRule = new BooleanRule(false);
+        BaseBarSeries dummySeries = new BaseBarSeries();
+        BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN (REPORTING)", dummyRule, dummyRule);
+        return new TradingStatementGenerator().generate(dummyStrategy, tradingRecord, dummySeries);
+    }
 
-    private static TradingRecord buildTradingRecord(List<Order> orders) {
+    public static TradingRecord buildTradingRecord(List<Order> orders) {
         List<Order> aggOrders = aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
 
         if (orders.size() != aggOrders.size()) {
@@ -194,6 +157,48 @@ public class ReportGenerator {
         });
         return tradingRecord;
     }
+
+
+    public static Double winningRatio(TradingStatement statement) {
+        final Num profitCount = statement.getPositionStatsReport().getProfitCount();
+        final Num evenCount = statement.getPositionStatsReport().getBreakEvenCount();
+        final Num lossCount = statement.getPositionStatsReport().getLossCount();
+
+        final Num totalCount = profitCount.plus(lossCount).plus(evenCount);
+        if (totalCount == null) {
+            return 0D;
+        }
+        final Num ratio = profitCount.dividedBy(totalCount);
+        return toRndBigDecimal(ratio).doubleValue();
+    }
+
+    public static Double winPositionsCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getProfitCount().doubleValue();
+    }
+
+    public static Double totalPositionsCount(TradingStatement statement) {
+        return winPositionsCount(statement) + lossPositionsCount(statement) + breakEvenPositionsCount(statement);
+    }
+
+    public static Double lossPositionsCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getLossCount().doubleValue();
+    }
+
+    public static Double breakEvenPositionsCount(TradingStatement statement) {
+        return statement.getPositionStatsReport().getBreakEvenCount().doubleValue();
+    }
+
+    public static Double totalInPercent(TradingStatement statement) {
+        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLossPercentage()).doubleValue();
+    }
+
+    public static Double totalInDollars(TradingStatement statement) {
+        return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLoss()).doubleValue();
+    }
+
+    //--------------------------------------------------------
+    //-------------Private Methods----------------------------
+    //--------------------------------------------------------
 
     private static void printTable(AsciiTable table) {
         table.getRenderer().setCWC(new CWC_LongestLine());
@@ -222,14 +227,6 @@ public class ReportGenerator {
 //
 //        return String.format("%s %s:%s", order.getAction(), time.getHour(), time.getMinute());
 //    }
-
-    @VisibleForTesting
-    public static TradingStatement buildTradingStatement(TradingRecord tradingRecord) {
-        BooleanRule dummyRule = new BooleanRule(false);
-        BaseBarSeries dummySeries = new BaseBarSeries();
-        BaseStrategy dummyStrategy = new BaseStrategy("UNKNOWN (REPORTING)", dummyRule, dummyRule);
-        return new TradingStatementGenerator().generate(dummyStrategy, tradingRecord, dummySeries);
-    }
 
 
 }

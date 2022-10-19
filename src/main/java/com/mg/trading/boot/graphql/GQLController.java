@@ -40,19 +40,19 @@ import static org.ta4j.core.Trade.TradeType.BUY;
 @Service
 @GraphQLApi
 public class GQLController {
-    private final BrokerProvider brokerProvider;
-    private final ScreenerProvider screeningProvider;
+    private final BrokerProvider broker;
+    private final ScreenerProvider screener;
 
 
-    public GQLController(final BrokerProvider brokerProvider,
-                         final ScreenerProvider screeningProvider) {
-        this.brokerProvider = brokerProvider;
-        this.screeningProvider = screeningProvider;
+    public GQLController(final BrokerProvider broker,
+                         final ScreenerProvider screener) {
+        this.broker = broker;
+        this.screener = screener;
     }
 
     @GraphQLQuery(description = "Run Screening with a predefined criteria.")
     public List<Ticker> fetchScreenedTickers() {
-        return screeningProvider.getUnusualVolume();
+        return screener.getUnusualVolume();
     }
 
 
@@ -60,7 +60,7 @@ public class GQLController {
     public String fetchTradingRecords(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
                                       @GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
 
-        TradingLog tradingLog = brokerProvider.account().getTradingLog(symbol, daysRange);
+        TradingLog tradingLog = broker.account().getTradingLog(symbol, daysRange);
         ReportGenerator.printTradingRecords(tradingLog);
         ReportGenerator.printTradingSummary(tradingLog);
 
@@ -81,7 +81,7 @@ public class GQLController {
         StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
         StrategyParameters parameters = strategyProvider.getParameters();
 
-        List<TickerQuote> quotes = brokerProvider.ticker().getTickerQuotes(
+        List<TickerQuote> quotes = broker.ticker().getTickerQuotes(
                 parameters.getSymbol(),
                 parameters.getQuotesRange(),
                 parameters.getQuotesInterval());
@@ -110,11 +110,11 @@ public class GQLController {
         log.info("Initializing {} strategy for {}...", name, symbol);
         final StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
         final StrategyParameters params = strategyProvider.getParameters();
-        final BarSeries series = StrategySeriesInitializer.init(brokerProvider, params);
+        final BarSeries series = StrategySeriesInitializer.init(broker, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
 
         StrategyContext context = StrategyContext.builder()
-                .broker(brokerProvider)
+                .broker(broker)
                 .parameters(params)
                 .strategy(strategy)
                 .series(series)

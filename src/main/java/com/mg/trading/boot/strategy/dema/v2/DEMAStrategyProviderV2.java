@@ -54,7 +54,7 @@ public class DEMAStrategyProviderV2 implements StrategyProvider {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, params.getLongBarCount());
-        BollingerBandFacade bandFacade = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
+        BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
 
@@ -64,12 +64,15 @@ public class DEMAStrategyProviderV2 implements StrategyProvider {
         Rule inMarketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series));
         Rule dayMaxLossNotReached = new TotalLossToleranceRule(series, params.getTotalLossTolerancePercent());
 
-        Rule enterRule = crossedUpDEMA.and(chandelierUnderPrice).and(inMarketHours).and(dayMaxLossNotReached);
+        Rule enterRule = crossedUpDEMA
+                .and(chandelierUnderPrice)
+                .and(inMarketHours)
+                .and(dayMaxLossNotReached);
 
         //EXIT RULES
-        Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bandFacade.upper());
+        Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper());
         Rule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
-        Rule hasProfit = new StopGainRule(closePrice, 0.3); //todo: this is not working when strategy is restarted
+        Rule hasProfit = new StopGainRule(closePrice, 0.2);
         Rule superTrendSell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, params.getShortBarCount()));
 
         Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
