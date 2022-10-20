@@ -42,9 +42,6 @@ public abstract class AbstractRestProvider {
             log.error("Remote service error: {}", e.getCause(), e);
             throw new RuntimeException(e.getMessage(), e);
         }
-//        catch (HttpStatusCodeException e) {
-//            throw new RuntimeException(e.getMessage(), e);
-//        }
 
         if (response.getStatusCode() != HttpStatus.OK) {
             log.error("Remote service error, unexpected status code: {}", response.getStatusCode().value());

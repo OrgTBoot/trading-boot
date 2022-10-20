@@ -35,12 +35,12 @@ public class QuoteListener implements Runnable {
             for (TickerQuote quote : quotes) {
                 if (shouldReplace(series, quote)) {
                     BarSeriesUtils.addBar(series, quote, duration, Boolean.TRUE);
-                    log.info("Replaced Quote : {}", quote);
+                    log.debug("Replaced Quote : {}", quote);
 //                    this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
 
                 } else if (shouldAdd(series, quote)) {
                     BarSeriesUtils.addBar(series, quote, duration, Boolean.FALSE);
-                    log.info("Added Quote : {}", quote);
+                    log.debug("Added Quote : {}", quote);
 //                    this.onChangeDecisionSupplier.get(); //trigger buy/sell logic
 
                 }

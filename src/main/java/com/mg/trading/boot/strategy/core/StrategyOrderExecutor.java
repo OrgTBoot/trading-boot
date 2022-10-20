@@ -82,7 +82,7 @@ public class StrategyOrderExecutor {
     }
 
     private void printStats() {
-        Integer today = 1;
+        Integer today = 0;
         TradingLog tradingLog = broker.account().getTradingLog(symbol, today);
         ReportGenerator.printTradingRecords(tradingLog);
         ReportGenerator.printTradingSummary(tradingLog);

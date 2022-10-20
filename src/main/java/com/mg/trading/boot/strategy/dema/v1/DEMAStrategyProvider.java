@@ -4,9 +4,8 @@ import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.indicators.ExtendedMarketHoursIndicator;
 import com.mg.trading.boot.strategy.indicators.MarketHoursIndicator;
-import com.mg.trading.boot.strategy.indicators.SuperTrendGreenIndicator;
 import com.mg.trading.boot.strategy.indicators.SuperTrendSellIndicator;
-import com.mg.trading.boot.strategy.rules.TimeTillMarketClosesRule;
+import com.mg.trading.boot.strategy.rules.TimeTillMarketExtendedHoursCloseRule;
 import com.mg.trading.boot.strategy.rules.TotalLossToleranceRule;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
@@ -73,7 +72,7 @@ public class DEMAStrategyProvider implements StrategyProvider {
         Rule dayMaxLossNotReached = new TotalLossToleranceRule(series, params.getTotalLossTolerancePercent());
         Rule extendedMarketHours = new BooleanIndicatorRule(new ExtendedMarketHoursIndicator(series));
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
-        Rule timeToMarketClose = new TimeTillMarketClosesRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
+        Rule timeToMarketClose = new TimeTillMarketExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
         Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation

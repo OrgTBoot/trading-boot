@@ -63,8 +63,8 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
 
     protected static Order mapToOrder(WOrder wOrder) {
         WOrderStatus wStatus = Optional.ofNullable(wOrder.getStatus()).orElse(wOrder.getStatusCode());
-        String limitPrice = Optional.ofNullable(wOrder.getLmtPrice()).orElse(wOrder.getAvgFilledPrice());
         BigDecimal avgFilledPrice = toBigDecimal(Optional.ofNullable(wOrder.getAvgFilledPrice()).orElse("0"));
+        String limitPrice = Optional.ofNullable(wOrder.getLmtPrice()).orElse(avgFilledPrice.toString());
 
         return Order.builder()
                 .id(String.valueOf(wOrder.getOrderId()))

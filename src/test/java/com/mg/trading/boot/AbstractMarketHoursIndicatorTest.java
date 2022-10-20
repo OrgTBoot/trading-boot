@@ -1,6 +1,5 @@
 package com.mg.trading.boot;
 
-import com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicator;
 import org.junit.Assert;
 import org.junit.Test;
 import org.ta4j.core.Bar;
@@ -113,11 +112,11 @@ public class AbstractMarketHoursIndicatorTest {
     }
 
     @Test
-    public void getMinutesTillMarketCloseTest() {
-        Bar bar = buildBar(19, 0);
-        Assert.assertEquals(60, getMinutesTillMarketClose(bar));
+    public void getMinutesTillExtendedMarketHoursCloseTest() {
+        Bar bar = buildBar(15, 0);
+        Assert.assertEquals(60, getMinutesTillMarketExtendedHoursClose(bar));
 
-        bar = buildBar(16, 30);//market closes at 20:00 => 60m + 60m + 60m + 30m
-        Assert.assertEquals(210, getMinutesTillMarketClose(bar), 0);
+        bar = buildBar(15, 30);
+        Assert.assertEquals(30, getMinutesTillMarketExtendedHoursClose(bar), 0);
     }
 }

@@ -45,10 +45,10 @@ public abstract class AbstractMarketHoursIndicator {
         return hour >= 16 && hour < 20;
     }
 
-    public static long getMinutesTillMarketClose(Bar bar) {
+    public static long getMinutesTillMarketExtendedHoursClose(Bar bar) {
         ZonedDateTime time = getDateTime(bar);
         ZonedDateTime marketCloseTime = ZonedDateTime.of(
-                time.getYear(), time.getMonthValue(), time.getDayOfMonth(), 20, 0, 0, 0, time.getZone());
+                time.getYear(), time.getMonthValue(), time.getDayOfMonth(), 16, 0, 0, 0, time.getZone());
 
         return ChronoUnit.MINUTES.between(time, marketCloseTime);
     }

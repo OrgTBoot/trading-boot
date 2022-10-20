@@ -8,16 +8,16 @@ import org.ta4j.core.TradingRecord;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicator.getMinutesTillMarketClose;
+import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicator.getMinutesTillMarketExtendedHoursClose;
 
 
 @Log4j2
-public class TimeTillMarketClosesRule implements Rule {
+public class TimeTillMarketExtendedHoursCloseRule implements Rule {
     private final BarSeries series;
     private final Integer value;
     private final TimeUnit timeUnit;
 
-    public TimeTillMarketClosesRule(BarSeries series, Integer value, TimeUnit timeUnit) {
+    public TimeTillMarketExtendedHoursCloseRule(BarSeries series, Integer value, TimeUnit timeUnit) {
         this.series = series;
         this.value = value;
         this.timeUnit = timeUnit;
@@ -28,11 +28,11 @@ public class TimeTillMarketClosesRule implements Rule {
         Bar bar = series.getBar(index);
 
         long thresholdMinutes = timeUnit.convert(value, TimeUnit.MINUTES);
-        long remainingMinutes = getMinutesTillMarketClose(bar);
+        long remainingMinutes = getMinutesTillMarketExtendedHoursClose(bar);
 
         boolean reachedThreshold = remainingMinutes <= thresholdMinutes;
         if (reachedThreshold) {
-            log.warn("There are {} minutes till marked closes. Idx={}", remainingMinutes, index);
+            log.warn("There are {} minutes till marked extended hours close. Idx={}", remainingMinutes, index);
         }
 
         return reachedThreshold;

@@ -2,11 +2,13 @@ package com.mg.trading.boot.graphql;
 
 import com.mg.trading.boot.exceptions.ValidationException;
 import com.mg.trading.boot.strategy.StrategyExecutor;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+@Log4j2
 public class RunningStrategiesHolder {
     private final static Map<String, StrategyExecutor> context = new HashMap<>();
 
@@ -25,6 +27,9 @@ public class RunningStrategiesHolder {
         if (strategyExecutor != null) {
             strategyExecutor.stop();
             context.remove(key);
+            log.info("Stop signal sent to strategy with key {}", key);
+        } else {
+            log.info("Strategy key {} not found in {}", key, context.keySet());
         }
     }
 
@@ -33,6 +38,6 @@ public class RunningStrategiesHolder {
     }
 
     private synchronized static String getStrategyKey(StrategyExecutor executor) {
-        return executor.getContext().getStrategy().getName();
+        return executor.getContext().getStrategy().getName().toUpperCase();
     }
 }
