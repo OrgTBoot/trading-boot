@@ -1,7 +1,6 @@
-package com.mg.trading.boot.graphql;
+package com.mg.trading.boot.strategy;
 
 import com.mg.trading.boot.exceptions.ValidationException;
-import com.mg.trading.boot.strategy.StrategyExecutor;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
@@ -9,7 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 @Log4j2
-public class RunningStrategiesHolder {
+public class TradingStrategyExecutorHolder {
     private final static Map<String, StrategyExecutor> context = new HashMap<>();
 
 
@@ -25,9 +24,10 @@ public class RunningStrategiesHolder {
     public synchronized static void remove(String key) {
         StrategyExecutor strategyExecutor = context.get(key);
         if (strategyExecutor != null) {
+            log.info("Stop signal sent to strategy with key {}", key);
             strategyExecutor.stop();
             context.remove(key);
-            log.info("Stop signal sent to strategy with key {}", key);
+
         } else {
             log.info("Strategy key {} not found in {}", key, context.keySet());
         }

@@ -9,6 +9,7 @@ import com.mg.trading.boot.models.StrategyContext;
 import com.mg.trading.boot.models.Ticker;
 import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.models.TradingLog;
+import com.mg.trading.boot.strategy.TradingStrategyExecutorHolder;
 import com.mg.trading.boot.strategy.StrategyExecutor;
 import com.mg.trading.boot.strategy.TradingStrategyExecutor;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
@@ -69,7 +70,7 @@ public class GQLController {
 
     @GraphQLQuery(description = "Returns a list keys for all the running strategies.")
     public Set<String> fetchRunningStrategyKeys() {
-        return RunningStrategiesHolder.getRunningKeys();
+        return TradingStrategyExecutorHolder.getRunningKeys();
     }
 
     @GraphQLMutation
@@ -121,7 +122,7 @@ public class GQLController {
                 .build();
 
         StrategyExecutor strategyExecutor = new TradingStrategyExecutor(context);
-        RunningStrategiesHolder.add(strategyExecutor);
+        TradingStrategyExecutorHolder.add(strategyExecutor);
 
         strategyExecutor.start();
 
@@ -132,7 +133,7 @@ public class GQLController {
     public String triggerLiveTradingStop(
             @GraphQLArgument(name = "strategyKey") @GraphQLNonNull final String strategyKey) {
 
-        RunningStrategiesHolder.remove(strategyKey);
+        TradingStrategyExecutorHolder.remove(strategyKey);
         return "Strategy removed " + strategyKey;
     }
 
