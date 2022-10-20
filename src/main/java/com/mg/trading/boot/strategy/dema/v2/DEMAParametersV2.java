@@ -28,7 +28,7 @@ public class DEMAParametersV2 extends StrategyParameters {
                 .symbol(symbol.toUpperCase())
                 .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
                 .totalLossTolerancePercent(10)
-                .minutesToMarketClose(60)
+                .minutesToMarketClose(30)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesRollingLimit(1000)

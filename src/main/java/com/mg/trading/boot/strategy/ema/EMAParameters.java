@@ -30,11 +30,11 @@ public class EMAParameters extends StrategyParameters {
                 .longBarCount(30)
                 .shortBarCount(5)
                 .totalLossTolerancePercent(10)
-                .minutesToMarketClose(60)
+                .minutesToMarketClose(30)
                 .quotesRange(Range.ONE_DAY)
-                .quotesInterval(Interval.ONE_MINUTE) //bar interval, ex: open-close interval of the bar is 1 minute
-                .quotesRollingLimit(1000) //keep total of 1k rolling bars.
-                .quotesPullFrequencyInSec(10) // pull refreshed quotes each 10 seconds
+                .quotesInterval(Interval.ONE_MINUTE)
+                .quotesRollingLimit(1000)
+                .quotesPullFrequencyInSec(10)
                 .bollingerMultiplier(BigDecimal.valueOf(3))
                 .build();
     }

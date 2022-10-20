@@ -30,7 +30,7 @@ public class TimeTillMarketExtendedHoursCloseRule implements Rule {
         long thresholdMinutes = timeUnit.convert(value, TimeUnit.MINUTES);
         long remainingMinutes = getMinutesTillMarketExtendedHoursClose(bar);
 
-        boolean reachedThreshold = remainingMinutes <= thresholdMinutes;
+        boolean reachedThreshold = remainingMinutes < thresholdMinutes;
         if (reachedThreshold) {
             log.warn("There are {} minutes till marked extended hours close. Idx={}", remainingMinutes, index);
         }

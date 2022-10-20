@@ -159,6 +159,9 @@ public class StrategyTest {
         symbols.add("10_19_2022_MNTV");
         symbols.add("10_19_2022_MVST");
         symbols.add("10_19_2022_ZYME");
+//        symbols.add("10_20_2020_WKHS");
+//        symbols.add("10_20_2022_TSLA");
+//        symbols.add("10_20_20200_AMD");
 
 
         List<TradingStatement> statementsEMA = new ArrayList<>();

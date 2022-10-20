@@ -31,7 +31,7 @@ public class DEMAParameters extends StrategyParameters {
                 .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
                 .bollingerMultiplier(BigDecimal.valueOf(3))
                 .totalLossTolerancePercent(10)
-                .minutesToMarketClose(60)
+                .minutesToMarketClose(30)
                 .positionStopLossPercent(2)
                 .positionStopGainPercent(3)
                 .longBarCount(60)
