@@ -46,7 +46,7 @@ public class DEMAStrategyProvider implements StrategyProvider {
     }
 
     @Override
-    public StrategyParameters getParameters() {
+    public StrategyParameters getParams() {
         return this.params;
     }
 

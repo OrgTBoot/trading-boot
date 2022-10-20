@@ -9,5 +9,5 @@ public interface StrategyProvider {
 
     Strategy getStrategy();
 
-    StrategyParameters getParameters();
+    StrategyParameters getParams();
 }

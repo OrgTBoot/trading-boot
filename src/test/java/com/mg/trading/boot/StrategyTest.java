@@ -193,6 +193,7 @@ public class StrategyTest {
 
         TradingRecord tradingRecord = seriesManager.run(strategy);
 
+        log.info(strategyProvider.getClass().getSimpleName());
         ReportGenerator.printTradingRecords(tradingRecord, symbol);
         ReportGenerator.printTradingSummary(tradingRecord, symbol);
 

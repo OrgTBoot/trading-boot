@@ -79,7 +79,7 @@ public class GQLController {
             @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) throws JsonProcessingException {
 
         StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
-        StrategyParameters parameters = strategyProvider.getParameters();
+        StrategyParameters parameters = strategyProvider.getParams();
 
         List<TickerQuote> quotes = broker.ticker().getTickerQuotes(
                 parameters.getSymbol(),
@@ -109,7 +109,7 @@ public class GQLController {
 
         log.info("Initializing {} strategy for {}...", name, symbol);
         final StrategyProvider strategyProvider = selectStrategy(name, symbol, sharesQty);
-        final StrategyParameters params = strategyProvider.getParameters();
+        final StrategyParameters params = strategyProvider.getParams();
         final BarSeries series = StrategySeriesInitializer.init(broker, params);
         final Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
 

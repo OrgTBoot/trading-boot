@@ -19,17 +19,14 @@ import java.util.Optional;
 public class EMAParameters extends StrategyParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
-    private Number stopGainPercent;
-    private Number positionStopLossPercent;
     private Integer minutesToMarketClose;
+    private BigDecimal bollingerMultiplier;
 
 
     public static EMAParameters optimal(String symbol, BigDecimal sharesQty) {
         return EMAParameters.builder()
                 .symbol(symbol.toUpperCase())
                 .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
-                .positionStopLossPercent(2)
-                .stopGainPercent(3)
                 .longBarCount(30)
                 .shortBarCount(5)
                 .totalLossTolerancePercent(10)
@@ -38,6 +35,7 @@ public class EMAParameters extends StrategyParameters {
                 .quotesInterval(Interval.ONE_MINUTE) //bar interval, ex: open-close interval of the bar is 1 minute
                 .quotesRollingLimit(1000) //keep total of 1k rolling bars.
                 .quotesPullFrequencyInSec(10) // pull refreshed quotes each 10 seconds
+                .bollingerMultiplier(BigDecimal.valueOf(3))
                 .build();
     }
 }
