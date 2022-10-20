@@ -75,12 +75,11 @@ public class DEMAStrategyProviderV2 implements StrategyProvider {
 
         //EXIT RULES
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper());
+        Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
         Rule superTrendSell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, params.getShortBarCount()));
         Rule extendedMarketHours = new BooleanIndicatorRule(new ExtendedMarketHoursIndicator(series));
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
         Rule timeToMarketClose = new TimeTillMarketClosesRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
-
-        Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
 
         Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation

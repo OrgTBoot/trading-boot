@@ -68,15 +68,18 @@ public class DEMAStrategyProvider implements StrategyProvider {
 
         //EXIT RULES
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bandFacade.upper());
+        Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
+        Rule superTrendSell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, params.getShortBarCount()));
         Rule dayMaxLossNotReached = new TotalLossToleranceRule(series, params.getTotalLossTolerancePercent());
         Rule extendedMarketHours = new BooleanIndicatorRule(new ExtendedMarketHoursIndicator(series));
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
         Rule timeToMarketClose = new TimeTillMarketClosesRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
-        Rule exitRule = bollingerCrossUp
-                .or(extendedMarketHours.and(hasMinimalProfit))
-                .or(dayMaxLossNotReached.negation())
-                .or(timeToMarketClose);
+        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
+                .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
+                .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
+                .or(dayMaxLossNotReached.negation())          // 5. or reached day max loss percent for a given symbol
+                .or(timeToMarketClose);                       // 6. or last resort rule - dump position of approaching market close
 
         String strategyName = "DEMA" + "_" + params.getSymbol();
 
