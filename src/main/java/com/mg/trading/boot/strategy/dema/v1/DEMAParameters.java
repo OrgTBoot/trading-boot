@@ -20,14 +20,18 @@ public class DEMAParameters extends StrategyParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
     private Number positionStopGainPercent;
+    private Number positionStopLossPercent;
     private BigDecimal bollingerMultiplier;
+    private Integer minutesToMarketClose;
+
 
     public static DEMAParameters optimal(String symbol, BigDecimal sharesQty) {
         return DEMAParameters.builder()
                 .symbol(symbol.toUpperCase())
                 .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
                 .bollingerMultiplier(BigDecimal.valueOf(3))
-                .totalLossTolerancePercent(3)
+                .totalLossTolerancePercent(10)
+                .minutesToMarketClose(60)
                 .positionStopLossPercent(2)
                 .positionStopGainPercent(3)
                 .longBarCount(60)

@@ -20,6 +20,8 @@ public class EMAParameters extends StrategyParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
     private Number stopGainPercent;
+    private Number positionStopLossPercent;
+    private Integer minutesToMarketClose;
 
 
     public static EMAParameters optimal(String symbol, BigDecimal sharesQty) {
@@ -30,6 +32,8 @@ public class EMAParameters extends StrategyParameters {
                 .stopGainPercent(3)
                 .longBarCount(30)
                 .shortBarCount(5)
+                .totalLossTolerancePercent(10)
+                .minutesToMarketClose(60)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE) //bar interval, ex: open-close interval of the bar is 1 minute
                 .quotesRollingLimit(1000) //keep total of 1k rolling bars.

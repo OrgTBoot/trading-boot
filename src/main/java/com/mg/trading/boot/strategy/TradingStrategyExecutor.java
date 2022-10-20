@@ -60,8 +60,6 @@ public class TradingStrategyExecutor implements StrategyExecutor {
         checkNotNull(context.getStrategy(), "Strategy should not be null");
         checkNotNull(context.getParameters(), "Parameters should not be null");
 
-        Number stopLoss = context.getParameters().getPositionStopLossPercent();
-        checkNotNull(stopLoss, "Parameters stop loss should not be null");
         checkNotNull(context.getParameters().getSymbol(), "Parameters symbol should not be null");
         checkNotNull(context.getParameters().getSharesQty(), "Parameters shares qty should not be null");
         checkNotNull(context.getParameters().getQuotesRange(), "Parameters range should not be null");

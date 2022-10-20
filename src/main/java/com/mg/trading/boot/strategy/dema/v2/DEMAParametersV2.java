@@ -19,17 +19,16 @@ import java.util.Optional;
 public class DEMAParametersV2 extends StrategyParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
-    private Number positionStopGainPercent;
     private BigDecimal bollingerMultiplier;
     private Integer chandelierBarCount;
+    private Integer minutesToMarketClose;
 
     public static DEMAParametersV2 optimal(String symbol, BigDecimal sharesQty) {
         return DEMAParametersV2.builder()
                 .symbol(symbol.toUpperCase())
                 .sharesQty(Optional.ofNullable(sharesQty).orElse(BigDecimal.ONE))
                 .totalLossTolerancePercent(10)
-                .positionStopLossPercent(2)
-                .positionStopGainPercent(3)
+                .minutesToMarketClose(60)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesRollingLimit(1000)

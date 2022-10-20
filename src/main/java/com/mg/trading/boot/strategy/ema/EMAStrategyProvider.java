@@ -1,8 +1,11 @@
 package com.mg.trading.boot.strategy.ema;
 
 import com.mg.trading.boot.strategy.core.StrategyProvider;
-import com.mg.trading.boot.strategy.indicators.AfterMarketHoursIndicator;
+import com.mg.trading.boot.strategy.indicators.ExtendedMarketHoursIndicator;
 import com.mg.trading.boot.strategy.indicators.MarketHoursIndicator;
+import com.mg.trading.boot.strategy.indicators.PreMarketHoursIndicator;
+import com.mg.trading.boot.strategy.rules.TimeTillMarketClosesRule;
+import com.mg.trading.boot.strategy.rules.TotalLossToleranceRule;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
@@ -16,6 +19,7 @@ import org.ta4j.core.rules.StopGainRule;
 import org.ta4j.core.rules.StopLossRule;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -57,18 +61,24 @@ public class EMAStrategyProvider implements StrategyProvider {
         EMAIndicator shortIndicator = new EMAIndicator(closePrice, parameters.getShortBarCount());
         EMAIndicator longIndicator = new EMAIndicator(closePrice, parameters.getLongBarCount());
 
-        //enter rules
+        //entry
         CrossedUpIndicatorRule crossedUpEMA = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
-        BooleanIndicatorRule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series)); //enter only during market hours
-        Rule enterRule = crossedUpEMA.and(marketHours);
+        Rule preMarketHours = new BooleanIndicatorRule(new PreMarketHoursIndicator(series));
+        Rule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series));
+        Rule dayMaxLossNotReached = new TotalLossToleranceRule(series, parameters.getTotalLossTolerancePercent());
 
-        //exit rules - stop loss/gain at X% OR if we are in after hours and position is positive
-        StopLossRule stopLoss = new StopLossRule(closePrice, parameters.getPositionStopLossPercent());
-        StopGainRule stopGain = new StopGainRule(closePrice, parameters.getStopGainPercent());
-        BooleanIndicatorRule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
-        StopGainRule hasProfit = new StopGainRule(closePrice, 0.3);
+        Rule enterRule = crossedUpEMA
+                .and(dayMaxLossNotReached)
+                .and(preMarketHours.or(marketHours));
 
-        Rule exitRule = stopLoss.or(stopGain).or(afterMarketHours.and(hasProfit));
+        //exit
+        Rule extendedMarketHours = new BooleanIndicatorRule(new ExtendedMarketHoursIndicator(series));
+        Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
+        Rule timeToMarketClose = new TimeTillMarketClosesRule(series, parameters.getMinutesToMarketClose(), TimeUnit.MINUTES);
+
+        Rule exitRule = dayMaxLossNotReached.negation()
+                .or(extendedMarketHours.and(hasMinimalProfit))
+                .or(timeToMarketClose);
 
         String strategyName = "EMA" + "_" + parameters.getSymbol();
         this.strategy = new BaseStrategy(strategyName, enterRule, exitRule);

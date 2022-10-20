@@ -2,10 +2,11 @@ package com.mg.trading.boot.strategy.dema.v1;
 
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
-import com.mg.trading.boot.strategy.indicators.AfterMarketHoursIndicator;
+import com.mg.trading.boot.strategy.indicators.ExtendedMarketHoursIndicator;
 import com.mg.trading.boot.strategy.indicators.MarketHoursIndicator;
 import com.mg.trading.boot.strategy.indicators.SuperTrendGreenIndicator;
 import com.mg.trading.boot.strategy.indicators.SuperTrendSellIndicator;
+import com.mg.trading.boot.strategy.rules.TimeTillMarketClosesRule;
 import com.mg.trading.boot.strategy.rules.TotalLossToleranceRule;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
@@ -18,6 +19,7 @@ import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.rules.*;
 
 import java.math.BigDecimal;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -66,19 +68,15 @@ public class DEMAStrategyProvider implements StrategyProvider {
 
         //EXIT RULES
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bandFacade.upper());
-        Rule stopLoss = new StopLossRule(closePrice, params.getPositionStopLossPercent());
-        Rule stopGain = new StopGainRule(closePrice, params.getPositionStopGainPercent());
-        Rule afterMarketHours = new BooleanIndicatorRule(new AfterMarketHoursIndicator(series));
-        Rule hasProfit = new StopGainRule(closePrice, 0.3);
-        Rule sell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, params.getShortBarCount()));
-        Rule notGreenTrend = new BooleanIndicatorRule(new SuperTrendGreenIndicator(series, params.getShortBarCount())).negation();
+        Rule dayMaxLossNotReached = new TotalLossToleranceRule(series, params.getTotalLossTolerancePercent());
+        Rule extendedMarketHours = new BooleanIndicatorRule(new ExtendedMarketHoursIndicator(series));
+        Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
+        Rule timeToMarketClose = new TimeTillMarketClosesRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
-        Rule exitRule =
-                bollingerCrossUp
-                .or(stopGain.and(notGreenTrend))
-                .or(afterMarketHours.and(hasProfit))
-                .or(sell)
-                .or(stopLoss);
+        Rule exitRule = bollingerCrossUp
+                .or(extendedMarketHours.and(hasMinimalProfit))
+                .or(dayMaxLossNotReached.negation())
+                .or(timeToMarketClose);
 
         String strategyName = "DEMA" + "_" + params.getSymbol();
 

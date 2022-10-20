@@ -6,11 +6,13 @@ import com.mg.trading.boot.models.TickerQuote;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;
+import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
+import org.ta4j.core.BaseBar;
 import org.ta4j.core.BaseBarSeries;
 
 import java.io.File;
-import java.time.Duration;
+import java.time.*;
 import java.util.List;
 
 public class TestDataProvider {
@@ -21,7 +23,7 @@ public class TestDataProvider {
         File file = new File(classLoader.getResource(fileName).getFile());
         String data = FileUtils.readFileToString(file, "UTF-8");
         ObjectMapper objectMapper = new ObjectMapper();
-//
+
         return objectMapper.readValue(data, new TypeReference<List<TickerQuote>>() {
         });
     }
@@ -32,5 +34,15 @@ public class TestDataProvider {
         BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
 
         return series;
+    }
+
+    public static Bar buildBar(int hour, int minute) {
+        final ZoneId zoneId = BarSeriesUtils.getDefaultZone();
+        final LocalDate date = LocalDate.of(2000, 1, 1);
+        final LocalTime time = LocalTime.of(hour, minute);
+
+        final ZonedDateTime dateTime = ZonedDateTime.of(date, time, zoneId);
+
+        return new BaseBar(Duration.ZERO, dateTime, 0, 0, 0, 0, 0);
     }
 }

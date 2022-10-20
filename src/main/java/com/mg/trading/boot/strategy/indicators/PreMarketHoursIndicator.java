@@ -4,18 +4,18 @@ import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.CachedIndicator;
 
-import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicator.isMarketHours;
+import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicator.isPremarketHours;
 
-public class MarketHoursIndicator extends CachedIndicator<Boolean> {
+public class PreMarketHoursIndicator extends CachedIndicator<Boolean> {
 
-    public MarketHoursIndicator(BarSeries series) {
+    public PreMarketHoursIndicator(BarSeries series) {
         super(series);
     }
 
     @Override
     protected Boolean calculate(int index) {
         Bar bar = getBarSeries().getBar(index);
-        return isMarketHours(bar);
+        return isPremarketHours(bar);
     }
 
 }

@@ -21,10 +21,6 @@ public abstract class StrategyParameters {
     private Number totalLossTolerancePercent;
 
     /**
-     * Position stop loss. This should prevent excessive losses in a particular position.
-     */
-    private Number positionStopLossPercent;
-    /**
      * Quotes range to extract. Ex 1 day range.
      */
     private Range quotesRange;
