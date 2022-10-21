@@ -16,7 +16,7 @@ public class XSuperTrendBuyIndicator extends CachedIndicator<Boolean> {
     @Override
     protected Boolean calculate(int index) {
         boolean result = "BUY".equals(indicator.getSignal(index));
-//        log.info("Idx {} isGreen {} signal={}", index, result, indicator.getSignal(index));
+        log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, result);
         return result;
     }
 }

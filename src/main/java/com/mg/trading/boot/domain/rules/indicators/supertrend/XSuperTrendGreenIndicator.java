@@ -15,6 +15,8 @@ public class XSuperTrendGreenIndicator extends CachedIndicator<Boolean> {
 
     @Override
     protected Boolean calculate(int index) {
-        return indicator.getIsGreen(index);
+        boolean isGreen = indicator.getIsGreen(index);
+        log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, isGreen);
+        return isGreen;
     }
 }

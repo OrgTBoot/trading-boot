@@ -14,6 +14,8 @@ import com.mg.trading.boot.integrations.ScreenerProvider;
 import com.mg.trading.boot.domain.models.Ticker;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.models.TradingLog;
+import com.mg.trading.boot.logging.LogPackage;
+import com.mg.trading.boot.logging.LogsManagementService;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
@@ -25,6 +27,7 @@ import io.leangen.graphql.annotations.GraphQLNonNull;
 import io.leangen.graphql.annotations.GraphQLQuery;
 import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.*;
 
@@ -42,11 +45,13 @@ public class GQLController {
     private final BrokerProvider broker;
     private final ScreenerProvider screener;
     private final IStrategyExecutor strategyExecutor;
+    private final LogsManagementService logsManagementService;
 
-    public GQLController(final BrokerProvider broker, final ScreenerProvider screener, final IStrategyExecutor strategyExecutor) {
+    public GQLController(final LogsManagementService logsManagementService, final BrokerProvider broker, final ScreenerProvider screener, final IStrategyExecutor strategyExecutor) {
         this.broker = broker;
         this.screener = screener;
         this.strategyExecutor = strategyExecutor;
+        this.logsManagementService = logsManagementService;
     }
 
     @GraphQLQuery(description = "Run Screening with a predefined criteria.")
@@ -103,6 +108,16 @@ public class GQLController {
 
         strategyExecutor.stop(strategyKey);
         return "Strategy removed " + strategyKey;
+    }
+
+    @GraphQLMutation(description = "Change log level")
+    public String triggerLogLevelChange(@GraphQLArgument(name = "level")
+                                        @GraphQLNonNull final LogLevel level,
+                                        @GraphQLArgument(name = "package")
+                                        @GraphQLNonNull final LogPackage logPackage) {
+
+        logsManagementService.updateLogLevel(logPackage, level);
+        return "Log level updated to  " + level;
     }
 
     private StrategyProvider selectStrategy(TradingStrategies name, String symbol, BigDecimal sharesQty) {

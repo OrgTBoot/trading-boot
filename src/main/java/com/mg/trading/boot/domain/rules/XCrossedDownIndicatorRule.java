@@ -2,13 +2,13 @@ package com.mg.trading.boot.domain.rules;
 
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.Indicator;
+import org.ta4j.core.Rule;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.num.Num;
 import org.ta4j.core.rules.CrossedDownIndicatorRule;
-import org.ta4j.core.rules.CrossedUpIndicatorRule;
 
 @Log4j2
-public class XCrossedDownIndicatorRule extends CrossedDownIndicatorRule implements IRule {
+public class XCrossedDownIndicatorRule extends CrossedDownIndicatorRule implements Rule {
 
 
     public XCrossedDownIndicatorRule(Indicator<Num> indicator, Number threshold) {
@@ -25,9 +25,6 @@ public class XCrossedDownIndicatorRule extends CrossedDownIndicatorRule implemen
 
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
-        boolean satisfied = super.isSatisfied(index, tradingRecord);
-        logResult(log, satisfied, index);
-
-        return satisfied;
+        return super.isSatisfied(index, tradingRecord);
     }
 }

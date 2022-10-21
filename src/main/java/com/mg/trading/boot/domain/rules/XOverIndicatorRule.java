@@ -2,12 +2,13 @@ package com.mg.trading.boot.domain.rules;
 
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.Indicator;
+import org.ta4j.core.Rule;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.num.Num;
 import org.ta4j.core.rules.OverIndicatorRule;
 
 @Log4j2
-public class XOverIndicatorRule extends OverIndicatorRule implements IRule {
+public class XOverIndicatorRule extends OverIndicatorRule implements Rule {
 
 
     public XOverIndicatorRule(Indicator<Num> indicator, Number threshold) {
@@ -24,9 +25,7 @@ public class XOverIndicatorRule extends OverIndicatorRule implements IRule {
 
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
-        boolean satisfied = super.isSatisfied(index, tradingRecord);
-        logResult(log, satisfied, index);
 
-        return satisfied;
+        return super.isSatisfied(index, tradingRecord);
     }
 }

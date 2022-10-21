@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
+import java.util.Arrays;
+import java.util.List;
 
 @Log4j2
 public abstract class AbstractRestProvider {
@@ -18,21 +20,15 @@ public abstract class AbstractRestProvider {
         this.restTemplate = restTemplate;
     }
 
-    protected ResponseEntity<?> get(String url,
-                                    ParameterizedTypeReference<?> typeReference) {
+    protected ResponseEntity<?> get(String url, ParameterizedTypeReference<?> typeReference) {
         return exchange(url, HttpMethod.GET, null, typeReference);
     }
 
-    protected ResponseEntity<?> post(String url,
-                                     Object body,
-                                     ParameterizedTypeReference<?> typeReference) {
+    protected ResponseEntity<?> post(String url, Object body, ParameterizedTypeReference<?> typeReference) {
         return exchange(url, HttpMethod.POST, body, typeReference);
     }
 
-    private ResponseEntity<?> exchange(String url,
-                                       HttpMethod method,
-                                       Object body,
-                                       ParameterizedTypeReference<?> typeReference) {
+    private ResponseEntity<?> exchange(String url, HttpMethod method, Object body, ParameterizedTypeReference<?> typeReference) {
         ResponseEntity<?> response;
         try {
             RequestEntity<?> request = new RequestEntity<>(body, method, URI.create(url));
@@ -43,7 +39,8 @@ public abstract class AbstractRestProvider {
             throw new RuntimeException(e.getMessage(), e);
         }
 
-        if (response.getStatusCode() != HttpStatus.OK) {
+        List<HttpStatus> okCodes = Arrays.asList(HttpStatus.OK, HttpStatus.NO_CONTENT);
+        if (!okCodes.contains(response.getStatusCode())) {
             log.error("Remote service error, unexpected status code: {}", response.getStatusCode().value());
             throw new RuntimeException("Unexpected status code on order placement: " + response.getStatusCode());
         }

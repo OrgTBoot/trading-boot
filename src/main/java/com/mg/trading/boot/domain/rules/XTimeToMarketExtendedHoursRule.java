@@ -3,7 +3,9 @@ package com.mg.trading.boot.domain.rules;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
+import org.ta4j.core.Rule;
 import org.ta4j.core.TradingRecord;
+import org.ta4j.core.rules.AbstractRule;
 
 import java.util.concurrent.TimeUnit;
 
@@ -11,7 +13,7 @@ import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicat
 
 
 @Log4j2
-public class XTimeToMarketExtendedHoursRule implements IRule {
+public class XTimeToMarketExtendedHoursRule extends AbstractRule implements Rule {
     private final BarSeries series;
     private final Integer value;
     private final TimeUnit timeUnit;
@@ -34,7 +36,7 @@ public class XTimeToMarketExtendedHoursRule implements IRule {
             log.warn("There are {} minutes till marked extended hours close. Idx={}", remainingMinutes, index);
         }
 
-        logResult(log, reachedThreshold, index);
+        traceIsSatisfied(index, reachedThreshold);
         return reachedThreshold;
     }
 }

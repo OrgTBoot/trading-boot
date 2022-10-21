@@ -13,7 +13,10 @@ public class XPreMarketHoursIndicator extends CachedIndicator<Boolean> {
     @Override
     public Boolean calculate(int index) {
         Bar bar = getBarSeries().getBar(index);
-        return XAbstractMarketHoursIndicator.isPremarketHours(bar);
+        boolean isPremarketHours = XAbstractMarketHoursIndicator.isPremarketHours(bar);
+        log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, isPremarketHours);
+
+        return isPremarketHours;
     }
 
 }

@@ -5,16 +5,17 @@ import org.ta4j.core.Rule;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.num.Num;
-import org.ta4j.core.rules.StopGainRule;
+import org.ta4j.core.rules.StopLossRule;
 
 @Log4j2
-public class XStopGainRule extends StopGainRule implements Rule {
-    public XStopGainRule(ClosePriceIndicator closePrice, Number gainPercentage) {
-        super(closePrice, gainPercentage);
+public class XStopLossRule extends StopLossRule implements Rule {
+
+    public XStopLossRule(ClosePriceIndicator closePrice, Number lossPercentage) {
+        super(closePrice, lossPercentage);
     }
 
-    public XStopGainRule(ClosePriceIndicator closePrice, Num gainPercentage) {
-        super(closePrice, gainPercentage);
+    public XStopLossRule(ClosePriceIndicator closePrice, Num lossPercentage) {
+        super(closePrice, lossPercentage);
     }
 
     @Override

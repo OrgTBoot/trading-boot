@@ -19,6 +19,7 @@ import java.util.UUID;
 public class BeanConfig {
     public final static String WEBULL_REST_TEMPLATE = "webull_rest_template";
     public final static String YAHOO_REST_TEMPLATE = "yahoo_rest_template";
+    public final static String SERVICE_REST_TEMPLATE = "service_rest_template";
 
     @Bean
     @Primary
@@ -30,6 +31,19 @@ public class BeanConfig {
     }
 
     @Bean
+    @Qualifier(SERVICE_REST_TEMPLATE)
+    public RestTemplate getServiceRestTemplate() {
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.getInterceptors().add((request, body, clientHttpRequestExecution) -> {
+            HttpHeaders headers = request.getHeaders();
+            headers.add("Content-Type", "application/json");
+
+            return clientHttpRequestExecution.execute(request, body);
+        });
+        return restTemplate;
+    }
+
+    @Bean
     @Qualifier(YAHOO_REST_TEMPLATE)
     public RestTemplate getYahooRestTemplate() {
         return new RestTemplate();
@@ -37,8 +51,7 @@ public class BeanConfig {
 
     @Bean
     @Qualifier(WEBULL_REST_TEMPLATE)
-    public RestTemplate getWebullRestTemplate(@Value("${providers.webull.auth.key}") String authKey,
-                                              @Value("${providers.webull.auth.secret}") String authSecret) {
+    public RestTemplate getWebullRestTemplate(@Value("${providers.webull.auth.key}") String authKey, @Value("${providers.webull.auth.secret}") String authSecret) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add((request, body, clientHttpRequestExecution) -> {
             HttpHeaders headers = request.getHeaders();

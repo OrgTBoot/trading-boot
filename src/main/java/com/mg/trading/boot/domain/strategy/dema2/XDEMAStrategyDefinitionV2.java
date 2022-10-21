@@ -67,6 +67,7 @@ public class XDEMAStrategyDefinitionV2 extends XAbstractStrategyDefinition {
         Rule superTrendSell = new XSuperTrendSellRule(series, params.getShortBarCount());
         Rule extendedMarketHours = new XExtendedMarketHoursRule(series);
         Rule hasMinimalProfit = new XStopGainRule(closePrice, 0.1);
+        Rule stopPositionLoss = new XStopLossRule(closePrice, params.getTotalLossThresholdPercent());
         Rule timeToExtendedHoursClose = new XTimeToMarketExtendedHoursRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
         Rule reachedMaxAllowedLoss = dayMaxLossNotReached.negation();
 

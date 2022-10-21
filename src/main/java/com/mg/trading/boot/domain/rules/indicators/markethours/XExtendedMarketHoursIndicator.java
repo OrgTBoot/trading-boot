@@ -16,6 +16,9 @@ public class XExtendedMarketHoursIndicator extends CachedIndicator<Boolean> {
     @Override
     public Boolean calculate(int index) {
         Bar bar = getBarSeries().getBar(index);
-        return XAbstractMarketHoursIndicator.isExtendedMarketHours(bar);
+        boolean isExtendedMktHours = XAbstractMarketHoursIndicator.isExtendedMarketHours(bar);
+        log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, isExtendedMktHours);
+
+        return isExtendedMktHours;
     }
 }
