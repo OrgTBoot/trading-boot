@@ -1,6 +1,6 @@
 package com.mg.trading.boot.integrations.webull;
 
-import com.mg.trading.boot.models.Range;
+import com.mg.trading.boot.domain.models.Range;
 
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;

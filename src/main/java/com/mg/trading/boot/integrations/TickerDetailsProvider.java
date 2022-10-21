@@ -1,9 +1,9 @@
 package com.mg.trading.boot.integrations;
 
-import com.mg.trading.boot.models.Interval;
-import com.mg.trading.boot.models.Range;
-import com.mg.trading.boot.models.Ticker;
-import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.domain.models.Interval;
+import com.mg.trading.boot.domain.models.Range;
+import com.mg.trading.boot.domain.models.Ticker;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import org.springframework.retry.annotation.Retryable;
 
 import java.util.List;

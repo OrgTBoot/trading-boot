@@ -1,7 +1,7 @@
 package com.mg.trading.boot.strategy.dema.v1;
 
-import com.mg.trading.boot.models.Interval;
-import com.mg.trading.boot.models.Range;
+import com.mg.trading.boot.domain.models.Interval;
+import com.mg.trading.boot.domain.models.Range;
 import com.mg.trading.boot.strategy.core.StrategyParameters;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

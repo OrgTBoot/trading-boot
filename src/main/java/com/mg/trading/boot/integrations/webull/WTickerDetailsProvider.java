@@ -1,15 +1,15 @@
 package com.mg.trading.boot.integrations.webull;
 
-import com.mg.trading.boot.exceptions.ValidationException;
+import com.mg.trading.boot.domain.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.TickerDetailsProvider;
 import com.mg.trading.boot.integrations.webull.data.common.WTicker;
 import com.mg.trading.boot.integrations.webull.data.common.WTickerData;
 import com.mg.trading.boot.integrations.webull.data.common.WTickerQuote;
-import com.mg.trading.boot.models.Interval;
-import com.mg.trading.boot.models.Range;
-import com.mg.trading.boot.models.Ticker;
-import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.domain.models.Interval;
+import com.mg.trading.boot.domain.models.Range;
+import com.mg.trading.boot.domain.models.Ticker;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;

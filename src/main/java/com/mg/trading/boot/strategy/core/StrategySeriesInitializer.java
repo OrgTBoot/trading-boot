@@ -1,7 +1,7 @@
 package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
@@ -41,7 +41,6 @@ public class StrategySeriesInitializer {
     }
 
     private static Duration getTickerDuration(List<TickerQuote> quotes) {
-        //NPE - let it be, we are expecting quotes!!!
         int lastQuoteIdx = quotes.size() - 1;
         return Duration.ofSeconds(quotes.get(lastQuoteIdx).getTimeStamp() - quotes.get(lastQuoteIdx - 1).getTimeStamp());
     }

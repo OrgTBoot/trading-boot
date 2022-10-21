@@ -1,17 +1,16 @@
 package com.mg.trading.boot;
 
-import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
 import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
 import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
 import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
-import com.mg.trading.boot.strategy.reporting.ReportGenerator;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Assert;
 import org.junit.Test;
 import org.ta4j.core.*;
 import org.ta4j.core.reports.TradingStatement;
@@ -21,8 +20,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
-import static com.mg.trading.boot.strategy.reporting.ReportGenerator.*;
 
 
 @Log4j2

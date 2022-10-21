@@ -1,6 +1,6 @@
 package com.mg.trading.boot.strategy.core;
 
-import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.Bar;

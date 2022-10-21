@@ -1,9 +1,9 @@
 package com.mg.trading.boot.integrations.webull;
 
+import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.webull.data.common.*;
 import com.mg.trading.boot.integrations.webull.data.paper.WPOrderRequest;
-import com.mg.trading.boot.models.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;

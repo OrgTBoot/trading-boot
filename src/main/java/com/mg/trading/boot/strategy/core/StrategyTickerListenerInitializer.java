@@ -1,9 +1,9 @@
 package com.mg.trading.boot.strategy.core;
 
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.models.Order;
-import com.mg.trading.boot.models.TickerQuote;
-import com.mg.trading.boot.strategy.reporting.ReportGenerator;
+import com.mg.trading.boot.domain.models.Order;
+import com.mg.trading.boot.domain.models.TickerQuote;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Strategy;

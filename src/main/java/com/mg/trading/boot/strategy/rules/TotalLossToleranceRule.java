@@ -23,7 +23,7 @@ public class TotalLossToleranceRule implements Rule {
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
         if (tradingRecord == null) {
-            return true;
+            return false;
         }
 
         Num currentLoss = new ProfitLossPercentageCriterion().calculate(series, tradingRecord);

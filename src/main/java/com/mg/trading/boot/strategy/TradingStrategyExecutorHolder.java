@@ -1,6 +1,6 @@
 package com.mg.trading.boot.strategy;
 
-import com.mg.trading.boot.exceptions.ValidationException;
+import com.mg.trading.boot.domain.exceptions.ValidationException;
 import lombok.extern.log4j.Log4j2;
 
 import java.util.HashMap;
