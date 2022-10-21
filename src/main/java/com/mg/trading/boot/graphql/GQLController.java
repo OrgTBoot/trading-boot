@@ -137,13 +137,6 @@ public class GQLController {
         return "Strategy removed " + strategyKey;
     }
 
-//    @GraphQLQuery
-//    public TickerSentiment findTickerSentiment(
-//            @GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-//            @GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
-//        return brokerProvider.getTickerSentimentByNews(symbol, daysRange);
-//    }
-
     private StrategyProvider selectStrategy(TradingStrategies name, String symbol, BigDecimal sharesQty) {
         switch (name) {
             case EMA:

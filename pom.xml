@@ -16,7 +16,6 @@
         <graphql.sprq.version>0.0.6</graphql.sprq.version>
         <graphql.version>5.0.2</graphql.version>
         <ta4j.version>0.15</ta4j.version>
-        <npl.version>4.5.1</npl.version>
         <opencsv.version>4.1</opencsv.version>
         <jsoup.version>1.14.3</jsoup.version>
     </properties>
@@ -106,42 +105,6 @@
             <groupId>io.leangen.graphql</groupId>
             <artifactId>graphql-spqr-spring-boot-starter</artifactId>
             <version>${graphql.sprq.version}</version>
-        </dependency>
-        <!-- NPL-->
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${npl.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${npl.version}</version>
-            <classifier>javadoc</classifier>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${npl.version}</version>
-            <classifier>sources</classifier>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${npl.version}</version>
-            <classifier>models</classifier>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${npl.version}</version>
-            <classifier>models-english</classifier>
-        </dependency>
-        <dependency>
-            <groupId>edu.stanford.nlp</groupId>
-            <artifactId>stanford-corenlp</artifactId>
-            <version>${npl.version}</version>
-            <classifier>models-english-kbp</classifier>
         </dependency>
         <!-- Misc -->
         <dependency>
