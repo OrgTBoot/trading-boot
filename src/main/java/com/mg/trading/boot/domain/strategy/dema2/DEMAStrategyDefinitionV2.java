@@ -1,7 +1,7 @@
 package com.mg.trading.boot.domain.strategy.dema2;
 
 import com.mg.trading.boot.domain.rules.*;
-import com.mg.trading.boot.domain.strategy.XAbstractStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
@@ -19,17 +19,17 @@ import java.util.concurrent.TimeUnit;
  * For more details see: <a href="https://www.youtube.com/watch?v=g-PLctW8aU0">Double EMA Cross + Fibonacci</a>
  */
 @Log4j2
-public class XDEMAStrategyDefinitionV2 extends XAbstractStrategyDefinition {
+public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
 
-    private final XDEMAParametersV2 params = XDEMAParametersV2.optimal();
+    private final DEMAParametersV2 params = DEMAParametersV2.optimal();
     private Strategy strategy;
 
-    public XDEMAStrategyDefinitionV2(String symbol) {
+    public DEMAStrategyDefinitionV2(String symbol) {
         super(symbol, "DEMAV2");
     }
 
     @Override
-    public XDEMAParametersV2 getParams() {
+    public DEMAParametersV2 getParams() {
         return params;
     }
 

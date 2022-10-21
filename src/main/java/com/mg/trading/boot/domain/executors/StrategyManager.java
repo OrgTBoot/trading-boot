@@ -1,9 +1,8 @@
 package com.mg.trading.boot.domain.executors;
 
-import com.google.common.base.Preconditions;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.subscribers.XOrderManager;
-import com.mg.trading.boot.domain.tasks.XQuoteExtractorTask;
+import com.mg.trading.boot.domain.subscribers.OrderManager;
+import com.mg.trading.boot.domain.tasks.QuoteExtractorTask;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
@@ -18,11 +17,11 @@ import static com.google.common.base.Preconditions.checkState;
 
 @Log4j2
 @Component
-public class XStrategyExecutor implements IStrategyExecutor {
+public class StrategyManager implements StrategyExecutor {
     private final BrokerProvider broker;
-    private final XStrategyExecutorsCache strategyExecutorsCache;
+    private final StrategyManagerCache strategyExecutorsCache;
 
-    public XStrategyExecutor(final BrokerProvider broker, final XStrategyExecutorsCache strategyExecutorsCache) {
+    public StrategyManager(final BrokerProvider broker, final StrategyManagerCache strategyExecutorsCache) {
         this.broker = broker;
         this.strategyExecutorsCache = strategyExecutorsCache;
     }
@@ -38,8 +37,8 @@ public class XStrategyExecutor implements IStrategyExecutor {
         log.info("\tInterval  : {}", strategyDef.getParams().getQuotesInterval());
         log.info("\tPull freq : {}", pullFrequency);
 
-        XQuoteExtractorTask quoteExtractorTask = new XQuoteExtractorTask(strategyDef, broker);
-        quoteExtractorTask.subscribe(new XOrderManager());
+        QuoteExtractorTask quoteExtractorTask = new QuoteExtractorTask(strategyDef, broker);
+        quoteExtractorTask.subscribe(new OrderManager());
 
         ScheduledExecutorService executor = getScheduledExecutor(strategyDef);
         executor.scheduleAtFixedRate(quoteExtractorTask, 0, pullFrequency, TimeUnit.SECONDS);

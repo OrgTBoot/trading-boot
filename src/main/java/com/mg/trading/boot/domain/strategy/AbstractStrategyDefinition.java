@@ -12,12 +12,12 @@ import java.time.Duration;
 import java.util.List;
 
 @Log4j2
-public abstract class XAbstractStrategyDefinition implements IStrategyDefinition {
+public abstract class AbstractStrategyDefinition implements IStrategyDefinition {
     private final String symbol;
     private final String strategyPrefix;
     protected final BarSeries series;
 
-    public XAbstractStrategyDefinition(String symbol, String strategyPrefix) {
+    public AbstractStrategyDefinition(String symbol, String strategyPrefix) {
         this.symbol = symbol.toUpperCase();
         this.strategyPrefix = strategyPrefix.toUpperCase();
         this.series = initSeries();

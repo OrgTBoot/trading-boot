@@ -4,18 +4,18 @@ import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.subscribers.XQuteChangeListener;
+import com.mg.trading.boot.domain.subscribers.QuteChangeListener;
 import com.mg.trading.boot.integrations.BrokerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class XQuoteExtractorTask implements Runnable {
+public class QuoteExtractorTask implements Runnable {
     private final BrokerProvider broker;
     private final IStrategyDefinition strategyDef;
-    private List<XQuteChangeListener> subscribers;
+    private List<QuteChangeListener> subscribers;
 
-    public XQuoteExtractorTask(final IStrategyDefinition strategyDef, final BrokerProvider broker) {
+    public QuoteExtractorTask(final IStrategyDefinition strategyDef, final BrokerProvider broker) {
         this.strategyDef = strategyDef;
         this.broker = broker;
         this.subscribers = new ArrayList<>();
@@ -37,7 +37,7 @@ public class XQuoteExtractorTask implements Runnable {
     }
 
 
-    public void subscribe(XQuteChangeListener subscriber) {
+    public void subscribe(QuteChangeListener subscriber) {
         this.subscribers.add(subscriber);
     }
 }

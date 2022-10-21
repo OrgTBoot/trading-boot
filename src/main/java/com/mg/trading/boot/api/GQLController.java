@@ -3,16 +3,16 @@ package com.mg.trading.boot.api;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.domain.exceptions.ValidationException;
-import com.mg.trading.boot.domain.executors.IStrategyExecutor;
+import com.mg.trading.boot.domain.executors.StrategyExecutor;
 import com.mg.trading.boot.domain.models.Ticker;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IParameters;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema.XDEMAStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
-import com.mg.trading.boot.domain.strategy.ema.XEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema.DEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
 import com.mg.trading.boot.logging.LogPackage;
@@ -41,10 +41,10 @@ import static org.ta4j.core.Trade.TradeType.BUY;
 public class GQLController {
     private final BrokerProvider broker;
     private final ScreenerProvider screener;
-    private final IStrategyExecutor strategyExecutor;
+    private final StrategyExecutor strategyExecutor;
     private final LogsManagementService logsManagementService;
 
-    public GQLController(final LogsManagementService logsManagementService, final BrokerProvider broker, final ScreenerProvider screener, final IStrategyExecutor strategyExecutor) {
+    public GQLController(final LogsManagementService logsManagementService, final BrokerProvider broker, final ScreenerProvider screener, final StrategyExecutor strategyExecutor) {
         this.broker = broker;
         this.screener = screener;
         this.strategyExecutor = strategyExecutor;
@@ -121,11 +121,11 @@ public class GQLController {
     private IStrategyDefinition selectStrategyDef(TradingStrategies name, String symbol) {
         switch (name) {
             case EMA:
-                return new XEMAStrategyDefinition(symbol);
+                return new EMAStrategyDefinition(symbol);
             case DEMA:
-                return new XDEMAStrategyDefinition(symbol);
+                return new DEMAStrategyDefinition(symbol);
             case DEMA_V2:
-                return new XDEMAStrategyDefinitionV2(symbol);
+                return new DEMAStrategyDefinitionV2(symbol);
             default:
                 throw new ValidationException("Strategy not supported");
         }

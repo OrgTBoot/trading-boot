@@ -2,7 +2,7 @@ package com.mg.trading.boot;
 
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.*;
@@ -21,7 +21,7 @@ public class IStrategyDefinitionTest {
 //        BarSeries series = new BaseBarSeries();
 //        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
 
-        IStrategyDefinition dema = new XDEMAStrategyDefinitionV2(symbol);
+        IStrategyDefinition dema = new DEMAStrategyDefinitionV2(symbol);
         BarSeries series = dema.updateSeries(quotes);
 
         Strategy strategy = dema.getStrategy();

@@ -1,8 +1,8 @@
-package com.mg.trading.boot.domain.strategy.dema;
+package com.mg.trading.boot.domain.strategy.dema2;
 
 import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
-import com.mg.trading.boot.domain.strategy.XAbstractParameters;
+import com.mg.trading.boot.domain.strategy.AbstractParameters;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,27 +15,24 @@ import java.math.BigDecimal;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class XDEMAParameters extends XAbstractParameters {
+public class DEMAParametersV2 extends AbstractParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
-    private Number positionStopGainPercent;
-    private Number positionStopLossPercent;
     private BigDecimal bollingerMultiplier;
+    private Integer chandelierBarCount;
     private Integer minutesToMarketClose;
 
-
-    public static XDEMAParameters optimal() {
-        return XDEMAParameters.builder()
-                .bollingerMultiplier(BigDecimal.valueOf(3))
+    public static DEMAParametersV2 optimal() {
+        return DEMAParametersV2.builder()
                 .totalLossThresholdPercent(10)
                 .minutesToMarketClose(30)
-                .positionStopLossPercent(2)
-                .positionStopGainPercent(3)
-                .longBarCount(60)
-                .shortBarCount(10)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesPullFrequencyInSec(5)
+                .longBarCount(60)
+                .shortBarCount(10)
+                .bollingerMultiplier(BigDecimal.valueOf(3))
+                .chandelierBarCount(5)
                 .build();
     }
 }

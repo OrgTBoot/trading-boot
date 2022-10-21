@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @SuperBuilder(toBuilder = true)
 @ToString(callSuper = true)
-public abstract class XAbstractParameters implements IParameters {
+public abstract class AbstractParameters implements IParameters {
     private Number totalLossThresholdPercent;
     private Range quotesRange;
     private Interval quotesInterval;

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
-public class XOrderManager implements XQuteChangeListener {
+public class OrderManager implements QuteChangeListener {
 
     @Override
     public void onQuoteChange(IStrategyDefinition strategyDef, BrokerProvider broker) {

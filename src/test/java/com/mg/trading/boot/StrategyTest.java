@@ -3,10 +3,9 @@ package com.mg.trading.boot;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema.XDEMAStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
-import com.mg.trading.boot.domain.strategy.ema.XEMAStrategyDefinition;
-import com.mg.trading.boot.utils.BarSeriesUtils;
+import com.mg.trading.boot.domain.strategy.dema.DEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
@@ -15,7 +14,6 @@ import org.junit.Test;
 import org.ta4j.core.*;
 import org.ta4j.core.reports.TradingStatement;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -162,19 +160,19 @@ public class StrategyTest {
 
         List<TradingStatement> statementsEMA = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement ema = testXStrategy(s, new XEMAStrategyDefinition(s));
+            TradingStatement ema = testXStrategy(s, new EMAStrategyDefinition(s));
             statementsEMA.add(ema);
         });
 
         List<TradingStatement> statementsDEMA = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement dema = testXStrategy(s, new XDEMAStrategyDefinition(s));
+            TradingStatement dema = testXStrategy(s, new DEMAStrategyDefinition(s));
             statementsDEMA.add(dema);
         });
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement demaV2 = testXStrategy(s, new XDEMAStrategyDefinitionV2(s));
+            TradingStatement demaV2 = testXStrategy(s, new DEMAStrategyDefinitionV2(s));
             statementsDEMAv2.add(demaV2);
         });
 
