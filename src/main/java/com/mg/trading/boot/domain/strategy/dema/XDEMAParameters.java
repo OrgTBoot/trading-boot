@@ -3,14 +3,12 @@ package com.mg.trading.boot.domain.strategy.dema;
 import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
 import com.mg.trading.boot.domain.strategy.XAbstractParameters;
-import com.mg.trading.boot.strategy.dema.v1.DEMAParameters;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 import java.math.BigDecimal;
-import java.util.Optional;
 
 
 @Getter

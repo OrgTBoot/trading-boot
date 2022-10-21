@@ -1,15 +1,11 @@
 package com.mg.trading.boot;
 
 import com.mg.trading.boot.domain.models.TickerQuote;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema.XDEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.ema.XEMAStrategyDefinition;
-import com.mg.trading.boot.strategy.core.StrategyProvider;
-import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
-import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
-import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
-import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
@@ -19,11 +15,9 @@ import org.junit.Test;
 import org.ta4j.core.*;
 import org.ta4j.core.reports.TradingStatement;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.function.Function;
 
 
@@ -168,7 +162,6 @@ public class StrategyTest {
 
         List<TradingStatement> statementsEMA = new ArrayList<>();
         symbols.forEach(s -> {
-//            TradingStatement ema = testStrategy(s, new EMAStrategyProvider(s, BigDecimal.ONE));
             TradingStatement ema = testXStrategy(s, new XEMAStrategyDefinition(s));
             statementsEMA.add(ema);
         });
@@ -176,14 +169,12 @@ public class StrategyTest {
         List<TradingStatement> statementsDEMA = new ArrayList<>();
         symbols.forEach(s -> {
             TradingStatement dema = testXStrategy(s, new XDEMAStrategyDefinition(s));
-//            TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
             statementsDEMA.add(dema);
         });
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
         symbols.forEach(s -> {
             TradingStatement demaV2 = testXStrategy(s, new XDEMAStrategyDefinitionV2(s));
-//            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyProviderV2(s, BigDecimal.ONE));
             statementsDEMAv2.add(demaV2);
         });
 
@@ -208,31 +199,7 @@ public class StrategyTest {
         return ReportGenerator.buildTradingStatement(tradingRecord);
     }
 
-
-    private static TradingStatement testStrategy(String symbol, StrategyProvider strategyProvider) {
-
-        List<TickerQuote> quotes = TestDataProvider.getQuotesFromFile(symbol + ".json");
-        BarSeries series = new BaseBarSeries();
-        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
-
-        Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
-        BarSeriesManager seriesManager = new BarSeriesManager(series);
-
-        TradingRecord tradingRecord = seriesManager.run(strategy);
-
-        log.info(strategyProvider.getClass().getSimpleName());
-        ReportGenerator.printTradingRecords(tradingRecord, symbol);
-        ReportGenerator.printTradingSummary(tradingRecord, symbol);
-
-        return ReportGenerator.buildTradingStatement(tradingRecord);
-    }
-
-    private static void printTradingSummaries(String name1,
-                                              List<TradingStatement> list1,
-                                              String name2,
-                                              List<TradingStatement> list2,
-                                              String name3,
-                                              List<TradingStatement> list3) {
+    private static void printTradingSummaries(String name1, List<TradingStatement> list1, String name2, List<TradingStatement> list2, String name3, List<TradingStatement> list3) {
         Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
         Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
         Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();

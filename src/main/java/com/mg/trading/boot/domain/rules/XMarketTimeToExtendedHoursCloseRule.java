@@ -9,7 +9,7 @@ import org.ta4j.core.rules.AbstractRule;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicator.getMinutesTillMarketExtendedHoursClose;
+import static com.mg.trading.boot.domain.rules.indicators.markethours.XAbstractMarketHoursIndicator.getMinutesTillMarketExtendedHoursClose;
 
 
 @Log4j2

@@ -4,6 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.domain.exceptions.ValidationException;
 import com.mg.trading.boot.domain.executors.IStrategyExecutor;
+import com.mg.trading.boot.domain.models.Ticker;
+import com.mg.trading.boot.domain.models.TickerQuote;
+import com.mg.trading.boot.domain.models.TradingLog;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IParameters;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema.XDEMAStrategyDefinition;
@@ -11,16 +15,8 @@ import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.ema.XEMAStrategyDefinition;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
-import com.mg.trading.boot.domain.models.Ticker;
-import com.mg.trading.boot.domain.models.TickerQuote;
-import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.logging.LogPackage;
 import com.mg.trading.boot.logging.LogsManagementService;
-import com.mg.trading.boot.strategy.core.StrategyProvider;
-import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
-import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
-import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
-import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import io.leangen.graphql.annotations.GraphQLArgument;
 import io.leangen.graphql.annotations.GraphQLMutation;
 import io.leangen.graphql.annotations.GraphQLNonNull;
@@ -29,7 +25,8 @@ import io.leangen.graphql.spqr.spring.annotations.GraphQLApi;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Service;
-import org.ta4j.core.*;
+import org.ta4j.core.BarSeriesManager;
+import org.ta4j.core.TradingRecord;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -120,18 +117,6 @@ public class GQLController {
         return "Log level updated to  " + level;
     }
 
-    private StrategyProvider selectStrategy(TradingStrategies name, String symbol, BigDecimal sharesQty) {
-        switch (name) {
-            case EMA:
-                return new EMAStrategyProvider(symbol, sharesQty);
-            case DEMA:
-                return new DEMAStrategyProvider(symbol, sharesQty);
-            case DEMA_V2:
-                return new DEMAStrategyProviderV2(symbol, sharesQty);
-            default:
-                throw new ValidationException("Strategy not supported");
-        }
-    }
 
     private IStrategyDefinition selectStrategyDef(TradingStrategies name, String symbol) {
         switch (name) {
