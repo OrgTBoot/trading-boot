@@ -2,7 +2,7 @@ package com.mg.trading.boot;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mg.trading.boot.models.TickerQuote;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.SneakyThrows;
 import org.apache.commons.io.FileUtils;

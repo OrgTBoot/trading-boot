@@ -1,10 +1,10 @@
 package com.mg.trading.boot;
 
-import com.mg.trading.boot.models.Order;
-import com.mg.trading.boot.models.OrderAction;
-import com.mg.trading.boot.models.OrderStatus;
-import com.mg.trading.boot.models.OrderType;
-import com.mg.trading.boot.strategy.reporting.ReportGenerator;
+import com.mg.trading.boot.domain.models.Order;
+import com.mg.trading.boot.domain.models.OrderAction;
+import com.mg.trading.boot.domain.models.OrderStatus;
+import com.mg.trading.boot.domain.models.OrderType;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Assert;
 import org.junit.Test;

@@ -1,15 +1,15 @@
 package com.mg.trading.boot.integrations.webull;
 
-import com.mg.trading.boot.analisys.SentimentAnalysisService;
-import com.mg.trading.boot.exceptions.ValidationException;
+import com.mg.trading.boot.domain.exceptions.ValidationException;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.TickerDetailsProvider;
-import com.mg.trading.boot.integrations.webull.data.common.WNewsArticle;
 import com.mg.trading.boot.integrations.webull.data.common.WTicker;
 import com.mg.trading.boot.integrations.webull.data.common.WTickerData;
 import com.mg.trading.boot.integrations.webull.data.common.WTickerQuote;
-import com.mg.trading.boot.models.*;
-import com.mg.trading.boot.models.npl.TickerSentiment;
+import com.mg.trading.boot.domain.models.Interval;
+import com.mg.trading.boot.domain.models.Range;
+import com.mg.trading.boot.domain.models.Ticker;
+import com.mg.trading.boot.domain.models.TickerQuote;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.ParameterizedTypeReference;
@@ -19,8 +19,6 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -81,31 +79,6 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public List<TickerNewsArticle> getTickerNews(String symbol, Integer daysRange) {
-        WTicker ticker = getTickerBySymbol(symbol);
-        if (ticker == null) {
-            return new ArrayList<>();
-        }
-
-        String url = WUrls.news(ticker.getTickerId(), 100);
-        ParameterizedTypeReference<List<WNewsArticle>> type = new ParameterizedTypeReference<List<WNewsArticle>>() {
-        };
-        ResponseEntity<List<WNewsArticle>> response = (ResponseEntity<List<WNewsArticle>>) get(url, type);
-
-        return mapToNewsArticles(response.getBody()).stream()
-                .filter(it -> it.getNewsDaysAgo() <= daysRange)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public TickerSentiment getTickerSentimentByNews(String symbol, Integer daysRange) {
-        List<TickerNewsArticle> news = getTickerNews(symbol, daysRange);
-        final SentimentAnalysisService analysisService = new SentimentAnalysisService();
-        return analysisService.getSentimentByTickerArticles(news);
-    }
-
-
     private List<TickerQuote> toTickerQuotes(WTickerQuote quotes) {
         return quotes.getData().stream().map(it -> {
                     String[] values = it.split(",");
@@ -155,22 +128,5 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 .company(ticker.getName())
                 .assetType(ticker.getTemplate())
                 .build();
-    }
-
-    private List<TickerNewsArticle> mapToNewsArticles(List<WNewsArticle> articles) {
-        if (CollectionUtils.isEmpty(articles)) {
-            return new ArrayList<>();
-        }
-
-        return articles.stream().map(it ->
-                        TickerNewsArticle.builder()
-                                .externalId(String.valueOf(it.getId()))
-                                .title(it.getTitle())
-                                .newsUrl(it.getNewsUrl())
-                                .sourceName(it.getSourceName())
-                                .newsTime(it.getNewsTime())
-                                .newsDaysAgo(ChronoUnit.DAYS.between(it.getNewsTime(), Instant.now()))
-                                .build())
-                .collect(Collectors.toList());
     }
 }

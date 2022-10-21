@@ -1,6 +1,6 @@
 package com.mg.trading.boot.integrations;
 
-import com.mg.trading.boot.models.*;
+import com.mg.trading.boot.domain.models.*;
 import org.springframework.retry.annotation.Retryable;
 
 import java.util.List;

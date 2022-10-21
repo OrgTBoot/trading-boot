@@ -1,28 +1,24 @@
 package com.mg.trading.boot;
 
-import com.mg.trading.boot.models.TickerQuote;
-import com.mg.trading.boot.strategy.core.StrategyProvider;
-import com.mg.trading.boot.strategy.dema.v1.DEMAStrategyProvider;
-import com.mg.trading.boot.strategy.dema.v2.DEMAStrategyProviderV2;
-import com.mg.trading.boot.strategy.ema.EMAStrategyProvider;
-import com.mg.trading.boot.strategy.reporting.ReportGenerator;
+import com.mg.trading.boot.domain.models.TickerQuote;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
+import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema.XDEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.ema.XEMAStrategyDefinition;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Assert;
 import org.junit.Test;
 import org.ta4j.core.*;
 import org.ta4j.core.reports.TradingStatement;
 
-import java.math.BigDecimal;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-
-import static com.mg.trading.boot.strategy.reporting.ReportGenerator.*;
 
 
 @Log4j2
@@ -159,56 +155,51 @@ public class StrategyTest {
         symbols.add("10_19_2022_MNTV");
         symbols.add("10_19_2022_MVST");
         symbols.add("10_19_2022_ZYME");
-//        symbols.add("10_20_2020_WKHS");
-//        symbols.add("10_20_2022_TSLA");
-//        symbols.add("10_20_20200_AMD");
+        symbols.add("10_20_2020_WKHS");
+        symbols.add("10_20_2022_TSLA");
+        symbols.add("10_20_20200_AMD");
 
 
         List<TradingStatement> statementsEMA = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement ema = testStrategy(s, new EMAStrategyProvider(s, BigDecimal.ONE));
+            TradingStatement ema = testXStrategy(s, new XEMAStrategyDefinition(s));
             statementsEMA.add(ema);
         });
 
         List<TradingStatement> statementsDEMA = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
+            TradingStatement dema = testXStrategy(s, new XDEMAStrategyDefinition(s));
             statementsDEMA.add(dema);
         });
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyProviderV2(s, BigDecimal.ONE));
+            TradingStatement demaV2 = testXStrategy(s, new XDEMAStrategyDefinitionV2(s));
             statementsDEMAv2.add(demaV2);
         });
 
         printTradingSummaries("EMA", statementsEMA, "DEMA", statementsDEMA, "DEMAv2", statementsDEMAv2);
     }
 
-    private static TradingStatement testStrategy(String symbol, StrategyProvider strategyProvider) {
+    private static TradingStatement testXStrategy(String symbol, IStrategyDefinition def) {
 
         List<TickerQuote> quotes = TestDataProvider.getQuotesFromFile(symbol + ".json");
-        BarSeries series = new BaseBarSeries();
-        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
+//        BarSeries series = new BaseBarSeries();
+//        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
 
-        Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
-        BarSeriesManager seriesManager = new BarSeriesManager(series);
+        def.updateSeries(quotes);
+        BarSeriesManager seriesManager = new BarSeriesManager(def.getSeries());
 
-        TradingRecord tradingRecord = seriesManager.run(strategy);
+        TradingRecord tradingRecord = seriesManager.run(def.getStrategy());
 
-        log.info(strategyProvider.getClass().getSimpleName());
+        log.info(def.getClass().getSimpleName());
         ReportGenerator.printTradingRecords(tradingRecord, symbol);
         ReportGenerator.printTradingSummary(tradingRecord, symbol);
 
         return ReportGenerator.buildTradingStatement(tradingRecord);
     }
 
-    private static void printTradingSummaries(String name1,
-                                              List<TradingStatement> list1,
-                                              String name2,
-                                              List<TradingStatement> list2,
-                                              String name3,
-                                              List<TradingStatement> list3) {
+    private static void printTradingSummaries(String name1, List<TradingStatement> list1, String name2, List<TradingStatement> list2, String name3, List<TradingStatement> list3) {
         Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
         Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
         Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();

@@ -1,7 +1,7 @@
 package com.mg.trading.boot.integrations.finviz;
 
 import com.mg.trading.boot.integrations.ScreenerProvider;
-import com.mg.trading.boot.models.Ticker;
+import com.mg.trading.boot.domain.models.Ticker;
 import de.vandermeer.asciitable.AT_Row;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;

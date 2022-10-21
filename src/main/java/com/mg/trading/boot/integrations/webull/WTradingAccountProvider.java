@@ -1,5 +1,6 @@
 package com.mg.trading.boot.integrations.webull;
 
+import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.webull.data.common.WOrder;
 import com.mg.trading.boot.integrations.webull.data.common.WOrderStatus;
@@ -8,7 +9,6 @@ import com.mg.trading.boot.integrations.webull.data.trading.WTAccount;
 import com.mg.trading.boot.integrations.webull.data.trading.WTOrderDateType;
 import com.mg.trading.boot.integrations.webull.data.trading.WTOrdersQuery;
 import com.mg.trading.boot.integrations.webull.data.trading.WTOrdersResult;
-import com.mg.trading.boot.models.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
-import org.ta4j.core.TradingRecord;
 
 import java.util.ArrayList;
 import java.util.List;
