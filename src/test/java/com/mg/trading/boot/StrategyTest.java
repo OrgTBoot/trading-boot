@@ -2,6 +2,7 @@ package com.mg.trading.boot;
 
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema.XDEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.ema.XEMAStrategyDefinition;
 import com.mg.trading.boot.strategy.core.StrategyProvider;
@@ -168,27 +169,28 @@ public class StrategyTest {
         List<TradingStatement> statementsEMA = new ArrayList<>();
         symbols.forEach(s -> {
 //            TradingStatement ema = testStrategy(s, new EMAStrategyProvider(s, BigDecimal.ONE));
-            TradingStatement ema = testStrategy(s, new XEMAStrategyDefinition(s));
+            TradingStatement ema = testXStrategy(s, new XEMAStrategyDefinition(s));
             statementsEMA.add(ema);
         });
 
         List<TradingStatement> statementsDEMA = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement dema = testStrategy(s, new XEMAStrategyDefinition(s));
+            TradingStatement dema = testXStrategy(s, new XDEMAStrategyDefinition(s));
 //            TradingStatement dema = testStrategy(s, new DEMAStrategyProvider(s, BigDecimal.ONE));
             statementsDEMA.add(dema);
         });
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
         symbols.forEach(s -> {
-            TradingStatement demaV2 = testStrategy(s, new XDEMAStrategyDefinitionV2(s));
+            TradingStatement demaV2 = testXStrategy(s, new XDEMAStrategyDefinitionV2(s));
+//            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyProviderV2(s, BigDecimal.ONE));
             statementsDEMAv2.add(demaV2);
         });
 
         printTradingSummaries("EMA", statementsEMA, "DEMA", statementsDEMA, "DEMAv2", statementsDEMAv2);
     }
 
-    private static TradingStatement testStrategy(String symbol, IStrategyDefinition def) {
+    private static TradingStatement testXStrategy(String symbol, IStrategyDefinition def) {
 
         List<TickerQuote> quotes = TestDataProvider.getQuotesFromFile(symbol + ".json");
 //        BarSeries series = new BaseBarSeries();
@@ -200,6 +202,25 @@ public class StrategyTest {
         TradingRecord tradingRecord = seriesManager.run(def.getStrategy());
 
         log.info(def.getClass().getSimpleName());
+        ReportGenerator.printTradingRecords(tradingRecord, symbol);
+        ReportGenerator.printTradingSummary(tradingRecord, symbol);
+
+        return ReportGenerator.buildTradingStatement(tradingRecord);
+    }
+
+
+    private static TradingStatement testStrategy(String symbol, StrategyProvider strategyProvider) {
+
+        List<TickerQuote> quotes = TestDataProvider.getQuotesFromFile(symbol + ".json");
+        BarSeries series = new BaseBarSeries();
+        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
+
+        Strategy strategy = strategyProvider.buildStrategy(series).getStrategy();
+        BarSeriesManager seriesManager = new BarSeriesManager(series);
+
+        TradingRecord tradingRecord = seriesManager.run(strategy);
+
+        log.info(strategyProvider.getClass().getSimpleName());
         ReportGenerator.printTradingRecords(tradingRecord, symbol);
         ReportGenerator.printTradingSummary(tradingRecord, symbol);
 

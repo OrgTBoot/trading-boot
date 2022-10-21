@@ -13,12 +13,12 @@ import static com.mg.trading.boot.strategy.indicators.AbstractMarketHoursIndicat
 
 
 @Log4j2
-public class XTimeToMarketExtendedHoursRule extends AbstractRule implements Rule {
+public class XMarketTimeToExtendedHoursCloseRule extends AbstractRule implements Rule {
     private final BarSeries series;
     private final Integer value;
     private final TimeUnit timeUnit;
 
-    public XTimeToMarketExtendedHoursRule(BarSeries series, Integer value, TimeUnit timeUnit) {
+    public XMarketTimeToExtendedHoursCloseRule(BarSeries series, Integer value, TimeUnit timeUnit) {
         this.series = series;
         this.value = value;
         this.timeUnit = timeUnit;

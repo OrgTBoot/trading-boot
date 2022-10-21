@@ -5,8 +5,8 @@ import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.XDEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
-import org.junit.Test;
 import org.ta4j.core.*;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
