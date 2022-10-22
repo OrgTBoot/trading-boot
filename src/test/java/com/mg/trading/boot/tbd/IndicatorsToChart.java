@@ -1,4 +1,4 @@
-package com.mg.trading.boot;
+package com.mg.trading.boot.tbd;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;

@@ -1,10 +1,10 @@
-package com.mg.trading.boot;
+package com.mg.trading.boot.tbd;
 
 import org.junit.Assert;
 import org.junit.Test;
 import org.ta4j.core.Bar;
 
-import static com.mg.trading.boot.TestDataProvider.buildBar;
+import static com.mg.trading.boot.tbd.TestDataProvider.buildBar;
 import static com.mg.trading.boot.domain.rules.indicators.markethours.XAbstractMarketHoursIndicator.*;
 
 public class AbstractMarketHoursIndicatorTest {

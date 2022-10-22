@@ -6,6 +6,7 @@ import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
 import org.ta4j.core.Strategy;
@@ -16,7 +17,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Log4j2
-public class OrderManager implements QuteChangeListener {
+@Service
+public class OrderManagementService implements QuteChangeListener {
 
     @Override
     public void onQuoteChange(IStrategyDefinition strategyDef, BrokerProvider broker) {
@@ -53,33 +55,18 @@ public class OrderManager implements QuteChangeListener {
         AccountProvider account = broker.account();
 
         List<Position> openPositions = account.getOpenPositions(symbol);
-        List<String> symbolsInSell = account.getOpenOrders(symbol).stream()
-                .filter(it -> OrderAction.SELL.equals(it.getAction()))
-                .map(it -> it.getTicker().getSymbol())
-                .collect(Collectors.toList());
+        List<String> symbolsInSell = account.getOpenOrders(symbol).stream().filter(it -> OrderAction.SELL.equals(it.getAction())).map(it -> it.getTicker().getSymbol()).collect(Collectors.toList());
 
-        List<Position> positionsToClose = openPositions.stream()
-                .filter(it -> !symbolsInSell.contains(it.getTicker().getSymbol()))
-                .collect(Collectors.toList());
+        List<Position> positionsToClose = openPositions.stream().filter(it -> !symbolsInSell.contains(it.getTicker().getSymbol())).collect(Collectors.toList());
 
         positionsToClose.forEach(position -> place(strategyDef, broker, OrderAction.SELL, position.getQuantity()));
     }
 
-    private void place(IStrategyDefinition strategyDef,
-                       BrokerProvider broker,
-                       OrderAction action,
-                       BigDecimal quantity) {
+    private void place(IStrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
         Bar endBar = strategyDef.getSeries().getLastBar();
 
-        OrderRequest orderRequest = OrderRequest.builder()
-                .symbol(symbol)
-                .action(action)
-                .orderType(OrderType.LIMIT)
-                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
-                .timeInForce(OrderTimeInForce.GTC)
-                .quantity(quantity)
-                .build();
+        OrderRequest orderRequest = OrderRequest.builder().symbol(symbol).action(action).orderType(OrderType.LIMIT).lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue())).timeInForce(OrderTimeInForce.GTC).quantity(quantity).build();
 
         broker.account().placeOrder(orderRequest);
         log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());

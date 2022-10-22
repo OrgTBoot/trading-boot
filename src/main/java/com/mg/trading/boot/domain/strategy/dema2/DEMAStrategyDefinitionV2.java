@@ -23,6 +23,8 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
 
     private final DEMAParametersV2 params = DEMAParametersV2.optimal();
     private Strategy strategy;
+    private Rule entryRule;
+    private Rule exitRule;
 
     public DEMAStrategyDefinitionV2(String symbol) {
         super(symbol, "DEMAV2");
@@ -41,6 +43,16 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
         return strategy;
     }
 
+    @Override
+    public Rule getEntryRule() {
+        return entryRule;
+    }
+
+    @Override
+    public Rule getExitRule() {
+        return exitRule;
+    }
+
     private Strategy initStrategy() {
         //INDICATORS
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
@@ -54,12 +66,12 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
         Rule marketHours = new XMarketHoursRule(series);
         Rule crossedUpDEMA = new XCrossedUpIndicatorRule(shortIndicator, longIndicator);
         Rule chandelierUnderPrice = new XUnderIndicatorRule(chandLong, closePrice);
-        Rule dayMaxLossNotReached = new XUnderTotalLossThresholdRule(series, params.getTotalLossThresholdPercent());
+        Rule stopTotalLossRule = new XStopTotalLossRule(series, params.getTotalLossThresholdPercent());
 
-        Rule entryRule = crossedUpDEMA      // 1. trend
-                .and(chandelierUnderPrice)           // 2. and confirmation
-                .and(dayMaxLossNotReached)           // 3. and avoid entering again in a bearish stock
-                .and(preMarketHours.or(marketHours));// 4. and enter only in marked hours
+        this.entryRule = crossedUpDEMA                    // 1. trend
+                .and(chandelierUnderPrice)                // 2. and confirmation
+                .and(stopTotalLossRule.negation())        // 3. and avoid entering again in a bearish stock
+                .and(preMarketHours.or(marketHours));     // 4. and enter only in marked hours
 
         //EXIT RULES
         Rule bollingerCrossUp = new XOverIndicatorRule(closePrice, bollinger.upper());
@@ -67,15 +79,14 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
         Rule superTrendSell = new XSuperTrendSellRule(series, params.getShortBarCount());
         Rule extendedMarketHours = new XMarketExtendedHoursRule(series);
         Rule hasMinimalProfit = new XStopGainRule(closePrice, 0.1);
-        Rule stopPositionLoss = new XStopLossRule(closePrice, params.getTotalLossThresholdPercent());
+        Rule stopLossRule = new XStopLossRule(closePrice, params.getTotalLossThresholdPercent());
         Rule timeToExtendedHoursClose = new XMarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
-        Rule reachedMaxAllowedLoss = dayMaxLossNotReached.negation();
 
-        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
+        this.exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
                 .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
                 .or(timeToExtendedHoursClose)                 // 4. or last resort rule - dump position of approaching market close
-                .or(reachedMaxAllowedLoss);                   // 5. or reached day max loss percent for a given symbol
+                .or(stopTotalLossRule);                       // 5. or reached day max loss percent for a given symbol
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }

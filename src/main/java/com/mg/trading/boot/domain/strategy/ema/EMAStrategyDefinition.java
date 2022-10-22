@@ -9,7 +9,7 @@ import org.ta4j.core.Strategy;
 import org.ta4j.core.indicators.EMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
-import org.ta4j.core.rules.*;
+import org.ta4j.core.rules.CrossedUpIndicatorRule;
 
 import java.util.concurrent.TimeUnit;
 
@@ -23,6 +23,8 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
 
     private final EMAParameters params = EMAParameters.optimal();
     private Strategy strategy;
+    private Rule entryRule;
+    private Rule exitRule;
 
     public EMAStrategyDefinition(String symbol) {
         super(symbol, "EMA");
@@ -41,6 +43,16 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         return strategy;
     }
 
+    @Override
+    public Rule getEntryRule() {
+        return entryRule;
+    }
+
+    @Override
+    public Rule getExitRule() {
+        return exitRule;
+    }
+
     private Strategy initStrategy() {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
 
@@ -51,11 +63,9 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
         CrossedUpIndicatorRule crossedUpEMA = new XCrossedUpIndicatorRule(shortIndicator, longIndicator);
         Rule marketHours = new XMarketHoursRule(series).or(new XMarketPreHoursRule(series));
-        Rule dayMaxLossNotReached = new XUnderTotalLossThresholdRule(series, params.getTotalLossThresholdPercent());
+        Rule stopTotalLossRule = new XStopTotalLossRule(series, params.getTotalLossThresholdPercent());
 
-        Rule enterRule = crossedUpEMA
-                .and(dayMaxLossNotReached)
-                .and(marketHours);
+        this.entryRule = crossedUpEMA.and(marketHours).and(stopTotalLossRule.negation());
 
         //exit
         Rule bollingerCrossUp = new XOverIndicatorRule(closePrice, bollinger.upper());
@@ -65,13 +75,13 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         Rule hasMinimalProfit = new XStopGainRule(closePrice, 0.1);
         Rule timeToMarketClose = new XMarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
-        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
+        this.exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
                 .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
-                .or(dayMaxLossNotReached.negation())          // 5. or reached day max loss percent for a given symbol
+                .or(stopTotalLossRule)                        // 5. or reached day max loss percent for a given symbol
                 .or(timeToMarketClose);                       // 6. or last resort rule - dump position of approaching market close
 
-        return new BaseStrategy(getStrategyName(), enterRule, exitRule);
+        return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }
 
 }

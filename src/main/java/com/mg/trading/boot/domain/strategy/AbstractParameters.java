@@ -6,11 +6,13 @@ import lombok.Getter;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
+import java.math.BigDecimal;
+
 @Getter
 @SuperBuilder(toBuilder = true)
 @ToString(callSuper = true)
 public abstract class AbstractParameters implements IParameters {
-    private Number totalLossThresholdPercent;
+    private BigDecimal totalLossThresholdPercent;
     private Range quotesRange;
     private Interval quotesInterval;
     private Integer quotesPullFrequencyInSec;

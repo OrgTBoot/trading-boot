@@ -24,7 +24,7 @@ public class DEMAParametersV2 extends AbstractParameters {
 
     public static DEMAParametersV2 optimal() {
         return DEMAParametersV2.builder()
-                .totalLossThresholdPercent(10)
+                .totalLossThresholdPercent(BigDecimal.valueOf(-10))
                 .minutesToMarketClose(30)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)

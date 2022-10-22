@@ -1,11 +1,11 @@
 package com.mg.trading.boot.domain.executors;
 
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.subscribers.OrderManager;
+import com.mg.trading.boot.domain.subscribers.OrderManagementService;
 import com.mg.trading.boot.domain.tasks.QuoteExtractorTask;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Set;
 import java.util.concurrent.Executors;
@@ -16,12 +16,12 @@ import java.util.concurrent.TimeUnit;
 import static com.google.common.base.Preconditions.checkState;
 
 @Log4j2
-@Component
-public class StrategyManager implements StrategyExecutor {
+@Service
+public class StrategyExecutorService implements StrategyExecutor {
     private final BrokerProvider broker;
     private final StrategyManagerCache strategyExecutorsCache;
 
-    public StrategyManager(final BrokerProvider broker, final StrategyManagerCache strategyExecutorsCache) {
+    public StrategyExecutorService(final BrokerProvider broker, final StrategyManagerCache strategyExecutorsCache) {
         this.broker = broker;
         this.strategyExecutorsCache = strategyExecutorsCache;
     }
@@ -38,7 +38,7 @@ public class StrategyManager implements StrategyExecutor {
         log.info("\tPull freq : {}", pullFrequency);
 
         QuoteExtractorTask quoteExtractorTask = new QuoteExtractorTask(strategyDef, broker);
-        quoteExtractorTask.subscribe(new OrderManager());
+        quoteExtractorTask.subscribe(new OrderManagementService());
 
         ScheduledExecutorService executor = getScheduledExecutor(strategyDef);
         executor.scheduleAtFixedRate(quoteExtractorTask, 0, pullFrequency, TimeUnit.SECONDS);

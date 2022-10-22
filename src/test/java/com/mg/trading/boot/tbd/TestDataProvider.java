@@ -1,4 +1,4 @@
-package com.mg.trading.boot;
+package com.mg.trading.boot.tbd;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,6 +12,7 @@ import org.ta4j.core.BaseBar;
 import org.ta4j.core.BaseBarSeries;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.time.*;
 import java.util.List;
 
@@ -36,13 +37,22 @@ public class TestDataProvider {
         return series;
     }
 
+
+    public static BarSeries buildBarSeries() {
+        return new BaseBarSeries();
+    }
+
     public static Bar buildBar(int hour, int minute) {
+        return buildBar(hour, minute, BigDecimal.ONE);
+    }
+
+    public static Bar buildBar(int hour, int minute, BigDecimal price) {
         final ZoneId zoneId = BarSeriesUtils.getDefaultZone();
         final LocalDate date = LocalDate.of(2000, 1, 1);
         final LocalTime time = LocalTime.of(hour, minute);
 
         final ZonedDateTime dateTime = ZonedDateTime.of(date, time, zoneId);
 
-        return new BaseBar(Duration.ZERO, dateTime, 0, 0, 0, 0, 0);
+        return new BaseBar(Duration.ZERO, dateTime, price, price, price, price, BigDecimal.ONE);
     }
 }
