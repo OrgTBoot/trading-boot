@@ -9,6 +9,10 @@ import org.ta4j.core.Strategy;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
+import org.ta4j.core.rules.CrossedDownIndicatorRule;
+import org.ta4j.core.rules.CrossedUpIndicatorRule;
+import org.ta4j.core.rules.OverIndicatorRule;
+import org.ta4j.core.rules.StopGainRule;
 
 import java.util.concurrent.TimeUnit;
 
@@ -53,34 +57,6 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
     }
 
     private Strategy initStrategy() {
-//        //INDICATORS
-//        ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-//        DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
-//        DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, params.getLongBarCount());
-//        BollingerBandFacade bandFacade = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
-//
-//        //ENTRY RULES
-//        Rule crossedUp = new XCrossedUpIndicatorRule(shortIndicator, longIndicator);
-//        Rule marketHours = new XMarketHoursRule(series).or(new XPreMarketHoursRule(series));
-//        Rule dayMaxLossNotReached = new XUnderTotalLossThresholdRule(series, params.getTotalLossThresholdPercent());
-//
-//        //todo: crossedUp needs a confirmation - we need second indicator that can act as a confirmation
-//        Rule entryRule = crossedUp.and(marketHours).and(dayMaxLossNotReached);
-//
-//        //EXIT RULES
-//        Rule bollingerCrossUp = new XOverIndicatorRule(closePrice, bandFacade.upper());
-//        Rule crossedDownDEMA = new XCrossedDownIndicatorRule(shortIndicator, longIndicator);
-//        Rule superTrendSell = new XSuperTrendSellRule(series, params.getShortBarCount());
-//        Rule extendedMarketHours = new XExtendedMarketHoursRule(series);
-//        Rule hasMinimalProfit = new XStopGainRule(closePrice, 0.1);
-//        Rule timeToMarketClose = new XTimeToMarketExtendedHoursRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
-//
-//        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
-//                .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
-//                .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
-//                .or(dayMaxLossNotReached.negation())          // 5. or reached day max loss percent for a given symbol
-//                .or(timeToMarketClose);                       // 6. or last resort rule - dump position of approaching market close
-
         //INDICATORS
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
@@ -88,10 +64,9 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
         BollingerBandFacade bandFacade = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
 
         //ENTRY RULES
-        Rule crossedUp = new XCrossedUpIndicatorRule(shortIndicator, longIndicator);
-//        Rule marketHours = new BooleanIndicatorRule(new MarketHoursIndicator(series));
-        Rule marketHours = new XMarketHoursRule(series);
-        Rule stopTotalLossRule = new XStopTotalLossRule(series, params.getTotalLossThresholdPercent());
+        Rule crossedUp = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
+        Rule marketHours = new MarketHoursRule(series);
+        Rule stopTotalLossRule = new StopTotalLossRule(series, params.getTotalLossThresholdPercent());
 
         //todo: crossedUp needs a confirmation - we need second indicator that can act as a confirmation
         this.entryRule = crossedUp
@@ -99,13 +74,13 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
                 .and(stopTotalLossRule.negation());
 
         //EXIT RULES
-        Rule bollingerCrossUp = new XOverIndicatorRule(closePrice, bandFacade.upper());
-        Rule crossedDownDEMA = new XCrossedDownIndicatorRule(shortIndicator, longIndicator);
+        Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bandFacade.upper());
+        Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
 //        Rule superTrendSell = new BooleanIndicatorRule(new SuperTrendSellIndicator(series, params.getShortBarCount()));
-        Rule superTrendSell = new XSuperTrendSellRule(series, params.getShortBarCount());
-        Rule extendedMarketHours = new XMarketExtendedHoursRule(series);
-        Rule hasMinimalProfit = new XStopGainRule(closePrice, 0.1);
-        Rule timeToMarketClose = new XMarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
+        Rule superTrendSell = new SuperTrendSellRule(series, params.getShortBarCount());
+        Rule extendedMarketHours = new MarketExtendedHoursRule(series);
+        Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
+        Rule timeToMarketClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
         this.exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation

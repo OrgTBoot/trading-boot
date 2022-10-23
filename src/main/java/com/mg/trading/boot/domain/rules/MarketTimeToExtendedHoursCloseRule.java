@@ -9,16 +9,16 @@ import org.ta4j.core.rules.AbstractRule;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.mg.trading.boot.domain.rules.indicators.markethours.XAbstractMarketHoursIndicator.getMinutesTillMarketExtendedHoursClose;
+import static com.mg.trading.boot.domain.rules.indicators.markethours.AbstractMarketHoursIndicator.getMinutesTillMarketExtendedHoursClose;
 
 
 @Log4j2
-public class XMarketTimeToExtendedHoursCloseRule extends AbstractRule implements Rule {
+public class MarketTimeToExtendedHoursCloseRule extends AbstractRule implements Rule {
     private final BarSeries series;
     private final Integer value;
     private final TimeUnit timeUnit;
 
-    public XMarketTimeToExtendedHoursCloseRule(BarSeries series, Integer value, TimeUnit timeUnit) {
+    public MarketTimeToExtendedHoursCloseRule(BarSeries series, Integer value, TimeUnit timeUnit) {
         this.series = series;
         this.value = value;
         this.timeUnit = timeUnit;
@@ -31,9 +31,9 @@ public class XMarketTimeToExtendedHoursCloseRule extends AbstractRule implements
         long thresholdMinutes = timeUnit.convert(value, TimeUnit.MINUTES);
         long remainingMinutes = getMinutesTillMarketExtendedHoursClose(bar);
 
-        boolean reachedThreshold = remainingMinutes < thresholdMinutes;
+        boolean reachedThreshold = remainingMinutes <= thresholdMinutes;
         if (reachedThreshold) {
-            log.warn("There are {} minutes till marked extended hours close. Idx={}", remainingMinutes, index);
+            log.trace("There are {} minutes till marked extended hours close. Idx={}", remainingMinutes, index);
         }
 
         traceIsSatisfied(index, reachedThreshold);

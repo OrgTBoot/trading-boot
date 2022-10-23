@@ -18,11 +18,11 @@ import static com.google.common.base.Preconditions.checkState;
  * Rule is considered satisfied if total loss of closed positions plus current open position exceeds the loss threshold.
  */
 @Log4j2
-public class XStopTotalLossRule extends AbstractRule implements Rule {
+public class StopTotalLossRule extends AbstractRule implements Rule {
     private final BarSeries series;
     private final BigDecimal lossThreshold;
 
-    public XStopTotalLossRule(BarSeries series, BigDecimal lossThreshold) {
+    public StopTotalLossRule(BarSeries series, BigDecimal lossThreshold) {
         this.series = series;
         this.lossThreshold = lossThreshold;
         checkState(BigDecimal.ZERO.compareTo(this.lossThreshold) > 0, "Loss threshold is expected to be a negative value: " + lossThreshold);

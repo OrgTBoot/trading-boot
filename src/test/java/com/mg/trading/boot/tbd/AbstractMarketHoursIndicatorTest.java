@@ -5,7 +5,7 @@ import org.junit.Test;
 import org.ta4j.core.Bar;
 
 import static com.mg.trading.boot.tbd.TestDataProvider.buildBar;
-import static com.mg.trading.boot.domain.rules.indicators.markethours.XAbstractMarketHoursIndicator.*;
+import static com.mg.trading.boot.domain.rules.indicators.markethours.AbstractMarketHoursIndicator.*;
 
 public class AbstractMarketHoursIndicatorTest {
 

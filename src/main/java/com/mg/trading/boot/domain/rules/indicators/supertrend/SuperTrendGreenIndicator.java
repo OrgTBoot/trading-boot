@@ -5,12 +5,12 @@ import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.CachedIndicator;
 
 @Log4j2
-public class XSuperTrendGreenIndicator extends CachedIndicator<Boolean> {
-    final XSuperTrendIndicator indicator;
+public class SuperTrendGreenIndicator extends CachedIndicator<Boolean> {
+    final SuperTrendIndicator indicator;
 
-    public XSuperTrendGreenIndicator(BarSeries series, int length) {
+    public SuperTrendGreenIndicator(BarSeries series, int length) {
         super(series);
-        this.indicator = new XSuperTrendIndicator(super.getBarSeries(), 3D, length);
+        this.indicator = new SuperTrendIndicator(super.getBarSeries(), 3D, length);
     }
 
     @Override

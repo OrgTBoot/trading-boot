@@ -7,16 +7,16 @@ import org.ta4j.core.indicators.CachedIndicator;
 /**
  * Rule is satisfied if bar end time is in after-market time frame.
  */
-public class XExtendedMarketHoursIndicator extends CachedIndicator<Boolean> {
+public class ExtendedMarketHoursIndicator extends CachedIndicator<Boolean> {
 
-    public XExtendedMarketHoursIndicator(BarSeries series) {
+    public ExtendedMarketHoursIndicator(BarSeries series) {
         super(series);
     }
 
     @Override
     public Boolean calculate(int index) {
         Bar bar = getBarSeries().getBar(index);
-        boolean isExtendedMktHours = XAbstractMarketHoursIndicator.isExtendedMarketHours(bar);
+        boolean isExtendedMktHours = AbstractMarketHoursIndicator.isExtendedMarketHours(bar);
         log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, isExtendedMktHours);
 
         return isExtendedMktHours;

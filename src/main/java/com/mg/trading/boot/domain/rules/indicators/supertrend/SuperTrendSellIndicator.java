@@ -5,12 +5,12 @@ import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.CachedIndicator;
 
 @Log4j2
-public class XSuperTrendSellIndicator extends CachedIndicator<Boolean> {
-    final XSuperTrendIndicator indicator;
+public class SuperTrendSellIndicator extends CachedIndicator<Boolean> {
+    final SuperTrendIndicator indicator;
 
-    public XSuperTrendSellIndicator(BarSeries series, int length) {
+    public SuperTrendSellIndicator(BarSeries series, int length) {
         super(series);
-        this.indicator = new XSuperTrendIndicator(super.getBarSeries(), 3D, length);
+        this.indicator = new SuperTrendIndicator(super.getBarSeries(), 3D, length);
     }
 
     @Override

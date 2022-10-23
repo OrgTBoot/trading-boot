@@ -6,7 +6,7 @@ import org.ta4j.core.indicators.ATRIndicator;
 import java.util.Vector;
 import java.util.stream.IntStream;
 
-public class XSuperTrendIndicator {
+public class SuperTrendIndicator {
 
     private BarSeries series;
     private double multiplier;
@@ -18,18 +18,18 @@ public class XSuperTrendIndicator {
     private Vector<Double> lowerBands;
     private Vector<Boolean> isGreen;
 
-    public XSuperTrendIndicator(BarSeries series, Double multiplier, int lookbackPeriod) {
+    public SuperTrendIndicator(BarSeries series, Double multiplier, int lookbackPeriod) {
         this.multiplier = multiplier;
         this.lookbackPeriod = lookbackPeriod;
         this.series = series;
         calculate();
     }
 
-    public XSuperTrendIndicator(BarSeries series) {
+    public SuperTrendIndicator(BarSeries series) {
         this(series, 3.0, 10);
     }
 
-    public XSuperTrendIndicator(BarSeries series, Double multiplier) {
+    public SuperTrendIndicator(BarSeries series, Double multiplier) {
         this(series, multiplier, 10);
     }
 

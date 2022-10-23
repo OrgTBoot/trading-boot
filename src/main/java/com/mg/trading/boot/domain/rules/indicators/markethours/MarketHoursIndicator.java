@@ -7,16 +7,16 @@ import org.ta4j.core.indicators.CachedIndicator;
 
 
 @Log4j2
-public class XMarketHoursIndicator extends CachedIndicator<Boolean> {
+public class MarketHoursIndicator extends CachedIndicator<Boolean> {
 
-    public XMarketHoursIndicator(BarSeries series) {
+    public MarketHoursIndicator(BarSeries series) {
         super(series);
     }
 
     @Override
     public Boolean calculate(int index) {
         Bar bar = getBarSeries().getBar(index);
-        boolean isMktHours = XAbstractMarketHoursIndicator.isMarketHours(bar);
+        boolean isMktHours = AbstractMarketHoursIndicator.isMarketHours(bar);
         log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, isMktHours);
 
         return isMktHours;

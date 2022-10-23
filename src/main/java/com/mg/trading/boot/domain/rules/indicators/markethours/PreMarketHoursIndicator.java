@@ -4,16 +4,16 @@ import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.CachedIndicator;
 
-public class XPreMarketHoursIndicator extends CachedIndicator<Boolean> {
+public class PreMarketHoursIndicator extends CachedIndicator<Boolean> {
 
-    public XPreMarketHoursIndicator(BarSeries series) {
+    public PreMarketHoursIndicator(BarSeries series) {
         super(series);
     }
 
     @Override
     public Boolean calculate(int index) {
         Bar bar = getBarSeries().getBar(index);
-        boolean isPremarketHours = XAbstractMarketHoursIndicator.isPremarketHours(bar);
+        boolean isPremarketHours = AbstractMarketHoursIndicator.isPremarketHours(bar);
         log.trace("{}#calculate({}) -> {}", this.getClass().getSimpleName(), index, isPremarketHours);
 
         return isPremarketHours;

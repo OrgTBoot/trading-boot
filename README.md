@@ -14,8 +14,10 @@ You need to have a WB account with Paper Trading enabled.
 3. You should see GQL playground where you can start running queries and mutations
 
 ### GQL query and mutation examples
+
 :warning: Beaware this API endpoint can change over the time and should be treated only as a reference.
-For more details on the API endpoint check GQL API documentation that is available at `http://localhost:8087` `Docs` tab.
+For more details on the API endpoint check GQL API documentation that is available at `http://localhost:8087` `Docs`
+tab.
 
 ```
 query fetchScreenedTickers {

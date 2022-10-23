@@ -5,7 +5,7 @@ import org.ta4j.core.Bar;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 
-public abstract class XAbstractMarketHoursIndicator {
+public abstract class AbstractMarketHoursIndicator {
 
     /**
      * Pre-Market hours are considered to be between 4:00AM - 9:30AM EST

@@ -20,9 +20,10 @@ public class LogsManagementService extends AbstractRestProvider {
     }
 
     public void updateLogLevel(LogPackage logPackage, LogLevel level) {
-        String url = String.format("http://localhost:%s/actuator/loggers/%s?configuredLevel=%s", serverPort, logPackage.getValue(), level.name());
-
-        post(url, null, new ParameterizedTypeReference<String>() {
+        logPackage.getPackages().forEach(pkg -> {
+            String url = String.format("http://localhost:%s/actuator/loggers/%s?configuredLevel=%s", serverPort, pkg, level.name());
+            post(url, null, new ParameterizedTypeReference<String>() {
+            });
         });
     }
 }

@@ -10,19 +10,19 @@ import java.math.BigDecimal;
 
 import static com.mg.trading.boot.tbd.TestDataProvider.buildBar;
 
-public class XStopTotalLossRuleTest {
+public class StopTotalLossRuleTest {
     Num oneShare = DecimalNum.valueOf(1);
 
     @Test
     public void stopTotalLossRuleTest_nullTradingRecord() {
-        XStopTotalLossRule rule = new XStopTotalLossRule(null, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(null, BigDecimal.TEN.negate());
         Assert.assertFalse(rule.isSatisfied(0, null));
     }
 
     @Test
     public void stopTotalLossRuleTest_emptyTradingRecord() {
         TradingRecord tradingRecord = new BaseTradingRecord();
-        XStopTotalLossRule rule = new XStopTotalLossRule(new BaseBarSeries(), BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(new BaseBarSeries(), BigDecimal.TEN.negate());
 
         Assert.assertFalse(rule.isSatisfied(0, tradingRecord));
     }
@@ -37,7 +37,7 @@ public class XStopTotalLossRuleTest {
         TradingRecord tradingRecord = new BaseTradingRecord();
         tradingRecord.operate(0, series.getBar(0).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 1
         Assert.assertFalse(rule.isSatisfied(0, tradingRecord));
@@ -53,7 +53,7 @@ public class XStopTotalLossRuleTest {
         TradingRecord tradingRecord = new BaseTradingRecord();
         tradingRecord.operate(0, series.getBar(0).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 1
         Assert.assertFalse(rule.isSatisfied(1, tradingRecord));
@@ -71,7 +71,7 @@ public class XStopTotalLossRuleTest {
         tradingRecord.operate(0, series.getBar(0).getClosePrice(), oneShare);
         tradingRecord.operate(0, series.getBar(1).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 2
         Assert.assertFalse(rule.isSatisfied(2, tradingRecord));
@@ -89,7 +89,7 @@ public class XStopTotalLossRuleTest {
         tradingRecord.operate(0, series.getBar(0).getClosePrice(), oneShare);
         tradingRecord.operate(0, series.getBar(1).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 3
         Assert.assertTrue(rule.isSatisfied(3, tradingRecord));
@@ -109,7 +109,7 @@ public class XStopTotalLossRuleTest {
         tradingRecord.operate(0, series.getBar(1).getClosePrice(), oneShare);
         tradingRecord.operate(0, series.getBar(2).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 2
         Assert.assertFalse(rule.isSatisfied(3, tradingRecord));
@@ -129,7 +129,7 @@ public class XStopTotalLossRuleTest {
         tradingRecord.operate(0, series.getBar(1).getClosePrice(), oneShare);
         tradingRecord.operate(0, series.getBar(2).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 3
         Assert.assertFalse(rule.isSatisfied(3, tradingRecord));
@@ -149,7 +149,7 @@ public class XStopTotalLossRuleTest {
         tradingRecord.operate(0, series.getBar(1).getClosePrice(), oneShare);
         tradingRecord.operate(0, series.getBar(2).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 3
         Assert.assertTrue(rule.isSatisfied(3, tradingRecord));
@@ -165,7 +165,7 @@ public class XStopTotalLossRuleTest {
         TradingRecord tradingRecord = new BaseTradingRecord();
         tradingRecord.operate(0, series.getBar(0).getClosePrice(), oneShare);
 
-        XStopTotalLossRule rule = new XStopTotalLossRule(series, BigDecimal.TEN.negate());
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
 
         //evaluate at bar idx 1
         Assert.assertTrue(rule.isSatisfied(1, tradingRecord));

@@ -1,16 +1,23 @@
 package com.mg.trading.boot.logging;
 
+import java.util.Arrays;
+import java.util.List;
+
 public enum LogPackage {
-    RULES("com.mg.trading.boot.domain.rules"),
-    INDICATORS("com.mg.trading.boot.domain.rules.indicators");
+    RULES(Arrays.asList(
+            "org.ta4j.core.rules",
+            "com.mg.trading.boot.domain.rules")),
+    INDICATORS(Arrays.asList(
+            "org.ta4j.core.indicators",
+            "com.mg.trading.boot.domain.rules.indicators"));
 
-    private final String value;
+    private final List<String> packages;
 
-    LogPackage(String value) {
-        this.value = value;
+    LogPackage(List<String> packages) {
+        this.packages = packages;
     }
 
-    public String getValue() {
-        return value;
+    public List<String> getPackages() {
+        return packages;
     }
 }
