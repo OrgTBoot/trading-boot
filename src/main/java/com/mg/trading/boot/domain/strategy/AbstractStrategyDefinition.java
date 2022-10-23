@@ -39,9 +39,10 @@ public abstract class AbstractStrategyDefinition implements IStrategyDefinition 
 
     @Override
     public BarSeries updateSeries(List<TickerQuote> quotes) {
-        //todo: review possibility of removing the last minute - suspecting it is not fully closed.
         if (!CollectionUtils.isEmpty(quotes)) {
-            upsertSeries(quotes);
+            //there is a high possibility that the last quote is not a full bar, we always ignore it.
+            List<TickerQuote> fullQuotes = quotes.subList(0, quotes.size() - 1);
+            upsertSeries(fullQuotes);
         }
 
         return series;

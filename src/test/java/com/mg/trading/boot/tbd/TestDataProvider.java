@@ -55,4 +55,21 @@ public class TestDataProvider {
 
         return new BaseBar(Duration.ZERO, dateTime, price, price, price, price, BigDecimal.ONE);
     }
+
+    public static TickerQuote buildQuote(int hour, int minute, BigDecimal price) {
+        final ZoneId zoneId = BarSeriesUtils.getDefaultZone();
+        final LocalDate date = LocalDate.of(2000, 1, 1);
+        final LocalTime time = LocalTime.of(hour, minute);
+        final ZonedDateTime dateTime = ZonedDateTime.of(date, time, zoneId);
+
+        return TickerQuote.builder()
+                .timeZone(zoneId.toString())
+                .timeStamp(dateTime.toInstant().toEpochMilli())
+                .openPrice(price)
+                .closePrice(price)
+                .lowPrice(price)
+                .highPrice(price)
+                .volume(1000L)
+                .build();
+    }
 }

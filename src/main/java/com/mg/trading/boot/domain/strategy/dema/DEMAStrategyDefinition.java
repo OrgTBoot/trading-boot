@@ -26,8 +26,6 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
 
     private final DEMAParameters params = DEMAParameters.optimal();
     private Strategy strategy;
-    private Rule entryRule;
-    private Rule exitRule;
 
     public DEMAStrategyDefinition(String symbol) {
         super(symbol, "DEMA");
@@ -46,15 +44,6 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
         return strategy;
     }
 
-    @Override
-    public Rule getEntryRule() {
-        return entryRule;
-    }
-
-    @Override
-    public Rule getExitRule() {
-        return exitRule;
-    }
 
     private Strategy initStrategy() {
         //INDICATORS
@@ -69,7 +58,7 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
         Rule stopTotalLossRule = new StopTotalLossRule(series, params.getTotalLossThresholdPercent());
 
         //todo: crossedUp needs a confirmation - we need second indicator that can act as a confirmation
-        this.entryRule = crossedUp
+        Rule entryRule = crossedUp
                 .and(marketHours)
                 .and(stopTotalLossRule.negation());
 
@@ -82,7 +71,7 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
         Rule timeToMarketClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
-        this.exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
+        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
                 .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
                 .or(stopTotalLossRule)                        // 5. or reached day max loss percent for a given symbol

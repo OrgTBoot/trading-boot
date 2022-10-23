@@ -26,8 +26,6 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
 
     private final EMAParameters params = EMAParameters.optimal();
     private Strategy strategy;
-    private Rule entryRule;
-    private Rule exitRule;
 
     public EMAStrategyDefinition(String symbol) {
         super(symbol, "EMA");
@@ -46,16 +44,6 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         return strategy;
     }
 
-    @Override
-    public Rule getEntryRule() {
-        return entryRule;
-    }
-
-    @Override
-    public Rule getExitRule() {
-        return exitRule;
-    }
-
     private Strategy initStrategy() {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
 
@@ -68,7 +56,7 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         Rule marketHours = new MarketHoursRule(series).or(new MarketPreHoursRule(series));
         Rule stopTotalLossRule = new StopTotalLossRule(series, params.getTotalLossThresholdPercent());
 
-        this.entryRule = crossedUpEMA.and(marketHours).and(stopTotalLossRule.negation());
+        Rule entryRule = crossedUpEMA.and(marketHours).and(stopTotalLossRule.negation());
 
         //exit
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper());
@@ -78,7 +66,7 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
         Rule timeToMarketClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
-        this.exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
+        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
                 .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
                 .or(stopTotalLossRule)                        // 5. or reached day max loss percent for a given symbol
