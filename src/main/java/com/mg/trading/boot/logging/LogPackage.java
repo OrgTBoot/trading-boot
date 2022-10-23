@@ -9,7 +9,7 @@ public enum LogPackage {
             "com.mg.trading.boot.domain.rules")),
     INDICATORS(Arrays.asList(
             "org.ta4j.core.indicators",
-            "com.mg.trading.boot.domain.rules.indicators"));
+            "com.mg.trading.boot.domain.indicators"));
 
     private final List<String> packages;
 

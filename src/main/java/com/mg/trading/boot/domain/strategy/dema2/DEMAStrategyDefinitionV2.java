@@ -80,7 +80,6 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
         Rule superTrendSell = new SuperTrendSellRule(series, params.getShortBarCount());
         Rule extendedMarketHours = new MarketExtendedHoursRule(series);
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
-//        Rule stopLossRule = new XStopLossRule(closePrice, params.getTotalLossThresholdPercent());
         Rule timeToExtendedHoursClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
         this.exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling

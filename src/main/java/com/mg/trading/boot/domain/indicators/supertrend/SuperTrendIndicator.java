@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.rules.indicators.supertrend;
+package com.mg.trading.boot.domain.indicators.supertrend;
 
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.indicators.ATRIndicator;

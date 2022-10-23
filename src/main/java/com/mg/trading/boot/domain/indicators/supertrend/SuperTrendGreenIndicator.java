@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.rules.indicators.supertrend;
+package com.mg.trading.boot.domain.indicators.supertrend;
 
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;

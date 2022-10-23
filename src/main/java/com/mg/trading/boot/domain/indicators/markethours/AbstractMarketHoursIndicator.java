@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.rules.indicators.markethours;
+package com.mg.trading.boot.domain.indicators.markethours;
 
 import org.ta4j.core.Bar;
 

@@ -1,6 +1,6 @@
 package com.mg.trading.boot.domain.rules;
 
-import com.mg.trading.boot.domain.rules.indicators.supertrend.SuperTrendSellIndicator;
+import com.mg.trading.boot.domain.indicators.supertrend.SuperTrendSellIndicator;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Rule;
