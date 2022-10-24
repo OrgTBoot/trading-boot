@@ -12,6 +12,7 @@ import com.mg.trading.boot.domain.strategy.IParameters;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
@@ -126,6 +127,8 @@ public class GQLController {
                 return new DEMAStrategyDefinition(symbol);
             case DEMA_V2:
                 return new DEMAStrategyDefinitionV2(symbol);
+            case DEMA_V3:
+                return new DEMAStrategyDefinitionV3(symbol);
             default:
                 throw new ValidationException("Strategy not supported");
         }

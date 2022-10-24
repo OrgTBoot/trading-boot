@@ -4,4 +4,5 @@ public enum TradingStrategies {
     EMA,
     DEMA,
     DEMA_V2,
+    DEMA_V3,
 }

@@ -1,5 +1,7 @@
 package com.mg.trading.boot.domain.strategy.dema2;
 
+import com.mg.trading.boot.domain.indicators.supertrentv2.Signal;
+import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
 import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
@@ -65,7 +67,7 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
         //EXIT RULES
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper());
         Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
-        Rule superTrendSell = new SuperTrendSellRule(series, params.getShortBarCount());
+        Rule superTrendSell = new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN);
         Rule extendedMarketHours = new MarketExtendedHoursRule(series);
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
         Rule timeToExtendedHoursClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);

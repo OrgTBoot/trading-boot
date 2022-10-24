@@ -1,26 +1,39 @@
 package com.mg.trading.boot.tbd;
 
-import com.mg.trading.boot.domain.models.TickerQuote;
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
 import lombok.extern.log4j.Log4j2;
+import org.junit.Before;
 import org.junit.Test;
-import org.ta4j.core.*;
+import org.slf4j.LoggerFactory;
+import org.ta4j.core.BarSeriesManager;
+import org.ta4j.core.TradingRecord;
 import org.ta4j.core.reports.TradingStatement;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
+import static com.mg.trading.boot.tbd.TestDataProvider.getQuotesFromFile;
+
 
 @Log4j2
 public class StrategyTest {
+
+    @Before
+    public void setUp() {
+        final Logger logger = (Logger) LoggerFactory.getLogger(Logger.ROOT_LOGGER_NAME);
+        logger.setLevel(Level.INFO);
+    }
 
 //    /**
 //     * Running two data sets through the same strategy.
@@ -175,18 +188,24 @@ public class StrategyTest {
             statementsDEMAv2.add(demaV2);
         });
 
-        printTradingSummaries("EMA", statementsEMA, "DEMA", statementsDEMA, "DEMAv2", statementsDEMAv2);
+        List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
+        symbols.forEach(s -> {
+            TradingStatement demaV3 = testXStrategy(s, new DEMAStrategyDefinitionV3(s));
+            statementsDEMAv3.add(demaV3);
+        });
+
+        AsciiTable table = new AsciiTable();
+        reportToTable("EMA", statementsEMA, table);
+        reportToTable("DEMA", statementsDEMA, table);
+        reportToTable("DEMAv2", statementsDEMAv2, table);
+        reportToTable("DEMAv3", statementsDEMAv3, table);
+        print(table);
     }
 
     private static TradingStatement testXStrategy(String symbol, IStrategyDefinition def) {
+        def.updateSeries(getQuotesFromFile(symbol + ".json"));
 
-        List<TickerQuote> quotes = TestDataProvider.getQuotesFromFile(symbol + ".json");
-//        BarSeries series = new BaseBarSeries();
-//        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
-
-        def.updateSeries(quotes);
         BarSeriesManager seriesManager = new BarSeriesManager(def.getSeries());
-
         TradingRecord tradingRecord = seriesManager.run(def.getStrategy());
 
         log.info(def.getClass().getSimpleName());
@@ -196,41 +215,24 @@ public class StrategyTest {
         return ReportGenerator.buildTradingStatement(tradingRecord);
     }
 
-    private static void printTradingSummaries(String name1, List<TradingStatement> list1, String name2, List<TradingStatement> list2, String name3, List<TradingStatement> list3) {
+    private static void reportToTable(String name, List<TradingStatement> statements, AsciiTable table) {
         Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
         Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
         Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();
         Function<List<TradingStatement>, Double> total = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
 
-
-        AsciiTable table = new AsciiTable();
-        table.addRule();
-        table.addRow("STRATEGY", "DATA SETS", "GAIN %", "POSITIONS", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
-        table.addRule();
-        table.addRow(name1, list1.size(), percent.apply(list1) + "%", positions.apply(list1), winning.apply(list1) / total.apply(list1));
-        table.addRule();
-        table.addRow(name2, list2.size(), percent.apply(list2) + "%", positions.apply(list2), winning.apply(list2) / total.apply(list2));
-        table.addRule();
-        table.addRow(name3, list3.size(), percent.apply(list3) + "%", positions.apply(list3), winning.apply(list3) / total.apply(list3));
+        if (table.getColNumber() == 0) {
+            table.addRule();
+            table.addRow("STRATEGY", "DATA SETS", "GAIN %", "POSITIONS", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+            table.addRule();
+        }
+        table.addRow(name, statements.size(), percent.apply(statements) + "%", positions.apply(statements), winning.apply(statements) / total.apply(statements));
         table.addRule();
         table.getRenderer().setCWC(new CWC_LongestLine());
-        log.info("\n" + table.render());
     }
 
-
-//    private static void assertFirstTradingStatementBeatsSecond(TradingStatement first, TradingStatement second) {
-//        final double winningRatio1 = winningRatio(first);
-//        final double totalProfitLoss1 = totalInDollars(first);
-//        final double totalProfitLossPercentage1 = totalInPercent(first);
-//
-//        final double winningRatio2 = winningRatio(second);
-//        final double totalProfitLoss2 = totalInDollars(second);
-//        final double totalProfitLossPercentage2 = totalInPercent(second);
-//
-//        Assert.assertTrue("Profit of the first (" + totalProfitLossPercentage1 + ") < second (" + totalProfitLossPercentage2 + ")", totalProfitLossPercentage1 >= totalProfitLossPercentage2);
-//        Assert.assertTrue(totalProfitLoss1 >= totalProfitLoss2);
-//        Assert.assertTrue(winningRatio1 >= 0.5 || winningRatio1 == 0);
-//        Assert.assertTrue("Winning ration of the first (" + winningRatio1 + ") < second (" + winningRatio2 + ")", winningRatio1 >= winningRatio2);
-//    }
+    private void print(AsciiTable table) {
+        log.info("\n" + table.render());
+    }
 
 }
