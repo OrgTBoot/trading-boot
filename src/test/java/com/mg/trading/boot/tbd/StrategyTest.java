@@ -141,7 +141,6 @@ public class StrategyTest {
         symbols.add("IMVT_1DAY_1MIN");
         symbols.add("ETMB_1DAY_1MIN");
         symbols.add("TELL_1DAY_1MIN");
-        symbols.add("AMPY_1DAY_1MIN");
         symbols.add("WTI_1DAY_IMIN_BERISH");
         symbols.add("SYTA_loss_tolerance");
         symbols.add("BHG_10_11_2022");
