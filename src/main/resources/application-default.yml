@@ -4,12 +4,12 @@ features:
 providers:
   webull:
     trade-account:
-      id: 10583124
+      id: <redacted>
     paper-account:
-      id: 9165031
+      id: <redacted>
     auth:
       key: access_token
-      secret: dc_us_tech1.183fb203a73-e815c8d646ce455ea7d279ee244eb323
+      secret: <redacted>
 
 logging:
   level:
