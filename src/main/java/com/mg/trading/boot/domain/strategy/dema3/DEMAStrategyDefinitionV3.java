@@ -58,10 +58,11 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         Rule marketHours = new MarketHoursRule(series);
         Rule crossedUpDEMA = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
         Rule stopTotalLossRule = new StopTotalLossRule(series, params.getTotalLossThresholdPercent());
-        Rule superTrendBuy = new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP);
+        Rule superTrendUpSignalUp = new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP);
+//        Rule superTrendUpSignalNone = new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.NO_SIGNAL);
 
         Rule entryRule = crossedUpDEMA                    // 1. trend
-                .and(superTrendBuy)                       // 2. and confirmation
+                .and(superTrendUpSignalUp)                // 2. and confirmation
                 .and(stopTotalLossRule.negation())        // 3. and avoid entering again in a bearish stock
                 .and(preMarketHours.or(marketHours));     // 4. and enter only in marked hours
 
@@ -74,8 +75,8 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
         Rule timeToExtendedHoursClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
 
-        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
-                .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
+        Rule exitRule = crossedDownDEMA                       // 1. trend reversal signal, reached upper line, market will start selling
+                .and(superTrendSell)                          // 2. or down-trend and sell confirmation
                 .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
                 .or(timeToExtendedHoursClose)                 // 4. or last resort rule - dump position of approaching market close
                 .or(stopTotalLossRule);                       // 5. or reached day max loss percent for a given symbol

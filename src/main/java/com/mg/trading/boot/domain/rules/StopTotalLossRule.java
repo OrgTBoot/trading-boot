@@ -1,5 +1,6 @@
 package com.mg.trading.boot.domain.rules;
 
+import com.mg.trading.boot.utils.NumberUtils;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Position;
@@ -24,9 +25,9 @@ public class StopTotalLossRule extends AbstractRule implements Rule {
 
     public StopTotalLossRule(BarSeries series, BigDecimal lossThreshold) {
         this.series = series;
-        this.lossThreshold = lossThreshold;
-        checkState(BigDecimal.ZERO.compareTo(this.lossThreshold) > 0, "Loss threshold is expected to be a negative value: " + lossThreshold);
+        this.lossThreshold = NumberUtils.toNegative(lossThreshold);
     }
+
 
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
@@ -35,15 +36,14 @@ public class StopTotalLossRule extends AbstractRule implements Rule {
             return false;
         }
 
-
         Num closedPositionsLoss = new ProfitLossPercentageCriterion().calculate(series, tradingRecord);
         Num openPositionLoss = getCurrentPositionLoss(index, tradingRecord);
-        Num currentLoss = closedPositionsLoss.plus(openPositionLoss);
+        Num totalLoss = closedPositionsLoss.plus(openPositionLoss);
 
-        boolean satisfied = currentLoss.doubleValue() < lossThreshold.doubleValue();
+        boolean satisfied = totalLoss.doubleValue() < lossThreshold.doubleValue();
 
         if (satisfied) {
-            log.warn("You've reached total loss tolerance threshold. Current {}, allowed is {}. Idx={}", currentLoss.doubleValue(), lossThreshold.doubleValue(), index);
+            log.warn("You've reached total loss tolerance threshold. Positions: closed='{}', open='{}', total='{}'. Allowed is {}. Idx={}", closedPositionsLoss.doubleValue(), openPositionLoss.doubleValue(), totalLoss.doubleValue(), lossThreshold.doubleValue(), index);
         }
         traceIsSatisfied(index, satisfied);
 

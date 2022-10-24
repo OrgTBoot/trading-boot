@@ -168,6 +168,7 @@ public class StrategyTest {
         symbols.add("10_20_2020_WKHS");
         symbols.add("10_20_2022_TSLA");
         symbols.add("10_20_20200_AMD");
+        symbols.add("10_23_2022_CABA");
 
 
         List<TradingStatement> statementsEMA = new ArrayList<>();

@@ -26,7 +26,7 @@ public class EMAParameters extends AbstractParameters {
         return EMAParameters.builder()
                 .longBarCount(30)
                 .shortBarCount(5)
-                .totalLossThresholdPercent(BigDecimal.valueOf(-10))
+                .totalLossThresholdPercent(BigDecimal.TEN)
                 .minutesToMarketClose(30)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)

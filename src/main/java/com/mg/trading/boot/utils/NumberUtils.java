@@ -52,6 +52,10 @@ public class NumberUtils {
         return DecimalNum.valueOf(value);
     }
 
+    public static BigDecimal toNegative(BigDecimal value) {
+        return value.doubleValue() > 0 ? value.negate() : value;
+    }
+
     //----------------------------------------------------
     //------------------Private methods-------------------
     //----------------------------------------------------
