@@ -19,8 +19,10 @@ import org.ta4j.core.BarSeriesManager;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.reports.TradingStatement;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.mg.trading.boot.tbd.TestDataProvider.getQuotesFromFile;
@@ -147,51 +149,29 @@ public class StrategyTest {
 
     @Test
     public void testMultipleStocks() {
-        List<String> symbols = new ArrayList<>();
-        symbols.add("OPEN");
-        symbols.add("PRVB_10_10_2022");
-        symbols.add("IMVT_10_08_2022");
-        symbols.add("IMVT_1DAY_1MIN");
-        symbols.add("ETMB_1DAY_1MIN");
-        symbols.add("TELL_1DAY_1MIN");
-        symbols.add("WTI_1DAY_IMIN_BERISH");
-        symbols.add("SYTA_loss_tolerance");
-        symbols.add("BHG_10_11_2022");
-        symbols.add("AMD_10_13_2022");
-        symbols.add("NET_10_17_2022");
-        symbols.add("REI_10_17_2022");
-        symbols.add("10_19_2022_AMPX");
-        symbols.add("10_19_2022_ESTE");
-        symbols.add("10_19_2022_MNTV");
-        symbols.add("10_19_2022_MVST");
-        symbols.add("10_19_2022_ZYME");
-        symbols.add("10_20_2020_WKHS");
-        symbols.add("10_20_2022_TSLA");
-        symbols.add("10_20_20200_AMD");
-        symbols.add("10_23_2022_CABA");
-
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 
         List<TradingStatement> statementsEMA = new ArrayList<>();
-        symbols.forEach(s -> {
-            TradingStatement ema = testXStrategy(s, new EMAStrategyDefinition(s));
+        quoteFiles.forEach(s -> {
+            TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
             statementsEMA.add(ema);
         });
 
         List<TradingStatement> statementsDEMA = new ArrayList<>();
-        symbols.forEach(s -> {
-            TradingStatement dema = testXStrategy(s, new DEMAStrategyDefinition(s));
+        quoteFiles.forEach(s -> {
+            TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
             statementsDEMA.add(dema);
         });
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
-        symbols.forEach(s -> {
-            TradingStatement demaV2 = testXStrategy(s, new DEMAStrategyDefinitionV2(s));
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
             statementsDEMAv2.add(demaV2);
         });
 
         List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
-        symbols.forEach(s -> {
-            TradingStatement demaV3 = testXStrategy(s, new DEMAStrategyDefinitionV3(s));
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
             statementsDEMAv3.add(demaV3);
         });
 
@@ -203,15 +183,15 @@ public class StrategyTest {
         print(table);
     }
 
-    private static TradingStatement testXStrategy(String symbol, IStrategyDefinition def) {
-        def.updateSeries(getQuotesFromFile(symbol + ".json"));
+    private static TradingStatement testStrategy(File file, IStrategyDefinition def) {
+        def.updateSeries(getQuotesFromFile(file));
 
         BarSeriesManager seriesManager = new BarSeriesManager(def.getSeries());
         TradingRecord tradingRecord = seriesManager.run(def.getStrategy());
 
         log.info(def.getClass().getSimpleName());
-        ReportGenerator.printTradingRecords(tradingRecord, symbol);
-        ReportGenerator.printTradingSummary(tradingRecord, symbol);
+        ReportGenerator.printTradingRecords(tradingRecord, file.getName());
+        ReportGenerator.printTradingSummary(tradingRecord, file.getName());
 
         return ReportGenerator.buildTradingStatement(tradingRecord);
     }

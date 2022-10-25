@@ -14,19 +14,36 @@ import org.ta4j.core.BaseBarSeries;
 import java.io.File;
 import java.math.BigDecimal;
 import java.time.*;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TestDataProvider {
 
     @SneakyThrows
-    public static List<TickerQuote> getQuotesFromFile(String fileName) {
+    public static List<File> getQuoteFiles() {
         ClassLoader classLoader = TestDataProvider.class.getClassLoader();
-        File file = new File(classLoader.getResource(fileName).getFile());
+        File[] files = new File(classLoader.getResource("./").getFile()).listFiles();
+
+        return Arrays.stream(files).filter(it -> it.getName().toLowerCase()
+                        .endsWith("json"))
+                .collect(Collectors.toList());
+    }
+
+    @SneakyThrows
+    public static List<TickerQuote> getQuotesFromFile(File file) {
         String data = FileUtils.readFileToString(file, "UTF-8");
         ObjectMapper objectMapper = new ObjectMapper();
 
         return objectMapper.readValue(data, new TypeReference<List<TickerQuote>>() {
         });
+    }
+
+    @SneakyThrows
+    public static List<TickerQuote> getQuotesFromFile(String fileName) {
+        ClassLoader classLoader = TestDataProvider.class.getClassLoader();
+        File file = new File(classLoader.getResource(fileName).getFile());
+        return getQuotesFromFile(file);
     }
 
     public static BarSeries getBarSeriesFromFile(String fileName) {
