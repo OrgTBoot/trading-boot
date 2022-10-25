@@ -60,22 +60,28 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         CrossedUpIndicatorRule crossedUpEMA = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
         Rule marketHours = new MarketHoursRule(series).or(new MarketPreHoursRule(series));
         Rule stopTotalLossRule = new StopTotalLossRule(series, params.getTotalLossThresholdPercent());
+        Rule market60MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES);
 
-        Rule entryRule = crossedUpEMA.and(marketHours).and(stopTotalLossRule.negation());
+        Rule entryRule = crossedUpEMA
+                .and(marketHours)                         // and enter only in marked hours
+                .and(stopTotalLossRule.negation())        // and avoid entering again in a bearish stock
+                .and(market60MinLeft.negation());         // and avoid entering in 60 min before market close
 
         //exit
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper());
         Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
         Rule superTrendSell = new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN);
-        Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
+        Rule has1PercentProfit = new StopGainRule(closePrice, 1);
+        Rule hasAnyProfit = new StopGainRule(closePrice, 0.1);
         Rule market30MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES);
-        Rule afterMarket60MinLeft = new MarketTimeLeftRule(series, AFTER_HOURS, 60, TimeUnit.MINUTES);
+        Rule market10MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES);
 
         Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
-                .or(market30MinLeft.and(hasMinimalProfit))    // 3. or try to exit in after marked with some profit
-                .or(stopTotalLossRule)                        // 5. or reached day max loss percent for a given symbol
-                .or(afterMarket60MinLeft);                    // 6. or last resort rule - dump position of approaching market close
+                .or(market60MinLeft.and(has1PercentProfit))   // 3. or 60m to market close, take profits >= 1%
+                .or(market30MinLeft.and(hasAnyProfit))        // 4. or 30m to market close, take any profits > 0%
+                .or(market10MinLeft)                          // 5. or 10m to market close, force close position even in loss
+                .or(stopTotalLossRule);                       // 6. or reached day max loss percent for a given symbol
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }

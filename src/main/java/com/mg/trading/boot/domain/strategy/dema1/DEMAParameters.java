@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.strategy.dema;
+package com.mg.trading.boot.domain.strategy.dema1;
 
 import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;

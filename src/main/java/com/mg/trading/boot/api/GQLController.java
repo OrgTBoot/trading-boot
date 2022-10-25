@@ -10,7 +10,7 @@ import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IParameters;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema.DEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;

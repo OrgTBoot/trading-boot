@@ -4,7 +4,7 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema.DEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
@@ -22,7 +22,6 @@ import org.ta4j.core.reports.TradingStatement;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 
 import static com.mg.trading.boot.tbd.TestDataProvider.getQuotesFromFile;
