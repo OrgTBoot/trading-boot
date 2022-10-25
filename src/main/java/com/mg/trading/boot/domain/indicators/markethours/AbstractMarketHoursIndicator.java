@@ -45,12 +45,36 @@ public abstract class AbstractMarketHoursIndicator {
         return hour >= 16 && hour < 20;
     }
 
-    public static long getMinutesTillMarketExtendedHoursClose(Bar bar) {
+//    public static long getMinutesTillMarketExtendedHoursClose(Bar bar) {
+//        ZonedDateTime time = getDateTime(bar);
+//        ZonedDateTime marketCloseTime = ZonedDateTime.of(
+//                time.getYear(), time.getMonthValue(), time.getDayOfMonth(), 16, 0, 0, 0, time.getZone());
+//
+//        return ChronoUnit.MINUTES.between(time, marketCloseTime);
+//    }
+
+    public static long getMinutesTillPreMarketHoursClose(Bar bar) {
         ZonedDateTime time = getDateTime(bar);
-        ZonedDateTime marketCloseTime = ZonedDateTime.of(
+        ZonedDateTime marketHoursStartTime = ZonedDateTime.of(
+                time.getYear(), time.getMonthValue(), time.getDayOfMonth(), 9, 30, 0, 0, time.getZone());
+
+        return ChronoUnit.MINUTES.between(time, marketHoursStartTime);
+    }
+
+    public static long getMinutesTillMarketHoursClose(Bar bar) {
+        ZonedDateTime time = getDateTime(bar);
+        ZonedDateTime marketHoursStartTime = ZonedDateTime.of(
                 time.getYear(), time.getMonthValue(), time.getDayOfMonth(), 16, 0, 0, 0, time.getZone());
 
-        return ChronoUnit.MINUTES.between(time, marketCloseTime);
+        return ChronoUnit.MINUTES.between(time, marketHoursStartTime);
+    }
+
+    public static long getMinutesTillExtendedHoursClose(Bar bar) {
+        ZonedDateTime time = getDateTime(bar);
+        ZonedDateTime marketHoursStartTime = ZonedDateTime.of(
+                time.getYear(), time.getMonthValue(), time.getDayOfMonth(), 20, 0, 0, 0, time.getZone());
+
+        return ChronoUnit.MINUTES.between(time, marketHoursStartTime);
     }
 
     private static int getHour(Bar bar) {

@@ -7,6 +7,7 @@ import org.ta4j.core.Rule;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
 import static com.mg.trading.boot.tbd.TestDataProvider.buildBar;
 import static com.mg.trading.boot.tbd.TestDataProvider.buildBarSeries;
 
@@ -15,7 +16,7 @@ public class MarketTimeToExtendedHoursCloseRuleTest {
     @Test
     public void marketTimeToExtendedHoursCloseRuleTest() {
         BarSeries series = buildBarSeries();
-        Rule rule = new MarketTimeToExtendedHoursCloseRule(series, 60, TimeUnit.MINUTES);
+        Rule rule = new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES);
 
         series.addBar(buildBar(1, 0));  //pre
         Assert.assertFalse(rule.isSatisfied(series.getEndIndex()));

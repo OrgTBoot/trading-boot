@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 public class EMAParameters extends AbstractParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
-    private Integer minutesToMarketClose;
     private BigDecimal bollingerMultiplier;
 
 
@@ -27,7 +26,6 @@ public class EMAParameters extends AbstractParameters {
                 .longBarCount(30)
                 .shortBarCount(5)
                 .totalLossThresholdPercent(BigDecimal.TEN)
-                .minutesToMarketClose(30)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesPullFrequencyInSec(10)

@@ -113,10 +113,10 @@ public class AbstractMarketHoursIndicatorTest {
 
     @Test
     public void getMinutesTillExtendedMarketHoursCloseTest() {
-        Bar bar = buildBar(15, 0);
-        Assert.assertEquals(60, getMinutesTillMarketExtendedHoursClose(bar));
+        Bar bar = buildBar(19, 0);
+        Assert.assertEquals(60, getMinutesTillExtendedHoursClose(bar));
 
-        bar = buildBar(15, 30);
-        Assert.assertEquals(30, getMinutesTillMarketExtendedHoursClose(bar), 0);
+        bar = buildBar(19, 30);
+        Assert.assertEquals(30, getMinutesTillExtendedHoursClose(bar), 0);
     }
 }

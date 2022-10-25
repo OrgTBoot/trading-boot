@@ -18,6 +18,9 @@ import org.ta4j.core.rules.StopGainRule;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.AFTER_HOURS;
+import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
+
 
 /**
  * For more details see: <a href="https://www.youtube.com/watch?v=Jd1JVF7Oy_A">Double EMA Cross</a>
@@ -64,15 +67,15 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper());
         Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
         Rule superTrendSell = new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN);
-        Rule extendedMarketHours = new MarketExtendedHoursRule(series);
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
-        Rule timeToMarketClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
+        Rule market30MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES);
+        Rule afterMarket60MinLeft = new MarketTimeLeftRule(series, AFTER_HOURS, 60, TimeUnit.MINUTES);
 
         Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
-                .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
+                .or(market30MinLeft.and(hasMinimalProfit))    // 3. or try to exit in after marked with some profit
                 .or(stopTotalLossRule)                        // 5. or reached day max loss percent for a given symbol
-                .or(timeToMarketClose);                       // 6. or last resort rule - dump position of approaching market close
+                .or(afterMarket60MinLeft);                    // 6. or last resort rule - dump position of approaching market close
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }

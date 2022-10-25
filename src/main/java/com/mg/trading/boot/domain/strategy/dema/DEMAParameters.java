@@ -21,14 +21,12 @@ public class DEMAParameters extends AbstractParameters {
     private Number positionStopGainPercent;
     private Number positionStopLossPercent;
     private BigDecimal bollingerMultiplier;
-    private Integer minutesToMarketClose;
 
 
     public static DEMAParameters optimal() {
         return DEMAParameters.builder()
                 .bollingerMultiplier(BigDecimal.valueOf(3))
                 .totalLossThresholdPercent(BigDecimal.TEN)
-                .minutesToMarketClose(30)
                 .positionStopLossPercent(2)
                 .positionStopGainPercent(3)
                 .longBarCount(60)

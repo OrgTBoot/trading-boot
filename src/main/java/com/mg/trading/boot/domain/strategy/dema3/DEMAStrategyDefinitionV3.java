@@ -18,6 +18,9 @@ import org.ta4j.core.rules.StopGainRule;
 
 import java.util.concurrent.TimeUnit;
 
+import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.AFTER_HOURS;
+import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
+
 
 /**
  * For more details see: <a href="https://www.youtube.com/watch?v=Jd1JVF7Oy_A">Double EMA Cross</a>
@@ -71,14 +74,14 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
         Rule superTrendSell = new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN);
 
-        Rule extendedMarketHours = new MarketExtendedHoursRule(series);
         Rule hasMinimalProfit = new StopGainRule(closePrice, 0.1);
-        Rule timeToExtendedHoursClose = new MarketTimeToExtendedHoursCloseRule(series, params.getMinutesToMarketClose(), TimeUnit.MINUTES);
+        Rule market30MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES);
+        Rule afterMarket60MinLeft = new MarketTimeLeftRule(series, AFTER_HOURS, 60, TimeUnit.MINUTES);
 
         Rule exitRule = crossedDownDEMA                       // 1. trend reversal signal, reached upper line, market will start selling
                 .and(superTrendSell)                          // 2. or down-trend and sell confirmation
-                .or(extendedMarketHours.and(hasMinimalProfit))// 3. or try to exit in after marked with some profit
-                .or(timeToExtendedHoursClose)                 // 4. or last resort rule - dump position of approaching market close
+                .or(market30MinLeft.and(hasMinimalProfit))    // 3. or try to exit in after marked with some profit
+                .or(afterMarket60MinLeft)                     // 4. or last resort rule - dump position of approaching market close
                 .or(stopTotalLossRule);                       // 5. or reached day max loss percent for a given symbol
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);

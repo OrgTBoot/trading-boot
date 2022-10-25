@@ -20,12 +20,10 @@ public class DEMAParametersV3 extends AbstractParameters {
     private Integer shortBarCount;
     private BigDecimal bollingerMultiplier;
     private Integer chandelierBarCount;
-    private Integer minutesToMarketClose;
 
     public static DEMAParametersV3 optimal() {
         return DEMAParametersV3.builder()
                 .totalLossThresholdPercent(BigDecimal.TEN)
-                .minutesToMarketClose(30)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesPullFrequencyInSec(5)
