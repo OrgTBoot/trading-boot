@@ -38,7 +38,7 @@ public class MarketTimeLeftRule extends AbstractRule implements Rule {
 
         boolean reachedThreshold = remainingMinutes <= thresholdMinutes;
         if (reachedThreshold) {
-            log.trace("There are {} minutes till {} close. Idx={}", market, remainingMinutes, index);
+            log.trace("There are {} minutes till {} close. Idx={}", remainingMinutes, market, index);
         }
 
         traceIsSatisfied(index, reachedThreshold);

@@ -1,12 +1,14 @@
 package com.mg.trading.boot.domain.strategy;
 
 import com.mg.trading.boot.domain.models.TickerQuote;
+import com.mg.trading.boot.domain.rules.TracingRule;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseBarSeriesBuilder;
+import org.ta4j.core.Rule;
 
 import java.time.Duration;
 import java.util.List;
@@ -46,6 +48,18 @@ public abstract class AbstractStrategyDefinition implements IStrategyDefinition 
         }
 
         return series;
+    }
+
+    protected Rule trace(Rule rule) {
+        return new TracingRule(rule, TracingRule.Type.CHAIN);
+    }
+
+    protected Rule trace(Rule rule, TracingRule.Type type) {
+        return new TracingRule(rule, type);
+    }
+
+    protected Rule trace(Rule rule, String alias) {
+        return new TracingRule(rule, TracingRule.Type.CHAIN, alias);
     }
 
     private BarSeries initSeries() {
