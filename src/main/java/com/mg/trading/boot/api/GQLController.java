@@ -68,6 +68,18 @@ public class GQLController {
         return "Completed. Please see details in console.";
     }
 
+    @GraphQLQuery(description = "Print trading records for all traded symbols.")
+    public String fetchAllTradingRecords(@GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
+
+        List<TradingLog> tradingLogs = broker.account().getTradingLogs(daysRange);
+        tradingLogs.forEach(tradingLog -> {
+            ReportGenerator.printTradingRecords(tradingLog);
+            ReportGenerator.printTradingSummary(tradingLog);
+        });
+
+        return "Completed. Please see details in console.";
+    }
+
     @GraphQLQuery(description = "Returns a list keys for all the running strategies.")
     public Set<String> fetchRunningStrategyKeys() {
         return strategyExecutor.getRunningStrategyKeys();
@@ -109,10 +121,7 @@ public class GQLController {
     }
 
     @GraphQLMutation(description = "Change log level")
-    public String triggerLogLevelChange(@GraphQLArgument(name = "level")
-                                        @GraphQLNonNull final LogLevel level,
-                                        @GraphQLArgument(name = "package")
-                                        @GraphQLNonNull final LogPackage logPackage) {
+    public String triggerLogLevelChange(@GraphQLArgument(name = "level") @GraphQLNonNull final LogLevel level, @GraphQLArgument(name = "package") @GraphQLNonNull final LogPackage logPackage) {
 
         logsManagementService.updateLogLevel(logPackage, level);
         return "Log level updated to  " + level;

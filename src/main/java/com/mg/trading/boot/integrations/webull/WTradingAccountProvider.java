@@ -9,7 +9,9 @@ import com.mg.trading.boot.integrations.webull.data.trading.WTAccount;
 import com.mg.trading.boot.integrations.webull.data.trading.WTOrderDateType;
 import com.mg.trading.boot.integrations.webull.data.trading.WTOrdersQuery;
 import com.mg.trading.boot.integrations.webull.data.trading.WTOrdersResult;
+import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -19,10 +21,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.time.Instant;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.google.common.base.Preconditions.checkNotNull;
@@ -73,7 +76,16 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
 
     @Override
     public List<Order> getFilledOrdersHistory(String symbol, Integer daysRange) {
+        List<WOrder> wOrders = getFilledOrdersHistory(daysRange);
+        return sortAsc(filterBySymbol(wOrders, symbol));
+    }
+
+
+    private List<WOrder> getFilledOrdersHistory(Integer daysRange) {
         String url = WUrls.orders(accountId);
+
+        ZonedDateTime date = Instant.now().atZone(BarSeriesUtils.getDefaultZone()).minus(daysRange, ChronoUnit.DAYS);
+        String startTime = DateTimeFormatter.ofPattern("yyyy-MM-dd").format(date);
 
         WTOrdersQuery query = WTOrdersQuery.builder()
                 .secAccountId(String.valueOf(accountId))
@@ -81,7 +93,7 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
                 .lastCreateTime0(0L)
                 .pageSize(10000)
                 .status(WOrderStatus.Filled)
-                .startTimeStr("1970-01-01")
+                .startTimeStr(startTime)
                 .endTimeStr(null)
                 .action(null)
                 .build();
@@ -93,7 +105,7 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
                 .flatMap(result -> result.getItems().stream())
                 .collect(Collectors.toList());
 
-        return super.filterBySymbolSortAsc(wOrders, symbol);
+        return wOrders;
     }
 
     @Override
@@ -116,6 +128,14 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
                 .openOrders(getOpenOrders(symbol))
                 .positions(getOpenPositions(symbol))
                 .build();
+    }
+
+    @Override
+    public List<TradingLog> getTradingLogs(Integer daysRange) {
+        List<WOrder> filledOrders = getFilledOrdersHistory(daysRange);
+        Set<String> symbols = filledOrders.stream().map(o -> o.getTicker().getSymbol()).collect(Collectors.toSet());
+
+        return symbols.stream().map(symbol -> getTradingLog(symbol, daysRange)).collect(Collectors.toList());
     }
 
     @Override

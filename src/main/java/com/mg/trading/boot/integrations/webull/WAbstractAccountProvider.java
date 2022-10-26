@@ -210,11 +210,16 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
         return UUID.randomUUID().toString();
     }
 
-    protected List<Order> filterBySymbolSortAsc(List<WOrder> orders, String symbol) {
+    protected List<Order> filterBySymbol(List<WOrder> orders, String symbol) {
         return orders.stream()
                 .filter(it -> StringUtils.equalsIgnoreCase(it.getTicker().getSymbol(), symbol))
                 .map(WAbstractAccountProvider::mapToOrder)
-                .sorted(Comparator.comparing(Order::getFilledTime))// sort ascending
+                .collect(Collectors.toList());
+    }
+
+    protected List<Order> sortAsc(List<Order> orders) {
+        return orders.stream()
+                .sorted(Comparator.comparing(Order::getFilledTime))
                 .collect(Collectors.toList());
     }
 

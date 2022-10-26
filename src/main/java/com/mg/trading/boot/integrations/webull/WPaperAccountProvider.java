@@ -6,6 +6,7 @@ import com.mg.trading.boot.integrations.webull.data.common.WOrder;
 import com.mg.trading.boot.integrations.webull.data.paper.WPAccount;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -17,10 +18,7 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.config.BeanConfig.WEBULL_REST_TEMPLATE;
@@ -32,9 +30,7 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
     private final Long accountId;
     private final WTickerDetailsProvider tickerDetailsProvider;
 
-    public WPaperAccountProvider(@Qualifier(WEBULL_REST_TEMPLATE) final RestTemplate restTemplate,
-                                 @Value("${providers.webull.paper-account.id}") Long paperAccountId,
-                                 WTickerDetailsProvider tickerDetailsProvider) {
+    public WPaperAccountProvider(@Qualifier(WEBULL_REST_TEMPLATE) final RestTemplate restTemplate, @Value("${providers.webull.paper-account.id}") Long paperAccountId, WTickerDetailsProvider tickerDetailsProvider) {
         super(restTemplate);
         this.accountId = paperAccountId;
         this.tickerDetailsProvider = tickerDetailsProvider;
@@ -60,12 +56,16 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
 
     @Override
     public List<Order> getOpenOrders(String symbol) {
-        return getOpenOrders().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
-                .collect(Collectors.toList());
+        return getOpenOrders().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol)).collect(Collectors.toList());
     }
 
     @Override
     public List<Order> getFilledOrdersHistory(String symbol, Integer daysRange) {
+        List<WOrder> wOrders = getFilledOrdersHistory(daysRange);
+        return sortAsc(filterBySymbol(wOrders, symbol));
+    }
+
+    private List<WOrder> getFilledOrdersHistory(Integer daysRange) {
         ZonedDateTime date = Instant.now().atZone(BarSeriesUtils.getDefaultZone()).minus(daysRange, ChronoUnit.DAYS);
         String url = WUrls.paperFilledOrders(accountId, date);
         ParameterizedTypeReference<List<WOrder>> type = new ParameterizedTypeReference<List<WOrder>>() {
@@ -73,13 +73,12 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
         List<WOrder> response = (List<WOrder>) get(url, type).getBody();
         List<WOrder> wOrders = Optional.ofNullable(response).orElse(new ArrayList<>());
 
-        return super.filterBySymbolSortAsc(wOrders, symbol);
+        return wOrders;
     }
 
     @Override
     public List<Position> getOpenPositions(String symbol) {
-        return getOpenPositions().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
-                .collect(Collectors.toList());
+        return getOpenPositions().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol)).collect(Collectors.toList());
     }
 
     @Override
@@ -96,6 +95,15 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
                 .openOrders(getOpenOrders(symbol))
                 .positions(getOpenPositions(symbol))
                 .build();
+    }
+
+
+    @Override
+    public List<TradingLog> getTradingLogs(Integer daysRange) {
+        List<WOrder> filledOrders = getFilledOrdersHistory(daysRange);
+        Set<String> symbols = filledOrders.stream().map(o -> o.getTicker().getSymbol()).collect(Collectors.toSet());
+
+        return symbols.stream().map(symbol -> getTradingLog(symbol, daysRange)).collect(Collectors.toList());
     }
 
     @Override
@@ -126,10 +134,7 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
 
 
     private static Account mapToAccount(WPAccount account) {
-        return Account.builder()
-                .openOrders(account.getOpenOrders().stream().map(WAbstractAccountProvider::mapToOrder).collect(Collectors.toList()))
-                .positions(account.getPositions().stream().map(WAbstractAccountProvider::mapToPosition).collect(Collectors.toList()))
-                .build();
+        return Account.builder().openOrders(account.getOpenOrders().stream().map(WAbstractAccountProvider::mapToOrder).collect(Collectors.toList())).positions(account.getPositions().stream().map(WAbstractAccountProvider::mapToPosition).collect(Collectors.toList())).build();
     }
 
 }

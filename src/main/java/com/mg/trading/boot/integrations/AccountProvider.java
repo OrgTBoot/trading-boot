@@ -29,6 +29,9 @@ public interface AccountProvider {
     @Retryable(value = Throwable.class)
     TradingLog getTradingLog(String symbol, Integer daysRange);
 
+    @Retryable(value = Throwable.class)
+    List<TradingLog> getTradingLogs(Integer daysRange);
+
     void placeOrder(OrderRequest orderRequest);
 
     void updateOrder(OrderRequest order);
