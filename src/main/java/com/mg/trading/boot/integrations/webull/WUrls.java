@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 public abstract class WUrls {
     private static final String quotesBase = "https://quotes-gw.webullfintech.com";
     private static final String paperActBase = "https://act.webullfintech.com";
-    private static final String usTrade = "https://ustrade.webullfinance.com";
+    private static final String usTradeBase = "https://ustrade.webullfinance.com";
 
 
     //------------Common---------------
@@ -32,6 +32,10 @@ public abstract class WUrls {
     }
 
     //------------Paper Trading---------------
+    private static String paper() {
+        return String.format("%s/webull-paper-center/api/paper", paperActBase);
+    }
+
     public static String paperAccount(Long accountId) {
         return String.format("%s/1/acc/%s", paper(), accountId);
     }
@@ -40,9 +44,12 @@ public abstract class WUrls {
         return String.format("%s/1/acc/%s/orderop/place/%s", paper(), accountId, tickerId);
     }
 
-    //todo - review
-    public static String paperCancelOrder(Long accountId, String tickerId) {
-        return String.format("%s/1/acc/%s/orderop/cancel/%s", paper(), accountId, tickerId);
+    public static String paperCancelOrder(Long accountId, String orderId) {
+        return String.format("%s/1/acc/%s/orderop/cancel/%s", paper(), accountId, orderId);
+    }
+
+    public static String paperUpdateOrder(Long accountId, String orderId) {
+        return String.format("%s/1/acc/%s/orderop/modify/%s", paper(), accountId, orderId);
     }
 
     public static String paperFilledOrders(Long accountId, ZonedDateTime startTime) {
@@ -55,35 +62,36 @@ public abstract class WUrls {
 
     //------------Real Trading---------------
     public static String openOrders(Long accountId) {
-        return String.format("%s/api/trading/v1/webull/order/openOrders?secAccountId=%s", usTrade, accountId);
+        return String.format("%s/api/trading/v1/webull/order/openOrders?secAccountId=%s", usTradeBase, accountId);
     }
 
     public static String orders(Long accountId) {
-        return String.format("%s/api/trading/v1/webull/order/list?secAccountId=%s", usTrade, accountId);
+        return String.format("%s/api/trading/v1/webull/order/list?secAccountId=%s", usTradeBase, accountId);
     }
 
     public static String accountSummary(Long accountId) {
-        return String.format("%s/api/trading/v1/webull/account/accountAssetSummary/v2?secAccountId=%s", usTrade, accountId);
+        return String.format("%s/api/trading/v1/webull/account/accountAssetSummary/v2?secAccountId=%s", usTradeBase, accountId);
     }
 
     public static String placeOrder(Long accountId) {
-        return String.format("%s/api/trading/v1/webull/order/stockOrderPlace?secAccountId=%s", usTrade, accountId);
+        return String.format("%s/api/trading/v1/webull/order/stockOrderPlace?secAccountId=%s", usTradeBase, accountId);
     }
 
     public static String cancelOrder(String orderId, String serialId, Long accountId) {
         return String.format("%s/api/trading/v1/webull/order/stockOrderCancel?orderId=%s&serialId=%s&secAccountId=%s",
-                usTrade, orderId, serialId, accountId);
+                usTradeBase, orderId, serialId, accountId);
+    }
+
+    public static String updateOrder(Long accountId) {
+        return String.format("%s/api/trading/v1/webull/order/stockOrderModify?secAccountId=%s", usTradeBase, accountId);
     }
 
     public static String placeOrderCombo(Long accountId) {
-        return String.format("%s/api/trading/v1/webull/order/comboOrderPlace?secAccountId=%s", usTrade, accountId);
+        return String.format("%s/api/trading/v1/webull/order/comboOrderPlace?secAccountId=%s", usTradeBase, accountId);
     }
 
     public static String modifyOrderCombo(Long accountId) {
-        return String.format("%s/api/trading/v1/webull/order/comboOrderModify?secAccountId=%s", usTrade, accountId);
+        return String.format("%s/api/trading/v1/webull/order/comboOrderModify?secAccountId=%s", usTradeBase, accountId);
     }
 
-    private static String paper() {
-        return String.format("%s/webull-paper-center/api/paper", paperActBase);
-    }
 }

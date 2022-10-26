@@ -31,6 +31,8 @@ public interface AccountProvider {
 
     void placeOrder(OrderRequest orderRequest);
 
+    void updateOrder(OrderRequest order);
+
     void cancelOrder(String id);
 
 }

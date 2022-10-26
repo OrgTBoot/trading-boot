@@ -1,10 +1,11 @@
 package com.mg.trading.boot.domain.subscribers;
 
 import com.mg.trading.boot.domain.models.*;
+import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
 import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
-import com.mg.trading.boot.domain.reporting.ReportGenerator;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -15,6 +16,9 @@ import org.ta4j.core.TradingRecord;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static com.mg.trading.boot.domain.models.OrderAction.BUY;
+import static com.mg.trading.boot.domain.models.OrderAction.SELL;
 
 @Log4j2
 @Service
@@ -43,33 +47,70 @@ public class OrderManagementService implements QuteChangeListener {
         List<Order> openOrders = account.getOpenOrders(symbol);
         List<Position> positions = account.getOpenPositions(symbol);
 
-        if (!CollectionUtils.isEmpty(openOrders) || !CollectionUtils.isEmpty(positions)) {
-            log.warn("Skipping {} BUY order placement. There are open orders[{}] or positions[{}].", symbol, openOrders.size(), positions.size());
+        if (notEmpty(openOrders) || notEmpty(positions)) {
+            log.warn("Skipping BUY {}. There are open {} orders or {} positions.", symbol, openOrders.size(), positions.size());
             return;
         }
-        place(strategyDef, broker, OrderAction.BUY, quantity);
+        place(strategyDef, broker, BUY, quantity);
     }
 
     private void placeSell(IStrategyDefinition strategyDef, BrokerProvider broker) {
         String symbol = strategyDef.getSymbol();
         AccountProvider account = broker.account();
+        List<Order> currentOrders = account.getOpenOrders(symbol);
 
-        List<Position> openPositions = account.getOpenPositions(symbol);
-        List<String> symbolsInSell = account.getOpenOrders(symbol).stream().filter(it -> OrderAction.SELL.equals(it.getAction())).map(it -> it.getTicker().getSymbol()).collect(Collectors.toList());
+        List<Order> buyOrders = filter(currentOrders, BUY);
+        if (notEmpty(buyOrders)) {
+            log.warn("SELL {} received but there are {} BUY orders, canceling them...", symbol, buyOrders.size());
+            buyOrders.forEach(order -> cancelOrder(account, order));
+        }
 
-        List<Position> positionsToClose = openPositions.stream().filter(it -> !symbolsInSell.contains(it.getTicker().getSymbol())).collect(Collectors.toList());
+        List<Order> sellOrders = filter(currentOrders, SELL);
+        if (notEmpty(sellOrders)) { //update sell orders with the current market price
+            sellOrders.forEach(order -> updateSellOrderPrice(account, strategyDef, order));
 
-        positionsToClose.forEach(position -> place(strategyDef, broker, OrderAction.SELL, position.getQuantity()));
+        } else { // submit sell orders
+            List<Position> positions = account.getOpenPositions(symbol);
+            positions.forEach(position -> place(strategyDef, broker, OrderAction.SELL, position.getQuantity()));
+        }
+    }
+
+    private void updateSellOrderPrice(AccountProvider account, IStrategyDefinition strategyDef, Order order) {
+        Bar endBar = strategyDef.getSeries().getLastBar();
+
+        OrderRequest orderRequest = OrderRequest.builder()
+                .orderId(order.getId())
+                .symbol(order.getTicker().getSymbol())
+                .action(order.getAction())
+                .orderType(OrderType.LIMIT)
+                .timeInForce(OrderTimeInForce.GTC)
+                .quantity(order.getTotalQuantity())
+                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
+                .build();
+
+        log.info("Updating {} {} order {} -> {}.",
+                orderRequest.getAction(),
+                orderRequest.getSymbol(),
+                order.getLmtPrice(),
+                orderRequest.getLmtPrice());
+
+        account.updateOrder(orderRequest);
     }
 
     private void place(IStrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
         Bar endBar = strategyDef.getSeries().getLastBar();
 
-        OrderRequest orderRequest = OrderRequest.builder().symbol(symbol).action(action).orderType(OrderType.LIMIT).lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue())).timeInForce(OrderTimeInForce.GTC).quantity(quantity).build();
+        OrderRequest orderRequest = OrderRequest.builder()
+                .symbol(symbol).action(action)
+                .orderType(OrderType.LIMIT)
+                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
+                .timeInForce(OrderTimeInForce.GTC)
+                .quantity(quantity)
+                .build();
 
         broker.account().placeOrder(orderRequest);
-        log.info("{} order placed {}. Bar end time {}", action, orderRequest, endBar.getEndTime());
+        log.info("Sending {} {} order at {}. Bar end time {}", action, symbol, orderRequest.getLmtPrice(), endBar.getEndTime());
 
         printStats(broker, symbol);
     }
@@ -83,7 +124,40 @@ public class OrderManagementService implements QuteChangeListener {
         Integer today = 0;
         TradingLog tradingLog = broker.account().getTradingLog(symbol, today);
 
+        log.warn("This trading records snapshot might not include latest trade.");
         ReportGenerator.printTradingRecords(tradingLog);
         ReportGenerator.printTradingSummary(tradingLog);
     }
+
+
+    @SneakyThrows
+    private void cancelOrder(AccountProvider account, Order order) {
+        account.cancelOrder(order.getId());
+
+        for (int i = 0; i <= 60; i++) {
+            List<Order> openOrders = account.getOpenOrders(order.getTicker().getSymbol());
+            if (!containsOrder(openOrders, order)) {
+                log.debug("Order {} {} cancellation confirmed.", order.getAction(), order.getTicker().getSymbol());
+                return;
+            }
+            Thread.sleep(1000);
+            log.debug("Waiting for order {} {} cancellation.", order.getAction(), order.getTicker().getSymbol());
+        }
+        log.error("Failed to cancel {} {} order.", order.getAction(), order.getTicker().getSymbol());
+    }
+
+
+    private boolean notEmpty(List<?> list) {
+        return !CollectionUtils.isEmpty(list);
+    }
+
+    private List<Order> filter(List<Order> orders, OrderAction action) {
+        return orders.stream().filter(it -> action.equals(it.getAction())).collect(Collectors.toList());
+    }
+
+    private boolean containsOrder(List<Order> orders, Order order) {
+        return orders.stream().anyMatch(it -> it.getId().equalsIgnoreCase(order.getId()));
+    }
+
+
 }

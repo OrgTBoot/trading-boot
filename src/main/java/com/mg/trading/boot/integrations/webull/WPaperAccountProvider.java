@@ -2,7 +2,7 @@ package com.mg.trading.boot.integrations.webull;
 
 import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.integrations.AccountProvider;
-import com.mg.trading.boot.integrations.webull.data.common.*;
+import com.mg.trading.boot.integrations.webull.data.common.WOrder;
 import com.mg.trading.boot.integrations.webull.data.paper.WPAccount;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
@@ -17,7 +17,10 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.config.BeanConfig.WEBULL_REST_TEMPLATE;
@@ -110,6 +113,15 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
 
         post(url, null, new ParameterizedTypeReference<String>() {
         });
+    }
+
+    @Override
+    public void updateOrder(OrderRequest orderRequest) {
+        Ticker ticker = tickerDetailsProvider.getTicker(orderRequest.getSymbol());
+        String url = WUrls.paperUpdateOrder(accountId, orderRequest.getOrderId());
+
+        log.info("Updating order: {}", orderRequest.getOrderId());
+        placeOrder(ticker, orderRequest, url);
     }
 
 

@@ -16,6 +16,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class WPOrderRequest {
     private Long tickerId;
+    private String orderId;
     private Boolean shortSupport;
     private WOrderType orderType;
     private WOrderTimeInForce timeInForce;

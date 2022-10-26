@@ -139,6 +139,14 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
         }
     }
 
+    @Override
+    public void updateOrder(OrderRequest orderRequest) {
+        String url = WUrls.updateOrder(accountId);
+        Ticker ticker = tickerDetailsProvider.getTicker(orderRequest.getSymbol());
+
+        placeOrder(ticker, orderRequest, url);
+    }
+
 
     private WTAccount getWTAccount() {
         String url = WUrls.accountSummary(accountId);

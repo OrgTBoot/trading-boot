@@ -32,6 +32,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
         Long tickerID = Long.valueOf(ticker.getExternalId());
         WPOrderRequest wpOrderRequest = WPOrderRequest.builder()
                 .tickerId(tickerID)
+                .orderId(orderRequest.getOrderId())
                 .action(mapOrderAction(orderRequest.getAction()))
                 .orderType(mapOrderType(orderRequest.getOrderType()))
                 .timeInForce(mapOrderTimeInForce(orderRequest.getTimeInForce()))
@@ -46,7 +47,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
 //                .assetType(ticker.getAssetType())
                 .build();
 
-        log.info("Placing order: {}", wpOrderRequest);
+        log.debug("Placing {} {} order at {}. Details: {}", wpOrderRequest.getAction(), ticker.getSymbol(), wpOrderRequest.getLmtPrice(), wpOrderRequest);
         ParameterizedTypeReference<WOrder> type = new ParameterizedTypeReference<WOrder>() {
         };
         ResponseEntity<WOrder> response = (ResponseEntity<WOrder>) post(url, wpOrderRequest, type);
