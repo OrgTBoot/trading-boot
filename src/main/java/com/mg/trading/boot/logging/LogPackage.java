@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum LogPackage {
-    RULES(Arrays.asList("org.ta4j.core.rules")),
+    RULES(Arrays.asList("com.mg.trading.boot.domain.rules")),
     INDICATORS(Arrays.asList(
             "org.ta4j.core.indicators",
             "com.mg.trading.boot.domain.indicators"));
