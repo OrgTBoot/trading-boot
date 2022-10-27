@@ -3,6 +3,7 @@ package com.mg.trading.boot.domain.strategy.dema1;
 import com.mg.trading.boot.domain.indicators.supertrentv2.Signal;
 import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
 import com.mg.trading.boot.domain.rules.*;
+import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BaseStrategy;
@@ -57,33 +58,33 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
         BollingerBandFacade bandFacade = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
 
         //ENTRY RULES
-        Rule crossedUp = new CrossedUpIndicatorRule(shortIndicator, longIndicator);
-        Rule marketHours = new MarketHoursRule(series).or(new MarketPreHoursRule(series));
-        Rule stopTotalLossRule = new StopTotalLossRule(series, params.getTotalLossThresholdPercent());
-        Rule market60MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES);
+        Rule crossedUp = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
+        Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
+        Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
+        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES));
 
         //todo: crossedUp needs a confirmation - we need second indicator that can act as a confirmation
-        Rule entryRule = crossedUp
+        Rule entryRule = trace(crossedUp
                 .and(marketHours)
                 .and(stopTotalLossRule.negation())
-                .and(market60MinLeft.negation());
+                .and(market60MinLeft.negation()), Type.ENTRY);
 
         //EXIT RULES
-        Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bandFacade.upper());
-        Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator);
-        Rule superTrendSell = new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN);
+        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bandFacade.upper()));
+        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator));
+        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN));
 
-        Rule has1PercentProfit = new StopGainRule(closePrice, 1);
-        Rule hasAnyProfit = new StopGainRule(closePrice, 0.1);
-        Rule market30MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES);
-        Rule market10MinLeft = new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES);
+        Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1));
+        Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1));
+        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES));
+        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES));
 
-        Rule exitRule = bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
+        Rule exitRule = trace(bollingerCrossUp                      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
                 .or(market60MinLeft.and(has1PercentProfit))   // 3. or 60m to market close, take profits >= 1%
                 .or(market30MinLeft.and(hasAnyProfit))        // 4. or 30m to market close, take any profits > 0%
                 .or(market10MinLeft)                          // 5. or 10m to market close, force close position even in loss
-                .or(stopTotalLossRule);                       // 5. or reached day max loss percent for a given symbol                .or(stopTotalLossRule);                       // 5. or reached day max loss percent for a given symbol
+                .or(stopTotalLossRule), Type.EXIT);           // 6. or reached day max loss percent for a given symbol
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }

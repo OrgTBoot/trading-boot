@@ -9,13 +9,11 @@ import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
+import org.ta4j.core.indicators.ChandelierExitShortIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
-import org.ta4j.core.rules.CrossedDownIndicatorRule;
-import org.ta4j.core.rules.CrossedUpIndicatorRule;
-import org.ta4j.core.rules.OverIndicatorRule;
-import org.ta4j.core.rules.StopGainRule;
+import org.ta4j.core.rules.*;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,6 +53,7 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, params.getLongBarCount());
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
+        ChandelierExitShortIndicator chandShort = new ChandelierExitShortIndicator(series, params.getShortBarCount(), 3);
 
         //ENTRY RULES
         Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
@@ -62,8 +61,6 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
         Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
-
-//        Rule superTrendUpSignalNone = new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.NO_SIGNAL);
 
         Rule entryRule = trace(crossedUpDEMA                      // 1. trend
                         .and(superTrendUpSignalUp)                // 2. and confirmation
@@ -73,21 +70,20 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
                 Type.ENTRY);
 
         //EXIT RULES
-        Rule superTrendSell = new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN);
-        Rule bollingerCrossUp = new OverIndicatorRule(closePrice, bollinger.upper()).and(superTrendSell);
-        Rule crossedDownDEMA = new CrossedDownIndicatorRule(shortIndicator, longIndicator).and(superTrendSell);
+        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "SellTrend");
+        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "BollingerCrossUp");
+        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator));
 
         Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
         Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
-        Rule exitRule = trace(bollingerCrossUp                        // 1. trend reversal signal, reached upper line, market will start selling
-                        .or(market60MinLeft.and(has1PercentProfit))   // 3. or 60m to market close, take profits >= 1%
-                        .or(market30MinLeft.and(hasAnyProfit))        // 4. or 30m to market close, take any profits > 0%
-                        .or(market10MinLeft)                          // 5. or 10m to market close, force close position even in loss
-                        .or(stopTotalLossRule),                       // 6. or reached day max loss percent for a given symbol
-                Type.EXIT);
+        Rule exitRule = trace(bollingerCrossUp.and(superTrendSell)    // 1. trend reversal signal, reached upper line, market will start selling
+                .or(market60MinLeft.and(has1PercentProfit))   // 3. or 60m to market close, take profits >= 1%
+                .or(market30MinLeft.and(hasAnyProfit))        // 4. or 30m to market close, take any profits > 0%
+                .or(market10MinLeft)                          // 5. or 10m to market close, force close position even in loss
+                .or(stopTotalLossRule), Type.EXIT);           // 6. or reached day max loss percent for a given symbol
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }
