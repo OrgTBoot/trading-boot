@@ -3,7 +3,7 @@ package com.mg.trading.boot.tbd;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
-import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
@@ -182,7 +182,7 @@ public class StrategyTest {
         print(table);
     }
 
-    private static TradingStatement testStrategy(File file, IStrategyDefinition def) {
+    private static TradingStatement testStrategy(File file, StrategyDefinition def) {
         def.updateSeries(getQuotesFromFile(file));
 
         BarSeriesManager seriesManager = new BarSeriesManager(def.getSeries());

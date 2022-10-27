@@ -2,7 +2,7 @@ package com.mg.trading.boot.domain.subscribers;
 
 import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
-import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import lombok.SneakyThrows;
@@ -25,7 +25,7 @@ import static com.mg.trading.boot.domain.models.OrderAction.SELL;
 public class OrderManagementService implements QuteChangeListener {
 
     @Override
-    public void onQuoteChange(IStrategyDefinition strategyDef, BrokerProvider broker) {
+    public void onQuoteChange(StrategyDefinition strategyDef, BrokerProvider broker) {
         TradingRecord tradingRecord = getTradingRecord(broker, strategyDef.getSymbol());
         int lastBarIdx = strategyDef.getSeries().getEndIndex();
 
@@ -40,7 +40,7 @@ public class OrderManagementService implements QuteChangeListener {
     }
 
 
-    private void placeBuy(IStrategyDefinition strategyDef, BrokerProvider broker, BigDecimal quantity) {
+    private void placeBuy(StrategyDefinition strategyDef, BrokerProvider broker, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
         AccountProvider account = broker.account();
 
@@ -54,7 +54,7 @@ public class OrderManagementService implements QuteChangeListener {
         place(strategyDef, broker, BUY, quantity);
     }
 
-    private void placeSell(IStrategyDefinition strategyDef, BrokerProvider broker) {
+    private void placeSell(StrategyDefinition strategyDef, BrokerProvider broker) {
         String symbol = strategyDef.getSymbol();
         AccountProvider account = broker.account();
         List<Order> currentOrders = account.getOpenOrders(symbol);
@@ -75,7 +75,7 @@ public class OrderManagementService implements QuteChangeListener {
         }
     }
 
-    private void updateSellOrderPrice(AccountProvider account, IStrategyDefinition strategyDef, Order order) {
+    private void updateSellOrderPrice(AccountProvider account, StrategyDefinition strategyDef, Order order) {
         Bar endBar = strategyDef.getSeries().getLastBar();
 
         OrderRequest orderRequest = OrderRequest.builder()
@@ -97,7 +97,7 @@ public class OrderManagementService implements QuteChangeListener {
         account.updateOrder(orderRequest);
     }
 
-    private void place(IStrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
+    private void place(StrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
         Bar endBar = strategyDef.getSeries().getLastBar();
 

@@ -1,7 +1,7 @@
 package com.mg.trading.boot.tbd;
 
 import com.mg.trading.boot.domain.models.TickerQuote;
-import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import lombok.extern.log4j.Log4j2;
@@ -12,7 +12,7 @@ import java.util.List;
 
 
 @Log4j2
-public class IStrategyDefinitionTest {
+public class StrategyDefinitionTest {
 
     @Test
     public void testMultipleStocks() {
@@ -21,7 +21,7 @@ public class IStrategyDefinitionTest {
 //        BarSeries series = new BaseBarSeries();
 //        BarSeriesUtils.addBarSeries(series, quotes, Duration.ofSeconds(60));
 
-        IStrategyDefinition dema = new DEMAStrategyDefinitionV2(symbol);
+        StrategyDefinition dema = new DEMAStrategyDefinitionV2(symbol);
         BarSeries series = dema.updateSeries(quotes);
 
         Strategy strategy = dema.getStrategy();

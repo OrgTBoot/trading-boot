@@ -1,7 +1,7 @@
 package com.mg.trading.boot.domain.executors;
 
 import com.mg.trading.boot.domain.exceptions.ValidationException;
-import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +16,7 @@ public class StrategyManagerCache {
     private final static Map<String, ScheduledExecutorService> cache = new HashMap<>();
 
 
-    public synchronized void add(IStrategyDefinition strategyDef, ScheduledExecutorService executor) {
+    public synchronized void add(StrategyDefinition strategyDef, ScheduledExecutorService executor) {
         String key = getStrategyKey(strategyDef);
 
         if (cache.containsKey(key)) {
@@ -29,7 +29,7 @@ public class StrategyManagerCache {
         return cache.get(key);
     }
 
-    public synchronized boolean contains(IStrategyDefinition strategyDef) {
+    public synchronized boolean contains(StrategyDefinition strategyDef) {
         return cache.containsKey(getStrategyKey(strategyDef));
     }
 
@@ -41,7 +41,7 @@ public class StrategyManagerCache {
         return cache.keySet();
     }
 
-    private synchronized static String getStrategyKey(IStrategyDefinition strategyDefinition) {
+    private synchronized static String getStrategyKey(StrategyDefinition strategyDefinition) {
         return strategyDefinition.getStrategy().getName().toUpperCase();
     }
 }

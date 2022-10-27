@@ -8,8 +8,8 @@ import com.mg.trading.boot.domain.models.Ticker;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
-import com.mg.trading.boot.domain.strategy.IParameters;
-import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.Parameters;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
@@ -88,8 +88,8 @@ public class GQLController {
     @GraphQLMutation
     public String triggerBackTracking(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name, @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) throws JsonProcessingException {
 
-        IStrategyDefinition strategyDef = selectStrategyDef(name, symbol);
-        IParameters params = strategyDef.getParams();
+        StrategyDefinition strategyDef = selectStrategyDef(name, symbol);
+        Parameters params = strategyDef.getParams();
 
         List<TickerQuote> quotes = broker.ticker().getTickerQuotes(symbol, params.getQuotesRange(), params.getQuotesInterval());
         log.info("Quotes: {}", new ObjectMapper().writeValueAsString(quotes));
@@ -107,7 +107,7 @@ public class GQLController {
     public String triggerLiveTrading(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name, @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) {
 
         log.info("Initializing {} strategy for {}...", name, symbol);
-        IStrategyDefinition strategyDef = selectStrategyDef(name, symbol);
+        StrategyDefinition strategyDef = selectStrategyDef(name, symbol);
         strategyExecutor.start(strategyDef);
 
         return "Strategy is running...";
@@ -128,7 +128,7 @@ public class GQLController {
     }
 
 
-    private IStrategyDefinition selectStrategyDef(TradingStrategies name, String symbol) {
+    private StrategyDefinition selectStrategyDef(TradingStrategies name, String symbol) {
         switch (name) {
             case EMA:
                 return new EMAStrategyDefinition(symbol);

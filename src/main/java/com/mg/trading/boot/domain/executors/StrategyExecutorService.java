@@ -1,6 +1,6 @@
 package com.mg.trading.boot.domain.executors;
 
-import com.mg.trading.boot.domain.strategy.IStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.subscribers.OrderManagementService;
 import com.mg.trading.boot.domain.tasks.QuoteExtractorTask;
 import com.mg.trading.boot.integrations.BrokerProvider;
@@ -27,7 +27,7 @@ public class StrategyExecutorService implements StrategyExecutor {
     }
 
     @Override
-    public void start(IStrategyDefinition strategyDef) {
+    public void start(StrategyDefinition strategyDef) {
         validate(strategyDef);
 
         Integer pullFrequency = strategyDef.getParams().getQuotesPullFrequencyInSec();
@@ -66,14 +66,14 @@ public class StrategyExecutorService implements StrategyExecutor {
         return strategyExecutorsCache.getRunningKeys();
     }
 
-    private ScheduledExecutorService getScheduledExecutor(IStrategyDefinition strategyDef) {
+    private ScheduledExecutorService getScheduledExecutor(StrategyDefinition strategyDef) {
         String name = strategyDef.getStrategy().getName();
         ThreadFactory threadFactory = runnable -> new Thread(runnable, name);
 
         return Executors.newSingleThreadScheduledExecutor(threadFactory);
     }
 
-    private void validate(IStrategyDefinition strategyDef) {
+    private void validate(StrategyDefinition strategyDef) {
         checkState(!strategyExecutorsCache.contains(strategyDef), "This strategy & symbol combination is already running.");
     }
 }

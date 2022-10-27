@@ -14,7 +14,7 @@ import java.time.Duration;
 import java.util.List;
 
 @Log4j2
-public abstract class AbstractStrategyDefinition implements IStrategyDefinition {
+public abstract class AbstractStrategyDefinition implements StrategyDefinition {
     private final String symbol;
     private final String strategyPrefix;
     protected final BarSeries series;

@@ -6,10 +6,10 @@ import org.ta4j.core.Strategy;
 
 import java.util.List;
 
-public interface IStrategyDefinition {
+public interface StrategyDefinition {
     String getSymbol();
 
-    IParameters getParams();
+    Parameters getParams();
 
     BarSeries getSeries();
 

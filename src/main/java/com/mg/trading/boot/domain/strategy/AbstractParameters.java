@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @SuperBuilder(toBuilder = true)
 @ToString(callSuper = true)
-public abstract class AbstractParameters implements IParameters {
+public abstract class AbstractParameters implements Parameters {
     private BigDecimal totalLossThresholdPercent;
     private Range quotesRange;
     private Interval quotesInterval;

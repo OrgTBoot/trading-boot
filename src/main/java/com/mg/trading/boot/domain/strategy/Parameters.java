@@ -3,7 +3,7 @@ package com.mg.trading.boot.domain.strategy;
 import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
 
-public interface IParameters {
+public interface Parameters {
     /**
      * Quotes range to extract. Ex 1 day range.
      */
