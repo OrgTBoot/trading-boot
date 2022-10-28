@@ -148,37 +148,42 @@ public class StrategyTest {
 
     @Test
     public void testMultipleStocks() {
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/10_27_2022");
         List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+
+        AsciiTable table = new AsciiTable();
 
         List<TradingStatement> statementsEMA = new ArrayList<>();
         quoteFiles.forEach(s -> {
             TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
             statementsEMA.add(ema);
         });
+        reportToTable("EMA", statementsEMA, table);
+
 
         List<TradingStatement> statementsDEMA = new ArrayList<>();
         quoteFiles.forEach(s -> {
             TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
             statementsDEMA.add(dema);
         });
+        reportToTable("DEMA", statementsDEMA, table);
+
 
         List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
         quoteFiles.forEach(s -> {
             TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
             statementsDEMAv2.add(demaV2);
         });
+        reportToTable("DEMAv2", statementsDEMAv2, table);
+
 
         List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
         quoteFiles.forEach(s -> {
             TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
             statementsDEMAv3.add(demaV3);
         });
-
-        AsciiTable table = new AsciiTable();
-        reportToTable("EMA", statementsEMA, table);
-        reportToTable("DEMA", statementsDEMA, table);
-        reportToTable("DEMAv2", statementsDEMAv2, table);
         reportToTable("DEMAv3", statementsDEMAv3, table);
+
         print(table);
     }
 

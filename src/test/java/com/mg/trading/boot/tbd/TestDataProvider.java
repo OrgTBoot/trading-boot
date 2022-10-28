@@ -13,6 +13,9 @@ import org.ta4j.core.BaseBarSeries;
 
 import java.io.File;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.*;
 import java.util.Arrays;
 import java.util.List;
@@ -22,12 +25,15 @@ public class TestDataProvider {
 
     @SneakyThrows
     public static List<File> getQuoteFiles() {
-        ClassLoader classLoader = TestDataProvider.class.getClassLoader();
-        File[] files = new File(classLoader.getResource("./").getFile()).listFiles();
+        return getQuoteFiles("./src/test/resources");
+    }
 
-        return Arrays.stream(files).filter(it -> it.getName().toLowerCase()
-                        .endsWith("json"))
-                .collect(Collectors.toList());
+    @SneakyThrows
+    public static List<File> getQuoteFiles(String path) {
+        List<File> files = Files.find(Paths.get(path), Integer.MAX_VALUE, (filePath, fileAttr) -> fileAttr.isRegularFile())
+                .map(Path::toFile).collect(Collectors.toList());
+
+        return files.stream().filter(it -> it.getName().toLowerCase().endsWith("json")).collect(Collectors.toList());
     }
 
     @SneakyThrows

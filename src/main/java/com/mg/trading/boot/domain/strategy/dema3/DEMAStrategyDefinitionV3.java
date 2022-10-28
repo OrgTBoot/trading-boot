@@ -74,12 +74,14 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "BollingerCrossUp");
         Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator));
 
+        Rule has5PercentLoss = trace(new StopLossRule(closePrice,5), "Has -5%");
         Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
         Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
-        Rule exitRule = trace(bollingerCrossUp.and(superTrendSell)    // 1. trend reversal signal, reached upper line, market will start selling
+        Rule exitRule = trace(bollingerCrossUp
+                .or(has5PercentLoss.and(superTrendSell))      // 1. trend reversal signal, reached upper line, market will start selling
                 .or(market60MinLeft.and(has1PercentProfit))   // 3. or 60m to market close, take profits >= 1%
                 .or(market30MinLeft.and(hasAnyProfit))        // 4. or 30m to market close, take any profits > 0%
                 .or(market10MinLeft)                          // 5. or 10m to market close, force close position even in loss
