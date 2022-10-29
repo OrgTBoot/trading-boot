@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.strategy.dema3;
+package com.mg.trading.boot.domain.strategy.dema4;
 
 import com.mg.trading.boot.domain.indicators.supertrentv2.Signal;
 import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
@@ -10,7 +10,6 @@ import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
 import org.ta4j.core.indicators.ChandelierExitLongIndicator;
-import org.ta4j.core.indicators.ChandelierExitShortIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
@@ -26,17 +25,17 @@ import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_
  * For more details see: <a href="https://www.youtube.com/watch?v=g-PLctW8aU0">Double EMA Cross + Fibonacci</a>
  */
 @Log4j2
-public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
+public class DEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
 
-    private final DEMAParametersV3 params = DEMAParametersV3.optimal();
+    private final DEMAParametersV4 params = DEMAParametersV4.optimal();
     private Strategy strategy;
 
-    public DEMAStrategyDefinitionV3(String symbol) {
+    public DEMAStrategyDefinitionV4(String symbol) {
         super(symbol, "DEMAV3");
     }
 
     @Override
-    public DEMAParametersV3 getParams() {
+    public DEMAParametersV4 getParams() {
         return params;
     }
 
@@ -65,8 +64,8 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
 
         Rule entryRule = trace(
-                crossedUpDEMA                                                // 1. trend
-                        .and(chandelierUnderPrice.and(superTrendUpSignalUp)) // 2. and confirmation
+                crossedUpDEMA                                     // 1. trend
+                        .and(chandelierUnderPrice)                // 2. and confirmation
                         .and(marketHours)                         // 3. and enter only in marked hours
                         .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
                         .and(stopTotalLossRule.negation()),       // 5. and avoid entering again in a bearish stock

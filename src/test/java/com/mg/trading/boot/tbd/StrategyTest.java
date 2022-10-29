@@ -7,6 +7,7 @@ import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
+import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
@@ -183,6 +184,14 @@ public class StrategyTest {
             statementsDEMAv3.add(demaV3);
         });
         reportToTable("DEMAv3", statementsDEMAv3, table);
+
+        List<TradingStatement> statementsDEMAv4 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
+            statementsDEMAv4.add(demaV4);
+        });
+        reportToTable("DEMAv4", statementsDEMAv4, table);
+
 
         print(table);
     }
