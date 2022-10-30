@@ -4,7 +4,7 @@ import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
-import com.mg.trading.boot.domain.subscribers.QuteChangeListener;
+import com.mg.trading.boot.domain.order.QuoteChangeListener;
 import com.mg.trading.boot.integrations.BrokerProvider;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ import java.util.List;
 public class QuoteExtractorTask implements Runnable {
     private final BrokerProvider broker;
     private final StrategyDefinition strategyDef;
-    private List<QuteChangeListener> subscribers;
+    private List<QuoteChangeListener> subscribers;
 
     public QuoteExtractorTask(final StrategyDefinition strategyDef, final BrokerProvider broker) {
         this.strategyDef = strategyDef;
@@ -37,7 +37,7 @@ public class QuoteExtractorTask implements Runnable {
     }
 
 
-    public void subscribe(QuteChangeListener subscriber) {
+    public void subscribe(QuoteChangeListener subscriber) {
         this.subscribers.add(subscriber);
     }
 }

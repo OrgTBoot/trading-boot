@@ -1,7 +1,7 @@
 package com.mg.trading.boot.domain.executors;
 
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
-import com.mg.trading.boot.domain.subscribers.OrderManagementService;
+import com.mg.trading.boot.domain.order.OrderManagementService;
 import com.mg.trading.boot.domain.tasks.QuoteExtractorTask;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import lombok.extern.log4j.Log4j2;
@@ -20,10 +20,14 @@ import static com.google.common.base.Preconditions.checkState;
 public class StrategyExecutorService implements StrategyExecutor {
     private final BrokerProvider broker;
     private final StrategyManagerCache strategyExecutorsCache;
+    private final OrderManagementService orderManagementService;
 
-    public StrategyExecutorService(final BrokerProvider broker, final StrategyManagerCache strategyExecutorsCache) {
+    public StrategyExecutorService(final BrokerProvider broker,
+                                   final StrategyManagerCache strategyExecutorsCache,
+                                   final OrderManagementService orderManagementService) {
         this.broker = broker;
         this.strategyExecutorsCache = strategyExecutorsCache;
+        this.orderManagementService = orderManagementService;
     }
 
     @Override
@@ -38,7 +42,7 @@ public class StrategyExecutorService implements StrategyExecutor {
         log.info("\tPull freq : {}", pullFrequency);
 
         QuoteExtractorTask quoteExtractorTask = new QuoteExtractorTask(strategyDef, broker);
-        quoteExtractorTask.subscribe(new OrderManagementService());
+        quoteExtractorTask.subscribe(this.orderManagementService);
 
         ScheduledExecutorService executor = getScheduledExecutor(strategyDef);
         executor.scheduleAtFixedRate(quoteExtractorTask, 0, pullFrequency, TimeUnit.SECONDS);

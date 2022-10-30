@@ -1,0 +1,58 @@
+package com.mg.trading.boot.domain.order;
+
+
+import com.mg.trading.boot.integrations.BrokerProvider;
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+/**
+ * For more details please see <a href="https://www.investopedia.com/terms/p/positionsizing.asp">Position Sizing</a>
+ * <p>
+ * Todo: Introduce an additional parameter that can allow is to trade only with a certain account amount.
+ *       for example if account is 50k and we want to limit trades to 25k.
+ */
+@Log4j2
+@Service
+public class OrderSizingService {
+    private final BigDecimal hundredPercent = BigDecimal.valueOf(100);
+    private final BigDecimal positionSizePercent;
+    private final BrokerProvider broker;
+
+    public OrderSizingService(@Value("${account.position-size-percent}") final BigDecimal positionSizePercent, final BrokerProvider broker) {
+        this.positionSizePercent = positionSizePercent;
+        this.broker = broker;
+    }
+
+    /**
+     * The investor knows that they can risk $500 per trade and is risking $20 per share.
+     * To work out the correct position size from this information, the investor simply needs
+     * to divide the account risk, which is $500, by the trade risk, which is $20.
+     * This means 25 shares can be bought ($500 / $20).
+     *
+     * @param sharePrice - cost of the share we intend to purchase
+     * @return - number of shares we can purchase.
+     */
+    public BigDecimal getOrderSizeInShares(BigDecimal sharePrice) {
+        BigDecimal accountRiskAmount = getAccountAmountToRisk();
+        BigDecimal shares = accountRiskAmount.divide(sharePrice, RoundingMode.CEILING);
+
+        return shares.compareTo(BigDecimal.ZERO) <= 0 ? BigDecimal.ZERO : shares;
+    }
+
+    /**
+     * Get Account Risk amount
+     * For example, if we have $25,000 account and maximum account risk of 2%, we cannot risk more than $500
+     * per trade (2% x $25,000). Even if we lose 10 consecutive trades in a row,
+     * we have only lost 20% of their investment capital.
+     *
+     * @return amount we are allowed to risk.
+     */
+    private BigDecimal getAccountAmountToRisk() {
+        BigDecimal buyingPower = this.broker.account().getAccount().getBuyingPower();
+        return positionSizePercent.multiply(buyingPower).divide(hundredPercent, RoundingMode.CEILING);
+    }
+}
