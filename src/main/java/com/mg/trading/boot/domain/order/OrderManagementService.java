@@ -1,12 +1,15 @@
-package com.mg.trading.boot.domain.subscribers;
+package com.mg.trading.boot.domain.order;
 
 import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
+import com.mg.trading.boot.utils.NumberUtils;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.config.ConfigurableBeanFactory;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
@@ -19,30 +22,42 @@ import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.domain.models.OrderAction.BUY;
 import static com.mg.trading.boot.domain.models.OrderAction.SELL;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.*;
 
 @Log4j2
 @Service
-public class OrderManagementService implements QuteChangeListener {
+@Scope(value = SCOPE_PROTOTYPE)
+public class OrderManagementService implements QuoteChangeListener {
+
+    private final OrderSizingService orderSizingService;
+
+    public OrderManagementService(final OrderSizingService orderSizingService) {
+        this.orderSizingService = orderSizingService;
+    }
 
     @Override
-    public void onQuoteChange(StrategyDefinition strategyDef, BrokerProvider broker) {
+    public synchronized void onQuoteChange(StrategyDefinition strategyDef, BrokerProvider broker) {
         TradingRecord tradingRecord = getTradingRecord(broker, strategyDef.getSymbol());
         int lastBarIdx = strategyDef.getSeries().getEndIndex();
 
         Strategy strategy = strategyDef.getStrategy();
-
         if (strategy.shouldEnter(lastBarIdx, tradingRecord)) {
-            placeBuy(strategyDef, broker, BigDecimal.ONE); //todo: implement shares calculation
+            BigDecimal shares = calculateOrderSizeInShares(strategyDef, lastBarIdx);
+            placeBuy(strategyDef, broker, shares);
 
         } else if (strategy.shouldExit(lastBarIdx, tradingRecord)) {
             placeSell(strategyDef, broker);
         }
     }
 
-
     private void placeBuy(StrategyDefinition strategyDef, BrokerProvider broker, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
         AccountProvider account = broker.account();
+
+        if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
+            log.warn("Skipping BUY {}. Calculated position size should be >= 1. Received {}", symbol, quantity);
+            return;
+        }
 
         List<Order> openOrders = account.getOpenOrders(symbol);
         List<Position> positions = account.getOpenPositions(symbol);
@@ -88,11 +103,7 @@ public class OrderManagementService implements QuteChangeListener {
                 .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
                 .build();
 
-        log.info("Updating {} {} order {} -> {}.",
-                orderRequest.getAction(),
-                orderRequest.getSymbol(),
-                order.getLmtPrice(),
-                orderRequest.getLmtPrice());
+        log.info("Updating {} {} order {} -> {}.", orderRequest.getAction(), orderRequest.getSymbol(), order.getLmtPrice(), orderRequest.getLmtPrice());
 
         account.updateOrder(orderRequest);
     }
@@ -102,7 +113,8 @@ public class OrderManagementService implements QuteChangeListener {
         Bar endBar = strategyDef.getSeries().getLastBar();
 
         OrderRequest orderRequest = OrderRequest.builder()
-                .symbol(symbol).action(action)
+                .symbol(symbol)
+                .action(action)
                 .orderType(OrderType.LIMIT)
                 .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
                 .timeInForce(OrderTimeInForce.GTC)
@@ -146,7 +158,6 @@ public class OrderManagementService implements QuteChangeListener {
         log.error("Failed to cancel {} {} order.", order.getAction(), order.getTicker().getSymbol());
     }
 
-
     private boolean notEmpty(List<?> list) {
         return !CollectionUtils.isEmpty(list);
     }
@@ -159,5 +170,11 @@ public class OrderManagementService implements QuteChangeListener {
         return orders.stream().anyMatch(it -> it.getId().equalsIgnoreCase(order.getId()));
     }
 
+    private BigDecimal calculateOrderSizeInShares(StrategyDefinition strategyDef, int barIdx) {
+        Bar bar = strategyDef.getSeries().getBar(barIdx);
+        BigDecimal sharePrice = NumberUtils.toRndBigDecimal(bar.getClosePrice());
+
+        return orderSizingService.getOrderSizeInShares(sharePrice);
+    }
 
 }

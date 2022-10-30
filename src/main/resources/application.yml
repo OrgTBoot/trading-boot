@@ -21,13 +21,10 @@ graphql:
       enabled: true
       endpoint: /
 ##------------------------------------------------------------------
-##------NLP CONFIGURATION-------------------------------------------
+##------TRADING ACCOUNT CONFIGURATION-------------------------------
 ##------------------------------------------------------------------
-nlp:
-  sentiment:
-    annotators: tokenize, cleanxml, ssplit, parse, sentiment
-#      annotators: tokenize,cleanxml,ssplit,pos,lemma,ner,parse,depparse,coref,natlog,openie,kbp,entitylink
-
+account:
+  position-size-percent: 3
 ##------------------------------------------------------------------
 ##------FEATURES CONFIGURATION--------------------------------------
 ##------------------------------------------------------------------
