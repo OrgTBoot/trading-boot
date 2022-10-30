@@ -36,7 +36,7 @@ public class OrderManagementService implements QuoteChangeListener {
     }
 
     @Override
-    public void onQuoteChange(StrategyDefinition strategyDef, BrokerProvider broker) {
+    public synchronized void onQuoteChange(StrategyDefinition strategyDef, BrokerProvider broker) {
         TradingRecord tradingRecord = getTradingRecord(broker, strategyDef.getSymbol());
         int lastBarIdx = strategyDef.getSeries().getEndIndex();
 
