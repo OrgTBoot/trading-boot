@@ -93,7 +93,15 @@ public class OrderManagementService implements QuoteChangeListener {
     private void updateSellOrderPrice(AccountProvider account, StrategyDefinition strategyDef, Order order) {
         Bar endBar = strategyDef.getSeries().getLastBar();
 
-        OrderRequest orderRequest = OrderRequest.builder().orderId(order.getId()).symbol(order.getTicker().getSymbol()).action(order.getAction()).orderType(OrderType.LIMIT).timeInForce(OrderTimeInForce.GTC).quantity(order.getTotalQuantity()).lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue())).build();
+        OrderRequest orderRequest = OrderRequest.builder()
+                .orderId(order.getId())
+                .symbol(order.getTicker().getSymbol())
+                .action(order.getAction())
+                .orderType(OrderType.LIMIT)
+                .timeInForce(OrderTimeInForce.GTC)
+                .quantity(order.getTotalQuantity())
+                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
+                .build();
 
         log.info("Updating {} {} order {} -> {}.", orderRequest.getAction(), orderRequest.getSymbol(), order.getLmtPrice(), orderRequest.getLmtPrice());
 
@@ -104,7 +112,14 @@ public class OrderManagementService implements QuoteChangeListener {
         String symbol = strategyDef.getSymbol();
         Bar endBar = strategyDef.getSeries().getLastBar();
 
-        OrderRequest orderRequest = OrderRequest.builder().symbol(symbol).action(action).orderType(OrderType.LIMIT).lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue())).timeInForce(OrderTimeInForce.GTC).quantity(quantity).build();
+        OrderRequest orderRequest = OrderRequest.builder()
+                .symbol(symbol)
+                .action(action)
+                .orderType(OrderType.LIMIT)
+                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
+                .timeInForce(OrderTimeInForce.GTC)
+                .quantity(quantity)
+                .build();
 
         broker.account().placeOrder(orderRequest);
         log.info("Sending {} {} order at {}. Bar end time {}", action, symbol, orderRequest.getLmtPrice(), endBar.getEndTime());
