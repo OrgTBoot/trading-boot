@@ -6,7 +6,6 @@ import com.mg.trading.boot.integrations.webull.data.common.WOrder;
 import com.mg.trading.boot.integrations.webull.data.paper.WPAccount;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
-import org.apache.commons.collections.ListUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -134,7 +133,11 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
 
 
     private static Account mapToAccount(WPAccount account) {
-        return Account.builder().openOrders(account.getOpenOrders().stream().map(WAbstractAccountProvider::mapToOrder).collect(Collectors.toList())).positions(account.getPositions().stream().map(WAbstractAccountProvider::mapToPosition).collect(Collectors.toList())).build();
+        return Account.builder()
+                .openOrders(account.getOpenOrders().stream().map(WAbstractAccountProvider::mapToOrder).collect(Collectors.toList()))
+                .positions(account.getPositions().stream().map(WAbstractAccountProvider::mapToPosition).collect(Collectors.toList()))
+                .buyingPower(account.getNetLiquidation())
+                .build();
     }
 
 }
