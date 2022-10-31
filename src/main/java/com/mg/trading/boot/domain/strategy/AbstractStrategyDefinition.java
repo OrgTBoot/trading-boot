@@ -51,15 +51,15 @@ public abstract class AbstractStrategyDefinition implements StrategyDefinition {
     }
 
     protected Rule trace(Rule rule) {
-        return new TracingRule(rule, TracingRule.Type.CHAIN);
+        return new TracingRule(rule, TracingRule.Type.CHAIN, series);
     }
 
     protected Rule trace(Rule rule, TracingRule.Type type) {
-        return new TracingRule(rule, type);
+        return new TracingRule(rule, type, series);
     }
 
     protected Rule trace(Rule rule, String alias) {
-        return new TracingRule(rule, TracingRule.Type.CHAIN, alias);
+        return new TracingRule(rule, TracingRule.Type.CHAIN, alias, series);
     }
 
     private BarSeries initSeries() {
@@ -102,8 +102,9 @@ public abstract class AbstractStrategyDefinition implements StrategyDefinition {
     private boolean shouldAddBar(BarSeries series, TickerQuote quote) {
         Bar lastBar = series.getLastBar();
         long latestBarTimeStamp = lastBar.getEndTime().toInstant().getEpochSecond();
-        boolean hasVolume = quote.getVolume() != 0;
+//        boolean hasVolume = quote.getVolume() != 0;
 
-        return quote.getTimeStamp() > latestBarTimeStamp && hasVolume;
+//        return quote.getTimeStamp() > latestBarTimeStamp && hasVolume;
+        return quote.getTimeStamp() > latestBarTimeStamp;
     }
 }

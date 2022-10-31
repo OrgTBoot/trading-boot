@@ -56,7 +56,7 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
         String url;
         switch (interval) {
             case ONE_MINUTE:
-                url = WUrls.quotesByMinute(ticker.getExternalId(), range);
+                url = isCrypto(ticker) ? WUrls.cryptoQuotes(ticker.getExternalId(), interval) : WUrls.quotesByMinute(ticker.getExternalId(), range);
                 break;
 
             default:
@@ -128,5 +128,9 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 .company(ticker.getName())
                 .assetType(ticker.getTemplate())
                 .build();
+    }
+
+    private boolean isCrypto(Ticker ticker) {
+        return ticker.getAssetType().equalsIgnoreCase("crypto");
     }
 }

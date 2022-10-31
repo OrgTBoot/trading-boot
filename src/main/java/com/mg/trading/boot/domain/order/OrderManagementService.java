@@ -42,7 +42,10 @@ public class OrderManagementService implements QuoteChangeListener {
 
         Strategy strategy = strategyDef.getStrategy();
         if (strategy.shouldEnter(lastBarIdx, tradingRecord)) {
+            log.info("Should enter!!!");
             BigDecimal shares = calculateOrderSizeInShares(strategyDef, lastBarIdx);
+            log.info("Should enter with {} shares!!!", shares);
+
             placeBuy(strategyDef, broker, shares);
 
         } else if (strategy.shouldExit(lastBarIdx, tradingRecord)) {
@@ -122,7 +125,7 @@ public class OrderManagementService implements QuoteChangeListener {
                 .build();
 
         broker.account().placeOrder(orderRequest);
-        log.info("Sending {} {} order at {}. Bar end time {}", action, symbol, orderRequest.getLmtPrice(), endBar.getEndTime());
+        log.info("Sending {} {} order of {} shares at {}. Bar end time {}", action, symbol, quantity, orderRequest.getLmtPrice(), endBar.getEndTime());
 
         printStats(broker, symbol);
     }

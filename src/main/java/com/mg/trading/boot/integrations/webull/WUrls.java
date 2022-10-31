@@ -1,5 +1,6 @@
 package com.mg.trading.boot.integrations.webull;
 
+import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
 
 import java.time.ZonedDateTime;
@@ -30,6 +31,12 @@ public abstract class WUrls {
         String period = range.unit + range.value;
         return String.format("%s/api/quote/charts/queryMinutes?tickerIds=%s&period=%s&extendTrading=1", quotesBase, tickerId, period);
     }
+
+    public static String cryptoQuotes(String tickerId, Interval interval) {
+        String period = interval.unit + interval.value;
+        return String.format("%s/api/crypto/charts/query?tickerIds=%s&type=%s&count=800", quotesBase, tickerId, period);
+    }
+
 
     //------------Paper Trading---------------
     private static String paper() {

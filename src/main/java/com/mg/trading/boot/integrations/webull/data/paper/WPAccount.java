@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -14,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class WPAccount {
     private BigDecimal netLiquidation;
+    private List<WPAccountMember> accountMembers;
     private List<WOrder> openOrders;
     private List<WPosition> positions;
 }

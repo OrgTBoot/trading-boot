@@ -24,7 +24,7 @@ graphql:
 ##------TRADING ACCOUNT CONFIGURATION-------------------------------
 ##------------------------------------------------------------------
 account:
-  position-size-percent: 3
+  position-size-percent: 1
 ##------------------------------------------------------------------
 ##------FEATURES CONFIGURATION--------------------------------------
 ##------------------------------------------------------------------
@@ -38,6 +38,8 @@ providers:
   webull:
     trade-account:
       id: <redacted>
+      pin-key: <redacted>
+      pin-secret: <redacted>
     paper-account:
       id: <redacted>
     auth:

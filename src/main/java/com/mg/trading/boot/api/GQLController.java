@@ -10,6 +10,7 @@ import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.Parameters;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
+import com.mg.trading.boot.domain.strategy.crypto.demav4.CryptoDEMAStrategyDefinitionV4;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
@@ -141,6 +142,8 @@ public class GQLController {
                 return new DEMAStrategyDefinitionV3(symbol);
             case DEMA_V4:
                 return new DEMAStrategyDefinitionV4(symbol);
+            case CRYPTO_DEMA_V4:
+                return new CryptoDEMAStrategyDefinitionV4(symbol);
             default:
                 throw new ValidationException("Strategy not supported");
         }

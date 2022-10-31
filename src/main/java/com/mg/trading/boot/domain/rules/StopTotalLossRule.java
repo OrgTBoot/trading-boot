@@ -16,7 +16,11 @@ import java.math.BigDecimal;
 import static com.google.common.base.Preconditions.checkState;
 
 /**
- * Rule is considered satisfied if total loss of closed positions plus current open position exceeds the loss threshold.
+ * Rule is considered satisfied if total loss of closed positions plus current open position exceeds the loss threshold
+ * or if current position exceeds the loss threshold.
+ * <p>
+ * Ex1: win 10%, loss 5%,  loss 16% will  --> loss of 11%
+ * Ex2: current position loss 10%
  */
 @Log4j2
 public class StopTotalLossRule extends AbstractRule implements Rule {
@@ -40,7 +44,7 @@ public class StopTotalLossRule extends AbstractRule implements Rule {
         Num openPositionLoss = getCurrentPositionLoss(index, tradingRecord);
         Num totalLoss = closedPositionsLoss.plus(openPositionLoss);
 
-        boolean satisfied = totalLoss.doubleValue() < lossThreshold.doubleValue();
+        boolean satisfied = totalLoss.doubleValue() < lossThreshold.doubleValue() || openPositionLoss.doubleValue() < lossThreshold.doubleValue();
 
         if (satisfied) {
             log.warn("You've reached total loss tolerance threshold. Positions: closed='{}', open='{}', total='{}'. Allowed is {}. Idx={}", closedPositionsLoss.doubleValue(), openPositionLoss.doubleValue(), totalLoss.doubleValue(), lossThreshold.doubleValue(), index);

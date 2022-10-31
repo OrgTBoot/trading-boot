@@ -4,6 +4,7 @@ import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.webull.data.common.WOrder;
 import com.mg.trading.boot.integrations.webull.data.paper.WPAccount;
+import com.mg.trading.boot.integrations.webull.data.paper.WPAccountMember;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
@@ -133,10 +135,14 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
 
 
     private static Account mapToAccount(WPAccount account) {
+        BigDecimal usableCash = account.getAccountMembers().stream()
+                .filter(it -> "usableCash".equalsIgnoreCase(it.getKey())).map(WPAccountMember::getValue)
+                .findFirst().orElse(BigDecimal.ZERO);
+
         return Account.builder()
                 .openOrders(account.getOpenOrders().stream().map(WAbstractAccountProvider::mapToOrder).collect(Collectors.toList()))
                 .positions(account.getPositions().stream().map(WAbstractAccountProvider::mapToPosition).collect(Collectors.toList()))
-                .buyingPower(account.getNetLiquidation())
+                .buyingPower(usableCash)
                 .build();
     }
 

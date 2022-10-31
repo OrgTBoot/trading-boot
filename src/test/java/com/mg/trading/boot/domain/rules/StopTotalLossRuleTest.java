@@ -171,4 +171,24 @@ public class StopTotalLossRuleTest {
         Assert.assertTrue(rule.isSatisfied(1, tradingRecord));
     }
 
+    @Test
+    public void stopTotalLossRuleTest_gainAndLossScenario() {
+        BaseBarSeries series = new BaseBarSeries();
+        series.addBar(buildBar(10, 0, BigDecimal.ONE));
+        series.addBar(buildBar(10, 1, BigDecimal.valueOf(1.10))); //GAIN 10%
+        series.addBar(buildBar(10, 2, BigDecimal.valueOf(1.10))); //NO PRICE CHANGE
+        series.addBar(buildBar(10, 3, BigDecimal.valueOf(0.95))); //LOSS 25%
+
+        TradingRecord tradingRecord = new BaseTradingRecord();
+        tradingRecord.operate(0, series.getBar(0).getClosePrice(), oneShare);
+        tradingRecord.operate(1, series.getBar(1).getClosePrice(), oneShare);
+        // entered on no price change bar, next bar with idx 3 has a loss of 25% we need to exit
+        tradingRecord.operate(2, series.getBar(2).getClosePrice(), oneShare);
+
+        StopTotalLossRule rule = new StopTotalLossRule(series, BigDecimal.TEN.negate());
+
+        //evaluate at bar idx 3 - loss is identified for the open position
+        Assert.assertTrue(rule.isSatisfied(3, tradingRecord));
+    }
+
 }

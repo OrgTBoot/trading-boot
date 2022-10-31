@@ -51,11 +51,15 @@ public class BeanConfig {
 
     @Bean
     @Qualifier(WEBULL_REST_TEMPLATE)
-    public RestTemplate getWebullRestTemplate(@Value("${providers.webull.auth.key}") String authKey, @Value("${providers.webull.auth.secret}") String authSecret) {
+    public RestTemplate getWebullRestTemplate(@Value("${providers.webull.auth.key}") String authKey,
+                                              @Value("${providers.webull.auth.secret}") String authSecret,
+                                              @Value("${providers.webull.trade-account.pin-key}") String pinKey,
+                                              @Value("${providers.webull.trade-account.pin-secret}") String pinSecret) {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add((request, body, clientHttpRequestExecution) -> {
             HttpHeaders headers = request.getHeaders();
             headers.add(authKey, authSecret);
+            headers.add(pinKey, pinSecret);
             headers.add("did", UUID.randomUUID().toString());
             headers.add("app", "global");
             headers.add("app-group", "broker");
