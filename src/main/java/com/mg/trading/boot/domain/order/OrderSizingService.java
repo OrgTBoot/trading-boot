@@ -38,9 +38,9 @@ public class OrderSizingService {
      */
     public BigDecimal getOrderSizeInShares(BigDecimal sharePrice) {
         BigDecimal accountRiskAmount = getAccountAmountToRisk();
-        BigDecimal shares = accountRiskAmount.divide(sharePrice, RoundingMode.CEILING);
+        int shares = accountRiskAmount.divide(sharePrice, RoundingMode.CEILING).intValue(); //rounding the value
 
-        return shares.compareTo(BigDecimal.ZERO) <= 0 ? BigDecimal.ZERO : shares;
+        return BigDecimal.valueOf(shares);
     }
 
     /**

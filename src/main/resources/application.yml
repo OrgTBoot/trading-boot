@@ -38,12 +38,13 @@ providers:
   webull:
     trade-account:
       id: <redacted>
-      pin-key: <redacted>
-      pin-secret: <redacted>
+      pin:
+        key: t_token
+        secret: <redacted>
     paper-account:
       id: <redacted>
     auth:
-      key: <redacted>
+      key: access_token
       secret: <redacted>
 ##------------------------------------------------------------------
 ##------LOGGER CONFIGURATION----------------------------------------

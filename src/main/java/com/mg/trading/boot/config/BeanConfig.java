@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -14,6 +13,8 @@ import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.UUID;
+
+import static com.mg.trading.boot.integrations.webull.WbAuthProvider.*;
 
 @Configuration
 public class BeanConfig {
@@ -51,16 +52,15 @@ public class BeanConfig {
 
     @Bean
     @Qualifier(WEBULL_REST_TEMPLATE)
-    public RestTemplate getWebullRestTemplate(@Value("${providers.webull.auth.key}") String authKey,
-                                              @Value("${providers.webull.auth.secret}") String authSecret,
-                                              @Value("${providers.webull.trade-account.pin-key}") String pinKey,
-                                              @Value("${providers.webull.trade-account.pin-secret}") String pinSecret) {
+    public RestTemplate getWbRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getInterceptors().add((request, body, clientHttpRequestExecution) -> {
+
             HttpHeaders headers = request.getHeaders();
-            headers.add(authKey, authSecret);
-            headers.add(pinKey, pinSecret);
-            headers.add("did", UUID.randomUUID().toString());
+            headers.add(getAuthKey(), getAuthSecret());
+            headers.add(getPinKey(), getPinToken());
+            headers.add("did", getDid()); //needs to be same as the one used to get pinToken
+
             headers.add("app", "global");
             headers.add("app-group", "broker");
             headers.add("appid", "wb_web_app");

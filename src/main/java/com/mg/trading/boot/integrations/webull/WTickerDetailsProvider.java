@@ -79,6 +79,12 @@ public class WTickerDetailsProvider extends AbstractRestProvider implements Tick
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public TickerQuote getLatestTickerQuote(String symbol) {
+        List<TickerQuote> tickerQuotes = getTickerQuotes(symbol, Range.ONE_DAY, Interval.ONE_MINUTE);
+        return tickerQuotes.get(tickerQuotes.size() - 1);
+    }
+
     private List<TickerQuote> toTickerQuotes(WTickerQuote quotes) {
         return quotes.getData().stream().map(it -> {
                     String[] values = it.split(",");

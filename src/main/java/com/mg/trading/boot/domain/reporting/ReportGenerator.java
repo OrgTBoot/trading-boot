@@ -143,7 +143,7 @@ public class ReportGenerator {
         List<Order> aggOrders = aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
 
         if (orders.size() != aggOrders.size()) {
-            log.warn("There was a need to aggregate some of the orders, was {}, became {}", orders.size(), aggOrders.size());
+            log.debug("There was a need to aggregate some of the orders, was {}, became {}", orders.size(), aggOrders.size());
         }
 
         TradingRecord tradingRecord = new BaseTradingRecord();

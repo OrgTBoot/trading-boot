@@ -2,10 +2,7 @@ package com.mg.trading.boot.integrations;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
@@ -28,11 +25,22 @@ public abstract class AbstractRestProvider {
         return exchange(url, HttpMethod.POST, body, typeReference);
     }
 
+    protected ResponseEntity<?> post(String url, Object body, HttpHeaders headers, ParameterizedTypeReference<?> typeReference) {
+        RequestEntity<?> request = new RequestEntity<>(body, headers, HttpMethod.POST, URI.create(url));
+
+        return exchange(request, typeReference);
+    }
+
     private ResponseEntity<?> exchange(String url, HttpMethod method, Object body, ParameterizedTypeReference<?> typeReference) {
+        RequestEntity<?> request = new RequestEntity<>(body, method, URI.create(url));
+
+        return exchange(request, typeReference);
+    }
+
+    private ResponseEntity<?> exchange(RequestEntity<?> requestEntity, ParameterizedTypeReference<?> typeReference) {
         ResponseEntity<?> response;
         try {
-            RequestEntity<?> request = new RequestEntity<>(body, method, URI.create(url));
-            response = this.restTemplate.exchange(request, typeReference);
+            response = this.restTemplate.exchange(requestEntity, typeReference);
 
         } catch (Exception e) {
             log.error("Remote service error: {}", e.getCause(), e);

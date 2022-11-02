@@ -1,16 +1,15 @@
-#-------------------------------------------
-#------CUSTOM PROPERTIES--------------------
-#-------------------------------------------
 features:
-  paper-trading: true
+  paper-trading: false
 account:
   position-size-percent: 3
+
 providers:
   webull:
     trade-account:
-      id: <redacted>
-      pin-key: t_token
-      pin-secret: <redacted>
+      id: 10583124
+      pin:
+        key: t_token
+        secret: <redacted>
     paper-account:
       id: <redacted>
     auth:

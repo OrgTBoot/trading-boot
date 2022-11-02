@@ -8,7 +8,6 @@ import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.utils.NumberUtils;
 import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -42,9 +41,8 @@ public class OrderManagementService implements QuoteChangeListener {
 
         Strategy strategy = strategyDef.getStrategy();
         if (strategy.shouldEnter(lastBarIdx, tradingRecord)) {
-            log.info("Should enter!!!");
             BigDecimal shares = calculateOrderSizeInShares(strategyDef, lastBarIdx);
-            log.info("Should enter with {} shares!!!", shares);
+            log.info("Should enter with {} shares.", shares);
 
             placeBuy(strategyDef, broker, shares);
 
@@ -85,7 +83,7 @@ public class OrderManagementService implements QuoteChangeListener {
 
         List<Order> sellOrders = filter(currentOrders, SELL);
         if (notEmpty(sellOrders)) { //update sell orders with the current market price
-            sellOrders.forEach(order -> updateSellOrderPrice(account, strategyDef, order));
+            sellOrders.forEach(order -> updateOrderLimitPrice(account, strategyDef, order));
 
         } else { // submit sell orders
             List<Position> positions = account.getOpenPositions(symbol);
@@ -93,7 +91,7 @@ public class OrderManagementService implements QuoteChangeListener {
         }
     }
 
-    private void updateSellOrderPrice(AccountProvider account, StrategyDefinition strategyDef, Order order) {
+    private void updateOrderLimitPrice(AccountProvider account, StrategyDefinition strategyDef, Order order) {
         Bar endBar = strategyDef.getSeries().getLastBar();
 
         OrderRequest orderRequest = OrderRequest.builder()
@@ -113,19 +111,20 @@ public class OrderManagementService implements QuoteChangeListener {
 
     private void place(StrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
-        Bar endBar = strategyDef.getSeries().getLastBar();
+        TickerQuote latestQuote = broker.ticker().getLatestTickerQuote(symbol);
+        BigDecimal price = latestQuote.getClosePrice();
 
         OrderRequest orderRequest = OrderRequest.builder()
                 .symbol(symbol)
                 .action(action)
                 .orderType(OrderType.LIMIT)
-                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
+                .lmtPrice(price)
                 .timeInForce(OrderTimeInForce.GTC)
                 .quantity(quantity)
                 .build();
 
         broker.account().placeOrder(orderRequest);
-        log.info("Sending {} {} order of {} shares at {}. Bar end time {}", action, symbol, quantity, orderRequest.getLmtPrice(), endBar.getEndTime());
+        log.info("Sending {} {} order of {} shares at {}", action, symbol, quantity, orderRequest.getLmtPrice());
 
         printStats(broker, symbol);
     }

@@ -26,7 +26,7 @@ public class RetryConfig {
                 log.warn("Retryable method {} threw {}th exception {}",
                         context.getAttribute("context.name"),
                         context.getRetryCount(),
-                        throwable.getMessage());
+                        throwable.getMessage(), throwable);
             }
         });
     }

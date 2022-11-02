@@ -15,4 +15,8 @@ public interface TickerDetailsProvider {
 
     @Retryable(value = Throwable.class)
     List<TickerQuote> getTickerQuotes(String symbol, Range range, Interval interval);
+
+    @Retryable(value = Throwable.class)
+    TickerQuote getLatestTickerQuote(String symbol);
+
 }

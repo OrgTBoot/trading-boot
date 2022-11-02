@@ -68,6 +68,10 @@ public abstract class WUrls {
     }
 
     //------------Real Trading---------------
+    public static String tradingToken() {
+        return "https://trade.webullfintech.com/api/trading/v1/global/trade/login";
+    }
+
     public static String openOrders(Long accountId) {
         return String.format("%s/api/trading/v1/webull/order/openOrders?secAccountId=%s", usTradeBase, accountId);
     }
