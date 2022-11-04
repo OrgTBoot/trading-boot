@@ -11,6 +11,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
@@ -32,18 +33,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
 
     public void placeOrder(Ticker ticker, OrderRequest orderRequest, String url) {
         Long tickerID = Long.valueOf(ticker.getExternalId());
-        WPOrderRequest wpOrderRequest = WPOrderRequest.builder()
-                .tickerId(tickerID)
-                .orderId(orderRequest.getOrderId())
-                .action(mapOrderAction(orderRequest.getAction()))
-                .orderType(mapOrderType(orderRequest.getOrderType()))
-                .timeInForce(mapOrderTimeInForce(orderRequest.getTimeInForce()))
-                .lmtPrice(orderRequest.getLmtPrice())
-                .quantity(orderRequest.getQuantity())
-                .outsideRegularTradingHour(Boolean.TRUE)
-                .shortSupport(Boolean.TRUE)
-                .comboType(WOrderComboType.NORMAL)
-                .serialId(generateUUID())
+        WPOrderRequest wpOrderRequest = WPOrderRequest.builder().tickerId(tickerID).orderId(orderRequest.getOrderId()).action(mapOrderAction(orderRequest.getAction())).orderType(mapOrderType(orderRequest.getOrderType())).timeInForce(mapOrderTimeInForce(orderRequest.getTimeInForce())).lmtPrice(orderRequest.getLmtPrice()).quantity(orderRequest.getQuantity()).outsideRegularTradingHour(Boolean.TRUE).shortSupport(Boolean.TRUE).comboType(WOrderComboType.NORMAL).serialId(generateUUID())
                 // specific for non-paper trading crypto scenario
 //                .entrustType(WTEntrustType.QTY)
 //                .assetType(ticker.getAssetType())
@@ -195,13 +185,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
 
 
     protected static Position mapToPosition(WPosition position) {
-        BigDecimal quantity = Optional.ofNullable(position.getQuantity())
-                .orElse(position.getPosition());//position is for paper trading
-
-        WTicker wTicker = Optional.ofNullable(position.getTicker())
-                .orElse(position.getItems().stream() //for crypto it's in items
-                        .findFirst().map(WTItem::getTicker)
-                        .orElseThrow(() -> new ValidationException("Ticker should not be null")));
+        BigDecimal quantity = Optional.ofNullable(position.getQuantity()).orElse(position.getPosition());//position is for paper trading
 
         return Position.builder()
                 .id(String.valueOf(position.getId()))
@@ -210,7 +194,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
                 .lastPrice(position.getLastPrice())
                 .quantity(quantity)
                 .marketValue(position.getMarketValue())
-                .ticker(mapToTicker(wTicker))
+                .ticker(mapToTicker(calculateTicker(position)))
                 .build();
     }
 
@@ -219,16 +203,27 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
     }
 
     protected List<Order> filterBySymbol(List<WOrder> orders, String symbol) {
-        return orders.stream()
-                .filter(it -> StringUtils.equalsIgnoreCase(it.getTicker().getSymbol(), symbol))
-                .map(WAbstractAccountProvider::mapToOrder)
-                .collect(Collectors.toList());
+        return orders.stream().filter(it -> StringUtils.equalsIgnoreCase(it.getTicker().getSymbol(), symbol)).map(WAbstractAccountProvider::mapToOrder).collect(Collectors.toList());
     }
 
     protected List<Order> sortAsc(List<Order> orders) {
-        return orders.stream()
-                .sorted(Comparator.comparing(Order::getFilledTime))
-                .collect(Collectors.toList());
+        return orders.stream().sorted(Comparator.comparing(Order::getFilledTime)).collect(Collectors.toList());
+    }
+
+
+    private static WTicker calculateTicker(WPosition position) {
+        if (position != null && position.getTicker() != null) {
+            return position.getTicker();
+        }
+
+        if (position != null && position.getItems() != null) { //for crypto it's in items
+            Optional<WTItem> item = position.getItems().stream().findFirst();
+            if (item.isPresent()) {
+                return item.get().getTicker();
+            }
+        }
+
+        throw new ValidationException("Ticker should not be null");
     }
 
 }

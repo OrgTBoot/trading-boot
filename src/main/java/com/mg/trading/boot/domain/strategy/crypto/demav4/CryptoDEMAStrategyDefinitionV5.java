@@ -16,23 +16,19 @@ import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.rules.*;
 
-import java.util.concurrent.TimeUnit;
-
-import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
-
 
 /**
  * For more details see: <a href="https://www.youtube.com/watch?v=Jd1JVF7Oy_A">Double EMA Cross</a>
  * For more details see: <a href="https://www.youtube.com/watch?v=g-PLctW8aU0">Double EMA Cross + Fibonacci</a>
  */
 @Log4j2
-public class CryptoDEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
+public class CryptoDEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
 
     private final DEMAParametersV4 params = DEMAParametersV4.optimal();
     private Strategy strategy;
 
-    public CryptoDEMAStrategyDefinitionV4(String symbol) {
-        super(symbol, "CRYPTO_DEMAV4");
+    public CryptoDEMAStrategyDefinitionV5(String symbol) {
+        super(symbol, "CRYPTO_DEMAV5");
     }
 
     @Override
@@ -65,8 +61,6 @@ public class CryptoDEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
 
         Rule entryRule = trace(
                 priceOverLongDEMA
-                        .and(superTrendUpSignalUp)
-                        .and(chandelierUnderPrice)
                         .and(superTrendUpSignalUp)
                         .and(stopTotalLossRule.negation()),
                 Type.ENTRY);

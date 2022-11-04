@@ -151,8 +151,8 @@ public class StrategyTest {
     @Test
     public void testMultipleStocks() {
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/10_27_2022");
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_02_2022");
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_02_2022");
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 
         AsciiTable table = new AsciiTable();
 
