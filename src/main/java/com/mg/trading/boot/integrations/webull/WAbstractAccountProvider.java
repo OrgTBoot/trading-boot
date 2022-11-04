@@ -1,9 +1,11 @@
 package com.mg.trading.boot.integrations.webull;
 
+import com.mg.trading.boot.domain.exceptions.ValidationException;
 import com.mg.trading.boot.domain.models.*;
 import com.mg.trading.boot.integrations.AbstractRestProvider;
 import com.mg.trading.boot.integrations.webull.data.common.*;
 import com.mg.trading.boot.integrations.webull.data.paper.WPOrderRequest;
+import com.mg.trading.boot.integrations.webull.data.trading.WTItem;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.ParameterizedTypeReference;
@@ -195,6 +197,12 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
     protected static Position mapToPosition(WPosition position) {
         BigDecimal quantity = Optional.ofNullable(position.getQuantity())
                 .orElse(position.getPosition());//position is for paper trading
+
+        WTicker wTicker = Optional.ofNullable(position.getTicker())
+                .orElse(position.getItems().stream() //for crypto it's in items
+                        .findFirst().map(WTItem::getTicker)
+                        .orElseThrow(() -> new ValidationException("Ticker should not be null")));
+
         return Position.builder()
                 .id(String.valueOf(position.getId()))
                 .cost(position.getCost())
@@ -202,7 +210,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
                 .lastPrice(position.getLastPrice())
                 .quantity(quantity)
                 .marketValue(position.getMarketValue())
-                .ticker(mapToTicker(position.getTicker()))
+                .ticker(mapToTicker(wTicker))
                 .build();
     }
 

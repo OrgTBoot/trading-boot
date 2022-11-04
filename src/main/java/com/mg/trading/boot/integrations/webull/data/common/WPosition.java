@@ -1,8 +1,10 @@
 package com.mg.trading.boot.integrations.webull.data.common;
 
+import com.mg.trading.boot.integrations.webull.data.trading.WTItem;
 import lombok.*;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Builder
@@ -21,6 +23,8 @@ public class WPosition {
     private String unrealizedProfitLoss;
     private String unrealizedProfitLossBase;
     private String unrealizedProfitLossRate;
+    private List<WTItem> items;
+
 
     private WTicker ticker;
 }

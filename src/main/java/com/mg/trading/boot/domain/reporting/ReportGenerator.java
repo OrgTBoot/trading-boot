@@ -30,7 +30,7 @@ public class ReportGenerator {
 
     public static void printTradingRecords(TradingLog tradingLog) {
         log.info("TRADING RECORDS FOR THE LAST {} DAY(S)", tradingLog.getDaysRange());
-        TradingRecord tradingRecord = buildTradingRecord(tradingLog.getFilledOrders());
+        TradingRecord tradingRecord = buildTradingRecord(tradingLog.getFilledOrders(), null);
         printTradingRecords(tradingRecord, tradingLog.getSymbol());
     }
 
@@ -41,15 +41,7 @@ public class ReportGenerator {
         table.addRule();
 
         tradingRecord.getPositions().forEach(it -> {
-            AT_Row row = table.addRow(symbol,
-                    it.getEntry().getIndex(),
-                    it.getExit().getIndex(),
-                    toRndBigDecimal(it.getEntry().getAmount()),
-                    toRndBigDecimal(it.getExit().getAmount()),
-                    toRndBigDecimal(it.getEntry().getNetPrice()) + "$",
-                    toRndBigDecimal(it.getExit().getNetPrice()) + "$",
-                    toRndBigDecimal(it.getProfit()) + "$",
-                    getPositionProfitInPercent(it) + "%");
+            AT_Row row = table.addRow(symbol, it.getEntry().getIndex(), it.getExit().getIndex(), toRndBigDecimal(it.getEntry().getAmount()), toRndBigDecimal(it.getExit().getAmount()), toRndBigDecimal(it.getEntry().getNetPrice()) + "$", toRndBigDecimal(it.getExit().getNetPrice()) + "$", toRndBigDecimal(it.getProfit()) + "$", getPositionProfitInPercent(it) + "%");
 
 
             //align numbers to the left
@@ -61,7 +53,7 @@ public class ReportGenerator {
 
     public static void printTradingSummary(TradingLog tradingLog) {
         log.info("Trading summary for the last {} day(s)", tradingLog.getDaysRange());
-        TradingRecord tradingRecord = buildTradingRecord(tradingLog.getFilledOrders());
+        TradingRecord tradingRecord = buildTradingRecord(tradingLog.getFilledOrders(), null);
         TradingStatement statement = buildTradingStatement(tradingRecord);
         printTradingSummary(statement, tradingLog.getSymbol());
     }
@@ -109,20 +101,7 @@ public class ReportGenerator {
             if (!sameAction) {
                 aggRecords.add(current);
             } else {
-                Order aggOrder = Order.builder()
-                        .id(prev.getId() + "_agg_" + current.getId())
-                        .action(prev.getAction())
-                        .status(prev.getStatus())
-                        .ticker(prev.getTicker())
-                        .orderType(prev.getOrderType())
-                        .lmtPrice(current.getLmtPrice())
-                        .placedTime(current.getPlacedTime())
-                        .filledTime(current.getFilledTime())
-                        .timeInForce(current.getTimeInForce())
-                        .totalQuantity(prev.getTotalQuantity().add(current.getTotalQuantity()))
-                        .filledQuantity(prev.getFilledQuantity().add(current.getFilledQuantity()))
-                        .avgFilledPrice(prev.getAvgFilledPrice().add(current.getAvgFilledPrice()).divide(BigDecimal.valueOf(2), RoundingMode.CEILING))
-                        .build();
+                Order aggOrder = Order.builder().id(prev.getId() + "_agg_" + current.getId()).action(prev.getAction()).status(prev.getStatus()).ticker(prev.getTicker()).orderType(prev.getOrderType()).lmtPrice(current.getLmtPrice()).placedTime(current.getPlacedTime()).filledTime(current.getFilledTime()).timeInForce(current.getTimeInForce()).totalQuantity(prev.getTotalQuantity().add(current.getTotalQuantity())).filledQuantity(prev.getFilledQuantity().add(current.getFilledQuantity())).avgFilledPrice(prev.getAvgFilledPrice().add(current.getAvgFilledPrice()).divide(BigDecimal.valueOf(2), RoundingMode.CEILING)).build();
 
                 int lastIdx = aggRecords.size() - 1;
                 aggRecords.remove(lastIdx);
@@ -139,7 +118,7 @@ public class ReportGenerator {
         return new TradingStatementGenerator().generate(dummyStrategy, tradingRecord, dummySeries);
     }
 
-    public static TradingRecord buildTradingRecord(List<Order> orders) {
+    public static TradingRecord buildTradingRecord(List<Order> orders, com.mg.trading.boot.domain.models.Position openPosition) {
         List<Order> aggOrders = aggregateOrders(orders); // covers BUY, BUY, SEL scenarios
 
         if (orders.size() != aggOrders.size()) {
@@ -147,14 +126,22 @@ public class ReportGenerator {
         }
 
         TradingRecord tradingRecord = new BaseTradingRecord();
-        AtomicInteger index = new AtomicInteger();
-        aggOrders.forEach(order -> {
-            int idx = index.getAndIncrement();
-            Num price = toDecimalNum(order.getAvgFilledPrice());
-            Num qty = toDecimalNum(order.getFilledQuantity());
 
-            tradingRecord.operate(idx, price, qty);
-        });
+        if (CollectionUtils.isEmpty(orders) && openPosition != null) {
+            Num price = toDecimalNum(openPosition.getCostPrice());
+            Num qty = toDecimalNum(openPosition.getQuantity());
+            tradingRecord.enter(0, price, qty);
+
+        } else {
+            AtomicInteger index = new AtomicInteger();
+            aggOrders.forEach(order -> {
+                int idx = index.getAndIncrement();
+                Num price = toDecimalNum(order.getAvgFilledPrice());
+                Num qty = toDecimalNum(order.getFilledQuantity());
+
+                tradingRecord.operate(idx, price, qty);
+            });
+        }
         return tradingRecord;
     }
 

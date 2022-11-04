@@ -131,7 +131,9 @@ public class OrderManagementService implements QuoteChangeListener {
 
     private static TradingRecord getTradingRecord(BrokerProvider broker, String symbol) {
         List<Order> filledOrders = broker.account().getFilledOrdersHistory(symbol, 1);
-        return ReportGenerator.buildTradingRecord(filledOrders);
+        Position position = broker.account().getOpenPositions(symbol).stream().findFirst().orElse(null);
+
+        return ReportGenerator.buildTradingRecord(filledOrders, position);
     }
 
     private void printStats(BrokerProvider broker, String symbol) {

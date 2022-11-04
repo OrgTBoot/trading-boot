@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.strategy.crypto.demav4;
+package com.mg.trading.boot.domain.strategy.dema5;
 
 import com.mg.trading.boot.domain.indicators.supertrentv2.Signal;
 import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
@@ -26,17 +26,17 @@ import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_
  * For more details see: <a href="https://www.youtube.com/watch?v=g-PLctW8aU0">Double EMA Cross + Fibonacci</a>
  */
 @Log4j2
-public class CryptoDEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
+public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
 
-    private final DEMAParametersV4 params = DEMAParametersV4.optimal();
+    private final DEMAParametersV5 params = DEMAParametersV5.optimal();
     private Strategy strategy;
 
-    public CryptoDEMAStrategyDefinitionV4(String symbol) {
-        super(symbol, "CRYPTO_DEMAV4");
+    public DEMAStrategyDefinitionV5(String symbol) {
+        super(symbol, "DEMAV5");
     }
 
     @Override
-    public DEMAParametersV4 getParams() {
+    public DEMAParametersV5 getParams() {
         return params;
     }
 
@@ -60,15 +60,17 @@ public class CryptoDEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
 //        Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
         Rule chandelierUnderPrice = trace(new UnderIndicatorRule(chandLong, closePrice));
-        Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
         Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP));
+        Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
+        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
-        Rule entryRule = trace(
-                priceOverLongDEMA
+
+        Rule entryRule = trace(priceOverLongDEMA
                         .and(superTrendUpSignalUp)
-                        .and(chandelierUnderPrice)
-                        .and(superTrendUpSignalUp)
-                        .and(stopTotalLossRule.negation()),
+                        .and(marketHours)                         // 3. and enter only in marked hours
+                        .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
+                        .and(stopTotalLossRule.negation()),       // 5. and avoid entering again in a bearish stock
                 Type.ENTRY);
 
 
@@ -78,11 +80,18 @@ public class CryptoDEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
         Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN));
 
         Rule has5PercentLoss = trace(new StopLossRule(closePrice, 5), "Has -5%");
+        Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
+        Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
+        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
+        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule exitRule = trace(
                 bollingerCrossUp                                      // 1. trend reversal signal, reached upper line, market will start selling
                         .or(crossedDownDEMA.and(superTrendSell).and(chandelierUnderPrice.negation())) // 2. confirmation
                         .or(has5PercentLoss.and(superTrendSell).and(chandelierUnderPrice.negation())) // 3. position stop loss
+                        .or(market60MinLeft.and(has1PercentProfit))   // 4. or 60m to market close, take profits >= 1%
+                        .or(market30MinLeft.and(hasAnyProfit))        // 5. or 30m to market close, take any profits > 0%
+                        .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss
                         .or(stopTotalLossRule), Type.EXIT);           // 7. or reached day max loss percent for a given symbol
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);

@@ -60,8 +60,8 @@ public class DEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
         Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         Rule chandelierUnderPrice = trace(new UnderIndicatorRule(chandLong, closePrice));
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
-        Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+//        Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP));
 
         Rule entryRule = trace(
                 crossedUpDEMA                                     // 1. trend

@@ -1,0 +1,8561 @@
+[
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376060,
+    "volume": 290,
+    "openPrice": 227.82,
+    "highPrice": 227.9,
+    "lowPrice": 227.79,
+    "closePrice": 227.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376120,
+    "volume": 489,
+    "openPrice": 228.0,
+    "highPrice": 228.35,
+    "lowPrice": 228.0,
+    "closePrice": 228.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376180,
+    "volume": 1190,
+    "openPrice": 228.21,
+    "highPrice": 228.89,
+    "lowPrice": 228.21,
+    "closePrice": 228.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376240,
+    "volume": 1343,
+    "openPrice": 228.73,
+    "highPrice": 228.8,
+    "lowPrice": 228.45,
+    "closePrice": 228.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376300,
+    "volume": 775,
+    "openPrice": 228.7,
+    "highPrice": 228.79,
+    "lowPrice": 228.5,
+    "closePrice": 228.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376360,
+    "volume": 282,
+    "openPrice": 228.7,
+    "highPrice": 228.7,
+    "lowPrice": 228.53,
+    "closePrice": 228.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376420,
+    "volume": 2199,
+    "openPrice": 228.73,
+    "highPrice": 228.73,
+    "lowPrice": 228.18,
+    "closePrice": 228.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376480,
+    "volume": 1115,
+    "openPrice": 228.2,
+    "highPrice": 228.4,
+    "lowPrice": 228.2,
+    "closePrice": 228.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376540,
+    "volume": 1425,
+    "openPrice": 228.31,
+    "highPrice": 228.49,
+    "lowPrice": 228.3,
+    "closePrice": 228.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376600,
+    "volume": 299,
+    "openPrice": 228.3,
+    "highPrice": 228.3,
+    "lowPrice": 228.1,
+    "closePrice": 228.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376660,
+    "volume": 553,
+    "openPrice": 228.14,
+    "highPrice": 228.2,
+    "lowPrice": 228.07,
+    "closePrice": 228.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376720,
+    "volume": 562,
+    "openPrice": 228.1,
+    "highPrice": 228.24,
+    "lowPrice": 228.09,
+    "closePrice": 228.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376780,
+    "volume": 2319,
+    "openPrice": 228.15,
+    "highPrice": 228.15,
+    "lowPrice": 227.54,
+    "closePrice": 227.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376840,
+    "volume": 1293,
+    "openPrice": 227.69,
+    "highPrice": 227.8,
+    "lowPrice": 227.4,
+    "closePrice": 227.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376900,
+    "volume": 32,
+    "openPrice": 227.6,
+    "highPrice": 227.75,
+    "lowPrice": 227.51,
+    "closePrice": 227.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667376960,
+    "volume": 148,
+    "openPrice": 227.7,
+    "highPrice": 227.7,
+    "lowPrice": 227.7,
+    "closePrice": 227.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377020,
+    "volume": 430,
+    "openPrice": 227.76,
+    "highPrice": 227.88,
+    "lowPrice": 227.65,
+    "closePrice": 227.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377080,
+    "volume": 489,
+    "openPrice": 227.86,
+    "highPrice": 227.9,
+    "lowPrice": 227.79,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377140,
+    "volume": 1734,
+    "openPrice": 227.84,
+    "highPrice": 228.0,
+    "lowPrice": 227.83,
+    "closePrice": 228.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377200,
+    "volume": 431,
+    "openPrice": 228.09,
+    "highPrice": 228.15,
+    "lowPrice": 228.09,
+    "closePrice": 228.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377260,
+    "volume": 465,
+    "openPrice": 228.21,
+    "highPrice": 228.21,
+    "lowPrice": 228.0,
+    "closePrice": 228.03
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377320,
+    "volume": 255,
+    "openPrice": 228.04,
+    "highPrice": 228.15,
+    "lowPrice": 228.0,
+    "closePrice": 228.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377380,
+    "volume": 174,
+    "openPrice": 228.14,
+    "highPrice": 228.2,
+    "lowPrice": 228.14,
+    "closePrice": 228.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377440,
+    "volume": 322,
+    "openPrice": 228.14,
+    "highPrice": 228.14,
+    "lowPrice": 228.07,
+    "closePrice": 228.11
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377500,
+    "volume": 389,
+    "openPrice": 228.14,
+    "highPrice": 228.15,
+    "lowPrice": 228.09,
+    "closePrice": 228.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377560,
+    "volume": 1284,
+    "openPrice": 228.09,
+    "highPrice": 228.59,
+    "lowPrice": 228.08,
+    "closePrice": 228.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377620,
+    "volume": 234,
+    "openPrice": 228.41,
+    "highPrice": 228.41,
+    "lowPrice": 228.34,
+    "closePrice": 228.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377680,
+    "volume": 939,
+    "openPrice": 228.4,
+    "highPrice": 228.4,
+    "lowPrice": 228.2,
+    "closePrice": 228.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377740,
+    "volume": 415,
+    "openPrice": 228.29,
+    "highPrice": 228.29,
+    "lowPrice": 228.26,
+    "closePrice": 228.26
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377800,
+    "volume": 363,
+    "openPrice": 228.26,
+    "highPrice": 228.26,
+    "lowPrice": 228.17,
+    "closePrice": 228.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377860,
+    "volume": 321,
+    "openPrice": 228.19,
+    "highPrice": 228.28,
+    "lowPrice": 228.17,
+    "closePrice": 228.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377920,
+    "volume": 109,
+    "openPrice": 228.17,
+    "highPrice": 228.29,
+    "lowPrice": 228.17,
+    "closePrice": 228.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667377980,
+    "volume": 363,
+    "openPrice": 228.28,
+    "highPrice": 228.3,
+    "lowPrice": 228.2,
+    "closePrice": 228.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378040,
+    "volume": 907,
+    "openPrice": 228.1,
+    "highPrice": 228.24,
+    "lowPrice": 227.97,
+    "closePrice": 228.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378100,
+    "volume": 247,
+    "openPrice": 228.12,
+    "highPrice": 228.25,
+    "lowPrice": 228.1,
+    "closePrice": 228.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378160,
+    "volume": 110,
+    "openPrice": 228.2,
+    "highPrice": 228.22,
+    "lowPrice": 228.2,
+    "closePrice": 228.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378220,
+    "volume": 184,
+    "openPrice": 228.15,
+    "highPrice": 228.2,
+    "lowPrice": 228.14,
+    "closePrice": 228.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378280,
+    "volume": 128,
+    "openPrice": 228.12,
+    "highPrice": 228.2,
+    "lowPrice": 228.11,
+    "closePrice": 228.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378340,
+    "volume": 189,
+    "openPrice": 228.13,
+    "highPrice": 228.13,
+    "lowPrice": 228.09,
+    "closePrice": 228.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378400,
+    "volume": 267,
+    "openPrice": 228.1,
+    "highPrice": 228.1,
+    "lowPrice": 228.01,
+    "closePrice": 228.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378460,
+    "volume": 84,
+    "openPrice": 228.09,
+    "highPrice": 228.2,
+    "lowPrice": 228.09,
+    "closePrice": 228.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378520,
+    "volume": 53,
+    "openPrice": 228.17,
+    "highPrice": 228.21,
+    "lowPrice": 228.17,
+    "closePrice": 228.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378580,
+    "volume": 39,
+    "openPrice": 228.18,
+    "highPrice": 228.23,
+    "lowPrice": 228.18,
+    "closePrice": 228.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378640,
+    "volume": 691,
+    "openPrice": 228.2,
+    "highPrice": 228.22,
+    "lowPrice": 228.1,
+    "closePrice": 228.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378700,
+    "volume": 33,
+    "openPrice": 228.1,
+    "highPrice": 228.14,
+    "lowPrice": 228.08,
+    "closePrice": 228.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378760,
+    "volume": 100,
+    "openPrice": 228.15,
+    "highPrice": 228.15,
+    "lowPrice": 228.14,
+    "closePrice": 228.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378820,
+    "volume": 135,
+    "openPrice": 228.14,
+    "highPrice": 228.14,
+    "lowPrice": 228.09,
+    "closePrice": 228.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378880,
+    "volume": 1081,
+    "openPrice": 228.08,
+    "highPrice": 228.08,
+    "lowPrice": 227.94,
+    "closePrice": 227.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667378940,
+    "volume": 800,
+    "openPrice": 227.96,
+    "highPrice": 228.05,
+    "lowPrice": 227.96,
+    "closePrice": 228.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379000,
+    "volume": 50,
+    "openPrice": 228.0,
+    "highPrice": 228.0,
+    "lowPrice": 227.97,
+    "closePrice": 227.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379060,
+    "volume": 48,
+    "openPrice": 227.97,
+    "highPrice": 227.97,
+    "lowPrice": 227.89,
+    "closePrice": 227.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379120,
+    "volume": 346,
+    "openPrice": 227.96,
+    "highPrice": 228.06,
+    "lowPrice": 227.96,
+    "closePrice": 228.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379180,
+    "volume": 78,
+    "openPrice": 228.06,
+    "highPrice": 228.06,
+    "lowPrice": 227.92,
+    "closePrice": 227.92
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379240,
+    "volume": 348,
+    "openPrice": 227.93,
+    "highPrice": 227.93,
+    "lowPrice": 227.88,
+    "closePrice": 227.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379300,
+    "volume": 50,
+    "openPrice": 227.9,
+    "highPrice": 227.9,
+    "lowPrice": 227.9,
+    "closePrice": 227.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379360,
+    "volume": 58,
+    "openPrice": 227.9,
+    "highPrice": 227.91,
+    "lowPrice": 227.85,
+    "closePrice": 227.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379480,
+    "volume": 153,
+    "openPrice": 227.99,
+    "highPrice": 227.99,
+    "lowPrice": 227.85,
+    "closePrice": 227.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379540,
+    "volume": 122,
+    "openPrice": 227.86,
+    "highPrice": 227.92,
+    "lowPrice": 227.86,
+    "closePrice": 227.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379660,
+    "volume": 496,
+    "openPrice": 227.93,
+    "highPrice": 228.04,
+    "lowPrice": 227.93,
+    "closePrice": 228.04
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379720,
+    "volume": 720,
+    "openPrice": 228.06,
+    "highPrice": 228.22,
+    "lowPrice": 228.02,
+    "closePrice": 228.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379780,
+    "volume": 62,
+    "openPrice": 228.11,
+    "highPrice": 228.15,
+    "lowPrice": 228.08,
+    "closePrice": 228.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379840,
+    "volume": 663,
+    "openPrice": 228.03,
+    "highPrice": 228.05,
+    "lowPrice": 227.84,
+    "closePrice": 227.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379900,
+    "volume": 1432,
+    "openPrice": 227.84,
+    "highPrice": 228.01,
+    "lowPrice": 227.65,
+    "closePrice": 228.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667379960,
+    "volume": 52,
+    "openPrice": 228.01,
+    "highPrice": 228.01,
+    "lowPrice": 227.97,
+    "closePrice": 227.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380020,
+    "volume": 22,
+    "openPrice": 227.85,
+    "highPrice": 227.9,
+    "lowPrice": 227.85,
+    "closePrice": 227.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380080,
+    "volume": 185,
+    "openPrice": 227.9,
+    "highPrice": 227.9,
+    "lowPrice": 227.68,
+    "closePrice": 227.68
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380140,
+    "volume": 738,
+    "openPrice": 227.67,
+    "highPrice": 227.72,
+    "lowPrice": 227.6,
+    "closePrice": 227.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380200,
+    "volume": 40,
+    "openPrice": 227.72,
+    "highPrice": 227.76,
+    "lowPrice": 227.72,
+    "closePrice": 227.76
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380260,
+    "volume": 161,
+    "openPrice": 227.76,
+    "highPrice": 227.76,
+    "lowPrice": 227.65,
+    "closePrice": 227.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380320,
+    "volume": 268,
+    "openPrice": 227.73,
+    "highPrice": 227.73,
+    "lowPrice": 227.61,
+    "closePrice": 227.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380380,
+    "volume": 406,
+    "openPrice": 227.61,
+    "highPrice": 227.79,
+    "lowPrice": 227.6,
+    "closePrice": 227.79
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380440,
+    "volume": 216,
+    "openPrice": 227.79,
+    "highPrice": 227.79,
+    "lowPrice": 227.61,
+    "closePrice": 227.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380500,
+    "volume": 206,
+    "openPrice": 227.64,
+    "highPrice": 227.64,
+    "lowPrice": 227.62,
+    "closePrice": 227.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380560,
+    "volume": 1473,
+    "openPrice": 227.62,
+    "highPrice": 227.63,
+    "lowPrice": 227.33,
+    "closePrice": 227.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380620,
+    "volume": 714,
+    "openPrice": 227.4,
+    "highPrice": 227.54,
+    "lowPrice": 227.36,
+    "closePrice": 227.54
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380680,
+    "volume": 20,
+    "openPrice": 227.54,
+    "highPrice": 227.54,
+    "lowPrice": 227.54,
+    "closePrice": 227.54
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380740,
+    "volume": 69,
+    "openPrice": 227.56,
+    "highPrice": 227.63,
+    "lowPrice": 227.56,
+    "closePrice": 227.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380800,
+    "volume": 639,
+    "openPrice": 227.56,
+    "highPrice": 227.56,
+    "lowPrice": 227.4,
+    "closePrice": 227.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380860,
+    "volume": 709,
+    "openPrice": 227.42,
+    "highPrice": 227.5,
+    "lowPrice": 227.4,
+    "closePrice": 227.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380920,
+    "volume": 682,
+    "openPrice": 227.35,
+    "highPrice": 227.4,
+    "lowPrice": 227.2,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667380980,
+    "volume": 206,
+    "openPrice": 227.16,
+    "highPrice": 227.21,
+    "lowPrice": 227.15,
+    "closePrice": 227.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381040,
+    "volume": 319,
+    "openPrice": 227.15,
+    "highPrice": 227.2,
+    "lowPrice": 227.15,
+    "closePrice": 227.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381100,
+    "volume": 419,
+    "openPrice": 227.19,
+    "highPrice": 227.19,
+    "lowPrice": 227.14,
+    "closePrice": 227.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381160,
+    "volume": 178,
+    "openPrice": 227.19,
+    "highPrice": 227.23,
+    "lowPrice": 227.17,
+    "closePrice": 227.22
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381220,
+    "volume": 527,
+    "openPrice": 227.25,
+    "highPrice": 227.26,
+    "lowPrice": 227.15,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381280,
+    "volume": 498,
+    "openPrice": 227.21,
+    "highPrice": 227.21,
+    "lowPrice": 227.13,
+    "closePrice": 227.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381340,
+    "volume": 314,
+    "openPrice": 227.07,
+    "highPrice": 227.09,
+    "lowPrice": 227.06,
+    "closePrice": 227.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381400,
+    "volume": 632,
+    "openPrice": 227.07,
+    "highPrice": 227.2,
+    "lowPrice": 227.06,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381460,
+    "volume": 325,
+    "openPrice": 227.15,
+    "highPrice": 227.19,
+    "lowPrice": 227.07,
+    "closePrice": 227.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381520,
+    "volume": 192,
+    "openPrice": 227.11,
+    "highPrice": 227.17,
+    "lowPrice": 227.07,
+    "closePrice": 227.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381580,
+    "volume": 198,
+    "openPrice": 227.1,
+    "highPrice": 227.19,
+    "lowPrice": 227.1,
+    "closePrice": 227.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381640,
+    "volume": 298,
+    "openPrice": 227.18,
+    "highPrice": 227.3,
+    "lowPrice": 227.18,
+    "closePrice": 227.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381700,
+    "volume": 58,
+    "openPrice": 227.29,
+    "highPrice": 227.38,
+    "lowPrice": 227.24,
+    "closePrice": 227.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381760,
+    "volume": 67,
+    "openPrice": 227.25,
+    "highPrice": 227.38,
+    "lowPrice": 227.25,
+    "closePrice": 227.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381820,
+    "volume": 233,
+    "openPrice": 227.31,
+    "highPrice": 227.31,
+    "lowPrice": 227.3,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381880,
+    "volume": 177,
+    "openPrice": 227.3,
+    "highPrice": 227.3,
+    "lowPrice": 227.27,
+    "closePrice": 227.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667381940,
+    "volume": 117,
+    "openPrice": 227.25,
+    "highPrice": 227.27,
+    "lowPrice": 227.23,
+    "closePrice": 227.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382000,
+    "volume": 120,
+    "openPrice": 227.27,
+    "highPrice": 227.27,
+    "lowPrice": 227.2,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382060,
+    "volume": 81,
+    "openPrice": 227.21,
+    "highPrice": 227.3,
+    "lowPrice": 227.2,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382120,
+    "volume": 189,
+    "openPrice": 227.3,
+    "highPrice": 227.3,
+    "lowPrice": 227.2,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382180,
+    "volume": 51,
+    "openPrice": 227.3,
+    "highPrice": 227.4,
+    "lowPrice": 227.3,
+    "closePrice": 227.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382240,
+    "volume": 373,
+    "openPrice": 227.4,
+    "highPrice": 227.4,
+    "lowPrice": 227.25,
+    "closePrice": 227.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382300,
+    "volume": 242,
+    "openPrice": 227.25,
+    "highPrice": 227.25,
+    "lowPrice": 227.19,
+    "closePrice": 227.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382360,
+    "volume": 608,
+    "openPrice": 227.2,
+    "highPrice": 227.24,
+    "lowPrice": 227.1,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382420,
+    "volume": 21,
+    "openPrice": 227.19,
+    "highPrice": 227.23,
+    "lowPrice": 227.12,
+    "closePrice": 227.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382480,
+    "volume": 111,
+    "openPrice": 227.23,
+    "highPrice": 227.25,
+    "lowPrice": 227.16,
+    "closePrice": 227.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382540,
+    "volume": 53,
+    "openPrice": 227.2,
+    "highPrice": 227.2,
+    "lowPrice": 227.12,
+    "closePrice": 227.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382600,
+    "volume": 110,
+    "openPrice": 227.13,
+    "highPrice": 227.21,
+    "lowPrice": 227.11,
+    "closePrice": 227.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382660,
+    "volume": 110,
+    "openPrice": 227.2,
+    "highPrice": 227.2,
+    "lowPrice": 227.17,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382720,
+    "volume": 30,
+    "openPrice": 227.25,
+    "highPrice": 227.25,
+    "lowPrice": 227.25,
+    "closePrice": 227.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382780,
+    "volume": 121,
+    "openPrice": 227.23,
+    "highPrice": 227.28,
+    "lowPrice": 227.17,
+    "closePrice": 227.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382840,
+    "volume": 84,
+    "openPrice": 227.26,
+    "highPrice": 227.26,
+    "lowPrice": 227.2,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382900,
+    "volume": 21,
+    "openPrice": 227.19,
+    "highPrice": 227.2,
+    "lowPrice": 227.17,
+    "closePrice": 227.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667382960,
+    "volume": 32,
+    "openPrice": 227.23,
+    "highPrice": 227.23,
+    "lowPrice": 227.23,
+    "closePrice": 227.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383020,
+    "volume": 15,
+    "openPrice": 227.22,
+    "highPrice": 227.24,
+    "lowPrice": 227.22,
+    "closePrice": 227.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383080,
+    "volume": 55,
+    "openPrice": 227.24,
+    "highPrice": 227.24,
+    "lowPrice": 227.16,
+    "closePrice": 227.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383200,
+    "volume": 58,
+    "openPrice": 227.27,
+    "highPrice": 227.3,
+    "lowPrice": 227.27,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383260,
+    "volume": 167,
+    "openPrice": 227.35,
+    "highPrice": 227.39,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383320,
+    "volume": 3,
+    "openPrice": 227.35,
+    "highPrice": 227.35,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383380,
+    "volume": 135,
+    "openPrice": 227.31,
+    "highPrice": 227.31,
+    "lowPrice": 227.23,
+    "closePrice": 227.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383440,
+    "volume": 23,
+    "openPrice": 227.27,
+    "highPrice": 227.27,
+    "lowPrice": 227.27,
+    "closePrice": 227.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383500,
+    "volume": 58,
+    "openPrice": 227.33,
+    "highPrice": 227.35,
+    "lowPrice": 227.33,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383560,
+    "volume": 80,
+    "openPrice": 227.35,
+    "highPrice": 227.35,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383620,
+    "volume": 103,
+    "openPrice": 227.4,
+    "highPrice": 227.47,
+    "lowPrice": 227.4,
+    "closePrice": 227.43
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383740,
+    "volume": 255,
+    "openPrice": 227.43,
+    "highPrice": 227.43,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383800,
+    "volume": 102,
+    "openPrice": 227.36,
+    "highPrice": 227.41,
+    "lowPrice": 227.36,
+    "closePrice": 227.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383860,
+    "volume": 143,
+    "openPrice": 227.41,
+    "highPrice": 227.49,
+    "lowPrice": 227.41,
+    "closePrice": 227.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383920,
+    "volume": 553,
+    "openPrice": 227.41,
+    "highPrice": 227.49,
+    "lowPrice": 227.41,
+    "closePrice": 227.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667383980,
+    "volume": 3,
+    "openPrice": 227.48,
+    "highPrice": 227.49,
+    "lowPrice": 227.48,
+    "closePrice": 227.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384040,
+    "volume": 94,
+    "openPrice": 227.48,
+    "highPrice": 227.48,
+    "lowPrice": 227.37,
+    "closePrice": 227.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384100,
+    "volume": 26,
+    "openPrice": 227.39,
+    "highPrice": 227.46,
+    "lowPrice": 227.38,
+    "closePrice": 227.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384160,
+    "volume": 138,
+    "openPrice": 227.4,
+    "highPrice": 227.4,
+    "lowPrice": 227.4,
+    "closePrice": 227.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384220,
+    "volume": 209,
+    "openPrice": 227.4,
+    "highPrice": 227.4,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384280,
+    "volume": 1,
+    "openPrice": 227.35,
+    "highPrice": 227.35,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384340,
+    "volume": 22,
+    "openPrice": 227.38,
+    "highPrice": 227.38,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384400,
+    "volume": 12,
+    "openPrice": 227.41,
+    "highPrice": 227.41,
+    "lowPrice": 227.36,
+    "closePrice": 227.36
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384520,
+    "volume": 6,
+    "openPrice": 227.47,
+    "highPrice": 227.47,
+    "lowPrice": 227.4,
+    "closePrice": 227.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384580,
+    "volume": 40,
+    "openPrice": 227.4,
+    "highPrice": 227.44,
+    "lowPrice": 227.4,
+    "closePrice": 227.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384640,
+    "volume": 58,
+    "openPrice": 227.44,
+    "highPrice": 227.44,
+    "lowPrice": 227.36,
+    "closePrice": 227.36
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384700,
+    "volume": 573,
+    "openPrice": 227.41,
+    "highPrice": 227.49,
+    "lowPrice": 227.41,
+    "closePrice": 227.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384760,
+    "volume": 1279,
+    "openPrice": 227.49,
+    "highPrice": 227.5,
+    "lowPrice": 227.49,
+    "closePrice": 227.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384820,
+    "volume": 297,
+    "openPrice": 227.54,
+    "highPrice": 227.58,
+    "lowPrice": 227.5,
+    "closePrice": 227.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384880,
+    "volume": 196,
+    "openPrice": 227.51,
+    "highPrice": 227.51,
+    "lowPrice": 227.4,
+    "closePrice": 227.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667384940,
+    "volume": 361,
+    "openPrice": 227.43,
+    "highPrice": 227.43,
+    "lowPrice": 227.35,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385000,
+    "volume": 312,
+    "openPrice": 227.3,
+    "highPrice": 227.38,
+    "lowPrice": 227.3,
+    "closePrice": 227.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385060,
+    "volume": 312,
+    "openPrice": 227.38,
+    "highPrice": 227.38,
+    "lowPrice": 227.19,
+    "closePrice": 227.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385120,
+    "volume": 545,
+    "openPrice": 227.17,
+    "highPrice": 227.19,
+    "lowPrice": 227.1,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385180,
+    "volume": 304,
+    "openPrice": 227.11,
+    "highPrice": 227.11,
+    "lowPrice": 227.08,
+    "closePrice": 227.11
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385240,
+    "volume": 366,
+    "openPrice": 227.12,
+    "highPrice": 227.15,
+    "lowPrice": 227.07,
+    "closePrice": 227.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385300,
+    "volume": 28,
+    "openPrice": 227.25,
+    "highPrice": 227.27,
+    "lowPrice": 227.25,
+    "closePrice": 227.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385360,
+    "volume": 7,
+    "openPrice": 227.25,
+    "highPrice": 227.25,
+    "lowPrice": 227.19,
+    "closePrice": 227.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385420,
+    "volume": 556,
+    "openPrice": 227.15,
+    "highPrice": 227.15,
+    "lowPrice": 227.08,
+    "closePrice": 227.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385480,
+    "volume": 201,
+    "openPrice": 227.08,
+    "highPrice": 227.12,
+    "lowPrice": 227.07,
+    "closePrice": 227.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385540,
+    "volume": 432,
+    "openPrice": 227.12,
+    "highPrice": 227.21,
+    "lowPrice": 227.09,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385600,
+    "volume": 112,
+    "openPrice": 227.2,
+    "highPrice": 227.27,
+    "lowPrice": 227.2,
+    "closePrice": 227.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385660,
+    "volume": 288,
+    "openPrice": 227.2,
+    "highPrice": 227.23,
+    "lowPrice": 227.19,
+    "closePrice": 227.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385720,
+    "volume": 2,
+    "openPrice": 227.21,
+    "highPrice": 227.21,
+    "lowPrice": 227.21,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385780,
+    "volume": 1,
+    "openPrice": 227.21,
+    "highPrice": 227.21,
+    "lowPrice": 227.21,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385840,
+    "volume": 279,
+    "openPrice": 227.29,
+    "highPrice": 227.29,
+    "lowPrice": 227.2,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385900,
+    "volume": 237,
+    "openPrice": 227.13,
+    "highPrice": 227.13,
+    "lowPrice": 227.07,
+    "closePrice": 227.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667385960,
+    "volume": 384,
+    "openPrice": 227.13,
+    "highPrice": 227.2,
+    "lowPrice": 227.13,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386020,
+    "volume": 40,
+    "openPrice": 227.17,
+    "highPrice": 227.2,
+    "lowPrice": 227.13,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386080,
+    "volume": 393,
+    "openPrice": 227.25,
+    "highPrice": 227.25,
+    "lowPrice": 227.21,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386140,
+    "volume": 123,
+    "openPrice": 227.16,
+    "highPrice": 227.17,
+    "lowPrice": 227.13,
+    "closePrice": 227.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386200,
+    "volume": 106,
+    "openPrice": 227.16,
+    "highPrice": 227.16,
+    "lowPrice": 227.16,
+    "closePrice": 227.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386260,
+    "volume": 366,
+    "openPrice": 227.14,
+    "highPrice": 227.14,
+    "lowPrice": 227.1,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386320,
+    "volume": 394,
+    "openPrice": 227.15,
+    "highPrice": 227.15,
+    "lowPrice": 227.05,
+    "closePrice": 227.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386380,
+    "volume": 85,
+    "openPrice": 227.12,
+    "highPrice": 227.14,
+    "lowPrice": 227.12,
+    "closePrice": 227.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386440,
+    "volume": 93,
+    "openPrice": 227.2,
+    "highPrice": 227.2,
+    "lowPrice": 227.14,
+    "closePrice": 227.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386500,
+    "volume": 91,
+    "openPrice": 227.14,
+    "highPrice": 227.15,
+    "lowPrice": 227.14,
+    "closePrice": 227.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386560,
+    "volume": 2,
+    "openPrice": 227.14,
+    "highPrice": 227.14,
+    "lowPrice": 227.14,
+    "closePrice": 227.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386620,
+    "volume": 466,
+    "openPrice": 227.14,
+    "highPrice": 227.28,
+    "lowPrice": 227.14,
+    "closePrice": 227.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386680,
+    "volume": 151,
+    "openPrice": 227.28,
+    "highPrice": 227.33,
+    "lowPrice": 227.28,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386740,
+    "volume": 12,
+    "openPrice": 227.21,
+    "highPrice": 227.31,
+    "lowPrice": 227.21,
+    "closePrice": 227.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386800,
+    "volume": 1053,
+    "openPrice": 227.25,
+    "highPrice": 227.6,
+    "lowPrice": 227.25,
+    "closePrice": 227.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386860,
+    "volume": 2011,
+    "openPrice": 227.39,
+    "highPrice": 227.39,
+    "lowPrice": 227.05,
+    "closePrice": 227.33
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386920,
+    "volume": 947,
+    "openPrice": 227.15,
+    "highPrice": 227.15,
+    "lowPrice": 227.05,
+    "closePrice": 227.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667386980,
+    "volume": 4379,
+    "openPrice": 227.08,
+    "highPrice": 227.08,
+    "lowPrice": 226.83,
+    "closePrice": 226.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387040,
+    "volume": 669,
+    "openPrice": 227.01,
+    "highPrice": 227.2,
+    "lowPrice": 227.0,
+    "closePrice": 227.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387100,
+    "volume": 60,
+    "openPrice": 227.18,
+    "highPrice": 227.19,
+    "lowPrice": 227.17,
+    "closePrice": 227.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387160,
+    "volume": 377,
+    "openPrice": 227.16,
+    "highPrice": 227.16,
+    "lowPrice": 227.06,
+    "closePrice": 227.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387280,
+    "volume": 218,
+    "openPrice": 227.16,
+    "highPrice": 227.18,
+    "lowPrice": 227.06,
+    "closePrice": 227.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387340,
+    "volume": 913,
+    "openPrice": 227.06,
+    "highPrice": 227.2,
+    "lowPrice": 227.05,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387400,
+    "volume": 255,
+    "openPrice": 227.2,
+    "highPrice": 227.34,
+    "lowPrice": 227.2,
+    "closePrice": 227.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387460,
+    "volume": 1444,
+    "openPrice": 227.43,
+    "highPrice": 227.52,
+    "lowPrice": 227.43,
+    "closePrice": 227.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387580,
+    "volume": 616,
+    "openPrice": 227.48,
+    "highPrice": 227.8,
+    "lowPrice": 227.48,
+    "closePrice": 227.76
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387640,
+    "volume": 566,
+    "openPrice": 227.85,
+    "highPrice": 227.85,
+    "lowPrice": 227.76,
+    "closePrice": 227.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387700,
+    "volume": 339,
+    "openPrice": 227.75,
+    "highPrice": 227.76,
+    "lowPrice": 227.69,
+    "closePrice": 227.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387760,
+    "volume": 236,
+    "openPrice": 227.73,
+    "highPrice": 227.82,
+    "lowPrice": 227.73,
+    "closePrice": 227.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387820,
+    "volume": 440,
+    "openPrice": 227.82,
+    "highPrice": 227.9,
+    "lowPrice": 227.76,
+    "closePrice": 227.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387880,
+    "volume": 2985,
+    "openPrice": 227.9,
+    "highPrice": 228.12,
+    "lowPrice": 227.9,
+    "closePrice": 228.11
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667387940,
+    "volume": 214,
+    "openPrice": 228.1,
+    "highPrice": 228.11,
+    "lowPrice": 228.06,
+    "closePrice": 228.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388000,
+    "volume": 144,
+    "openPrice": 227.99,
+    "highPrice": 228.05,
+    "lowPrice": 227.97,
+    "closePrice": 228.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388060,
+    "volume": 253,
+    "openPrice": 227.99,
+    "highPrice": 228.06,
+    "lowPrice": 227.99,
+    "closePrice": 228.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388120,
+    "volume": 293,
+    "openPrice": 228.02,
+    "highPrice": 228.06,
+    "lowPrice": 227.97,
+    "closePrice": 227.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388180,
+    "volume": 58,
+    "openPrice": 228.0,
+    "highPrice": 228.0,
+    "lowPrice": 227.91,
+    "closePrice": 227.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388240,
+    "volume": 212,
+    "openPrice": 227.91,
+    "highPrice": 227.91,
+    "lowPrice": 227.62,
+    "closePrice": 227.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388300,
+    "volume": 102,
+    "openPrice": 227.74,
+    "highPrice": 227.75,
+    "lowPrice": 227.6,
+    "closePrice": 227.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388360,
+    "volume": 298,
+    "openPrice": 227.69,
+    "highPrice": 227.69,
+    "lowPrice": 227.59,
+    "closePrice": 227.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388420,
+    "volume": 38,
+    "openPrice": 227.59,
+    "highPrice": 227.67,
+    "lowPrice": 227.59,
+    "closePrice": 227.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388480,
+    "volume": 6,
+    "openPrice": 227.65,
+    "highPrice": 227.7,
+    "lowPrice": 227.65,
+    "closePrice": 227.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388540,
+    "volume": 1778,
+    "openPrice": 227.7,
+    "highPrice": 227.8,
+    "lowPrice": 227.67,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388600,
+    "volume": 1150,
+    "openPrice": 227.73,
+    "highPrice": 227.8,
+    "lowPrice": 227.73,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388660,
+    "volume": 72,
+    "openPrice": 227.69,
+    "highPrice": 227.73,
+    "lowPrice": 227.69,
+    "closePrice": 227.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388720,
+    "volume": 397,
+    "openPrice": 227.8,
+    "highPrice": 227.9,
+    "lowPrice": 227.8,
+    "closePrice": 227.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388780,
+    "volume": 316,
+    "openPrice": 227.9,
+    "highPrice": 227.9,
+    "lowPrice": 227.88,
+    "closePrice": 227.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388840,
+    "volume": 94,
+    "openPrice": 227.91,
+    "highPrice": 227.91,
+    "lowPrice": 227.89,
+    "closePrice": 227.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388900,
+    "volume": 86,
+    "openPrice": 227.89,
+    "highPrice": 227.89,
+    "lowPrice": 227.82,
+    "closePrice": 227.83
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667388960,
+    "volume": 100,
+    "openPrice": 227.83,
+    "highPrice": 227.83,
+    "lowPrice": 227.83,
+    "closePrice": 227.83
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389020,
+    "volume": 3,
+    "openPrice": 227.8,
+    "highPrice": 227.8,
+    "lowPrice": 227.8,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389080,
+    "volume": 203,
+    "openPrice": 227.85,
+    "highPrice": 227.85,
+    "lowPrice": 227.8,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389140,
+    "volume": 80,
+    "openPrice": 227.8,
+    "highPrice": 227.8,
+    "lowPrice": 227.75,
+    "closePrice": 227.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389200,
+    "volume": 277,
+    "openPrice": 227.84,
+    "highPrice": 227.84,
+    "lowPrice": 227.75,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389260,
+    "volume": 42,
+    "openPrice": 227.8,
+    "highPrice": 227.8,
+    "lowPrice": 227.75,
+    "closePrice": 227.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389320,
+    "volume": 27,
+    "openPrice": 227.75,
+    "highPrice": 227.81,
+    "lowPrice": 227.75,
+    "closePrice": 227.81
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389380,
+    "volume": 40,
+    "openPrice": 227.75,
+    "highPrice": 227.75,
+    "lowPrice": 227.63,
+    "closePrice": 227.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389440,
+    "volume": 93,
+    "openPrice": 227.69,
+    "highPrice": 227.69,
+    "lowPrice": 227.62,
+    "closePrice": 227.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389500,
+    "volume": 496,
+    "openPrice": 227.62,
+    "highPrice": 227.62,
+    "lowPrice": 227.47,
+    "closePrice": 227.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389560,
+    "volume": 10,
+    "openPrice": 227.5,
+    "highPrice": 227.5,
+    "lowPrice": 227.5,
+    "closePrice": 227.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389620,
+    "volume": 36,
+    "openPrice": 227.48,
+    "highPrice": 227.53,
+    "lowPrice": 227.48,
+    "closePrice": 227.53
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389740,
+    "volume": 254,
+    "openPrice": 227.53,
+    "highPrice": 227.53,
+    "lowPrice": 227.51,
+    "closePrice": 227.52
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389800,
+    "volume": 27,
+    "openPrice": 227.57,
+    "highPrice": 227.61,
+    "lowPrice": 227.57,
+    "closePrice": 227.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389860,
+    "volume": 396,
+    "openPrice": 227.67,
+    "highPrice": 227.67,
+    "lowPrice": 227.62,
+    "closePrice": 227.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389920,
+    "volume": 139,
+    "openPrice": 227.68,
+    "highPrice": 227.74,
+    "lowPrice": 227.61,
+    "closePrice": 227.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667389980,
+    "volume": 29,
+    "openPrice": 227.62,
+    "highPrice": 227.62,
+    "lowPrice": 227.59,
+    "closePrice": 227.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390040,
+    "volume": 75,
+    "openPrice": 227.62,
+    "highPrice": 227.62,
+    "lowPrice": 227.57,
+    "closePrice": 227.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390160,
+    "volume": 153,
+    "openPrice": 227.65,
+    "highPrice": 227.74,
+    "lowPrice": 227.57,
+    "closePrice": 227.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390220,
+    "volume": 232,
+    "openPrice": 227.65,
+    "highPrice": 227.68,
+    "lowPrice": 227.65,
+    "closePrice": 227.68
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390280,
+    "volume": 410,
+    "openPrice": 227.69,
+    "highPrice": 227.69,
+    "lowPrice": 227.66,
+    "closePrice": 227.66
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390340,
+    "volume": 191,
+    "openPrice": 227.66,
+    "highPrice": 227.71,
+    "lowPrice": 227.65,
+    "closePrice": 227.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390400,
+    "volume": 194,
+    "openPrice": 227.7,
+    "highPrice": 227.73,
+    "lowPrice": 227.68,
+    "closePrice": 227.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390460,
+    "volume": 47529,
+    "openPrice": 227.35,
+    "highPrice": 228.74,
+    "lowPrice": 226.84,
+    "closePrice": 227.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390520,
+    "volume": 811,
+    "openPrice": 227.78,
+    "highPrice": 228.07,
+    "lowPrice": 226.95,
+    "closePrice": 227.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390580,
+    "volume": 570,
+    "openPrice": 227.78,
+    "highPrice": 227.78,
+    "lowPrice": 227.66,
+    "closePrice": 227.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390640,
+    "volume": 57,
+    "openPrice": 227.73,
+    "highPrice": 227.8,
+    "lowPrice": 227.7,
+    "closePrice": 227.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390700,
+    "volume": 660,
+    "openPrice": 227.78,
+    "highPrice": 227.89,
+    "lowPrice": 227.78,
+    "closePrice": 227.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390760,
+    "volume": 335,
+    "openPrice": 227.84,
+    "highPrice": 227.9,
+    "lowPrice": 227.78,
+    "closePrice": 227.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390820,
+    "volume": 336,
+    "openPrice": 227.88,
+    "highPrice": 227.9,
+    "lowPrice": 227.78,
+    "closePrice": 227.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390880,
+    "volume": 289,
+    "openPrice": 227.9,
+    "highPrice": 227.9,
+    "lowPrice": 227.78,
+    "closePrice": 227.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667390940,
+    "volume": 1226,
+    "openPrice": 227.83,
+    "highPrice": 227.83,
+    "lowPrice": 227.66,
+    "closePrice": 227.73
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391000,
+    "volume": 499,
+    "openPrice": 227.77,
+    "highPrice": 227.79,
+    "lowPrice": 227.55,
+    "closePrice": 227.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391060,
+    "volume": 1369,
+    "openPrice": 227.51,
+    "highPrice": 227.55,
+    "lowPrice": 227.18,
+    "closePrice": 227.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391120,
+    "volume": 5232,
+    "openPrice": 227.54,
+    "highPrice": 227.68,
+    "lowPrice": 227.42,
+    "closePrice": 227.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391180,
+    "volume": 838,
+    "openPrice": 227.55,
+    "highPrice": 227.65,
+    "lowPrice": 227.42,
+    "closePrice": 227.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391240,
+    "volume": 4372,
+    "openPrice": 227.54,
+    "highPrice": 227.68,
+    "lowPrice": 227.42,
+    "closePrice": 227.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391300,
+    "volume": 188,
+    "openPrice": 227.64,
+    "highPrice": 227.64,
+    "lowPrice": 227.42,
+    "closePrice": 227.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391360,
+    "volume": 5433,
+    "openPrice": 227.56,
+    "highPrice": 227.6,
+    "lowPrice": 226.66,
+    "closePrice": 226.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391420,
+    "volume": 9506,
+    "openPrice": 226.7,
+    "highPrice": 227.17,
+    "lowPrice": 226.29,
+    "closePrice": 227.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391480,
+    "volume": 1757,
+    "openPrice": 227.0,
+    "highPrice": 227.47,
+    "lowPrice": 226.89,
+    "closePrice": 227.04
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391540,
+    "volume": 537,
+    "openPrice": 226.99,
+    "highPrice": 227.3,
+    "lowPrice": 226.89,
+    "closePrice": 226.92
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391600,
+    "volume": 1176,
+    "openPrice": 227.09,
+    "highPrice": 227.25,
+    "lowPrice": 227.0,
+    "closePrice": 227.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391660,
+    "volume": 1323,
+    "openPrice": 226.96,
+    "highPrice": 227.26,
+    "lowPrice": 226.9,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391720,
+    "volume": 462,
+    "openPrice": 227.26,
+    "highPrice": 227.26,
+    "lowPrice": 227.0,
+    "closePrice": 227.26
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391780,
+    "volume": 710,
+    "openPrice": 227.18,
+    "highPrice": 227.3,
+    "lowPrice": 227.01,
+    "closePrice": 227.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391840,
+    "volume": 1150,
+    "openPrice": 227.29,
+    "highPrice": 227.29,
+    "lowPrice": 227.01,
+    "closePrice": 227.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391900,
+    "volume": 533,
+    "openPrice": 227.19,
+    "highPrice": 227.19,
+    "lowPrice": 227.01,
+    "closePrice": 227.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667391960,
+    "volume": 1057,
+    "openPrice": 227.06,
+    "highPrice": 227.21,
+    "lowPrice": 227.0,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392020,
+    "volume": 2151,
+    "openPrice": 227.05,
+    "highPrice": 227.14,
+    "lowPrice": 227.0,
+    "closePrice": 227.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392080,
+    "volume": 756,
+    "openPrice": 227.1,
+    "highPrice": 227.21,
+    "lowPrice": 227.09,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392140,
+    "volume": 2573,
+    "openPrice": 227.12,
+    "highPrice": 227.35,
+    "lowPrice": 227.12,
+    "closePrice": 227.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392200,
+    "volume": 745,
+    "openPrice": 227.24,
+    "highPrice": 227.38,
+    "lowPrice": 227.21,
+    "closePrice": 227.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392260,
+    "volume": 1867,
+    "openPrice": 227.42,
+    "highPrice": 227.5,
+    "lowPrice": 227.15,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392320,
+    "volume": 5528,
+    "openPrice": 227.21,
+    "highPrice": 227.3,
+    "lowPrice": 227.13,
+    "closePrice": 227.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392380,
+    "volume": 404,
+    "openPrice": 227.25,
+    "highPrice": 227.3,
+    "lowPrice": 227.15,
+    "closePrice": 227.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392440,
+    "volume": 1979,
+    "openPrice": 227.34,
+    "highPrice": 227.5,
+    "lowPrice": 227.15,
+    "closePrice": 227.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392500,
+    "volume": 1102,
+    "openPrice": 227.35,
+    "highPrice": 227.48,
+    "lowPrice": 227.2,
+    "closePrice": 227.48
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392560,
+    "volume": 2057,
+    "openPrice": 227.39,
+    "highPrice": 227.48,
+    "lowPrice": 227.39,
+    "closePrice": 227.45
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392620,
+    "volume": 3071,
+    "openPrice": 227.48,
+    "highPrice": 227.72,
+    "lowPrice": 227.39,
+    "closePrice": 227.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392680,
+    "volume": 1519,
+    "openPrice": 227.68,
+    "highPrice": 227.68,
+    "lowPrice": 227.3,
+    "closePrice": 227.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392740,
+    "volume": 882,
+    "openPrice": 227.6,
+    "highPrice": 227.72,
+    "lowPrice": 227.4,
+    "closePrice": 227.66
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392800,
+    "volume": 388,
+    "openPrice": 227.66,
+    "highPrice": 227.71,
+    "lowPrice": 227.5,
+    "closePrice": 227.71
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392860,
+    "volume": 461,
+    "openPrice": 227.5,
+    "highPrice": 227.7,
+    "lowPrice": 227.47,
+    "closePrice": 227.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392920,
+    "volume": 2835,
+    "openPrice": 227.64,
+    "highPrice": 227.64,
+    "lowPrice": 227.1,
+    "closePrice": 227.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667392980,
+    "volume": 4256,
+    "openPrice": 227.27,
+    "highPrice": 227.28,
+    "lowPrice": 226.65,
+    "closePrice": 226.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393040,
+    "volume": 5066,
+    "openPrice": 226.65,
+    "highPrice": 226.81,
+    "lowPrice": 226.26,
+    "closePrice": 226.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393100,
+    "volume": 2380,
+    "openPrice": 226.67,
+    "highPrice": 226.82,
+    "lowPrice": 226.29,
+    "closePrice": 226.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393160,
+    "volume": 2276,
+    "openPrice": 226.37,
+    "highPrice": 226.64,
+    "lowPrice": 226.3,
+    "closePrice": 226.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393220,
+    "volume": 1716,
+    "openPrice": 226.62,
+    "highPrice": 226.64,
+    "lowPrice": 226.44,
+    "closePrice": 226.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393280,
+    "volume": 1976,
+    "openPrice": 226.61,
+    "highPrice": 227.0,
+    "lowPrice": 226.4,
+    "closePrice": 226.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393340,
+    "volume": 1081,
+    "openPrice": 226.5,
+    "highPrice": 226.6,
+    "lowPrice": 226.33,
+    "closePrice": 226.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393400,
+    "volume": 765,
+    "openPrice": 226.6,
+    "highPrice": 226.9,
+    "lowPrice": 226.34,
+    "closePrice": 226.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393460,
+    "volume": 4356,
+    "openPrice": 226.8,
+    "highPrice": 227.25,
+    "lowPrice": 226.7,
+    "closePrice": 227.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393520,
+    "volume": 621,
+    "openPrice": 227.25,
+    "highPrice": 227.25,
+    "lowPrice": 226.75,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393580,
+    "volume": 1359,
+    "openPrice": 227.2,
+    "highPrice": 227.2,
+    "lowPrice": 226.75,
+    "closePrice": 226.96
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393640,
+    "volume": 1134,
+    "openPrice": 226.99,
+    "highPrice": 227.1,
+    "lowPrice": 226.8,
+    "closePrice": 227.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393700,
+    "volume": 2613,
+    "openPrice": 227.1,
+    "highPrice": 227.1,
+    "lowPrice": 226.8,
+    "closePrice": 227.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393760,
+    "volume": 776,
+    "openPrice": 226.9,
+    "highPrice": 227.1,
+    "lowPrice": 226.9,
+    "closePrice": 227.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393820,
+    "volume": 167,
+    "openPrice": 227.1,
+    "highPrice": 227.2,
+    "lowPrice": 226.9,
+    "closePrice": 227.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393880,
+    "volume": 1594,
+    "openPrice": 227.0,
+    "highPrice": 227.08,
+    "lowPrice": 226.85,
+    "closePrice": 226.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667393940,
+    "volume": 1087,
+    "openPrice": 226.9,
+    "highPrice": 227.0,
+    "lowPrice": 226.85,
+    "closePrice": 226.93
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394000,
+    "volume": 1218,
+    "openPrice": 226.93,
+    "highPrice": 227.0,
+    "lowPrice": 226.85,
+    "closePrice": 226.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394060,
+    "volume": 5462,
+    "openPrice": 226.9,
+    "highPrice": 227.0,
+    "lowPrice": 226.61,
+    "closePrice": 226.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394120,
+    "volume": 1129,
+    "openPrice": 226.74,
+    "highPrice": 226.9,
+    "lowPrice": 226.6,
+    "closePrice": 226.81
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394180,
+    "volume": 462,
+    "openPrice": 226.72,
+    "highPrice": 226.9,
+    "lowPrice": 226.72,
+    "closePrice": 226.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394240,
+    "volume": 1420,
+    "openPrice": 226.81,
+    "highPrice": 226.9,
+    "lowPrice": 226.65,
+    "closePrice": 226.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394300,
+    "volume": 859,
+    "openPrice": 226.8,
+    "highPrice": 226.9,
+    "lowPrice": 226.8,
+    "closePrice": 226.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394360,
+    "volume": 2222,
+    "openPrice": 226.9,
+    "highPrice": 226.9,
+    "lowPrice": 226.8,
+    "closePrice": 226.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394420,
+    "volume": 110,
+    "openPrice": 226.82,
+    "highPrice": 226.9,
+    "lowPrice": 226.8,
+    "closePrice": 226.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394480,
+    "volume": 1367,
+    "openPrice": 226.8,
+    "highPrice": 226.95,
+    "lowPrice": 226.8,
+    "closePrice": 226.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394540,
+    "volume": 580,
+    "openPrice": 226.88,
+    "highPrice": 227.0,
+    "lowPrice": 226.84,
+    "closePrice": 226.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394600,
+    "volume": 439,
+    "openPrice": 226.88,
+    "highPrice": 226.95,
+    "lowPrice": 226.76,
+    "closePrice": 226.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394660,
+    "volume": 1135,
+    "openPrice": 226.9,
+    "highPrice": 226.9,
+    "lowPrice": 226.65,
+    "closePrice": 226.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394720,
+    "volume": 1570,
+    "openPrice": 226.69,
+    "highPrice": 226.85,
+    "lowPrice": 226.6,
+    "closePrice": 226.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394780,
+    "volume": 2096,
+    "openPrice": 226.6,
+    "highPrice": 226.75,
+    "lowPrice": 226.5,
+    "closePrice": 226.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394840,
+    "volume": 2230,
+    "openPrice": 226.5,
+    "highPrice": 226.6,
+    "lowPrice": 226.3,
+    "closePrice": 226.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394900,
+    "volume": 2878,
+    "openPrice": 226.3,
+    "highPrice": 226.64,
+    "lowPrice": 226.3,
+    "closePrice": 226.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667394960,
+    "volume": 2391,
+    "openPrice": 226.53,
+    "highPrice": 226.64,
+    "lowPrice": 226.45,
+    "closePrice": 226.48
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395020,
+    "volume": 847,
+    "openPrice": 226.6,
+    "highPrice": 226.64,
+    "lowPrice": 226.28,
+    "closePrice": 226.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395080,
+    "volume": 2708,
+    "openPrice": 226.25,
+    "highPrice": 226.46,
+    "lowPrice": 226.25,
+    "closePrice": 226.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395140,
+    "volume": 2076,
+    "openPrice": 226.37,
+    "highPrice": 226.45,
+    "lowPrice": 226.31,
+    "closePrice": 226.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395200,
+    "volume": 2227,
+    "openPrice": 226.4,
+    "highPrice": 226.44,
+    "lowPrice": 226.26,
+    "closePrice": 226.33
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395260,
+    "volume": 2573,
+    "openPrice": 226.3,
+    "highPrice": 226.44,
+    "lowPrice": 226.26,
+    "closePrice": 226.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395320,
+    "volume": 1000,
+    "openPrice": 226.3,
+    "highPrice": 226.3,
+    "lowPrice": 226.16,
+    "closePrice": 226.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395380,
+    "volume": 579,
+    "openPrice": 226.2,
+    "highPrice": 226.39,
+    "lowPrice": 226.15,
+    "closePrice": 226.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395440,
+    "volume": 2533,
+    "openPrice": 226.14,
+    "highPrice": 226.28,
+    "lowPrice": 226.12,
+    "closePrice": 226.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395500,
+    "volume": 1060,
+    "openPrice": 226.18,
+    "highPrice": 226.18,
+    "lowPrice": 226.03,
+    "closePrice": 226.03
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395560,
+    "volume": 2350,
+    "openPrice": 226.12,
+    "highPrice": 226.2,
+    "lowPrice": 226.03,
+    "closePrice": 226.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395620,
+    "volume": 1626,
+    "openPrice": 226.15,
+    "highPrice": 226.15,
+    "lowPrice": 226.0,
+    "closePrice": 226.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395680,
+    "volume": 3114,
+    "openPrice": 226.07,
+    "highPrice": 226.21,
+    "lowPrice": 226.0,
+    "closePrice": 226.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395740,
+    "volume": 824,
+    "openPrice": 226.2,
+    "highPrice": 226.2,
+    "lowPrice": 225.98,
+    "closePrice": 226.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395800,
+    "volume": 5371,
+    "openPrice": 226.0,
+    "highPrice": 226.11,
+    "lowPrice": 225.52,
+    "closePrice": 225.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395860,
+    "volume": 838259,
+    "openPrice": 225.88,
+    "highPrice": 226.5,
+    "lowPrice": 225.33,
+    "closePrice": 225.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395920,
+    "volume": 352503,
+    "openPrice": 225.72,
+    "highPrice": 225.72,
+    "lowPrice": 224.24,
+    "closePrice": 224.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667395980,
+    "volume": 306402,
+    "openPrice": 224.45,
+    "highPrice": 224.45,
+    "lowPrice": 223.61,
+    "closePrice": 223.96
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396040,
+    "volume": 267197,
+    "openPrice": 223.95,
+    "highPrice": 224.6,
+    "lowPrice": 223.4,
+    "closePrice": 224.33
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396100,
+    "volume": 208503,
+    "openPrice": 224.36,
+    "highPrice": 224.6,
+    "lowPrice": 223.88,
+    "closePrice": 224.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396160,
+    "volume": 279739,
+    "openPrice": 224.27,
+    "highPrice": 224.57,
+    "lowPrice": 223.4,
+    "closePrice": 224.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396220,
+    "volume": 312936,
+    "openPrice": 224.34,
+    "highPrice": 224.76,
+    "lowPrice": 223.61,
+    "closePrice": 224.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396280,
+    "volume": 275458,
+    "openPrice": 224.15,
+    "highPrice": 225.18,
+    "lowPrice": 223.66,
+    "closePrice": 225.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396340,
+    "volume": 205540,
+    "openPrice": 225.12,
+    "highPrice": 225.43,
+    "lowPrice": 224.38,
+    "closePrice": 224.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396400,
+    "volume": 157804,
+    "openPrice": 224.85,
+    "highPrice": 225.1,
+    "lowPrice": 224.3,
+    "closePrice": 225.09
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396460,
+    "volume": 373870,
+    "openPrice": 225.09,
+    "highPrice": 226.48,
+    "lowPrice": 225.06,
+    "closePrice": 226.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396520,
+    "volume": 186713,
+    "openPrice": 226.1,
+    "highPrice": 226.27,
+    "lowPrice": 225.61,
+    "closePrice": 226.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396580,
+    "volume": 282290,
+    "openPrice": 226.15,
+    "highPrice": 226.75,
+    "lowPrice": 225.39,
+    "closePrice": 225.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396640,
+    "volume": 147075,
+    "openPrice": 225.66,
+    "highPrice": 225.98,
+    "lowPrice": 225.52,
+    "closePrice": 225.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396700,
+    "volume": 158345,
+    "openPrice": 225.98,
+    "highPrice": 226.49,
+    "lowPrice": 225.71,
+    "closePrice": 226.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396760,
+    "volume": 249129,
+    "openPrice": 226.07,
+    "highPrice": 226.88,
+    "lowPrice": 225.19,
+    "closePrice": 226.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396820,
+    "volume": 284342,
+    "openPrice": 226.88,
+    "highPrice": 227.26,
+    "lowPrice": 226.56,
+    "closePrice": 226.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396880,
+    "volume": 207830,
+    "openPrice": 226.81,
+    "highPrice": 227.24,
+    "lowPrice": 226.75,
+    "closePrice": 227.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667396940,
+    "volume": 218228,
+    "openPrice": 227.1,
+    "highPrice": 227.32,
+    "lowPrice": 226.72,
+    "closePrice": 227.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397000,
+    "volume": 179865,
+    "openPrice": 227.14,
+    "highPrice": 227.27,
+    "lowPrice": 226.6,
+    "closePrice": 226.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397060,
+    "volume": 147950,
+    "openPrice": 226.88,
+    "highPrice": 227.07,
+    "lowPrice": 226.41,
+    "closePrice": 226.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397120,
+    "volume": 252239,
+    "openPrice": 226.51,
+    "highPrice": 227.7,
+    "lowPrice": 226.44,
+    "closePrice": 227.58
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397180,
+    "volume": 229663,
+    "openPrice": 227.52,
+    "highPrice": 227.87,
+    "lowPrice": 227.05,
+    "closePrice": 227.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397240,
+    "volume": 169757,
+    "openPrice": 227.1,
+    "highPrice": 227.59,
+    "lowPrice": 226.83,
+    "closePrice": 227.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397300,
+    "volume": 146503,
+    "openPrice": 227.33,
+    "highPrice": 227.78,
+    "lowPrice": 227.1,
+    "closePrice": 227.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397360,
+    "volume": 117024,
+    "openPrice": 227.31,
+    "highPrice": 227.6,
+    "lowPrice": 227.12,
+    "closePrice": 227.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397420,
+    "volume": 181763,
+    "openPrice": 227.26,
+    "highPrice": 227.45,
+    "lowPrice": 226.61,
+    "closePrice": 226.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397480,
+    "volume": 142235,
+    "openPrice": 226.76,
+    "highPrice": 227.07,
+    "lowPrice": 226.6,
+    "closePrice": 226.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397540,
+    "volume": 133399,
+    "openPrice": 226.63,
+    "highPrice": 226.9,
+    "lowPrice": 226.42,
+    "closePrice": 226.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397600,
+    "volume": 116415,
+    "openPrice": 226.54,
+    "highPrice": 227.03,
+    "lowPrice": 226.43,
+    "closePrice": 226.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397660,
+    "volume": 233630,
+    "openPrice": 226.81,
+    "highPrice": 227.56,
+    "lowPrice": 226.72,
+    "closePrice": 227.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397720,
+    "volume": 152465,
+    "openPrice": 227.2,
+    "highPrice": 227.64,
+    "lowPrice": 226.97,
+    "closePrice": 227.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397780,
+    "volume": 125685,
+    "openPrice": 226.97,
+    "highPrice": 227.15,
+    "lowPrice": 226.65,
+    "closePrice": 226.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397840,
+    "volume": 77672,
+    "openPrice": 226.91,
+    "highPrice": 227.19,
+    "lowPrice": 226.8,
+    "closePrice": 226.93
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397900,
+    "volume": 104794,
+    "openPrice": 227.0,
+    "highPrice": 227.38,
+    "lowPrice": 226.91,
+    "closePrice": 227.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667397960,
+    "volume": 172011,
+    "openPrice": 227.35,
+    "highPrice": 227.72,
+    "lowPrice": 227.17,
+    "closePrice": 227.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398020,
+    "volume": 117202,
+    "openPrice": 227.25,
+    "highPrice": 227.57,
+    "lowPrice": 227.25,
+    "closePrice": 227.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398080,
+    "volume": 171399,
+    "openPrice": 227.32,
+    "highPrice": 227.56,
+    "lowPrice": 227.02,
+    "closePrice": 227.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398140,
+    "volume": 258966,
+    "openPrice": 227.38,
+    "highPrice": 227.38,
+    "lowPrice": 226.13,
+    "closePrice": 226.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398200,
+    "volume": 166478,
+    "openPrice": 226.21,
+    "highPrice": 226.47,
+    "lowPrice": 226.04,
+    "closePrice": 226.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398260,
+    "volume": 161410,
+    "openPrice": 226.23,
+    "highPrice": 226.53,
+    "lowPrice": 226.14,
+    "closePrice": 226.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398320,
+    "volume": 213561,
+    "openPrice": 226.19,
+    "highPrice": 226.37,
+    "lowPrice": 225.6,
+    "closePrice": 225.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398380,
+    "volume": 148249,
+    "openPrice": 225.88,
+    "highPrice": 225.91,
+    "lowPrice": 225.5,
+    "closePrice": 225.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398440,
+    "volume": 139663,
+    "openPrice": 225.72,
+    "highPrice": 226.08,
+    "lowPrice": 225.61,
+    "closePrice": 225.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398500,
+    "volume": 179951,
+    "openPrice": 225.75,
+    "highPrice": 225.85,
+    "lowPrice": 225.28,
+    "closePrice": 225.39
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398560,
+    "volume": 99658,
+    "openPrice": 225.35,
+    "highPrice": 225.58,
+    "lowPrice": 225.26,
+    "closePrice": 225.52
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398620,
+    "volume": 175261,
+    "openPrice": 225.52,
+    "highPrice": 225.64,
+    "lowPrice": 225.05,
+    "closePrice": 225.22
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398680,
+    "volume": 199243,
+    "openPrice": 225.19,
+    "highPrice": 225.23,
+    "lowPrice": 224.89,
+    "closePrice": 225.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398740,
+    "volume": 210545,
+    "openPrice": 225.01,
+    "highPrice": 225.45,
+    "lowPrice": 224.82,
+    "closePrice": 225.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398800,
+    "volume": 129840,
+    "openPrice": 225.35,
+    "highPrice": 225.59,
+    "lowPrice": 225.25,
+    "closePrice": 225.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398860,
+    "volume": 122340,
+    "openPrice": 225.33,
+    "highPrice": 225.49,
+    "lowPrice": 225.0,
+    "closePrice": 225.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398920,
+    "volume": 106979,
+    "openPrice": 225.06,
+    "highPrice": 225.09,
+    "lowPrice": 224.84,
+    "closePrice": 224.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667398980,
+    "volume": 154557,
+    "openPrice": 224.97,
+    "highPrice": 225.66,
+    "lowPrice": 224.92,
+    "closePrice": 225.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399040,
+    "volume": 162806,
+    "openPrice": 225.63,
+    "highPrice": 225.94,
+    "lowPrice": 225.57,
+    "closePrice": 225.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399100,
+    "volume": 74057,
+    "openPrice": 225.74,
+    "highPrice": 225.79,
+    "lowPrice": 225.51,
+    "closePrice": 225.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399160,
+    "volume": 114121,
+    "openPrice": 225.55,
+    "highPrice": 225.65,
+    "lowPrice": 225.22,
+    "closePrice": 225.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399220,
+    "volume": 74671,
+    "openPrice": 225.28,
+    "highPrice": 225.45,
+    "lowPrice": 225.16,
+    "closePrice": 225.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399280,
+    "volume": 58245,
+    "openPrice": 225.27,
+    "highPrice": 225.6,
+    "lowPrice": 225.25,
+    "closePrice": 225.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399340,
+    "volume": 105627,
+    "openPrice": 225.48,
+    "highPrice": 225.87,
+    "lowPrice": 225.39,
+    "closePrice": 225.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399400,
+    "volume": 105321,
+    "openPrice": 225.42,
+    "highPrice": 225.66,
+    "lowPrice": 225.21,
+    "closePrice": 225.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399460,
+    "volume": 125619,
+    "openPrice": 225.62,
+    "highPrice": 226.05,
+    "lowPrice": 225.52,
+    "closePrice": 226.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399520,
+    "volume": 90345,
+    "openPrice": 225.95,
+    "highPrice": 226.1,
+    "lowPrice": 225.79,
+    "closePrice": 225.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399580,
+    "volume": 95780,
+    "openPrice": 225.9,
+    "highPrice": 225.93,
+    "lowPrice": 225.3,
+    "closePrice": 225.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399640,
+    "volume": 79812,
+    "openPrice": 225.3,
+    "highPrice": 225.47,
+    "lowPrice": 225.22,
+    "closePrice": 225.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399700,
+    "volume": 80681,
+    "openPrice": 225.32,
+    "highPrice": 225.46,
+    "lowPrice": 225.21,
+    "closePrice": 225.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399760,
+    "volume": 176574,
+    "openPrice": 225.25,
+    "highPrice": 225.25,
+    "lowPrice": 224.69,
+    "closePrice": 224.71
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399820,
+    "volume": 107013,
+    "openPrice": 224.73,
+    "highPrice": 225.1,
+    "lowPrice": 224.72,
+    "closePrice": 224.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399880,
+    "volume": 92449,
+    "openPrice": 224.87,
+    "highPrice": 225.2,
+    "lowPrice": 224.77,
+    "closePrice": 225.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667399940,
+    "volume": 128047,
+    "openPrice": 225.16,
+    "highPrice": 225.5,
+    "lowPrice": 225.02,
+    "closePrice": 225.03
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400000,
+    "volume": 74283,
+    "openPrice": 225.11,
+    "highPrice": 225.31,
+    "lowPrice": 224.9,
+    "closePrice": 225.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400060,
+    "volume": 89774,
+    "openPrice": 225.26,
+    "highPrice": 225.35,
+    "lowPrice": 225.05,
+    "closePrice": 225.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400120,
+    "volume": 53461,
+    "openPrice": 225.14,
+    "highPrice": 225.25,
+    "lowPrice": 225.06,
+    "closePrice": 225.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400180,
+    "volume": 61802,
+    "openPrice": 225.15,
+    "highPrice": 225.26,
+    "lowPrice": 224.85,
+    "closePrice": 225.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400240,
+    "volume": 78288,
+    "openPrice": 225.04,
+    "highPrice": 225.32,
+    "lowPrice": 225.04,
+    "closePrice": 225.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400300,
+    "volume": 96917,
+    "openPrice": 225.23,
+    "highPrice": 225.63,
+    "lowPrice": 225.1,
+    "closePrice": 225.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400360,
+    "volume": 74710,
+    "openPrice": 225.49,
+    "highPrice": 225.65,
+    "lowPrice": 225.3,
+    "closePrice": 225.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400420,
+    "volume": 63990,
+    "openPrice": 225.62,
+    "highPrice": 225.66,
+    "lowPrice": 225.38,
+    "closePrice": 225.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400480,
+    "volume": 61138,
+    "openPrice": 225.45,
+    "highPrice": 225.67,
+    "lowPrice": 225.4,
+    "closePrice": 225.58
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400540,
+    "volume": 81105,
+    "openPrice": 225.46,
+    "highPrice": 225.46,
+    "lowPrice": 224.98,
+    "closePrice": 225.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400600,
+    "volume": 35640,
+    "openPrice": 225.08,
+    "highPrice": 225.23,
+    "lowPrice": 225.06,
+    "closePrice": 225.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400660,
+    "volume": 95563,
+    "openPrice": 225.07,
+    "highPrice": 225.12,
+    "lowPrice": 224.77,
+    "closePrice": 224.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400720,
+    "volume": 97415,
+    "openPrice": 224.83,
+    "highPrice": 224.95,
+    "lowPrice": 224.61,
+    "closePrice": 224.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400780,
+    "volume": 136337,
+    "openPrice": 224.87,
+    "highPrice": 224.91,
+    "lowPrice": 224.5,
+    "closePrice": 224.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400840,
+    "volume": 131751,
+    "openPrice": 224.84,
+    "highPrice": 225.14,
+    "lowPrice": 224.54,
+    "closePrice": 224.73
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400900,
+    "volume": 106636,
+    "openPrice": 224.7,
+    "highPrice": 225.05,
+    "lowPrice": 224.65,
+    "closePrice": 224.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667400960,
+    "volume": 86461,
+    "openPrice": 224.91,
+    "highPrice": 225.09,
+    "lowPrice": 224.83,
+    "closePrice": 224.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401020,
+    "volume": 84931,
+    "openPrice": 224.86,
+    "highPrice": 224.93,
+    "lowPrice": 224.63,
+    "closePrice": 224.79
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401080,
+    "volume": 49829,
+    "openPrice": 224.83,
+    "highPrice": 224.88,
+    "lowPrice": 224.66,
+    "closePrice": 224.79
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401140,
+    "volume": 119756,
+    "openPrice": 224.79,
+    "highPrice": 224.81,
+    "lowPrice": 224.4,
+    "closePrice": 224.43
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401200,
+    "volume": 163387,
+    "openPrice": 224.45,
+    "highPrice": 224.47,
+    "lowPrice": 224.12,
+    "closePrice": 224.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401260,
+    "volume": 164246,
+    "openPrice": 224.32,
+    "highPrice": 224.65,
+    "lowPrice": 224.2,
+    "closePrice": 224.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401320,
+    "volume": 83916,
+    "openPrice": 224.27,
+    "highPrice": 224.43,
+    "lowPrice": 224.15,
+    "closePrice": 224.22
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401380,
+    "volume": 94624,
+    "openPrice": 224.21,
+    "highPrice": 224.34,
+    "lowPrice": 224.03,
+    "closePrice": 224.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401440,
+    "volume": 95819,
+    "openPrice": 224.16,
+    "highPrice": 224.3,
+    "lowPrice": 224.07,
+    "closePrice": 224.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401500,
+    "volume": 73930,
+    "openPrice": 224.06,
+    "highPrice": 224.29,
+    "lowPrice": 224.05,
+    "closePrice": 224.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401560,
+    "volume": 167647,
+    "openPrice": 224.06,
+    "highPrice": 224.16,
+    "lowPrice": 223.85,
+    "closePrice": 223.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401620,
+    "volume": 97365,
+    "openPrice": 223.86,
+    "highPrice": 223.91,
+    "lowPrice": 223.72,
+    "closePrice": 223.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401680,
+    "volume": 134033,
+    "openPrice": 223.71,
+    "highPrice": 223.94,
+    "lowPrice": 223.63,
+    "closePrice": 223.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401740,
+    "volume": 70282,
+    "openPrice": 223.87,
+    "highPrice": 223.93,
+    "lowPrice": 223.61,
+    "closePrice": 223.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401800,
+    "volume": 98135,
+    "openPrice": 223.67,
+    "highPrice": 223.87,
+    "lowPrice": 223.6,
+    "closePrice": 223.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401860,
+    "volume": 105222,
+    "openPrice": 223.63,
+    "highPrice": 223.69,
+    "lowPrice": 223.5,
+    "closePrice": 223.68
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401920,
+    "volume": 82138,
+    "openPrice": 223.64,
+    "highPrice": 223.75,
+    "lowPrice": 223.52,
+    "closePrice": 223.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667401980,
+    "volume": 150277,
+    "openPrice": 223.53,
+    "highPrice": 223.72,
+    "lowPrice": 223.34,
+    "closePrice": 223.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402040,
+    "volume": 159067,
+    "openPrice": 223.35,
+    "highPrice": 223.47,
+    "lowPrice": 223.16,
+    "closePrice": 223.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402100,
+    "volume": 80765,
+    "openPrice": 223.2,
+    "highPrice": 223.43,
+    "lowPrice": 223.16,
+    "closePrice": 223.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402160,
+    "volume": 87657,
+    "openPrice": 223.35,
+    "highPrice": 223.59,
+    "lowPrice": 223.23,
+    "closePrice": 223.48
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402220,
+    "volume": 80214,
+    "openPrice": 223.5,
+    "highPrice": 223.56,
+    "lowPrice": 223.39,
+    "closePrice": 223.46
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402280,
+    "volume": 99981,
+    "openPrice": 223.47,
+    "highPrice": 223.84,
+    "lowPrice": 223.42,
+    "closePrice": 223.73
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402340,
+    "volume": 54970,
+    "openPrice": 223.72,
+    "highPrice": 223.79,
+    "lowPrice": 223.56,
+    "closePrice": 223.66
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402400,
+    "volume": 61369,
+    "openPrice": 223.64,
+    "highPrice": 223.75,
+    "lowPrice": 223.5,
+    "closePrice": 223.74
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402460,
+    "volume": 77148,
+    "openPrice": 223.71,
+    "highPrice": 223.84,
+    "lowPrice": 223.71,
+    "closePrice": 223.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402520,
+    "volume": 89997,
+    "openPrice": 223.73,
+    "highPrice": 223.77,
+    "lowPrice": 223.38,
+    "closePrice": 223.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402580,
+    "volume": 61360,
+    "openPrice": 223.43,
+    "highPrice": 223.5,
+    "lowPrice": 223.3,
+    "closePrice": 223.48
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402640,
+    "volume": 81998,
+    "openPrice": 223.5,
+    "highPrice": 223.64,
+    "lowPrice": 223.27,
+    "closePrice": 223.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402700,
+    "volume": 91531,
+    "openPrice": 223.34,
+    "highPrice": 223.4,
+    "lowPrice": 223.22,
+    "closePrice": 223.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402760,
+    "volume": 84767,
+    "openPrice": 223.33,
+    "highPrice": 223.59,
+    "lowPrice": 223.15,
+    "closePrice": 223.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402820,
+    "volume": 53484,
+    "openPrice": 223.48,
+    "highPrice": 223.66,
+    "lowPrice": 223.44,
+    "closePrice": 223.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402880,
+    "volume": 101719,
+    "openPrice": 223.64,
+    "highPrice": 223.66,
+    "lowPrice": 223.52,
+    "closePrice": 223.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667402940,
+    "volume": 109576,
+    "openPrice": 223.65,
+    "highPrice": 223.82,
+    "lowPrice": 223.57,
+    "closePrice": 223.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403000,
+    "volume": 170484,
+    "openPrice": 223.62,
+    "highPrice": 224.18,
+    "lowPrice": 223.61,
+    "closePrice": 224.04
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403060,
+    "volume": 109402,
+    "openPrice": 224.07,
+    "highPrice": 224.24,
+    "lowPrice": 223.92,
+    "closePrice": 223.92
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403120,
+    "volume": 100374,
+    "openPrice": 223.96,
+    "highPrice": 224.07,
+    "lowPrice": 223.82,
+    "closePrice": 224.04
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403180,
+    "volume": 97559,
+    "openPrice": 224.06,
+    "highPrice": 224.31,
+    "lowPrice": 223.96,
+    "closePrice": 224.26
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403240,
+    "volume": 114846,
+    "openPrice": 224.26,
+    "highPrice": 224.48,
+    "lowPrice": 224.13,
+    "closePrice": 224.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403300,
+    "volume": 77534,
+    "openPrice": 224.44,
+    "highPrice": 224.49,
+    "lowPrice": 224.29,
+    "closePrice": 224.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403360,
+    "volume": 69752,
+    "openPrice": 224.34,
+    "highPrice": 224.34,
+    "lowPrice": 224.09,
+    "closePrice": 224.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403420,
+    "volume": 71570,
+    "openPrice": 224.19,
+    "highPrice": 224.47,
+    "lowPrice": 224.1,
+    "closePrice": 224.46
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403480,
+    "volume": 109535,
+    "openPrice": 224.46,
+    "highPrice": 224.58,
+    "lowPrice": 224.2,
+    "closePrice": 224.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403540,
+    "volume": 94744,
+    "openPrice": 224.21,
+    "highPrice": 224.23,
+    "lowPrice": 223.86,
+    "closePrice": 223.96
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403600,
+    "volume": 57831,
+    "openPrice": 223.94,
+    "highPrice": 224.05,
+    "lowPrice": 223.8,
+    "closePrice": 223.92
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403660,
+    "volume": 48383,
+    "openPrice": 223.96,
+    "highPrice": 224.02,
+    "lowPrice": 223.89,
+    "closePrice": 223.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403720,
+    "volume": 69685,
+    "openPrice": 224.0,
+    "highPrice": 224.13,
+    "lowPrice": 223.91,
+    "closePrice": 223.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403780,
+    "volume": 87153,
+    "openPrice": 223.93,
+    "highPrice": 224.18,
+    "lowPrice": 223.72,
+    "closePrice": 224.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403840,
+    "volume": 55109,
+    "openPrice": 224.09,
+    "highPrice": 224.16,
+    "lowPrice": 223.97,
+    "closePrice": 224.04
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403900,
+    "volume": 55254,
+    "openPrice": 224.01,
+    "highPrice": 224.03,
+    "lowPrice": 223.85,
+    "closePrice": 223.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667403960,
+    "volume": 56776,
+    "openPrice": 223.96,
+    "highPrice": 224.03,
+    "lowPrice": 223.8,
+    "closePrice": 223.98
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404020,
+    "volume": 63688,
+    "openPrice": 224.0,
+    "highPrice": 224.0,
+    "lowPrice": 223.7,
+    "closePrice": 223.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404080,
+    "volume": 59047,
+    "openPrice": 223.81,
+    "highPrice": 223.9,
+    "lowPrice": 223.63,
+    "closePrice": 223.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404140,
+    "volume": 59038,
+    "openPrice": 223.85,
+    "highPrice": 223.89,
+    "lowPrice": 223.66,
+    "closePrice": 223.81
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404200,
+    "volume": 55031,
+    "openPrice": 223.81,
+    "highPrice": 223.86,
+    "lowPrice": 223.69,
+    "closePrice": 223.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404260,
+    "volume": 114736,
+    "openPrice": 223.74,
+    "highPrice": 223.8,
+    "lowPrice": 223.42,
+    "closePrice": 223.73
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404320,
+    "volume": 59127,
+    "openPrice": 223.73,
+    "highPrice": 223.87,
+    "lowPrice": 223.62,
+    "closePrice": 223.66
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404380,
+    "volume": 46235,
+    "openPrice": 223.68,
+    "highPrice": 223.84,
+    "lowPrice": 223.63,
+    "closePrice": 223.76
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404440,
+    "volume": 37168,
+    "openPrice": 223.73,
+    "highPrice": 223.75,
+    "lowPrice": 223.55,
+    "closePrice": 223.68
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404500,
+    "volume": 42936,
+    "openPrice": 223.67,
+    "highPrice": 223.71,
+    "lowPrice": 223.42,
+    "closePrice": 223.53
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404560,
+    "volume": 33551,
+    "openPrice": 223.55,
+    "highPrice": 223.66,
+    "lowPrice": 223.51,
+    "closePrice": 223.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404620,
+    "volume": 80569,
+    "openPrice": 223.61,
+    "highPrice": 223.61,
+    "lowPrice": 223.27,
+    "closePrice": 223.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404680,
+    "volume": 63793,
+    "openPrice": 223.27,
+    "highPrice": 223.38,
+    "lowPrice": 223.2,
+    "closePrice": 223.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404740,
+    "volume": 44862,
+    "openPrice": 223.3,
+    "highPrice": 223.48,
+    "lowPrice": 223.27,
+    "closePrice": 223.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404800,
+    "volume": 36617,
+    "openPrice": 223.42,
+    "highPrice": 223.44,
+    "lowPrice": 223.33,
+    "closePrice": 223.43
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404860,
+    "volume": 47588,
+    "openPrice": 223.43,
+    "highPrice": 223.54,
+    "lowPrice": 223.36,
+    "closePrice": 223.53
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404920,
+    "volume": 79779,
+    "openPrice": 223.53,
+    "highPrice": 223.72,
+    "lowPrice": 223.53,
+    "closePrice": 223.66
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667404980,
+    "volume": 65024,
+    "openPrice": 223.68,
+    "highPrice": 223.8,
+    "lowPrice": 223.62,
+    "closePrice": 223.68
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405040,
+    "volume": 45272,
+    "openPrice": 223.69,
+    "highPrice": 223.8,
+    "lowPrice": 223.55,
+    "closePrice": 223.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405100,
+    "volume": 48309,
+    "openPrice": 223.59,
+    "highPrice": 223.75,
+    "lowPrice": 223.5,
+    "closePrice": 223.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405160,
+    "volume": 105598,
+    "openPrice": 223.76,
+    "highPrice": 224.05,
+    "lowPrice": 223.72,
+    "closePrice": 224.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405220,
+    "volume": 87614,
+    "openPrice": 224.03,
+    "highPrice": 224.05,
+    "lowPrice": 223.68,
+    "closePrice": 223.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405280,
+    "volume": 97377,
+    "openPrice": 223.74,
+    "highPrice": 223.74,
+    "lowPrice": 223.31,
+    "closePrice": 223.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405340,
+    "volume": 79739,
+    "openPrice": 223.36,
+    "highPrice": 223.46,
+    "lowPrice": 223.25,
+    "closePrice": 223.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405400,
+    "volume": 37263,
+    "openPrice": 223.35,
+    "highPrice": 223.46,
+    "lowPrice": 223.35,
+    "closePrice": 223.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405460,
+    "volume": 80003,
+    "openPrice": 223.4,
+    "highPrice": 223.62,
+    "lowPrice": 223.31,
+    "closePrice": 223.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405520,
+    "volume": 198015,
+    "openPrice": 223.35,
+    "highPrice": 223.35,
+    "lowPrice": 222.82,
+    "closePrice": 222.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405580,
+    "volume": 108083,
+    "openPrice": 222.84,
+    "highPrice": 223.24,
+    "lowPrice": 222.84,
+    "closePrice": 223.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405640,
+    "volume": 49716,
+    "openPrice": 223.07,
+    "highPrice": 223.14,
+    "lowPrice": 223.02,
+    "closePrice": 223.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405700,
+    "volume": 51818,
+    "openPrice": 223.08,
+    "highPrice": 223.21,
+    "lowPrice": 223.08,
+    "closePrice": 223.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405760,
+    "volume": 38987,
+    "openPrice": 223.21,
+    "highPrice": 223.23,
+    "lowPrice": 223.1,
+    "closePrice": 223.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405820,
+    "volume": 49923,
+    "openPrice": 223.19,
+    "highPrice": 223.24,
+    "lowPrice": 223.0,
+    "closePrice": 223.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405880,
+    "volume": 59195,
+    "openPrice": 223.12,
+    "highPrice": 223.24,
+    "lowPrice": 222.82,
+    "closePrice": 222.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667405940,
+    "volume": 45118,
+    "openPrice": 222.88,
+    "highPrice": 223.0,
+    "lowPrice": 222.82,
+    "closePrice": 223.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406000,
+    "volume": 34431,
+    "openPrice": 222.98,
+    "highPrice": 223.17,
+    "lowPrice": 222.91,
+    "closePrice": 223.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406060,
+    "volume": 161237,
+    "openPrice": 223.08,
+    "highPrice": 223.25,
+    "lowPrice": 223.07,
+    "closePrice": 223.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406120,
+    "volume": 64844,
+    "openPrice": 223.17,
+    "highPrice": 223.17,
+    "lowPrice": 222.96,
+    "closePrice": 222.96
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406180,
+    "volume": 84732,
+    "openPrice": 222.96,
+    "highPrice": 223.02,
+    "lowPrice": 222.6,
+    "closePrice": 222.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406240,
+    "volume": 111532,
+    "openPrice": 222.6,
+    "highPrice": 222.66,
+    "lowPrice": 222.4,
+    "closePrice": 222.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406300,
+    "volume": 62718,
+    "openPrice": 222.54,
+    "highPrice": 222.55,
+    "lowPrice": 222.41,
+    "closePrice": 222.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406360,
+    "volume": 120100,
+    "openPrice": 222.48,
+    "highPrice": 222.6,
+    "lowPrice": 222.34,
+    "closePrice": 222.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406420,
+    "volume": 106168,
+    "openPrice": 222.51,
+    "highPrice": 222.51,
+    "lowPrice": 222.13,
+    "closePrice": 222.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406480,
+    "volume": 95220,
+    "openPrice": 222.25,
+    "highPrice": 222.28,
+    "lowPrice": 222.04,
+    "closePrice": 222.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406540,
+    "volume": 90721,
+    "openPrice": 222.06,
+    "highPrice": 222.31,
+    "lowPrice": 222.03,
+    "closePrice": 222.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406600,
+    "volume": 63696,
+    "openPrice": 222.21,
+    "highPrice": 222.28,
+    "lowPrice": 222.09,
+    "closePrice": 222.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406660,
+    "volume": 83858,
+    "openPrice": 222.13,
+    "highPrice": 222.19,
+    "lowPrice": 222.01,
+    "closePrice": 222.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406720,
+    "volume": 188256,
+    "openPrice": 222.04,
+    "highPrice": 222.35,
+    "lowPrice": 221.91,
+    "closePrice": 222.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406780,
+    "volume": 81758,
+    "openPrice": 222.28,
+    "highPrice": 222.43,
+    "lowPrice": 222.2,
+    "closePrice": 222.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406840,
+    "volume": 61741,
+    "openPrice": 222.37,
+    "highPrice": 222.49,
+    "lowPrice": 222.24,
+    "closePrice": 222.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406900,
+    "volume": 46724,
+    "openPrice": 222.38,
+    "highPrice": 222.47,
+    "lowPrice": 222.15,
+    "closePrice": 222.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667406960,
+    "volume": 58835,
+    "openPrice": 222.12,
+    "highPrice": 222.33,
+    "lowPrice": 222.05,
+    "closePrice": 222.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407020,
+    "volume": 116952,
+    "openPrice": 222.02,
+    "highPrice": 222.02,
+    "lowPrice": 221.81,
+    "closePrice": 221.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407080,
+    "volume": 98348,
+    "openPrice": 221.87,
+    "highPrice": 221.92,
+    "lowPrice": 221.61,
+    "closePrice": 221.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407140,
+    "volume": 140498,
+    "openPrice": 221.66,
+    "highPrice": 221.66,
+    "lowPrice": 221.37,
+    "closePrice": 221.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407200,
+    "volume": 68774,
+    "openPrice": 221.52,
+    "highPrice": 221.55,
+    "lowPrice": 221.41,
+    "closePrice": 221.46
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407260,
+    "volume": 104423,
+    "openPrice": 221.47,
+    "highPrice": 221.75,
+    "lowPrice": 221.4,
+    "closePrice": 221.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407320,
+    "volume": 59588,
+    "openPrice": 221.75,
+    "highPrice": 221.75,
+    "lowPrice": 221.51,
+    "closePrice": 221.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407380,
+    "volume": 59655,
+    "openPrice": 221.56,
+    "highPrice": 221.69,
+    "lowPrice": 221.46,
+    "closePrice": 221.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407440,
+    "volume": 63825,
+    "openPrice": 221.47,
+    "highPrice": 221.62,
+    "lowPrice": 221.43,
+    "closePrice": 221.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407500,
+    "volume": 119149,
+    "openPrice": 221.51,
+    "highPrice": 221.52,
+    "lowPrice": 221.29,
+    "closePrice": 221.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407560,
+    "volume": 116127,
+    "openPrice": 221.52,
+    "highPrice": 221.7,
+    "lowPrice": 221.52,
+    "closePrice": 221.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407620,
+    "volume": 71754,
+    "openPrice": 221.7,
+    "highPrice": 221.75,
+    "lowPrice": 221.52,
+    "closePrice": 221.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407680,
+    "volume": 72728,
+    "openPrice": 221.6,
+    "highPrice": 221.84,
+    "lowPrice": 221.55,
+    "closePrice": 221.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407740,
+    "volume": 64271,
+    "openPrice": 221.76,
+    "highPrice": 221.84,
+    "lowPrice": 221.65,
+    "closePrice": 221.68
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407800,
+    "volume": 73021,
+    "openPrice": 221.72,
+    "highPrice": 221.93,
+    "lowPrice": 221.71,
+    "closePrice": 221.83
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407860,
+    "volume": 111385,
+    "openPrice": 221.86,
+    "highPrice": 222.06,
+    "lowPrice": 221.86,
+    "closePrice": 222.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407920,
+    "volume": 85447,
+    "openPrice": 222.04,
+    "highPrice": 222.25,
+    "lowPrice": 221.95,
+    "closePrice": 222.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667407980,
+    "volume": 108577,
+    "openPrice": 222.18,
+    "highPrice": 222.34,
+    "lowPrice": 221.92,
+    "closePrice": 221.96
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408040,
+    "volume": 71878,
+    "openPrice": 222.0,
+    "highPrice": 222.12,
+    "lowPrice": 221.92,
+    "closePrice": 222.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408100,
+    "volume": 32406,
+    "openPrice": 222.12,
+    "highPrice": 222.16,
+    "lowPrice": 222.03,
+    "closePrice": 222.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408160,
+    "volume": 83972,
+    "openPrice": 222.09,
+    "highPrice": 222.13,
+    "lowPrice": 221.75,
+    "closePrice": 221.79
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408220,
+    "volume": 66932,
+    "openPrice": 221.81,
+    "highPrice": 221.93,
+    "lowPrice": 221.7,
+    "closePrice": 221.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408280,
+    "volume": 115476,
+    "openPrice": 221.88,
+    "highPrice": 222.34,
+    "lowPrice": 221.86,
+    "closePrice": 222.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408340,
+    "volume": 104331,
+    "openPrice": 222.32,
+    "highPrice": 222.59,
+    "lowPrice": 222.32,
+    "closePrice": 222.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408400,
+    "volume": 59847,
+    "openPrice": 222.48,
+    "highPrice": 222.48,
+    "lowPrice": 222.24,
+    "closePrice": 222.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408460,
+    "volume": 48451,
+    "openPrice": 222.36,
+    "highPrice": 222.38,
+    "lowPrice": 222.1,
+    "closePrice": 222.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408520,
+    "volume": 50373,
+    "openPrice": 222.17,
+    "highPrice": 222.25,
+    "lowPrice": 222.08,
+    "closePrice": 222.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408580,
+    "volume": 49507,
+    "openPrice": 222.17,
+    "highPrice": 222.19,
+    "lowPrice": 221.9,
+    "closePrice": 222.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408640,
+    "volume": 97067,
+    "openPrice": 222.03,
+    "highPrice": 222.05,
+    "lowPrice": 221.72,
+    "closePrice": 221.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408700,
+    "volume": 37701,
+    "openPrice": 221.78,
+    "highPrice": 221.89,
+    "lowPrice": 221.73,
+    "closePrice": 221.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408760,
+    "volume": 43221,
+    "openPrice": 221.89,
+    "highPrice": 222.03,
+    "lowPrice": 221.81,
+    "closePrice": 221.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408820,
+    "volume": 66976,
+    "openPrice": 221.88,
+    "highPrice": 221.88,
+    "lowPrice": 221.57,
+    "closePrice": 221.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408880,
+    "volume": 33388,
+    "openPrice": 221.64,
+    "highPrice": 221.74,
+    "lowPrice": 221.63,
+    "closePrice": 221.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667408940,
+    "volume": 32445,
+    "openPrice": 221.74,
+    "highPrice": 221.78,
+    "lowPrice": 221.64,
+    "closePrice": 221.66
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409000,
+    "volume": 46945,
+    "openPrice": 221.63,
+    "highPrice": 221.74,
+    "lowPrice": 221.59,
+    "closePrice": 221.71
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409060,
+    "volume": 52845,
+    "openPrice": 221.7,
+    "highPrice": 221.87,
+    "lowPrice": 221.66,
+    "closePrice": 221.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409120,
+    "volume": 55325,
+    "openPrice": 221.81,
+    "highPrice": 221.94,
+    "lowPrice": 221.8,
+    "closePrice": 221.92
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409180,
+    "volume": 42135,
+    "openPrice": 221.92,
+    "highPrice": 221.94,
+    "lowPrice": 221.81,
+    "closePrice": 221.81
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409240,
+    "volume": 86040,
+    "openPrice": 221.81,
+    "highPrice": 221.81,
+    "lowPrice": 221.46,
+    "closePrice": 221.46
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409300,
+    "volume": 45268,
+    "openPrice": 221.48,
+    "highPrice": 221.65,
+    "lowPrice": 221.46,
+    "closePrice": 221.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409360,
+    "volume": 44052,
+    "openPrice": 221.62,
+    "highPrice": 221.69,
+    "lowPrice": 221.5,
+    "closePrice": 221.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409420,
+    "volume": 25012,
+    "openPrice": 221.54,
+    "highPrice": 221.69,
+    "lowPrice": 221.53,
+    "closePrice": 221.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409480,
+    "volume": 64752,
+    "openPrice": 221.64,
+    "highPrice": 222.03,
+    "lowPrice": 221.6,
+    "closePrice": 221.96
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409540,
+    "volume": 47723,
+    "openPrice": 221.95,
+    "highPrice": 222.1,
+    "lowPrice": 221.89,
+    "closePrice": 221.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409600,
+    "volume": 36795,
+    "openPrice": 221.92,
+    "highPrice": 222.03,
+    "lowPrice": 221.83,
+    "closePrice": 221.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409660,
+    "volume": 56002,
+    "openPrice": 221.89,
+    "highPrice": 222.13,
+    "lowPrice": 221.86,
+    "closePrice": 222.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409720,
+    "volume": 54959,
+    "openPrice": 222.1,
+    "highPrice": 222.15,
+    "lowPrice": 221.92,
+    "closePrice": 221.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409780,
+    "volume": 25032,
+    "openPrice": 221.97,
+    "highPrice": 222.03,
+    "lowPrice": 221.95,
+    "closePrice": 221.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409840,
+    "volume": 19428,
+    "openPrice": 221.95,
+    "highPrice": 222.05,
+    "lowPrice": 221.92,
+    "closePrice": 221.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409900,
+    "volume": 32704,
+    "openPrice": 221.98,
+    "highPrice": 221.99,
+    "lowPrice": 221.83,
+    "closePrice": 221.98
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667409960,
+    "volume": 53112,
+    "openPrice": 221.94,
+    "highPrice": 222.0,
+    "lowPrice": 221.7,
+    "closePrice": 221.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410020,
+    "volume": 19282,
+    "openPrice": 221.84,
+    "highPrice": 221.84,
+    "lowPrice": 221.72,
+    "closePrice": 221.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410080,
+    "volume": 53485,
+    "openPrice": 221.76,
+    "highPrice": 221.78,
+    "lowPrice": 221.52,
+    "closePrice": 221.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410140,
+    "volume": 55460,
+    "openPrice": 221.59,
+    "highPrice": 222.02,
+    "lowPrice": 221.57,
+    "closePrice": 222.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410200,
+    "volume": 34959,
+    "openPrice": 222.01,
+    "highPrice": 222.01,
+    "lowPrice": 221.81,
+    "closePrice": 221.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410260,
+    "volume": 29662,
+    "openPrice": 221.88,
+    "highPrice": 221.95,
+    "lowPrice": 221.73,
+    "closePrice": 221.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410320,
+    "volume": 25964,
+    "openPrice": 221.82,
+    "highPrice": 221.94,
+    "lowPrice": 221.76,
+    "closePrice": 221.84
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410380,
+    "volume": 58554,
+    "openPrice": 221.83,
+    "highPrice": 222.09,
+    "lowPrice": 221.83,
+    "closePrice": 222.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410440,
+    "volume": 37118,
+    "openPrice": 222.0,
+    "highPrice": 222.13,
+    "lowPrice": 221.95,
+    "closePrice": 222.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410500,
+    "volume": 64250,
+    "openPrice": 222.1,
+    "highPrice": 222.28,
+    "lowPrice": 222.1,
+    "closePrice": 222.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410560,
+    "volume": 72532,
+    "openPrice": 222.16,
+    "highPrice": 222.29,
+    "lowPrice": 222.06,
+    "closePrice": 222.22
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410620,
+    "volume": 63302,
+    "openPrice": 222.2,
+    "highPrice": 222.3,
+    "lowPrice": 222.11,
+    "closePrice": 222.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410680,
+    "volume": 91309,
+    "openPrice": 222.16,
+    "highPrice": 222.43,
+    "lowPrice": 222.15,
+    "closePrice": 222.16
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410740,
+    "volume": 61455,
+    "openPrice": 222.15,
+    "highPrice": 222.39,
+    "lowPrice": 222.15,
+    "closePrice": 222.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410800,
+    "volume": 39019,
+    "openPrice": 222.16,
+    "highPrice": 222.21,
+    "lowPrice": 222.12,
+    "closePrice": 222.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410860,
+    "volume": 150282,
+    "openPrice": 222.22,
+    "highPrice": 222.47,
+    "lowPrice": 222.01,
+    "closePrice": 222.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410920,
+    "volume": 105954,
+    "openPrice": 222.35,
+    "highPrice": 222.47,
+    "lowPrice": 222.24,
+    "closePrice": 222.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667410980,
+    "volume": 106611,
+    "openPrice": 222.27,
+    "highPrice": 222.29,
+    "lowPrice": 221.85,
+    "closePrice": 222.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411040,
+    "volume": 36890,
+    "openPrice": 222.02,
+    "highPrice": 222.04,
+    "lowPrice": 221.89,
+    "closePrice": 221.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411100,
+    "volume": 46940,
+    "openPrice": 221.96,
+    "highPrice": 221.97,
+    "lowPrice": 221.72,
+    "closePrice": 221.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411160,
+    "volume": 58079,
+    "openPrice": 221.73,
+    "highPrice": 221.88,
+    "lowPrice": 221.68,
+    "closePrice": 221.83
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411220,
+    "volume": 93822,
+    "openPrice": 221.84,
+    "highPrice": 222.02,
+    "lowPrice": 221.81,
+    "closePrice": 222.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411280,
+    "volume": 55477,
+    "openPrice": 221.95,
+    "highPrice": 222.13,
+    "lowPrice": 221.92,
+    "closePrice": 221.97
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411340,
+    "volume": 51711,
+    "openPrice": 221.98,
+    "highPrice": 222.12,
+    "lowPrice": 221.84,
+    "closePrice": 222.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411400,
+    "volume": 56063,
+    "openPrice": 222.04,
+    "highPrice": 222.05,
+    "lowPrice": 221.93,
+    "closePrice": 222.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411460,
+    "volume": 73095,
+    "openPrice": 222.01,
+    "highPrice": 222.25,
+    "lowPrice": 221.96,
+    "closePrice": 222.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411520,
+    "volume": 72990,
+    "openPrice": 222.21,
+    "highPrice": 222.36,
+    "lowPrice": 222.1,
+    "closePrice": 222.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411580,
+    "volume": 49099,
+    "openPrice": 222.16,
+    "highPrice": 222.23,
+    "lowPrice": 222.01,
+    "closePrice": 222.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411640,
+    "volume": 62940,
+    "openPrice": 222.0,
+    "highPrice": 222.11,
+    "lowPrice": 221.98,
+    "closePrice": 222.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411700,
+    "volume": 45203,
+    "openPrice": 222.07,
+    "highPrice": 222.15,
+    "lowPrice": 222.05,
+    "closePrice": 222.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411760,
+    "volume": 88773,
+    "openPrice": 222.09,
+    "highPrice": 222.23,
+    "lowPrice": 221.98,
+    "closePrice": 221.99
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411820,
+    "volume": 60619,
+    "openPrice": 221.98,
+    "highPrice": 222.0,
+    "lowPrice": 221.8,
+    "closePrice": 221.81
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411880,
+    "volume": 51070,
+    "openPrice": 221.81,
+    "highPrice": 221.93,
+    "lowPrice": 221.8,
+    "closePrice": 221.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667411940,
+    "volume": 34925,
+    "openPrice": 221.93,
+    "highPrice": 221.94,
+    "lowPrice": 221.79,
+    "closePrice": 221.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412000,
+    "volume": 46759,
+    "openPrice": 221.79,
+    "highPrice": 221.92,
+    "lowPrice": 221.75,
+    "closePrice": 221.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412060,
+    "volume": 843672,
+    "openPrice": 221.89,
+    "highPrice": 224.48,
+    "lowPrice": 221.0,
+    "closePrice": 224.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412120,
+    "volume": 620054,
+    "openPrice": 224.24,
+    "highPrice": 226.14,
+    "lowPrice": 224.24,
+    "closePrice": 225.93
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412180,
+    "volume": 575471,
+    "openPrice": 225.82,
+    "highPrice": 227.03,
+    "lowPrice": 225.31,
+    "closePrice": 225.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412240,
+    "volume": 395791,
+    "openPrice": 225.85,
+    "highPrice": 226.7,
+    "lowPrice": 225.56,
+    "closePrice": 226.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412300,
+    "volume": 428787,
+    "openPrice": 226.23,
+    "highPrice": 226.72,
+    "lowPrice": 225.38,
+    "closePrice": 226.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412360,
+    "volume": 318813,
+    "openPrice": 226.63,
+    "highPrice": 226.65,
+    "lowPrice": 225.7,
+    "closePrice": 225.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412420,
+    "volume": 248522,
+    "openPrice": 225.79,
+    "highPrice": 226.48,
+    "lowPrice": 225.57,
+    "closePrice": 226.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412480,
+    "volume": 408523,
+    "openPrice": 226.33,
+    "highPrice": 226.78,
+    "lowPrice": 225.44,
+    "closePrice": 225.83
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412540,
+    "volume": 198698,
+    "openPrice": 225.88,
+    "highPrice": 226.28,
+    "lowPrice": 225.69,
+    "closePrice": 225.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412600,
+    "volume": 201621,
+    "openPrice": 225.97,
+    "highPrice": 226.15,
+    "lowPrice": 225.47,
+    "closePrice": 225.58
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412660,
+    "volume": 402423,
+    "openPrice": 225.57,
+    "highPrice": 225.75,
+    "lowPrice": 224.03,
+    "closePrice": 224.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412720,
+    "volume": 262851,
+    "openPrice": 224.32,
+    "highPrice": 224.57,
+    "lowPrice": 223.71,
+    "closePrice": 224.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412780,
+    "volume": 344091,
+    "openPrice": 224.01,
+    "highPrice": 224.94,
+    "lowPrice": 223.83,
+    "closePrice": 224.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412840,
+    "volume": 172144,
+    "openPrice": 224.65,
+    "highPrice": 224.95,
+    "lowPrice": 224.28,
+    "closePrice": 224.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412900,
+    "volume": 142373,
+    "openPrice": 224.36,
+    "highPrice": 224.59,
+    "lowPrice": 224.13,
+    "closePrice": 224.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667412960,
+    "volume": 211991,
+    "openPrice": 224.53,
+    "highPrice": 224.8,
+    "lowPrice": 223.75,
+    "closePrice": 223.83
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413020,
+    "volume": 189497,
+    "openPrice": 223.88,
+    "highPrice": 224.23,
+    "lowPrice": 223.58,
+    "closePrice": 223.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413080,
+    "volume": 193621,
+    "openPrice": 223.68,
+    "highPrice": 223.94,
+    "lowPrice": 223.16,
+    "closePrice": 223.27
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413140,
+    "volume": 216651,
+    "openPrice": 223.28,
+    "highPrice": 224.06,
+    "lowPrice": 223.22,
+    "closePrice": 223.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413200,
+    "volume": 140945,
+    "openPrice": 223.69,
+    "highPrice": 224.07,
+    "lowPrice": 223.46,
+    "closePrice": 224.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413260,
+    "volume": 159312,
+    "openPrice": 224.06,
+    "highPrice": 224.25,
+    "lowPrice": 223.61,
+    "closePrice": 223.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413320,
+    "volume": 114347,
+    "openPrice": 223.68,
+    "highPrice": 224.18,
+    "lowPrice": 223.63,
+    "closePrice": 223.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413380,
+    "volume": 185899,
+    "openPrice": 224.0,
+    "highPrice": 224.65,
+    "lowPrice": 223.83,
+    "closePrice": 224.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413440,
+    "volume": 120805,
+    "openPrice": 224.36,
+    "highPrice": 224.61,
+    "lowPrice": 224.25,
+    "closePrice": 224.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413500,
+    "volume": 204589,
+    "openPrice": 224.64,
+    "highPrice": 225.15,
+    "lowPrice": 224.52,
+    "closePrice": 224.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413560,
+    "volume": 168491,
+    "openPrice": 224.92,
+    "highPrice": 225.07,
+    "lowPrice": 224.69,
+    "closePrice": 225.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413620,
+    "volume": 141207,
+    "openPrice": 224.97,
+    "highPrice": 225.07,
+    "lowPrice": 224.8,
+    "closePrice": 225.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413680,
+    "volume": 163196,
+    "openPrice": 224.96,
+    "highPrice": 225.48,
+    "lowPrice": 224.9,
+    "closePrice": 225.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413740,
+    "volume": 239758,
+    "openPrice": 225.38,
+    "highPrice": 225.71,
+    "lowPrice": 225.31,
+    "closePrice": 225.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413800,
+    "volume": 241144,
+    "openPrice": 225.71,
+    "highPrice": 226.42,
+    "lowPrice": 225.7,
+    "closePrice": 226.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413860,
+    "volume": 338426,
+    "openPrice": 226.38,
+    "highPrice": 226.75,
+    "lowPrice": 225.53,
+    "closePrice": 225.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413920,
+    "volume": 302870,
+    "openPrice": 225.6,
+    "highPrice": 225.73,
+    "lowPrice": 224.58,
+    "closePrice": 224.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667413980,
+    "volume": 290860,
+    "openPrice": 224.91,
+    "highPrice": 225.57,
+    "lowPrice": 224.27,
+    "closePrice": 225.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414040,
+    "volume": 152318,
+    "openPrice": 225.18,
+    "highPrice": 225.39,
+    "lowPrice": 224.87,
+    "closePrice": 225.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414100,
+    "volume": 158608,
+    "openPrice": 224.98,
+    "highPrice": 225.29,
+    "lowPrice": 224.8,
+    "closePrice": 225.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414160,
+    "volume": 333827,
+    "openPrice": 225.13,
+    "highPrice": 226.78,
+    "lowPrice": 224.84,
+    "closePrice": 226.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414220,
+    "volume": 567480,
+    "openPrice": 226.55,
+    "highPrice": 226.61,
+    "lowPrice": 222.32,
+    "closePrice": 222.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414280,
+    "volume": 809442,
+    "openPrice": 222.44,
+    "highPrice": 223.87,
+    "lowPrice": 221.57,
+    "closePrice": 221.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414340,
+    "volume": 665601,
+    "openPrice": 221.64,
+    "highPrice": 222.46,
+    "lowPrice": 221.33,
+    "closePrice": 222.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414400,
+    "volume": 304353,
+    "openPrice": 222.2,
+    "highPrice": 223.26,
+    "lowPrice": 221.53,
+    "closePrice": 223.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414460,
+    "volume": 310925,
+    "openPrice": 222.72,
+    "highPrice": 223.92,
+    "lowPrice": 222.61,
+    "closePrice": 222.99
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414520,
+    "volume": 337722,
+    "openPrice": 222.83,
+    "highPrice": 223.96,
+    "lowPrice": 222.1,
+    "closePrice": 223.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414580,
+    "volume": 605871,
+    "openPrice": 223.56,
+    "highPrice": 224.94,
+    "lowPrice": 223.33,
+    "closePrice": 224.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414640,
+    "volume": 241316,
+    "openPrice": 224.37,
+    "highPrice": 224.55,
+    "lowPrice": 223.15,
+    "closePrice": 223.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414700,
+    "volume": 177729,
+    "openPrice": 223.91,
+    "highPrice": 223.95,
+    "lowPrice": 222.7,
+    "closePrice": 223.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414760,
+    "volume": 194294,
+    "openPrice": 223.01,
+    "highPrice": 223.7,
+    "lowPrice": 222.88,
+    "closePrice": 223.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414820,
+    "volume": 278488,
+    "openPrice": 223.32,
+    "highPrice": 223.88,
+    "lowPrice": 222.01,
+    "closePrice": 222.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414880,
+    "volume": 155895,
+    "openPrice": 222.64,
+    "highPrice": 222.83,
+    "lowPrice": 222.0,
+    "closePrice": 222.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667414940,
+    "volume": 184887,
+    "openPrice": 222.14,
+    "highPrice": 222.75,
+    "lowPrice": 222.07,
+    "closePrice": 222.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415000,
+    "volume": 175512,
+    "openPrice": 222.54,
+    "highPrice": 223.18,
+    "lowPrice": 222.02,
+    "closePrice": 222.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415060,
+    "volume": 353843,
+    "openPrice": 222.26,
+    "highPrice": 222.69,
+    "lowPrice": 220.9,
+    "closePrice": 221.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415120,
+    "volume": 837814,
+    "openPrice": 221.01,
+    "highPrice": 221.13,
+    "lowPrice": 218.98,
+    "closePrice": 219.03
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415180,
+    "volume": 440885,
+    "openPrice": 218.91,
+    "highPrice": 219.73,
+    "lowPrice": 218.7,
+    "closePrice": 219.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415240,
+    "volume": 361926,
+    "openPrice": 219.24,
+    "highPrice": 219.33,
+    "lowPrice": 218.5,
+    "closePrice": 218.8
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415300,
+    "volume": 321111,
+    "openPrice": 218.73,
+    "highPrice": 219.68,
+    "lowPrice": 218.6,
+    "closePrice": 219.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415360,
+    "volume": 280021,
+    "openPrice": 219.45,
+    "highPrice": 220.03,
+    "lowPrice": 218.85,
+    "closePrice": 219.23
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415420,
+    "volume": 151273,
+    "openPrice": 219.23,
+    "highPrice": 219.23,
+    "lowPrice": 218.78,
+    "closePrice": 218.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415480,
+    "volume": 172367,
+    "openPrice": 218.88,
+    "highPrice": 219.09,
+    "lowPrice": 218.5,
+    "closePrice": 218.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415540,
+    "volume": 254550,
+    "openPrice": 218.87,
+    "highPrice": 219.7,
+    "lowPrice": 218.7,
+    "closePrice": 219.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415600,
+    "volume": 192345,
+    "openPrice": 219.46,
+    "highPrice": 219.48,
+    "lowPrice": 219.0,
+    "closePrice": 219.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415660,
+    "volume": 236492,
+    "openPrice": 219.0,
+    "highPrice": 219.57,
+    "lowPrice": 218.42,
+    "closePrice": 219.39
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415720,
+    "volume": 210206,
+    "openPrice": 219.42,
+    "highPrice": 219.59,
+    "lowPrice": 218.67,
+    "closePrice": 219.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415780,
+    "volume": 173314,
+    "openPrice": 219.46,
+    "highPrice": 219.89,
+    "lowPrice": 219.27,
+    "closePrice": 219.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415840,
+    "volume": 208590,
+    "openPrice": 219.51,
+    "highPrice": 219.84,
+    "lowPrice": 219.12,
+    "closePrice": 219.52
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415900,
+    "volume": 159090,
+    "openPrice": 219.52,
+    "highPrice": 219.79,
+    "lowPrice": 219.06,
+    "closePrice": 219.33
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667415960,
+    "volume": 179667,
+    "openPrice": 219.22,
+    "highPrice": 220.4,
+    "lowPrice": 219.22,
+    "closePrice": 219.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416020,
+    "volume": 151531,
+    "openPrice": 219.74,
+    "highPrice": 219.88,
+    "lowPrice": 219.23,
+    "closePrice": 219.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416080,
+    "volume": 124885,
+    "openPrice": 219.53,
+    "highPrice": 219.76,
+    "lowPrice": 219.3,
+    "closePrice": 219.43
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416140,
+    "volume": 237172,
+    "openPrice": 219.41,
+    "highPrice": 220.85,
+    "lowPrice": 219.35,
+    "closePrice": 220.71
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416200,
+    "volume": 243414,
+    "openPrice": 220.65,
+    "highPrice": 221.16,
+    "lowPrice": 220.25,
+    "closePrice": 221.03
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416260,
+    "volume": 121173,
+    "openPrice": 221.02,
+    "highPrice": 221.03,
+    "lowPrice": 220.08,
+    "closePrice": 220.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416320,
+    "volume": 133556,
+    "openPrice": 220.37,
+    "highPrice": 220.75,
+    "lowPrice": 220.02,
+    "closePrice": 220.26
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416380,
+    "volume": 108018,
+    "openPrice": 220.23,
+    "highPrice": 220.37,
+    "lowPrice": 219.95,
+    "closePrice": 220.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416440,
+    "volume": 114614,
+    "openPrice": 220.06,
+    "highPrice": 220.15,
+    "lowPrice": 219.57,
+    "closePrice": 219.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416500,
+    "volume": 111669,
+    "openPrice": 219.69,
+    "highPrice": 219.72,
+    "lowPrice": 219.23,
+    "closePrice": 219.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416560,
+    "volume": 247644,
+    "openPrice": 219.26,
+    "highPrice": 219.33,
+    "lowPrice": 218.72,
+    "closePrice": 218.74
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416620,
+    "volume": 270624,
+    "openPrice": 218.76,
+    "highPrice": 219.11,
+    "lowPrice": 218.56,
+    "closePrice": 218.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416680,
+    "volume": 208249,
+    "openPrice": 218.58,
+    "highPrice": 219.23,
+    "lowPrice": 218.55,
+    "closePrice": 218.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416740,
+    "volume": 237935,
+    "openPrice": 218.89,
+    "highPrice": 219.26,
+    "lowPrice": 218.44,
+    "closePrice": 218.99
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416800,
+    "volume": 159766,
+    "openPrice": 218.95,
+    "highPrice": 218.95,
+    "lowPrice": 218.51,
+    "closePrice": 218.58
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416860,
+    "volume": 387286,
+    "openPrice": 218.56,
+    "highPrice": 218.56,
+    "lowPrice": 217.7,
+    "closePrice": 217.79
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416920,
+    "volume": 294858,
+    "openPrice": 217.68,
+    "highPrice": 217.95,
+    "lowPrice": 217.36,
+    "closePrice": 217.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667416980,
+    "volume": 164465,
+    "openPrice": 217.51,
+    "highPrice": 217.65,
+    "lowPrice": 217.29,
+    "closePrice": 217.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417040,
+    "volume": 281578,
+    "openPrice": 217.3,
+    "highPrice": 217.35,
+    "lowPrice": 216.7,
+    "closePrice": 216.74
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417100,
+    "volume": 252914,
+    "openPrice": 216.75,
+    "highPrice": 217.03,
+    "lowPrice": 216.7,
+    "closePrice": 216.74
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417160,
+    "volume": 264929,
+    "openPrice": 216.7,
+    "highPrice": 216.73,
+    "lowPrice": 216.36,
+    "closePrice": 216.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417220,
+    "volume": 436852,
+    "openPrice": 216.39,
+    "highPrice": 216.44,
+    "lowPrice": 215.8,
+    "closePrice": 216.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417280,
+    "volume": 272287,
+    "openPrice": 216.08,
+    "highPrice": 216.39,
+    "lowPrice": 215.84,
+    "closePrice": 216.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417340,
+    "volume": 245314,
+    "openPrice": 216.0,
+    "highPrice": 216.33,
+    "lowPrice": 215.72,
+    "closePrice": 215.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417400,
+    "volume": 306418,
+    "openPrice": 215.85,
+    "highPrice": 216.8,
+    "lowPrice": 215.74,
+    "closePrice": 216.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417460,
+    "volume": 213519,
+    "openPrice": 216.74,
+    "highPrice": 216.74,
+    "lowPrice": 216.02,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417520,
+    "volume": 271678,
+    "openPrice": 216.2,
+    "highPrice": 216.91,
+    "lowPrice": 216.15,
+    "closePrice": 216.81
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417580,
+    "volume": 144225,
+    "openPrice": 216.77,
+    "highPrice": 216.81,
+    "lowPrice": 216.35,
+    "closePrice": 216.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417640,
+    "volume": 223714,
+    "openPrice": 216.47,
+    "highPrice": 216.78,
+    "lowPrice": 216.22,
+    "closePrice": 216.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417700,
+    "volume": 146371,
+    "openPrice": 216.5,
+    "highPrice": 216.78,
+    "lowPrice": 216.31,
+    "closePrice": 216.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417760,
+    "volume": 261155,
+    "openPrice": 216.3,
+    "highPrice": 216.43,
+    "lowPrice": 215.96,
+    "closePrice": 216.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417820,
+    "volume": 210280,
+    "openPrice": 216.15,
+    "highPrice": 216.65,
+    "lowPrice": 215.96,
+    "closePrice": 216.54
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417880,
+    "volume": 272163,
+    "openPrice": 216.49,
+    "highPrice": 217.26,
+    "lowPrice": 216.38,
+    "closePrice": 217.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667417940,
+    "volume": 161745,
+    "openPrice": 217.15,
+    "highPrice": 217.22,
+    "lowPrice": 216.59,
+    "closePrice": 216.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418000,
+    "volume": 133501,
+    "openPrice": 216.62,
+    "highPrice": 216.76,
+    "lowPrice": 216.39,
+    "closePrice": 216.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418060,
+    "volume": 197470,
+    "openPrice": 216.63,
+    "highPrice": 216.83,
+    "lowPrice": 216.31,
+    "closePrice": 216.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418120,
+    "volume": 120054,
+    "openPrice": 216.49,
+    "highPrice": 216.84,
+    "lowPrice": 216.42,
+    "closePrice": 216.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418180,
+    "volume": 142154,
+    "openPrice": 216.68,
+    "highPrice": 216.84,
+    "lowPrice": 216.45,
+    "closePrice": 216.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418240,
+    "volume": 176686,
+    "openPrice": 216.57,
+    "highPrice": 216.61,
+    "lowPrice": 216.35,
+    "closePrice": 216.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418300,
+    "volume": 197034,
+    "openPrice": 216.51,
+    "highPrice": 217.05,
+    "lowPrice": 216.51,
+    "closePrice": 216.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418360,
+    "volume": 197351,
+    "openPrice": 216.82,
+    "highPrice": 216.83,
+    "lowPrice": 216.4,
+    "closePrice": 216.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418420,
+    "volume": 261964,
+    "openPrice": 216.6,
+    "highPrice": 216.6,
+    "lowPrice": 216.04,
+    "closePrice": 216.04
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418480,
+    "volume": 219926,
+    "openPrice": 216.1,
+    "highPrice": 216.45,
+    "lowPrice": 216.0,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418540,
+    "volume": 180264,
+    "openPrice": 216.01,
+    "highPrice": 216.5,
+    "lowPrice": 215.99,
+    "closePrice": 216.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418600,
+    "volume": 198858,
+    "openPrice": 216.11,
+    "highPrice": 216.18,
+    "lowPrice": 215.9,
+    "closePrice": 216.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418660,
+    "volume": 302778,
+    "openPrice": 216.11,
+    "highPrice": 216.18,
+    "lowPrice": 215.38,
+    "closePrice": 215.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418720,
+    "volume": 278195,
+    "openPrice": 215.5,
+    "highPrice": 215.5,
+    "lowPrice": 215.06,
+    "closePrice": 215.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418780,
+    "volume": 491063,
+    "openPrice": 215.1,
+    "highPrice": 215.29,
+    "lowPrice": 215.0,
+    "closePrice": 215.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418840,
+    "volume": 257438,
+    "openPrice": 215.06,
+    "highPrice": 215.57,
+    "lowPrice": 215.05,
+    "closePrice": 215.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418900,
+    "volume": 239357,
+    "openPrice": 215.28,
+    "highPrice": 215.78,
+    "lowPrice": 215.22,
+    "closePrice": 215.54
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667418960,
+    "volume": 311362,
+    "openPrice": 215.59,
+    "highPrice": 215.9,
+    "lowPrice": 215.22,
+    "closePrice": 215.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419020,
+    "volume": 239782,
+    "openPrice": 215.68,
+    "highPrice": 215.81,
+    "lowPrice": 215.6,
+    "closePrice": 215.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419080,
+    "volume": 297789,
+    "openPrice": 215.64,
+    "highPrice": 215.71,
+    "lowPrice": 215.34,
+    "closePrice": 215.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419140,
+    "volume": 334819,
+    "openPrice": 215.41,
+    "highPrice": 215.56,
+    "lowPrice": 215.26,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419200,
+    "volume": 2695976,
+    "openPrice": 215.28,
+    "highPrice": 215.39,
+    "lowPrice": 214.82,
+    "closePrice": 214.98
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419260,
+    "volume": 387630,
+    "openPrice": 214.9,
+    "highPrice": 215.45,
+    "lowPrice": 214.24,
+    "closePrice": 214.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419320,
+    "volume": 15975,
+    "openPrice": 214.58,
+    "highPrice": 214.98,
+    "lowPrice": 213.44,
+    "closePrice": 214.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419380,
+    "volume": 8505,
+    "openPrice": 214.0,
+    "highPrice": 214.64,
+    "lowPrice": 214.0,
+    "closePrice": 214.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419440,
+    "volume": 10345,
+    "openPrice": 214.06,
+    "highPrice": 214.47,
+    "lowPrice": 214.02,
+    "closePrice": 214.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419500,
+    "volume": 6682,
+    "openPrice": 214.17,
+    "highPrice": 214.5,
+    "lowPrice": 214.1,
+    "closePrice": 214.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419560,
+    "volume": 7100,
+    "openPrice": 214.21,
+    "highPrice": 214.45,
+    "lowPrice": 214.2,
+    "closePrice": 214.45
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419620,
+    "volume": 3779,
+    "openPrice": 214.37,
+    "highPrice": 214.45,
+    "lowPrice": 214.25,
+    "closePrice": 214.28
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419680,
+    "volume": 109362,
+    "openPrice": 214.28,
+    "highPrice": 214.41,
+    "lowPrice": 214.25,
+    "closePrice": 214.39
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419740,
+    "volume": 15573,
+    "openPrice": 214.39,
+    "highPrice": 214.98,
+    "lowPrice": 214.25,
+    "closePrice": 214.42
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419800,
+    "volume": 2684,
+    "openPrice": 214.37,
+    "highPrice": 214.5,
+    "lowPrice": 214.32,
+    "closePrice": 214.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419860,
+    "volume": 21813,
+    "openPrice": 214.42,
+    "highPrice": 214.7,
+    "lowPrice": 214.42,
+    "closePrice": 214.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419920,
+    "volume": 54992,
+    "openPrice": 214.68,
+    "highPrice": 214.98,
+    "lowPrice": 214.5,
+    "closePrice": 214.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667419980,
+    "volume": 7328,
+    "openPrice": 214.64,
+    "highPrice": 214.64,
+    "lowPrice": 214.5,
+    "closePrice": 214.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420040,
+    "volume": 2864,
+    "openPrice": 214.56,
+    "highPrice": 214.59,
+    "lowPrice": 214.45,
+    "closePrice": 214.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420100,
+    "volume": 1793,
+    "openPrice": 214.51,
+    "highPrice": 214.59,
+    "lowPrice": 214.45,
+    "closePrice": 214.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420160,
+    "volume": 3079,
+    "openPrice": 214.52,
+    "highPrice": 214.58,
+    "lowPrice": 214.45,
+    "closePrice": 214.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420220,
+    "volume": 2322,
+    "openPrice": 214.57,
+    "highPrice": 214.98,
+    "lowPrice": 214.46,
+    "closePrice": 214.48
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420280,
+    "volume": 27888,
+    "openPrice": 214.55,
+    "highPrice": 214.98,
+    "lowPrice": 214.46,
+    "closePrice": 214.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420340,
+    "volume": 6685,
+    "openPrice": 214.5,
+    "highPrice": 214.7,
+    "lowPrice": 214.48,
+    "closePrice": 214.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420400,
+    "volume": 25823,
+    "openPrice": 214.64,
+    "highPrice": 214.98,
+    "lowPrice": 214.58,
+    "closePrice": 214.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420460,
+    "volume": 2700,
+    "openPrice": 214.7,
+    "highPrice": 214.79,
+    "lowPrice": 214.6,
+    "closePrice": 214.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420520,
+    "volume": 2370,
+    "openPrice": 214.77,
+    "highPrice": 215.11,
+    "lowPrice": 214.7,
+    "closePrice": 215.11
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420580,
+    "volume": 1596,
+    "openPrice": 215.2,
+    "highPrice": 215.5,
+    "lowPrice": 215.0,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420640,
+    "volume": 2427,
+    "openPrice": 215.4,
+    "highPrice": 215.82,
+    "lowPrice": 215.29,
+    "closePrice": 215.51
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420700,
+    "volume": 3765,
+    "openPrice": 215.5,
+    "highPrice": 215.82,
+    "lowPrice": 215.4,
+    "closePrice": 215.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420760,
+    "volume": 1163,
+    "openPrice": 215.77,
+    "highPrice": 215.9,
+    "lowPrice": 215.52,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420820,
+    "volume": 1229,
+    "openPrice": 215.9,
+    "highPrice": 215.9,
+    "lowPrice": 215.4,
+    "closePrice": 215.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420880,
+    "volume": 1717,
+    "openPrice": 215.55,
+    "highPrice": 215.7,
+    "lowPrice": 215.4,
+    "closePrice": 215.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667420940,
+    "volume": 1076,
+    "openPrice": 215.6,
+    "highPrice": 215.78,
+    "lowPrice": 215.5,
+    "closePrice": 215.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421000,
+    "volume": 892,
+    "openPrice": 215.69,
+    "highPrice": 215.89,
+    "lowPrice": 215.6,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421060,
+    "volume": 7249,
+    "openPrice": 215.76,
+    "highPrice": 215.98,
+    "lowPrice": 214.98,
+    "closePrice": 215.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421120,
+    "volume": 1148,
+    "openPrice": 215.87,
+    "highPrice": 215.91,
+    "lowPrice": 215.65,
+    "closePrice": 215.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421180,
+    "volume": 2408,
+    "openPrice": 215.8,
+    "highPrice": 215.9,
+    "lowPrice": 215.65,
+    "closePrice": 215.74
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421240,
+    "volume": 1072,
+    "openPrice": 215.74,
+    "highPrice": 215.9,
+    "lowPrice": 215.7,
+    "closePrice": 215.82
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421300,
+    "volume": 1700,
+    "openPrice": 215.89,
+    "highPrice": 215.89,
+    "lowPrice": 215.75,
+    "closePrice": 215.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421360,
+    "volume": 1045,
+    "openPrice": 215.75,
+    "highPrice": 215.89,
+    "lowPrice": 215.75,
+    "closePrice": 215.88
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421420,
+    "volume": 3050,
+    "openPrice": 215.88,
+    "highPrice": 216.09,
+    "lowPrice": 215.8,
+    "closePrice": 216.09
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421480,
+    "volume": 4546,
+    "openPrice": 216.1,
+    "highPrice": 216.4,
+    "lowPrice": 215.99,
+    "closePrice": 216.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421540,
+    "volume": 3462,
+    "openPrice": 216.09,
+    "highPrice": 216.5,
+    "lowPrice": 216.09,
+    "closePrice": 216.48
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421600,
+    "volume": 5111,
+    "openPrice": 216.4,
+    "highPrice": 216.5,
+    "lowPrice": 216.27,
+    "closePrice": 216.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421660,
+    "volume": 5999,
+    "openPrice": 216.5,
+    "highPrice": 216.5,
+    "lowPrice": 216.28,
+    "closePrice": 216.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421720,
+    "volume": 7236,
+    "openPrice": 216.38,
+    "highPrice": 216.4,
+    "lowPrice": 216.01,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421780,
+    "volume": 1101,
+    "openPrice": 216.2,
+    "highPrice": 216.3,
+    "lowPrice": 216.0,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421840,
+    "volume": 3457,
+    "openPrice": 216.0,
+    "highPrice": 216.2,
+    "lowPrice": 215.8,
+    "closePrice": 215.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421900,
+    "volume": 1462,
+    "openPrice": 215.94,
+    "highPrice": 216.17,
+    "lowPrice": 215.78,
+    "closePrice": 216.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667421960,
+    "volume": 1270,
+    "openPrice": 216.04,
+    "highPrice": 216.2,
+    "lowPrice": 215.98,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422020,
+    "volume": 1761,
+    "openPrice": 216.2,
+    "highPrice": 216.2,
+    "lowPrice": 215.95,
+    "closePrice": 216.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422080,
+    "volume": 47357,
+    "openPrice": 216.0,
+    "highPrice": 216.2,
+    "lowPrice": 216.0,
+    "closePrice": 216.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422140,
+    "volume": 1616,
+    "openPrice": 216.09,
+    "highPrice": 216.2,
+    "lowPrice": 216.01,
+    "closePrice": 216.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422200,
+    "volume": 303,
+    "openPrice": 216.06,
+    "highPrice": 216.19,
+    "lowPrice": 216.01,
+    "closePrice": 216.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422260,
+    "volume": 1689,
+    "openPrice": 216.15,
+    "highPrice": 216.19,
+    "lowPrice": 216.01,
+    "closePrice": 216.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422320,
+    "volume": 947,
+    "openPrice": 216.19,
+    "highPrice": 216.19,
+    "lowPrice": 216.01,
+    "closePrice": 216.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422380,
+    "volume": 1451,
+    "openPrice": 216.07,
+    "highPrice": 216.08,
+    "lowPrice": 215.9,
+    "closePrice": 215.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422440,
+    "volume": 5902,
+    "openPrice": 215.9,
+    "highPrice": 216.06,
+    "lowPrice": 215.8,
+    "closePrice": 215.98
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422500,
+    "volume": 1854,
+    "openPrice": 216.05,
+    "highPrice": 216.06,
+    "lowPrice": 215.9,
+    "closePrice": 216.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422560,
+    "volume": 629,
+    "openPrice": 216.07,
+    "highPrice": 216.2,
+    "lowPrice": 215.86,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422620,
+    "volume": 1288,
+    "openPrice": 216.2,
+    "highPrice": 216.2,
+    "lowPrice": 215.95,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422680,
+    "volume": 673,
+    "openPrice": 216.15,
+    "highPrice": 216.2,
+    "lowPrice": 215.9,
+    "closePrice": 216.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422740,
+    "volume": 597,
+    "openPrice": 216.11,
+    "highPrice": 216.11,
+    "lowPrice": 215.95,
+    "closePrice": 215.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422800,
+    "volume": 2067,
+    "openPrice": 215.92,
+    "highPrice": 216.17,
+    "lowPrice": 215.9,
+    "closePrice": 216.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422860,
+    "volume": 2504,
+    "openPrice": 216.17,
+    "highPrice": 216.17,
+    "lowPrice": 216.0,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422920,
+    "volume": 2838,
+    "openPrice": 216.0,
+    "highPrice": 216.25,
+    "lowPrice": 216.0,
+    "closePrice": 216.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667422980,
+    "volume": 1494,
+    "openPrice": 216.16,
+    "highPrice": 216.25,
+    "lowPrice": 216.06,
+    "closePrice": 216.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423040,
+    "volume": 645,
+    "openPrice": 216.1,
+    "highPrice": 216.2,
+    "lowPrice": 216.06,
+    "closePrice": 216.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423100,
+    "volume": 725,
+    "openPrice": 216.13,
+    "highPrice": 216.2,
+    "lowPrice": 216.06,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423160,
+    "volume": 2702,
+    "openPrice": 216.2,
+    "highPrice": 216.28,
+    "lowPrice": 216.06,
+    "closePrice": 216.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423220,
+    "volume": 1339,
+    "openPrice": 216.22,
+    "highPrice": 216.26,
+    "lowPrice": 216.01,
+    "closePrice": 216.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423280,
+    "volume": 1082,
+    "openPrice": 216.01,
+    "highPrice": 216.17,
+    "lowPrice": 216.0,
+    "closePrice": 216.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423340,
+    "volume": 1033,
+    "openPrice": 216.0,
+    "highPrice": 216.11,
+    "lowPrice": 216.0,
+    "closePrice": 216.09
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423400,
+    "volume": 818,
+    "openPrice": 216.17,
+    "highPrice": 216.17,
+    "lowPrice": 216.0,
+    "closePrice": 216.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423460,
+    "volume": 2214,
+    "openPrice": 216.03,
+    "highPrice": 216.24,
+    "lowPrice": 216.0,
+    "closePrice": 216.24
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423520,
+    "volume": 103,
+    "openPrice": 216.1,
+    "highPrice": 216.24,
+    "lowPrice": 216.0,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423580,
+    "volume": 1303,
+    "openPrice": 216.22,
+    "highPrice": 216.24,
+    "lowPrice": 216.1,
+    "closePrice": 216.18
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423640,
+    "volume": 695,
+    "openPrice": 216.2,
+    "highPrice": 216.43,
+    "lowPrice": 216.18,
+    "closePrice": 216.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423700,
+    "volume": 255,
+    "openPrice": 216.35,
+    "highPrice": 216.38,
+    "lowPrice": 216.26,
+    "closePrice": 216.33
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423760,
+    "volume": 975,
+    "openPrice": 216.22,
+    "highPrice": 216.3,
+    "lowPrice": 216.1,
+    "closePrice": 216.25
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423820,
+    "volume": 717,
+    "openPrice": 216.18,
+    "highPrice": 216.25,
+    "lowPrice": 216.1,
+    "closePrice": 216.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423880,
+    "volume": 439,
+    "openPrice": 216.18,
+    "highPrice": 216.18,
+    "lowPrice": 216.01,
+    "closePrice": 216.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667423940,
+    "volume": 1360,
+    "openPrice": 216.02,
+    "highPrice": 216.2,
+    "lowPrice": 216.02,
+    "closePrice": 216.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424000,
+    "volume": 217,
+    "openPrice": 216.1,
+    "highPrice": 216.17,
+    "lowPrice": 216.1,
+    "closePrice": 216.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424060,
+    "volume": 517,
+    "openPrice": 216.16,
+    "highPrice": 216.17,
+    "lowPrice": 216.1,
+    "closePrice": 216.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424120,
+    "volume": 1115,
+    "openPrice": 216.13,
+    "highPrice": 216.15,
+    "lowPrice": 216.1,
+    "closePrice": 216.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424180,
+    "volume": 1463,
+    "openPrice": 216.15,
+    "highPrice": 216.17,
+    "lowPrice": 216.11,
+    "closePrice": 216.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424240,
+    "volume": 1853,
+    "openPrice": 216.12,
+    "highPrice": 216.13,
+    "lowPrice": 216.11,
+    "closePrice": 216.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424300,
+    "volume": 1398,
+    "openPrice": 216.12,
+    "highPrice": 216.12,
+    "lowPrice": 216.08,
+    "closePrice": 216.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424360,
+    "volume": 835,
+    "openPrice": 216.05,
+    "highPrice": 216.12,
+    "lowPrice": 216.0,
+    "closePrice": 216.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424420,
+    "volume": 1105,
+    "openPrice": 216.07,
+    "highPrice": 216.12,
+    "lowPrice": 216.01,
+    "closePrice": 216.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424480,
+    "volume": 1207,
+    "openPrice": 216.09,
+    "highPrice": 216.12,
+    "lowPrice": 216.02,
+    "closePrice": 216.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424540,
+    "volume": 722,
+    "openPrice": 216.12,
+    "highPrice": 216.12,
+    "lowPrice": 216.01,
+    "closePrice": 216.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424600,
+    "volume": 974,
+    "openPrice": 216.12,
+    "highPrice": 216.12,
+    "lowPrice": 216.03,
+    "closePrice": 216.09
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424660,
+    "volume": 556,
+    "openPrice": 216.09,
+    "highPrice": 216.09,
+    "lowPrice": 216.01,
+    "closePrice": 216.09
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424720,
+    "volume": 722,
+    "openPrice": 216.09,
+    "highPrice": 216.09,
+    "lowPrice": 216.04,
+    "closePrice": 216.07
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424780,
+    "volume": 301,
+    "openPrice": 216.09,
+    "highPrice": 216.09,
+    "lowPrice": 216.01,
+    "closePrice": 216.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424840,
+    "volume": 1214,
+    "openPrice": 216.09,
+    "highPrice": 216.09,
+    "lowPrice": 216.01,
+    "closePrice": 216.02
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424900,
+    "volume": 3798,
+    "openPrice": 216.02,
+    "highPrice": 216.05,
+    "lowPrice": 216.0,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667424960,
+    "volume": 742,
+    "openPrice": 216.02,
+    "highPrice": 216.1,
+    "lowPrice": 216.02,
+    "closePrice": 216.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425020,
+    "volume": 4116,
+    "openPrice": 216.09,
+    "highPrice": 216.1,
+    "lowPrice": 215.99,
+    "closePrice": 216.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425080,
+    "volume": 763,
+    "openPrice": 216.1,
+    "highPrice": 216.1,
+    "lowPrice": 215.95,
+    "closePrice": 215.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425140,
+    "volume": 628,
+    "openPrice": 216.0,
+    "highPrice": 216.0,
+    "lowPrice": 215.8,
+    "closePrice": 215.86
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425200,
+    "volume": 1080,
+    "openPrice": 215.89,
+    "highPrice": 216.08,
+    "lowPrice": 215.8,
+    "closePrice": 216.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425260,
+    "volume": 808,
+    "openPrice": 216.01,
+    "highPrice": 216.07,
+    "lowPrice": 215.86,
+    "closePrice": 215.93
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425320,
+    "volume": 109,
+    "openPrice": 216.06,
+    "highPrice": 216.07,
+    "lowPrice": 215.8,
+    "closePrice": 215.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425380,
+    "volume": 114,
+    "openPrice": 215.95,
+    "highPrice": 216.0,
+    "lowPrice": 215.82,
+    "closePrice": 215.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425440,
+    "volume": 418,
+    "openPrice": 215.91,
+    "highPrice": 216.0,
+    "lowPrice": 215.8,
+    "closePrice": 215.94
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425500,
+    "volume": 1038,
+    "openPrice": 215.91,
+    "highPrice": 216.0,
+    "lowPrice": 215.85,
+    "closePrice": 215.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425560,
+    "volume": 729,
+    "openPrice": 215.89,
+    "highPrice": 216.0,
+    "lowPrice": 215.8,
+    "closePrice": 215.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425620,
+    "volume": 320,
+    "openPrice": 215.89,
+    "highPrice": 216.0,
+    "lowPrice": 215.8,
+    "closePrice": 215.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425680,
+    "volume": 433,
+    "openPrice": 215.94,
+    "highPrice": 216.0,
+    "lowPrice": 215.9,
+    "closePrice": 215.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425740,
+    "volume": 69,
+    "openPrice": 216.0,
+    "highPrice": 216.0,
+    "lowPrice": 215.92,
+    "closePrice": 215.92
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425800,
+    "volume": 504,
+    "openPrice": 215.95,
+    "highPrice": 216.0,
+    "lowPrice": 215.8,
+    "closePrice": 215.91
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425860,
+    "volume": 209,
+    "openPrice": 216.0,
+    "highPrice": 216.05,
+    "lowPrice": 215.9,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425920,
+    "volume": 219,
+    "openPrice": 215.95,
+    "highPrice": 216.08,
+    "lowPrice": 215.93,
+    "closePrice": 215.95
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667425980,
+    "volume": 83,
+    "openPrice": 215.95,
+    "highPrice": 216.0,
+    "lowPrice": 215.95,
+    "closePrice": 215.98
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426040,
+    "volume": 132,
+    "openPrice": 216.0,
+    "highPrice": 216.0,
+    "lowPrice": 215.9,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426100,
+    "volume": 307,
+    "openPrice": 215.97,
+    "highPrice": 216.0,
+    "lowPrice": 215.9,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426160,
+    "volume": 3911,
+    "openPrice": 216.0,
+    "highPrice": 216.0,
+    "lowPrice": 215.9,
+    "closePrice": 215.9
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426220,
+    "volume": 212,
+    "openPrice": 215.86,
+    "highPrice": 215.9,
+    "lowPrice": 215.82,
+    "closePrice": 215.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426280,
+    "volume": 3573,
+    "openPrice": 215.85,
+    "highPrice": 215.9,
+    "lowPrice": 215.8,
+    "closePrice": 215.89
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426340,
+    "volume": 1519,
+    "openPrice": 215.89,
+    "highPrice": 215.89,
+    "lowPrice": 215.75,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426400,
+    "volume": 3166,
+    "openPrice": 215.83,
+    "highPrice": 215.85,
+    "lowPrice": 215.65,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426460,
+    "volume": 609,
+    "openPrice": 215.75,
+    "highPrice": 215.9,
+    "lowPrice": 215.56,
+    "closePrice": 215.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426520,
+    "volume": 82,
+    "openPrice": 215.78,
+    "highPrice": 215.99,
+    "lowPrice": 215.78,
+    "closePrice": 215.87
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426580,
+    "volume": 145,
+    "openPrice": 215.9,
+    "highPrice": 216.0,
+    "lowPrice": 215.85,
+    "closePrice": 216.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426640,
+    "volume": 231,
+    "openPrice": 215.93,
+    "highPrice": 215.95,
+    "lowPrice": 215.56,
+    "closePrice": 215.85
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426700,
+    "volume": 1219,
+    "openPrice": 215.85,
+    "highPrice": 215.85,
+    "lowPrice": 215.5,
+    "closePrice": 215.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426760,
+    "volume": 594,
+    "openPrice": 215.51,
+    "highPrice": 215.82,
+    "lowPrice": 215.3,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426820,
+    "volume": 148,
+    "openPrice": 215.4,
+    "highPrice": 215.65,
+    "lowPrice": 215.23,
+    "closePrice": 215.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426880,
+    "volume": 225,
+    "openPrice": 215.5,
+    "highPrice": 215.5,
+    "lowPrice": 215.21,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667426940,
+    "volume": 3015,
+    "openPrice": 215.3,
+    "highPrice": 215.39,
+    "lowPrice": 215.1,
+    "closePrice": 215.1
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427000,
+    "volume": 317,
+    "openPrice": 215.25,
+    "highPrice": 215.3,
+    "lowPrice": 215.1,
+    "closePrice": 215.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427060,
+    "volume": 2036,
+    "openPrice": 215.28,
+    "highPrice": 215.4,
+    "lowPrice": 215.15,
+    "closePrice": 215.34
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427120,
+    "volume": 268,
+    "openPrice": 215.3,
+    "highPrice": 215.51,
+    "lowPrice": 215.3,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427180,
+    "volume": 371,
+    "openPrice": 215.43,
+    "highPrice": 215.5,
+    "lowPrice": 215.3,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427240,
+    "volume": 269,
+    "openPrice": 215.49,
+    "highPrice": 215.5,
+    "lowPrice": 215.3,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427300,
+    "volume": 1316,
+    "openPrice": 215.5,
+    "highPrice": 215.5,
+    "lowPrice": 215.3,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427360,
+    "volume": 326,
+    "openPrice": 215.5,
+    "highPrice": 215.8,
+    "lowPrice": 215.4,
+    "closePrice": 215.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427420,
+    "volume": 682,
+    "openPrice": 215.65,
+    "highPrice": 215.8,
+    "lowPrice": 215.55,
+    "closePrice": 215.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427480,
+    "volume": 185,
+    "openPrice": 215.75,
+    "highPrice": 215.75,
+    "lowPrice": 215.52,
+    "closePrice": 215.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427540,
+    "volume": 691,
+    "openPrice": 215.52,
+    "highPrice": 215.7,
+    "lowPrice": 215.52,
+    "closePrice": 215.7
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427600,
+    "volume": 153,
+    "openPrice": 215.62,
+    "highPrice": 215.7,
+    "lowPrice": 215.52,
+    "closePrice": 215.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427660,
+    "volume": 26,
+    "openPrice": 215.52,
+    "highPrice": 215.6,
+    "lowPrice": 215.52,
+    "closePrice": 215.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427720,
+    "volume": 144,
+    "openPrice": 215.56,
+    "highPrice": 215.6,
+    "lowPrice": 215.54,
+    "closePrice": 215.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427780,
+    "volume": 344,
+    "openPrice": 215.56,
+    "highPrice": 215.6,
+    "lowPrice": 215.4,
+    "closePrice": 215.52
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427840,
+    "volume": 215,
+    "openPrice": 215.46,
+    "highPrice": 215.51,
+    "lowPrice": 215.36,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427900,
+    "volume": 1905,
+    "openPrice": 215.4,
+    "highPrice": 215.46,
+    "lowPrice": 215.32,
+    "closePrice": 215.39
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667427960,
+    "volume": 89,
+    "openPrice": 215.42,
+    "highPrice": 215.42,
+    "lowPrice": 215.3,
+    "closePrice": 215.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428020,
+    "volume": 15,
+    "openPrice": 215.38,
+    "highPrice": 215.38,
+    "lowPrice": 215.32,
+    "closePrice": 215.33
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428080,
+    "volume": 70,
+    "openPrice": 215.38,
+    "highPrice": 215.38,
+    "lowPrice": 215.27,
+    "closePrice": 215.38
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428140,
+    "volume": 262,
+    "openPrice": 215.38,
+    "highPrice": 215.46,
+    "lowPrice": 215.27,
+    "closePrice": 215.41
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428200,
+    "volume": 261,
+    "openPrice": 215.32,
+    "highPrice": 215.7,
+    "lowPrice": 215.32,
+    "closePrice": 215.64
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428260,
+    "volume": 17,
+    "openPrice": 215.5,
+    "highPrice": 215.7,
+    "lowPrice": 215.5,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428320,
+    "volume": 57,
+    "openPrice": 215.7,
+    "highPrice": 215.7,
+    "lowPrice": 215.6,
+    "closePrice": 215.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428380,
+    "volume": 124,
+    "openPrice": 215.6,
+    "highPrice": 215.8,
+    "lowPrice": 215.6,
+    "closePrice": 215.79
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428440,
+    "volume": 244,
+    "openPrice": 215.74,
+    "highPrice": 215.78,
+    "lowPrice": 215.5,
+    "closePrice": 215.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428500,
+    "volume": 79,
+    "openPrice": 215.63,
+    "highPrice": 215.77,
+    "lowPrice": 215.5,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428560,
+    "volume": 299,
+    "openPrice": 215.63,
+    "highPrice": 215.79,
+    "lowPrice": 215.5,
+    "closePrice": 215.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428620,
+    "volume": 23,
+    "openPrice": 215.79,
+    "highPrice": 215.79,
+    "lowPrice": 215.69,
+    "closePrice": 215.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428680,
+    "volume": 155,
+    "openPrice": 215.79,
+    "highPrice": 215.79,
+    "lowPrice": 215.64,
+    "closePrice": 215.72
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428740,
+    "volume": 567,
+    "openPrice": 215.61,
+    "highPrice": 215.76,
+    "lowPrice": 215.5,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428800,
+    "volume": 108,
+    "openPrice": 215.62,
+    "highPrice": 215.74,
+    "lowPrice": 215.5,
+    "closePrice": 215.62
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428860,
+    "volume": 111,
+    "openPrice": 215.63,
+    "highPrice": 215.73,
+    "lowPrice": 215.5,
+    "closePrice": 215.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428920,
+    "volume": 761,
+    "openPrice": 215.66,
+    "highPrice": 215.79,
+    "lowPrice": 215.66,
+    "closePrice": 215.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667428980,
+    "volume": 793,
+    "openPrice": 215.75,
+    "highPrice": 215.75,
+    "lowPrice": 215.6,
+    "closePrice": 215.74
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429040,
+    "volume": 239,
+    "openPrice": 215.62,
+    "highPrice": 215.78,
+    "lowPrice": 215.6,
+    "closePrice": 215.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429100,
+    "volume": 77,
+    "openPrice": 215.74,
+    "highPrice": 215.78,
+    "lowPrice": 215.6,
+    "closePrice": 215.77
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429160,
+    "volume": 82,
+    "openPrice": 215.7,
+    "highPrice": 215.75,
+    "lowPrice": 215.55,
+    "closePrice": 215.73
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429220,
+    "volume": 227,
+    "openPrice": 215.73,
+    "highPrice": 215.73,
+    "lowPrice": 215.55,
+    "closePrice": 215.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429280,
+    "volume": 132,
+    "openPrice": 215.63,
+    "highPrice": 215.65,
+    "lowPrice": 215.55,
+    "closePrice": 215.57
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429340,
+    "volume": 605,
+    "openPrice": 215.57,
+    "highPrice": 215.59,
+    "lowPrice": 215.47,
+    "closePrice": 215.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429400,
+    "volume": 22,
+    "openPrice": 215.44,
+    "highPrice": 215.5,
+    "lowPrice": 215.38,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429460,
+    "volume": 220,
+    "openPrice": 215.49,
+    "highPrice": 215.5,
+    "lowPrice": 215.26,
+    "closePrice": 215.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429520,
+    "volume": 410,
+    "openPrice": 215.5,
+    "highPrice": 215.5,
+    "lowPrice": 215.3,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429580,
+    "volume": 51,
+    "openPrice": 215.39,
+    "highPrice": 215.48,
+    "lowPrice": 215.3,
+    "closePrice": 215.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429640,
+    "volume": 2935,
+    "openPrice": 215.44,
+    "highPrice": 215.5,
+    "lowPrice": 215.35,
+    "closePrice": 215.43
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429700,
+    "volume": 186,
+    "openPrice": 215.43,
+    "highPrice": 215.55,
+    "lowPrice": 215.43,
+    "closePrice": 215.53
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429760,
+    "volume": 407,
+    "openPrice": 215.53,
+    "highPrice": 215.55,
+    "lowPrice": 215.46,
+    "closePrice": 215.55
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429820,
+    "volume": 291,
+    "openPrice": 215.5,
+    "highPrice": 215.54,
+    "lowPrice": 215.4,
+    "closePrice": 215.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429880,
+    "volume": 168,
+    "openPrice": 215.47,
+    "highPrice": 215.49,
+    "lowPrice": 215.36,
+    "closePrice": 215.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667429940,
+    "volume": 484,
+    "openPrice": 215.4,
+    "highPrice": 215.5,
+    "lowPrice": 215.4,
+    "closePrice": 215.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430000,
+    "volume": 54,
+    "openPrice": 215.45,
+    "highPrice": 215.5,
+    "lowPrice": 215.4,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430060,
+    "volume": 191,
+    "openPrice": 215.46,
+    "highPrice": 215.49,
+    "lowPrice": 215.41,
+    "closePrice": 215.45
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430120,
+    "volume": 278,
+    "openPrice": 215.41,
+    "highPrice": 215.5,
+    "lowPrice": 215.41,
+    "closePrice": 215.46
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430180,
+    "volume": 33,
+    "openPrice": 215.4,
+    "highPrice": 215.49,
+    "lowPrice": 215.37,
+    "closePrice": 215.47
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430240,
+    "volume": 190,
+    "openPrice": 215.39,
+    "highPrice": 215.5,
+    "lowPrice": 215.39,
+    "closePrice": 215.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430300,
+    "volume": 467,
+    "openPrice": 215.47,
+    "highPrice": 215.48,
+    "lowPrice": 215.32,
+    "closePrice": 215.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430360,
+    "volume": 323,
+    "openPrice": 215.32,
+    "highPrice": 215.37,
+    "lowPrice": 215.26,
+    "closePrice": 215.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430420,
+    "volume": 178,
+    "openPrice": 215.37,
+    "highPrice": 215.37,
+    "lowPrice": 215.27,
+    "closePrice": 215.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430480,
+    "volume": 37,
+    "openPrice": 215.34,
+    "highPrice": 215.41,
+    "lowPrice": 215.27,
+    "closePrice": 215.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430540,
+    "volume": 221,
+    "openPrice": 215.33,
+    "highPrice": 215.37,
+    "lowPrice": 215.3,
+    "closePrice": 215.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430600,
+    "volume": 47,
+    "openPrice": 215.37,
+    "highPrice": 215.37,
+    "lowPrice": 215.3,
+    "closePrice": 215.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430660,
+    "volume": 301,
+    "openPrice": 215.36,
+    "highPrice": 215.38,
+    "lowPrice": 215.3,
+    "closePrice": 215.35
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430720,
+    "volume": 62,
+    "openPrice": 215.38,
+    "highPrice": 215.4,
+    "lowPrice": 215.32,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430780,
+    "volume": 1140,
+    "openPrice": 215.4,
+    "highPrice": 215.4,
+    "lowPrice": 215.36,
+    "closePrice": 215.37
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430840,
+    "volume": 263,
+    "openPrice": 215.4,
+    "highPrice": 215.49,
+    "lowPrice": 215.33,
+    "closePrice": 215.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430900,
+    "volume": 144,
+    "openPrice": 215.38,
+    "highPrice": 215.48,
+    "lowPrice": 215.33,
+    "closePrice": 215.45
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667430960,
+    "volume": 173,
+    "openPrice": 215.33,
+    "highPrice": 215.4,
+    "lowPrice": 215.28,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431020,
+    "volume": 692,
+    "openPrice": 215.27,
+    "highPrice": 215.3,
+    "lowPrice": 215.12,
+    "closePrice": 215.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431080,
+    "volume": 193,
+    "openPrice": 215.17,
+    "highPrice": 215.28,
+    "lowPrice": 215.11,
+    "closePrice": 215.15
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431140,
+    "volume": 5455,
+    "openPrice": 215.19,
+    "highPrice": 215.19,
+    "lowPrice": 215.0,
+    "closePrice": 215.0
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431200,
+    "volume": 2637,
+    "openPrice": 215.0,
+    "highPrice": 215.22,
+    "lowPrice": 215.0,
+    "closePrice": 215.11
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431260,
+    "volume": 1313,
+    "openPrice": 215.1,
+    "highPrice": 215.2,
+    "lowPrice": 215.01,
+    "closePrice": 215.01
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431320,
+    "volume": 862,
+    "openPrice": 215.15,
+    "highPrice": 215.2,
+    "lowPrice": 215.08,
+    "closePrice": 215.17
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431380,
+    "volume": 446,
+    "openPrice": 215.1,
+    "highPrice": 215.19,
+    "lowPrice": 215.09,
+    "closePrice": 215.19
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431440,
+    "volume": 328,
+    "openPrice": 215.19,
+    "highPrice": 215.19,
+    "lowPrice": 215.08,
+    "closePrice": 215.08
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431500,
+    "volume": 498,
+    "openPrice": 215.06,
+    "highPrice": 215.1,
+    "lowPrice": 215.01,
+    "closePrice": 215.09
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431560,
+    "volume": 1321,
+    "openPrice": 215.09,
+    "highPrice": 215.09,
+    "lowPrice": 215.0,
+    "closePrice": 215.05
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431620,
+    "volume": 82,
+    "openPrice": 215.05,
+    "highPrice": 215.08,
+    "lowPrice": 215.0,
+    "closePrice": 215.06
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431680,
+    "volume": 419,
+    "openPrice": 215.1,
+    "highPrice": 215.19,
+    "lowPrice": 215.03,
+    "closePrice": 215.12
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431740,
+    "volume": 270,
+    "openPrice": 215.12,
+    "highPrice": 215.2,
+    "lowPrice": 215.04,
+    "closePrice": 215.13
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431800,
+    "volume": 448,
+    "openPrice": 215.06,
+    "highPrice": 215.2,
+    "lowPrice": 215.06,
+    "closePrice": 215.14
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431860,
+    "volume": 498,
+    "openPrice": 215.2,
+    "highPrice": 215.3,
+    "lowPrice": 215.1,
+    "closePrice": 215.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431920,
+    "volume": 65,
+    "openPrice": 215.21,
+    "highPrice": 215.3,
+    "lowPrice": 215.12,
+    "closePrice": 215.2
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667431980,
+    "volume": 786,
+    "openPrice": 215.24,
+    "highPrice": 215.3,
+    "lowPrice": 215.2,
+    "closePrice": 215.21
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432040,
+    "volume": 183,
+    "openPrice": 215.21,
+    "highPrice": 215.45,
+    "lowPrice": 215.18,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432100,
+    "volume": 130,
+    "openPrice": 215.4,
+    "highPrice": 215.51,
+    "lowPrice": 215.4,
+    "closePrice": 215.45
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432160,
+    "volume": 170,
+    "openPrice": 215.43,
+    "highPrice": 215.47,
+    "lowPrice": 215.33,
+    "closePrice": 215.44
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432220,
+    "volume": 1839,
+    "openPrice": 215.31,
+    "highPrice": 215.39,
+    "lowPrice": 215.22,
+    "closePrice": 215.29
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432280,
+    "volume": 226,
+    "openPrice": 215.36,
+    "highPrice": 215.36,
+    "lowPrice": 215.22,
+    "closePrice": 215.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432340,
+    "volume": 204,
+    "openPrice": 215.39,
+    "highPrice": 215.39,
+    "lowPrice": 215.23,
+    "closePrice": 215.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432400,
+    "volume": 335,
+    "openPrice": 215.23,
+    "highPrice": 215.39,
+    "lowPrice": 215.23,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432460,
+    "volume": 1160,
+    "openPrice": 215.4,
+    "highPrice": 215.49,
+    "lowPrice": 215.23,
+    "closePrice": 215.31
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432520,
+    "volume": 422,
+    "openPrice": 215.3,
+    "highPrice": 215.38,
+    "lowPrice": 215.27,
+    "closePrice": 215.3
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432580,
+    "volume": 969,
+    "openPrice": 215.27,
+    "highPrice": 215.38,
+    "lowPrice": 215.27,
+    "closePrice": 215.32
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432640,
+    "volume": 265,
+    "openPrice": 215.5,
+    "highPrice": 215.5,
+    "lowPrice": 215.31,
+    "closePrice": 215.4
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432700,
+    "volume": 238,
+    "openPrice": 215.49,
+    "highPrice": 215.5,
+    "lowPrice": 215.3,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432760,
+    "volume": 55,
+    "openPrice": 215.5,
+    "highPrice": 215.5,
+    "lowPrice": 215.31,
+    "closePrice": 215.36
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432820,
+    "volume": 781,
+    "openPrice": 215.31,
+    "highPrice": 215.59,
+    "lowPrice": 215.31,
+    "closePrice": 215.49
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432880,
+    "volume": 3578,
+    "openPrice": 215.58,
+    "highPrice": 215.8,
+    "lowPrice": 215.49,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667432940,
+    "volume": 2037,
+    "openPrice": 215.8,
+    "highPrice": 215.8,
+    "lowPrice": 215.65,
+    "closePrice": 215.69
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433000,
+    "volume": 1501,
+    "openPrice": 215.75,
+    "highPrice": 215.8,
+    "lowPrice": 215.69,
+    "closePrice": 215.75
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433060,
+    "volume": 308,
+    "openPrice": 215.8,
+    "highPrice": 215.87,
+    "lowPrice": 215.69,
+    "closePrice": 215.78
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433120,
+    "volume": 255,
+    "openPrice": 215.8,
+    "highPrice": 215.8,
+    "lowPrice": 215.63,
+    "closePrice": 215.63
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433180,
+    "volume": 254,
+    "openPrice": 215.75,
+    "highPrice": 215.78,
+    "lowPrice": 215.51,
+    "closePrice": 215.67
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433240,
+    "volume": 1960,
+    "openPrice": 215.74,
+    "highPrice": 215.74,
+    "lowPrice": 215.59,
+    "closePrice": 215.61
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433300,
+    "volume": 138,
+    "openPrice": 215.7,
+    "highPrice": 215.7,
+    "lowPrice": 215.51,
+    "closePrice": 215.56
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433360,
+    "volume": 122,
+    "openPrice": 215.65,
+    "highPrice": 215.71,
+    "lowPrice": 215.58,
+    "closePrice": 215.65
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433420,
+    "volume": 412,
+    "openPrice": 215.65,
+    "highPrice": 215.7,
+    "lowPrice": 215.6,
+    "closePrice": 215.6
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433480,
+    "volume": 586,
+    "openPrice": 215.6,
+    "highPrice": 215.68,
+    "lowPrice": 215.55,
+    "closePrice": 215.59
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433540,
+    "volume": 1950,
+    "openPrice": 215.58,
+    "highPrice": 215.59,
+    "lowPrice": 215.3,
+    "closePrice": 215.5
+  },
+  {
+    "timeZone": "America/New_York",
+    "timeStamp": 1667433600,
+    "volume": 544,
+    "openPrice": 215.31,
+    "highPrice": 215.9,
+    "lowPrice": 215.31,
+    "closePrice": 215.73
+  }
+]

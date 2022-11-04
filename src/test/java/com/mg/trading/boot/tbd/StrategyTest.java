@@ -8,6 +8,7 @@ import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
+import com.mg.trading.boot.domain.strategy.dema5.DEMAStrategyDefinitionV5;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
@@ -150,7 +151,8 @@ public class StrategyTest {
     @Test
     public void testMultipleStocks() {
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/10_27_2022");
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_02_2022");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 
         AsciiTable table = new AsciiTable();
 
@@ -191,6 +193,13 @@ public class StrategyTest {
             statementsDEMAv4.add(demaV4);
         });
         reportToTable("DEMAv4", statementsDEMAv4, table);
+
+        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
+            statementsDEMAv5.add(demaV5);
+        });
+        reportToTable("DEMAv5", statementsDEMAv5, table);
 
 
         print(table);

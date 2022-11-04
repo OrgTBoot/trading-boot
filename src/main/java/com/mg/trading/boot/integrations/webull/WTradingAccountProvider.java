@@ -110,13 +110,15 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
 
     @Override
     public List<Position> getOpenPositions(String symbol) {
-        return getOpenPositions().stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
+        List<Position> openPositions = getOpenPositions();
+
+        return openPositions.stream().filter(it -> Objects.equals(it.getTicker().getSymbol(), symbol))
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<Position> getOpenPositions() {
-        return getAccount().getPositions();
+        return Optional.ofNullable(getAccount().getPositions()).orElse(new ArrayList<>());
     }
 
     @Override
@@ -178,7 +180,8 @@ public class WTradingAccountProvider extends WAbstractAccountProvider implements
     }
 
     private List<Position> getAccountPositions(WTAccount wtAccount) {
-        List<WPosition> positions = wtAccount.getAssetSummaryVO().getPositions();
+        List<WPosition> positions = Optional.ofNullable(wtAccount.getAssetSummaryVO().getPositions())
+                .orElse(new ArrayList<>());
 
         return positions.stream().map(WAbstractAccountProvider::mapToPosition).collect(Collectors.toList());
     }
