@@ -31,6 +31,7 @@ import org.springframework.boot.logging.LogLevel;
 import org.springframework.stereotype.Service;
 import org.ta4j.core.BarSeriesManager;
 import org.ta4j.core.TradingRecord;
+import org.ta4j.core.num.DecimalNum;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -89,17 +90,27 @@ public class GQLController {
     }
 
     @GraphQLMutation
-    public String triggerBackTracking(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name, @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) throws JsonProcessingException {
+    public String triggerSymbolsBackTracking(@GraphQLArgument(name = "symbols") @GraphQLNonNull final List<String> symbols,
+                                             @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
+        for (String symbol : symbols) {
+            triggerBackTracking(symbol, name);
+        }
+        return "Completed. Please see details in console.";
+    }
+
+    @GraphQLMutation
+    public String triggerBackTracking(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+                                      @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
 
         StrategyDefinition strategyDef = selectStrategyDef(name, symbol);
         Parameters params = strategyDef.getParams();
 
         List<TickerQuote> quotes = broker.ticker().getTickerQuotes(symbol, params.getQuotesRange(), params.getQuotesInterval());
-        log.info("Quotes: {}", new ObjectMapper().writeValueAsString(quotes));
+        log.info("{} Quotes: {}", symbol, new ObjectMapper().writeValueAsString(quotes));
         strategyDef.updateSeries(quotes); // load series in to strategy
 
         BarSeriesManager seriesManager = new BarSeriesManager(strategyDef.getSeries());
-        TradingRecord tradingRecord = seriesManager.run(strategyDef.getStrategy(), BUY, toDecimalNum(sharesQty));
+        TradingRecord tradingRecord = seriesManager.run(strategyDef.getStrategy(), BUY, DecimalNum.valueOf(1));
 
         ReportGenerator.printTradingRecords(tradingRecord, symbol);
         ReportGenerator.printTradingSummary(tradingRecord, symbol);
@@ -107,7 +118,8 @@ public class GQLController {
     }
 
     @GraphQLMutation(description = "Start trading strategy for the given symbol. Strategy will run in background until stopped.")
-    public String triggerLiveTrading(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name, @GraphQLArgument(name = "sharesQty", defaultValue = "1") final BigDecimal sharesQty) {
+    public String triggerLiveTrading(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
+                                     @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
 
         log.info("Initializing {} strategy for {}...", name, symbol);
         StrategyDefinition strategyDef = selectStrategyDef(name, symbol);

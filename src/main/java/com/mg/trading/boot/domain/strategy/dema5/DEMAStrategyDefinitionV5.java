@@ -75,9 +75,9 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
 
 
         //EXIT RULES
-        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()));
-        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator));
-        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN));
+        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
+        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "S.Trend Sell");
 
         Rule has5PercentLoss = trace(new StopLossRule(closePrice, 5), "Has -5%");
         Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
@@ -85,10 +85,11 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
+        Rule priceCrossedDownDEMA = new CrossedDownIndicatorRule(closePrice, longIndicator);
         Rule exitRule = trace(
                 bollingerCrossUp                                      // 1. trend reversal signal, reached upper line, market will start selling
-                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierUnderPrice.negation())) // 2. confirmation
-                        .or(has5PercentLoss.and(superTrendSell).and(chandelierUnderPrice.negation())) // 3. position stop loss
+                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierUnderPrice.negation().or(priceCrossedDownDEMA))) // 2. confirmation
+                        .or(has5PercentLoss.and(superTrendSell).and(chandelierUnderPrice.negation().or(priceCrossedDownDEMA))) // 3. position stop loss
                         .or(market60MinLeft.and(has1PercentProfit))   // 4. or 60m to market close, take profits >= 1%
                         .or(market30MinLeft.and(hasAnyProfit))        // 5. or 30m to market close, take any profits > 0%
                         .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss
