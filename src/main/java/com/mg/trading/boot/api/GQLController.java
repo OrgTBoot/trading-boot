@@ -16,6 +16,8 @@ import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
 import com.mg.trading.boot.domain.strategy.dema5.DEMAStrategyDefinitionV5;
+import com.mg.trading.boot.domain.strategy.dema6.DEMAStrategyDefinitionV6;
+import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
@@ -157,6 +159,10 @@ public class GQLController {
                 return new DEMAStrategyDefinitionV4(symbol);
             case DEMA_V5:
                 return new DEMAStrategyDefinitionV5(symbol);
+            case DEMA_V6:
+                return new DEMAStrategyDefinitionV6(symbol);
+            case DEMA_V7:
+                return new DEMAStrategyDefinitionV7(symbol);
             case CRYPTO_DEMA_V5:
                 return new CryptoDEMAStrategyDefinitionV5(symbol);
             default:

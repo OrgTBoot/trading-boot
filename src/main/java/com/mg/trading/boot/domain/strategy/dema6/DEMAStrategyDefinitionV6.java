@@ -32,7 +32,7 @@ public class DEMAStrategyDefinitionV6 extends AbstractStrategyDefinition {
     private Strategy strategy;
 
     public DEMAStrategyDefinitionV6(String symbol) {
-        super(symbol, "DEMAV5");
+        super(symbol, "DEMAV6");
     }
 
     @Override
