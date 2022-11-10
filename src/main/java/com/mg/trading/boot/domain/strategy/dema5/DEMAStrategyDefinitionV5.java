@@ -57,10 +57,8 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
         //ENTRY RULES
-//        Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
-        Rule chandelierUnderPrice = trace(new UnderIndicatorRule(chandLong, closePrice));
-        Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP));
+        Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP), "BUY");
         Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
@@ -77,9 +75,10 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         //EXIT RULES
         Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
         Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
-        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "S.Trend Sell");
+        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "SELL");
+        Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
 
-        Rule has5PercentLoss = trace(new StopLossRule(closePrice, 5), "Has -5%");
+        Rule has5PercentLoss = trace(new StopLossRule(closePrice, 2), "Has -2%");
         Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
         Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
@@ -88,8 +87,8 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         Rule priceCrossedDownDEMA = new CrossedDownIndicatorRule(closePrice, longIndicator);
         Rule exitRule = trace(
                 bollingerCrossUp                                      // 1. trend reversal signal, reached upper line, market will start selling
-                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierUnderPrice.negation().or(priceCrossedDownDEMA))) // 2. confirmation
-                        .or(has5PercentLoss.and(superTrendSell).and(chandelierUnderPrice.negation().or(priceCrossedDownDEMA))) // 3. position stop loss
+                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierOverPrice.or(priceCrossedDownDEMA))) // 2. confirmation
+                        .or(has5PercentLoss.and(superTrendSell).and(chandelierOverPrice.or(priceCrossedDownDEMA))) // 3. position stop loss
                         .or(market60MinLeft.and(has1PercentProfit))   // 4. or 60m to market close, take profits >= 1%
                         .or(market30MinLeft.and(hasAnyProfit))        // 5. or 30m to market close, take any profits > 0%
                         .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss

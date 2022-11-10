@@ -31,7 +31,7 @@ public class DEMAParametersV5 extends AbstractParameters {
                 .longBarCount(60)
                 .shortBarCount(10)
                 .bollingerBarCount(60)
-                .bollingerMultiplier(BigDecimal.valueOf(3))
+                .bollingerMultiplier(BigDecimal.valueOf(3.5))
                 .chandelierBarCount(5)
                 .build();
     }
