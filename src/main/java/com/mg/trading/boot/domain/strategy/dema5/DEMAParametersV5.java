@@ -19,6 +19,7 @@ public class DEMAParametersV5 extends AbstractParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
     private BigDecimal bollingerMultiplier;
+    private Integer bollingerBarCount;
     private Integer chandelierBarCount;
 
     public static DEMAParametersV5 optimal() {
@@ -29,6 +30,7 @@ public class DEMAParametersV5 extends AbstractParameters {
                 .quotesPullFrequencyInSec(5)
                 .longBarCount(60)
                 .shortBarCount(10)
+                .bollingerBarCount(60)
                 .bollingerMultiplier(BigDecimal.valueOf(3))
                 .chandelierBarCount(5)
                 .build();
