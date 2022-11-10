@@ -12,10 +12,14 @@ public class SuperTrendWithTrendAndSignal extends AbstractSuperTrend<Triple<Tren
 
     @Override
     public Triple<Trend, Signal, Num> getValue(int index) {
-        Pair<Trend, Num> actual = calculate(index);
-        Pair<Trend, Num> previous = calculate(index - 1);
-
         Signal signal = Signal.NO_SIGNAL;
+        Pair<Trend, Num> actual = calculate(index);
+
+        if (index <= 0) {
+            return Triple.of(actual.getLeft(), signal, actual.getRight());
+        }
+
+        Pair<Trend, Num> previous = calculate(index - 1);
 
         if (Trend.UP.equals(previous.getLeft()) && Trend.DOWN.equals(actual.getLeft())) {
             signal = Signal.DOWN;

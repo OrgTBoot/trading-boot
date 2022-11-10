@@ -36,8 +36,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.BinaryOperator;
 
-import static com.mg.trading.boot.domain.indicators.supertrentv2.Trend.DOWN;
-import static com.mg.trading.boot.domain.indicators.supertrentv2.Trend.UP;
+import static com.mg.trading.boot.domain.indicators.supertrentv2.Trend.*;
 
 public abstract class AbstractSuperTrend<T> extends AbstractIndicator<T> {
     private final int barCount;
@@ -81,10 +80,12 @@ public abstract class AbstractSuperTrend<T> extends AbstractIndicator<T> {
         Pair<Num, Num> finalUpperBand = calculateUpperBand(index, index);
         Pair<Num, Num> finalLowerBand = calculateLowerBand(index, index);
 
-        Pair<Trend, Num> result = Pair.of(UP, finalLowerBand.getLeft());
+        Pair<Trend, Num> result = Pair.of(UNKNOWN, finalLowerBand.getLeft());
         if (index < barCount) {
             return result;
         }
+
+        result = Pair.of(UP, finalLowerBand.getLeft());
 
         Pair<Trend, Num> previousSuperTrend = prevTrend.get(index - 1);
         if (previousSuperTrend == null) {

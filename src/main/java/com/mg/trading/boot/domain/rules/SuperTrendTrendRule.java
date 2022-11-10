@@ -21,6 +21,12 @@ public class SuperTrendTrendRule extends AbstractRule implements Rule {
         this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, 3);
     }
 
+
+    public SuperTrendTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend, Integer multiplier) {
+        this.expectedTrend = expectedTrend;
+        this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, multiplier);
+    }
+
     @Override
     public boolean isSatisfied(int index, TradingRecord tradingRecord) {
 

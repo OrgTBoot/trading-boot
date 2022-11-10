@@ -1,7 +1,7 @@
-package com.mg.trading.boot.tbd;
+package com.mg.trading.boot.tbd.charts;
 
-import com.mg.trading.boot.domain.indicators.supertrentv2.AwesomeIndicatorWithTrend;
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
+import com.mg.trading.boot.tbd.TestDataProvider;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -15,7 +15,6 @@ import org.jfree.ui.RefineryUtilities;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Indicator;
-import org.ta4j.core.indicators.ChandelierExitLongIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.num.Num;
@@ -63,20 +62,25 @@ public class IndicatorsToChart {
     }
 
     public static void main(String[] args) {
-        String fileName = "BHG_10_11_2022.json";
+        String fileName = "tmp/TQQQ.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
-        SuperTrend superTrend = new SuperTrend(series, 10,3);
+        SuperTrend superTrend1 = new SuperTrend(series, 10,3);
+        SuperTrend superTrend2 = new SuperTrend(series, 9,2);
+        SuperTrend superTrend3 = new SuperTrend(series, 8,1);
 //
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, 60);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, 10);
+
 //        ChandelierExitLongIndicator chandelierLong = new ChandelierExitLongIndicator(series, 10, 3);
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(buildChartBarSeries(series, closePrice, fileName));
-        dataset.addSeries(buildChartBarSeries(series, superTrend, "SuperTrend"));
-        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA 60"));
-        dataset.addSeries(buildChartBarSeries(series, shortIndicator, "DEMA 10"));
+        dataset.addSeries(buildChartBarSeries(series, superTrend1, "ST1"));
+        dataset.addSeries(buildChartBarSeries(series, superTrend2, "ST2"));
+        dataset.addSeries(buildChartBarSeries(series, superTrend3, "ST3"));
+//        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA 60"));
+//        dataset.addSeries(buildChartBarSeries(series, shortIndicator, "DEMA 10"));
 //        dataset.addSeries(buildChartBarSeries(series, chandelierLong, "Chand"));
 
         JFreeChart chart = ChartFactory.createTimeSeriesChart(fileName, // title

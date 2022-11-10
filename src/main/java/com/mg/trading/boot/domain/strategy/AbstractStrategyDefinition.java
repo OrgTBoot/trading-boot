@@ -84,7 +84,7 @@ public abstract class AbstractStrategyDefinition implements StrategyDefinition {
 
             } else if (shouldAddBar(series, quote)) {
                 BarSeriesUtils.addBar(series, quote, duration);
-                log.debug("Added Quote : {}", quote);
+                log.trace("Added Quote : {}", quote);
             }
         }
     }

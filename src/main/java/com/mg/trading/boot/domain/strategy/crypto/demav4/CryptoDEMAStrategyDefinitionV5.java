@@ -73,11 +73,12 @@ public class CryptoDEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
 
         Rule has5PercentLoss = trace(new StopLossRule(closePrice, 5), "Has -5%");
 
+        Rule priceCrossedDownDEMA = new CrossedDownIndicatorRule(closePrice, longIndicator);
         Rule exitRule = trace(
-                bollingerCrossUp                                      // 1. trend reversal signal, reached upper line, market will start selling
-                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierUnderPrice.negation())) // 2. confirmation
-                        .or(has5PercentLoss.and(superTrendSell).and(chandelierUnderPrice.negation())) // 3. position stop loss
-                        .or(stopTotalLossRule), Type.EXIT);           // 7. or reached day max loss percent for a given symbol
+                bollingerCrossUp
+                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierUnderPrice.negation().or(priceCrossedDownDEMA)))
+                        .or(has5PercentLoss.and(superTrendSell).and(chandelierUnderPrice.negation().or(priceCrossedDownDEMA)))
+                        .or(stopTotalLossRule), Type.EXIT);
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }
