@@ -59,7 +59,7 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         int stLength1 = params.getShortBarCount();
         int stLength2 = params.getShortBarCount() + 1;
-        int stLength3 = params.getShortBarCount() + 2;
+        int stLength3 = params.getShortBarCount() + 3;
 
         Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
         Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 1));
@@ -71,7 +71,11 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
 
-        Rule entryRule = trace(priceOverLongDEMA.and(superTrendUp1).and(superTrendUp2).and(superTrendUp3).and(marketHours)                         // 3. and enter only in marked hours
+        Rule entryRule = trace(priceOverLongDEMA
+                        .and(superTrendUp1)
+                        .and(superTrendUp2)
+                        .and(superTrendUp3)
+                        .and(marketHours)                         // 3. and enter only in marked hours
                         .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
                         .and(stopTotalLossRule.negation()),       // 5. and avoid entering again in a bearish stock
                 Type.ENTRY);
@@ -87,18 +91,19 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
 
         Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
 
-//        Rule has2PercentProfit = trace(new StopGainRule(closePrice, 2), "Has > 2%");
-        Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
-        Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
+        Rule has2PercentLoss = trace(new StopLossRule(closePrice, 5), "Gain -2%");
+        Rule gain1Percent = trace(new StopGainRule(closePrice, 1), "Gain > 1%");
+        Rule gain05Percent = trace(new StopGainRule(closePrice, 0.5), "Gain > 0.5%");
+        Rule loss3Percent = trace(new StopLossRule(closePrice, 3), "Loss -3%");
+        Rule anyGain = trace(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule exitRule = trace(
-                crossedDownDEMA.and(superTrendDown).and(chandelierOverPrice)
-//                        .or(has2PercentProfit)
+                superTrendDown.and(gain1Percent.or(loss3Percent))
                         .or(bollingerCrossUp)
-                        .or(market60MinLeft.and(has1PercentProfit))   // 4. or 60m to market close, take profits >= 1%
-                        .or(market30MinLeft.and(hasAnyProfit))        // 5. or 30m to market close, take any profits > 0%
+                        .or(market60MinLeft.and(gain1Percent))   // 4. or 60m to market close, take profits >= 1%
+                        .or(market30MinLeft.and(anyGain))        // 5. or 30m to market close, take any profits > 0%
                         .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss
                         .or(stopTotalLossRule),                       // 7. or reached day max loss percent for a given symbol
                 Type.EXIT);
