@@ -67,19 +67,13 @@ public class WPaperAccountProvider extends WAbstractAccountProvider implements A
     }
 
     private List<WOrder> getFilledOrdersHistory(Integer daysRange) {
-        Instant currentDate = Instant.now().truncatedTo(ChronoUnit.DAYS);
-        ZonedDateTime filterDate = currentDate.atZone(BarSeriesUtils.getDefaultZone()).minus(daysRange, ChronoUnit.DAYS);
+        ZonedDateTime date = Instant.now().atZone(BarSeriesUtils.getDefaultZone()).minus(daysRange, ChronoUnit.DAYS);
 
-        String url = WUrls.paperFilledOrders(accountId, filterDate);
+        String url = WUrls.paperFilledOrders(accountId, date);
         ParameterizedTypeReference<List<WOrder>> type = new ParameterizedTypeReference<List<WOrder>>() {
         };
 
         List<WOrder> response = (List<WOrder>) get(url, type).getBody();
-        //workaround: sometimes WB returns prev day orders
-        response = response.stream()
-                .filter(it -> Instant.ofEpochMilli(it.getFilledTime0()).isBefore(filterDate.toInstant()))
-                .collect(Collectors.toList());
-
         List<WOrder> wOrders = Optional.ofNullable(response).orElse(new ArrayList<>());
 
         return wOrders;

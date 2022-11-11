@@ -42,7 +42,6 @@ public class OrderManagementService implements QuoteChangeListener {
         Strategy strategy = strategyDef.getStrategy();
         if (strategy.shouldEnter(lastBarIdx, tradingRecord)) {
             BigDecimal shares = calculateOrderSizeInShares(strategyDef, lastBarIdx);
-            log.info("Should enter with {} shares.", shares);
 
             placeBuy(strategyDef, broker, shares);
 
@@ -64,7 +63,8 @@ public class OrderManagementService implements QuoteChangeListener {
         List<Position> positions = account.getOpenPositions(symbol);
 
         if (notEmpty(openOrders) || notEmpty(positions)) {
-            log.warn("Skipping BUY {}. There are open {} orders or {} positions.", symbol, openOrders.size(), positions.size());
+            log.warn("Skipping BUY {} of {} shares. There are open {} orders or {} positions.",
+                    symbol, quantity, openOrders.size(), positions.size());
             return;
         }
         place(strategyDef, broker, BUY, quantity);

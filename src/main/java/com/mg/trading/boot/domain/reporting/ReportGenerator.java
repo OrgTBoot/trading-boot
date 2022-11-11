@@ -1,6 +1,7 @@
 package com.mg.trading.boot.domain.reporting;
 
 import com.mg.trading.boot.domain.models.Order;
+import com.mg.trading.boot.domain.models.OrderAction;
 import com.mg.trading.boot.domain.models.TradingLog;
 import de.vandermeer.asciitable.AT_Row;
 import de.vandermeer.asciitable.AsciiTable;
@@ -89,6 +90,8 @@ public class ReportGenerator {
     public static List<Order> aggregateOrders(List<Order> orders) {
         List<Order> aggRecords = new ArrayList<>();
 
+        removeFirstIfSalle(orders);
+
         for (Order current : orders) {
             Order prev = CollectionUtils.isEmpty(aggRecords) ? null : aggRecords.get(aggRecords.size() - 1);
 
@@ -143,6 +146,13 @@ public class ReportGenerator {
             });
         }
         return tradingRecord;
+    }
+
+    private static void removeFirstIfSalle(List<Order> orders) {
+        if (!CollectionUtils.isEmpty(orders) && orders.get(0).getAction().equals(OrderAction.SELL)) {
+            orders.remove(0);
+            log.warn("Removed first order from the list since it is a SELL action.");
+        }
     }
 
 
