@@ -62,50 +62,43 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         int stLength3 = params.getShortBarCount() + 3;
 
         Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
-        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 1));
-        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 2));
-        Rule superTrendUp3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3));
+        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 1), "BUY1");
+        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 2), "BUY2");
+        Rule superTrendUp3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3), "BUY3");
+        Rule superTrendUp = trace(superTrendUp1.and(superTrendUp2).and(superTrendUp3), "All BUY");
 
         Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
-
         Rule entryRule = trace(priceOverLongDEMA
-                        .and(superTrendUp1)
-                        .and(superTrendUp2)
-                        .and(superTrendUp3)
+                        .and(superTrendUp)
                         .and(marketHours)                         // 3. and enter only in marked hours
                         .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
                         .and(stopTotalLossRule.negation()),       // 5. and avoid entering again in a bearish stock
                 Type.ENTRY);
 
-
         //EXIT RULES
-        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
-        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
         Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, 1), "SELL1");
         Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, 2), "SELL2");
         Rule superTrendDown3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.DOWN, 3), "SELL3");
-        Rule superTrendDown = superTrendDown1.and(superTrendDown2).and(superTrendDown3);
-
+        Rule superTrendDown = trace(superTrendDown1.and(superTrendDown2).and(superTrendDown3), "All SELL");
+        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule priceUnderLongDEMA = trace(new UnderIndicatorRule(closePrice, longIndicator), "DEMA over price");
         Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
 
-        Rule has2PercentLoss = trace(new StopLossRule(closePrice, 5), "Gain -2%");
         Rule gain1Percent = trace(new StopGainRule(closePrice, 1), "Gain > 1%");
-        Rule gain05Percent = trace(new StopGainRule(closePrice, 0.5), "Gain > 0.5%");
-        Rule loss2Percent = trace(new StopLossRule(closePrice, 2), "Loss -3%");
         Rule anyGain = trace(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule exitRule = trace(
-                superTrendDown.and(gain1Percent.or(loss2Percent))//todo: add one more indicator that can confirm sell moment
-                        .or(bollingerCrossUp)
-                        .or(market60MinLeft.and(gain1Percent))   // 4. or 60m to market close, take profits >= 1%
-                        .or(market30MinLeft.and(anyGain))        // 5. or 30m to market close, take any profits > 0%
-                        .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss
-                        .or(stopTotalLossRule),                       // 7. or reached day max loss percent for a given symbol
+                bollingerCrossUp.and(anyGain)                                                // indicates high probability of a trend reversal
+                        .or(superTrendDown.and(chandelierOverPrice).and(priceUnderLongDEMA)) // downtrend and price under long double moving average
+                        .or(superTrendDown.and(market60MinLeft).and(gain1Percent))           // or 60m to market close, trend is down, take profits >= 1%
+                        .or(market30MinLeft.and(anyGain))                                    // or 30m to market close, take any profits > 0%
+                        .or(market10MinLeft)                                                 // or 10m to market close, force close position even in loss
+                        .or(stopTotalLossRule),                                              // or reached day max loss percent for a given symbol
                 Type.EXIT);
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
