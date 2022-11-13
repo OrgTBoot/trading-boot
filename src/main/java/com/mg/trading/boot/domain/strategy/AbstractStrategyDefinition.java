@@ -42,9 +42,9 @@ public abstract class AbstractStrategyDefinition implements StrategyDefinition {
     @Override
     public BarSeries updateSeries(List<TickerQuote> quotes) {
         if (!CollectionUtils.isEmpty(quotes)) {
-            //there is a high possibility that the last quote is not a full bar, we always ignore it.
-            List<TickerQuote> fullQuotes = quotes.subList(0, quotes.size() - 1);
-            upsertSeries(fullQuotes);
+//            there is a high possibility that the last quote is not a full bar, we always ignore it.
+//            List<TickerQuote> fullQuotes = quotes.subList(0, quotes.size() - 1);
+            upsertSeries(quotes);
         }
 
         return series;
@@ -74,37 +74,52 @@ public abstract class AbstractStrategyDefinition implements StrategyDefinition {
     private void upsertSeries(List<TickerQuote> quotes) {
         Duration duration = getQuoteDuration(quotes);
         for (TickerQuote quote : quotes) {
+            Bar newBar = BarSeriesUtils.mapToBar(quote, duration);
 
             if (series.getBarCount() == 0) {
                 BarSeriesUtils.addBar(series, quote, duration);
 
-            } else if (shouldReplaceBar(series, quote)) {
-                BarSeriesUtils.addBar(series, quote, duration, Boolean.TRUE);
-                log.debug("Replaced Quote : {}", quote);
+            } else if (shouldReplaceBar(series, newBar)) {
+                series.addBar(newBar, true);
+                log.debug("Quote Replaced: {}", quote);
 
-            } else if (shouldAddBar(series, quote)) {
-                BarSeriesUtils.addBar(series, quote, duration);
-                log.trace("Added Quote : {}", quote);
+            } else if (shouldAddBar(series, newBar)) {
+                series.addBar(newBar);
+                log.debug("Quote Added: {}", quote);
             }
         }
     }
 
-    private boolean shouldReplaceBar(BarSeries series, TickerQuote quote) {
+    private boolean shouldReplaceBar(BarSeries series, Bar newBar) {
         Bar lastBar = series.getLastBar();
-        long latestBarTimeStamp = lastBar.getEndTime().toInstant().getEpochSecond();
-        boolean sameTimeStamp = quote.getTimeStamp().equals(latestBarTimeStamp);
-        boolean sameVolume = quote.getVolume().equals(lastBar.getVolume().longValue());
-        boolean sameClosePrice = quote.getClosePrice().doubleValue() == lastBar.getClosePrice().doubleValue();
+        boolean sameTimeStamp = newBar.getEndTime().isEqual(lastBar.getEndTime());
+        boolean sameVolume = newBar.getVolume().longValue() == lastBar.getVolume().longValue();
+        boolean sameClosePrice = newBar.getClosePrice().doubleValue() == lastBar.getClosePrice().doubleValue();
 
         return sameTimeStamp && (!sameVolume || !sameClosePrice);
     }
 
-    private boolean shouldAddBar(BarSeries series, TickerQuote quote) {
-        Bar lastBar = series.getLastBar();
-        long latestBarTimeStamp = lastBar.getEndTime().toInstant().getEpochSecond();
-//        boolean hasVolume = quote.getVolume() != 0;
+//    private boolean shouldReplaceBar(BarSeries series, TickerQuote quote) {
+//        Bar lastBar = series.getLastBar();
+//        long latestBarTimeStamp = lastBar.getEndTime().toInstant().getEpochSecond();
+//        boolean sameTimeStamp = quote.getTimeStamp().equals(latestBarTimeStamp);
+//        boolean sameVolume = quote.getVolume().equals(lastBar.getVolume().longValue());
+//        boolean sameClosePrice = quote.getClosePrice().doubleValue() == lastBar.getClosePrice().doubleValue();
+//
+//        return sameTimeStamp && (!sameVolume || !sameClosePrice);
+//    }
 
-//        return quote.getTimeStamp() > latestBarTimeStamp && hasVolume;
-        return quote.getTimeStamp() > latestBarTimeStamp;
+//    private boolean shouldAddBar(BarSeries series, TickerQuote quote) {
+//        Bar lastBar = series.getLastBar();
+//        long latestBarTimeStamp = lastBar.getEndTime().toInstant().getEpochSecond();
+////        boolean hasVolume = quote.getVolume() != 0;
+//
+////        return quote.getTimeStamp() > latestBarTimeStamp && hasVolume;
+//        return quote.getTimeStamp() > latestBarTimeStamp;
+//    }
+
+    private boolean shouldAddBar(BarSeries series, Bar newBar) {
+        Bar lastBar = series.getLastBar();
+        return newBar.getEndTime().isAfter(lastBar.getEndTime());
     }
 }

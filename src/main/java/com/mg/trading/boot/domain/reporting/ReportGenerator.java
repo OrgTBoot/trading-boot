@@ -70,7 +70,7 @@ public class ReportGenerator {
         table.addRule();
         table.addRow("SYMBOL", "METRIC SUMMARY", "VALUE").setTextAlignment(TextAlignment.CENTER);
         table.addRule();
-        table.addRow(symbol, "Total return", totalInPercent(statement) + "% | " + totalInDollars(statement) + "$");
+        table.addRow(symbol, "Total return per share", totalInDollars(statement) + "$ | " + totalInPercent(statement) + "%");
         table.addRule();
         table.addRow(symbol, "Winning positions ratio", winningRatio(statement));
         table.addRule();

@@ -66,7 +66,7 @@ public abstract class WAbstractAccountProvider extends AbstractRestProvider {
                 .timeInForce(mapWbOrderTimeInForce(wOrder.getTimeInForce()))
                 .status(mapWbOrderStatus(wStatus))
                 .filledTime(wOrder.getFilledTime0())
-                .placedTime(wOrder.getPlacedTime())
+                .placedTime(wOrder.getCreateTime0())
                 .lmtPrice(toBigDecimal(limitPrice))
                 .avgFilledPrice(avgFilledPrice)
                 .filledQuantity(toBigDecimal(wOrder.getFilledQuantity()))

@@ -5,14 +5,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.task.TaskSchedulerBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.UUID;
 
 import static com.mg.trading.boot.integrations.webull.WbAuthProvider.*;
 
@@ -21,6 +21,11 @@ public class BeanConfig {
     public final static String WEBULL_REST_TEMPLATE = "webull_rest_template";
     public final static String YAHOO_REST_TEMPLATE = "yahoo_rest_template";
     public final static String SERVICE_REST_TEMPLATE = "service_rest_template";
+
+    @Bean
+    public ThreadPoolTaskScheduler taskScheduler(TaskSchedulerBuilder builder) {
+        return builder.build();
+    }
 
     @Bean
     @Primary

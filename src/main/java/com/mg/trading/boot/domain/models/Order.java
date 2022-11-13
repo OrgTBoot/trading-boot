@@ -18,7 +18,7 @@ public class Order {
     private BigDecimal filledQuantity;
     private BigDecimal lmtPrice;
     private BigDecimal avgFilledPrice;
-    private String placedTime;
+    private Long placedTime;
     private Long filledTime;
     private OrderStatus status;
     private Ticker ticker;

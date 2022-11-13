@@ -1,10 +1,10 @@
-package com.mg.trading.boot.domain.strategy.dema7;
+package com.mg.trading.boot.domain.strategy.crypto.dema7;
 
 import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
 import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema5.DEMAParametersV5;
+import com.mg.trading.boot.domain.strategy.dema7.DEMAParametersV7;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
@@ -20,22 +20,18 @@ import java.util.concurrent.TimeUnit;
 import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
 
 
-/**
- * For more details see: <a href="https://www.youtube.com/watch?v=Jd1JVF7Oy_A">Double EMA Cross</a>
- * For more details see: <a href="https://www.youtube.com/watch?v=g-PLctW8aU0">Double EMA Cross + Fibonacci</a>
- */
 @Log4j2
-public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
+public class CryptoStrategyDefinitionV7 extends AbstractStrategyDefinition {
 
-    private final DEMAParametersV7 params = DEMAParametersV7.optimal();
+    private final CryptoParametersV7 params = CryptoParametersV7.optimal();
     private Strategy strategy;
 
-    public DEMAStrategyDefinitionV7(String symbol) {
-        super(symbol, "DEMAV7");
+    public CryptoStrategyDefinitionV7(String symbol) {
+        super(symbol, "CRYPTO_V7");
     }
 
     @Override
-    public DEMAParametersV7 getParams() {
+    public CryptoParametersV7 getParams() {
         return params;
     }
 
@@ -66,8 +62,6 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 2));
         Rule superTrendUp3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3));
 
-        Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
-        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
 
@@ -75,8 +69,6 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
                         .and(superTrendUp1)
                         .and(superTrendUp2)
                         .and(superTrendUp3)
-                        .and(marketHours)                         // 3. and enter only in marked hours
-                        .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
                         .and(stopTotalLossRule.negation()),       // 5. and avoid entering again in a bearish stock
                 Type.ENTRY);
 
@@ -91,20 +83,12 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
 
         Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
 
-        Rule has2PercentLoss = trace(new StopLossRule(closePrice, 5), "Gain -2%");
         Rule gain1Percent = trace(new StopGainRule(closePrice, 1), "Gain > 1%");
-        Rule gain05Percent = trace(new StopGainRule(closePrice, 0.5), "Gain > 0.5%");
         Rule loss2Percent = trace(new StopLossRule(closePrice, 2), "Loss -3%");
-        Rule anyGain = trace(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
-        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
-        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule exitRule = trace(
-                superTrendDown.and(gain1Percent.or(loss2Percent))//todo: add one more indicator that can confirm sell moment
+                superTrendDown.and(gain1Percent.or(loss2Percent))
                         .or(bollingerCrossUp)
-                        .or(market60MinLeft.and(gain1Percent))   // 4. or 60m to market close, take profits >= 1%
-                        .or(market30MinLeft.and(anyGain))        // 5. or 30m to market close, take any profits > 0%
-                        .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss
                         .or(stopTotalLossRule),                       // 7. or reached day max loss percent for a given symbol
                 Type.EXIT);
 

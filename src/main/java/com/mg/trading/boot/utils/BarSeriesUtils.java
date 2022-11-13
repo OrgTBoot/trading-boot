@@ -46,7 +46,7 @@ public class BarSeriesUtils {
     }
 
     public static ZoneId getDefaultZone() {
-        //todo: find a way to calculate time zone
+        //todo: find a way to calculate time zones
         return ZoneId.of("America/New_York");
     }
 

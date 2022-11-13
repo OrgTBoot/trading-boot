@@ -6,7 +6,6 @@ import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.integrations.AccountProvider;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.utils.NumberUtils;
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static com.mg.trading.boot.domain.models.OrderAction.BUY;
-import static com.mg.trading.boot.domain.models.OrderAction.SELL;
-import static org.springframework.beans.factory.config.ConfigurableBeanFactory.*;
+import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
 @Log4j2
 @Service
@@ -55,7 +53,8 @@ public class OrderManagementService implements QuoteChangeListener {
         AccountProvider account = broker.account();
 
         if (quantity.compareTo(BigDecimal.ZERO) <= 0) {
-            log.warn("Skipping BUY {}. Calculated position size should be >= 1. Received {}", symbol, quantity);
+            log.warn("Skipping BUY {}. Calculated position size should be >= 1. Received {}. "
+                    + "Not enough money in account?!", symbol, quantity);
             return;
         }
 
@@ -73,40 +72,15 @@ public class OrderManagementService implements QuoteChangeListener {
     private void placeSell(StrategyDefinition strategyDef, BrokerProvider broker) {
         String symbol = strategyDef.getSymbol();
         AccountProvider account = broker.account();
-        List<Order> currentOrders = account.getOpenOrders(symbol);
+        List<Order> openOrders = account.getOpenOrders(symbol);
 
-        List<Order> buyOrders = filter(currentOrders, BUY);
-        if (notEmpty(buyOrders)) {
-            log.warn("SELL {} received but there are {} BUY orders, canceling them...", symbol, buyOrders.size());
-            buyOrders.forEach(order -> cancelOrder(account, order));
+        if (notEmpty(openOrders)) {
+            log.warn("Skipping {} SELL. There are {} open orders.", symbol, openOrders.size());
+            return;
         }
 
-        List<Order> sellOrders = filter(currentOrders, SELL);
-        if (notEmpty(sellOrders)) { //update sell orders with the current market price
-            sellOrders.forEach(order -> updateOrderLimitPrice(account, strategyDef, order));
-
-        } else { // submit sell orders
-            List<Position> positions = account.getOpenPositions(symbol);
-            positions.forEach(position -> place(strategyDef, broker, OrderAction.SELL, position.getQuantity()));
-        }
-    }
-
-    private void updateOrderLimitPrice(AccountProvider account, StrategyDefinition strategyDef, Order order) {
-        Bar endBar = strategyDef.getSeries().getLastBar();
-
-        OrderRequest orderRequest = OrderRequest.builder()
-                .orderId(order.getId())
-                .symbol(order.getTicker().getSymbol())
-                .action(order.getAction())
-                .orderType(OrderType.LIMIT)
-                .timeInForce(OrderTimeInForce.GTC)
-                .quantity(order.getTotalQuantity())
-                .lmtPrice(BigDecimal.valueOf(endBar.getClosePrice().doubleValue()))
-                .build();
-
-        log.info("Updating {} {} order {} -> {}.", orderRequest.getAction(), orderRequest.getSymbol(), order.getLmtPrice(), orderRequest.getLmtPrice());
-
-        account.updateOrder(orderRequest);
+        List<Position> positions = account.getOpenPositions(symbol);
+        positions.forEach(position -> place(strategyDef, broker, OrderAction.SELL, position.getQuantity()));
     }
 
     private void place(StrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
@@ -147,22 +121,6 @@ public class OrderManagementService implements QuoteChangeListener {
     }
 
 
-    @SneakyThrows
-    private void cancelOrder(AccountProvider account, Order order) {
-        account.cancelOrder(order.getId());
-
-        for (int i = 0; i <= 60; i++) {
-            List<Order> openOrders = account.getOpenOrders(order.getTicker().getSymbol());
-            if (!containsOrder(openOrders, order)) {
-                log.debug("Order {} {} cancellation confirmed.", order.getAction(), order.getTicker().getSymbol());
-                return;
-            }
-            Thread.sleep(1000);
-            log.debug("Waiting for order {} {} cancellation.", order.getAction(), order.getTicker().getSymbol());
-        }
-        log.error("Failed to cancel {} {} order.", order.getAction(), order.getTicker().getSymbol());
-    }
-
     private boolean notEmpty(List<?> list) {
         return !CollectionUtils.isEmpty(list);
     }
@@ -171,9 +129,6 @@ public class OrderManagementService implements QuoteChangeListener {
         return orders.stream().filter(it -> action.equals(it.getAction())).collect(Collectors.toList());
     }
 
-    private boolean containsOrder(List<Order> orders, Order order) {
-        return orders.stream().anyMatch(it -> it.getId().equalsIgnoreCase(order.getId()));
-    }
 
     private BigDecimal calculateOrderSizeInShares(StrategyDefinition strategyDef, int barIdx) {
         Bar bar = strategyDef.getSeries().getBar(barIdx);

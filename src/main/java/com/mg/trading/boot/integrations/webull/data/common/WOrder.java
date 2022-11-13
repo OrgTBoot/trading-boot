@@ -14,11 +14,11 @@ public class WOrder {
     private WOrderAction action;
     private String totalQuantity;
     private String filledQuantity;
-    private String placedTime;
     private WOrderTimeInForce timeInForce;
     private WOrderType orderType;
     private String lmtPrice;
     private String avgFilledPrice;
+    private String placedTime;
     private Long createTime0;
     private Long filledTime0;
     private String filledTime;

@@ -1,6 +1,5 @@
 package com.mg.trading.boot.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.domain.exceptions.ValidationException;
 import com.mg.trading.boot.domain.executors.StrategyExecutor;
@@ -10,6 +9,7 @@ import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.Parameters;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
+import com.mg.trading.boot.domain.strategy.crypto.dema7.CryptoStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.crypto.demav4.CryptoDEMAStrategyDefinitionV5;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
@@ -35,11 +35,9 @@ import org.ta4j.core.BarSeriesManager;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.num.DecimalNum;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
-import static com.mg.trading.boot.utils.NumberUtils.toDecimalNum;
 import static org.ta4j.core.Trade.TradeType.BUY;
 
 @Log4j2
@@ -163,8 +161,10 @@ public class GQLController {
                 return new DEMAStrategyDefinitionV6(symbol);
             case DEMA_V7:
                 return new DEMAStrategyDefinitionV7(symbol);
-            case CRYPTO_DEMA_V5:
+            case CRYPTO_V5:
                 return new CryptoDEMAStrategyDefinitionV5(symbol);
+            case CRYPTO_V7:
+                return new CryptoStrategyDefinitionV7(symbol);
             default:
                 throw new ValidationException("Strategy not supported");
         }
