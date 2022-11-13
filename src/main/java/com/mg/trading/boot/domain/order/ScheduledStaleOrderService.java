@@ -22,7 +22,7 @@ public class ScheduledStaleOrderService {
     private final BrokerProvider broker;
     private final Long orderTimeToLiveSec;
 
-    public ScheduledStaleOrderService(final BrokerProvider broker, final @Value("${account.order-time-to-live-sec}") Long orderTimeToLiveSec) {
+    public ScheduledStaleOrderService(final BrokerProvider broker, final @Value("${account.order.stale-ttl-sec}") Long orderTimeToLiveSec) {
         this.broker = broker;
         this.orderTimeToLiveSec = orderTimeToLiveSec;
     }

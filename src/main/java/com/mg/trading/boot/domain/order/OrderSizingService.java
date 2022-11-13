@@ -19,11 +19,11 @@ import java.math.RoundingMode;
 @Service
 public class OrderSizingService {
     private final BigDecimal hundredPercent = BigDecimal.valueOf(100);
-    private final BigDecimal positionSizePercent;
+    private final BigDecimal orderSizePercent;
     private final BrokerProvider broker;
 
-    public OrderSizingService(@Value("${account.position-size-percent}") final BigDecimal positionSizePercent, final BrokerProvider broker) {
-        this.positionSizePercent = positionSizePercent;
+    public OrderSizingService(@Value("${account.order.size-percent}") final BigDecimal orderSizePercent, final BrokerProvider broker) {
+        this.orderSizePercent = orderSizePercent;
         this.broker = broker;
     }
 
@@ -53,6 +53,6 @@ public class OrderSizingService {
      */
     private BigDecimal getAccountAmountToRisk() {
         BigDecimal buyingPower = this.broker.account().getAccount().getBuyingPower();
-        return positionSizePercent.multiply(buyingPower).divide(hundredPercent, RoundingMode.CEILING);
+        return orderSizePercent.multiply(buyingPower).divide(hundredPercent, RoundingMode.CEILING);
     }
 }
