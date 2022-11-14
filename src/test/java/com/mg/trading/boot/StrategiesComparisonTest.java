@@ -11,6 +11,7 @@ import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
 import com.mg.trading.boot.domain.strategy.dema5.DEMAStrategyDefinitionV5;
 import com.mg.trading.boot.domain.strategy.dema6.DEMAStrategyDefinitionV6;
 import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
+import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import de.vandermeer.asciitable.AsciiTable;
@@ -43,7 +44,7 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_08_2022");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_03_2022");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
         List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 
@@ -108,6 +109,14 @@ public class StrategiesComparisonTest {
             statementsDEMAv7.add(demaV7);
         });
         reportToTable("DEMAv7", statementsDEMAv7, table);
+
+
+        List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
+            statementsDEMAv8.add(demaV8);
+        });
+        reportToTable("DEMAv8", statementsDEMAv8, table);
 
 
         print(table);
