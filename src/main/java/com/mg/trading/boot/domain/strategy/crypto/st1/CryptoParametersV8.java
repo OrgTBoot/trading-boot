@@ -1,8 +1,9 @@
-package com.mg.trading.boot.domain.strategy.crypto.demav4;
+package com.mg.trading.boot.domain.strategy.crypto.st1;
 
 import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
 import com.mg.trading.boot.domain.strategy.AbstractParameters;
+import com.mg.trading.boot.domain.strategy.dema8.DEMAParametersV8;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,22 +16,24 @@ import java.math.BigDecimal;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class CryptoDEMAParametersV4 extends AbstractParameters {
+public class CryptoParametersV8 extends AbstractParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
     private BigDecimal bollingerMultiplier;
+    private Integer bollingerBarCount;
     private Integer chandelierBarCount;
 
-    public static CryptoDEMAParametersV4 optimal() {
-        return CryptoDEMAParametersV4.builder()
+    public static CryptoParametersV8 optimal() {
+        return CryptoParametersV8.builder()
                 .totalLossThresholdPercent(BigDecimal.TEN)
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
                 .quotesPullFrequencyInSec(5)
                 .longBarCount(60)
                 .shortBarCount(10)
-                .bollingerMultiplier(BigDecimal.valueOf(3))
-                .chandelierBarCount(5)
+                .bollingerBarCount(60)
+                .bollingerMultiplier(BigDecimal.valueOf(3.5))
+                .chandelierBarCount(3)
                 .build();
     }
 }

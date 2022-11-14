@@ -17,6 +17,7 @@ import com.mg.trading.boot.tbd.TestDataProvider;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
+import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Before;
 import org.junit.Test;
@@ -26,7 +27,10 @@ import org.ta4j.core.TradingRecord;
 import org.ta4j.core.reports.TradingStatement;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Function;
 
@@ -44,9 +48,8 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_03_2022");
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_08_2022");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 
         AsciiTable table = new AsciiTable();
 
@@ -136,17 +139,33 @@ public class StrategiesComparisonTest {
     }
 
     private static void reportToTable(String name, List<TradingStatement> statements, AsciiTable table) {
+        DecimalFormat df = new DecimalFormat("0.000");
         Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
         Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
         Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();
         Function<List<TradingStatement>, Double> total = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
 
+        //from all traded symbols - get min, max, avg. This is useful when comparing with other strategies to identify the extremes.
+        Function<List<TradingStatement>, Double> maxGain = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).max().getAsDouble();
+        Function<List<TradingStatement>, Double> minGain = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).min().getAsDouble();
+        Function<List<TradingStatement>, Double> avgGain = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).average().getAsDouble();
+
+        Double winningRatio = winning.apply(statements) / total.apply(statements);
+
+
         if (table.getColNumber() == 0) {
             table.addRule();
-            table.addRow("STRATEGY", "DATA SETS", "GAIN %", "POSITIONS", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "GAIN %", "MAX GAIN %", "MIN GAIN %", "AVG GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
             table.addRule();
         }
-        table.addRow(name, statements.size(), percent.apply(statements) + "%", positions.apply(statements), winning.apply(statements) / total.apply(statements));
+        table.addRow(name,
+                statements.size(),
+                positions.apply(statements),
+                df.format(percent.apply(statements)) + "%",
+                df.format(maxGain.apply(statements)) + "%",
+                df.format(minGain.apply(statements)) + "%",
+                df.format(avgGain.apply(statements)) + "%",
+                df.format(winningRatio));
         table.addRule();
         table.getRenderer().setCWC(new CWC_LongestLine());
     }
