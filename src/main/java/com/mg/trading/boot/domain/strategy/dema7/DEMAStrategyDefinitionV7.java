@@ -67,7 +67,7 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         Rule superTrendUp3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3), "BUY3");
         Rule superTrendUp = trace(superTrendUp1.and(superTrendUp2).and(superTrendUp3), "All BUY");
 
-        Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
+        Rule marketHours = trace(new MarketHoursRule(series));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 

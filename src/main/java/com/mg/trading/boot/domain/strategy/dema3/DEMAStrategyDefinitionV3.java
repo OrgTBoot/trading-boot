@@ -57,7 +57,7 @@ public class DEMAStrategyDefinitionV3 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
         //ENTRY RULES
-        Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
+        Rule marketHours = trace(new MarketHoursRule(series));
         Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         Rule chandelierUnderPrice = trace(new UnderIndicatorRule(chandLong, closePrice));
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));

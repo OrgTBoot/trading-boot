@@ -48,8 +48,8 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_14_2022");
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_14_2022");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
@@ -156,15 +156,15 @@ public class StrategiesComparisonTest {
 
         if (table.getColNumber() == 0) {
             table.addRule();
-            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN GAIN %", "AVG GAIN %", "MAX GAIN %", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN GAIN %", "MAX GAIN %","AVG GAIN %", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
             table.addRule();
         }
         table.addRow(name,
                 statements.size(),
                 positions.apply(statements),
                 df.format(minGain.apply(statements)) + "%",
-                df.format(avgGain.apply(statements)) + "%",
                 df.format(maxGain.apply(statements)) + "%",
+                df.format(avgGain.apply(statements)) + "%",
                 df.format(percent.apply(statements)) + "%",
                 df.format(winningRatio));
         table.addRule();

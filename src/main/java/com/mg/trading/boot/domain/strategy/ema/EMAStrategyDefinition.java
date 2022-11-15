@@ -58,7 +58,7 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         //entry
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
         Rule crossedUpEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
-        Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
+        Rule marketHours = trace(new MarketHoursRule(series));
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES));
 

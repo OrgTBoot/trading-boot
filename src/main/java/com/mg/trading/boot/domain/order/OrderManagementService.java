@@ -62,7 +62,7 @@ public class OrderManagementService implements QuoteChangeListener {
         List<Position> positions = account.getOpenPositions(symbol);
 
         if (notEmpty(openOrders) || notEmpty(positions)) {
-            log.warn("Skipping BUY {} of {} shares. There are open {} orders or {} positions.",
+            log.debug("Skipping BUY {} of {} shares. There are open {} orders or {} positions.",
                     symbol, quantity, openOrders.size(), positions.size());
             return;
         }
