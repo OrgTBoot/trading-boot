@@ -4,7 +4,6 @@ import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
 import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema7.DEMAParametersV7;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
@@ -15,7 +14,6 @@ import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.rules.*;
 
-import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
@@ -80,22 +78,24 @@ public class DEMAStrategyDefinitionV8 extends AbstractStrategyDefinition {
         Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, stMultiplier1), "SELL1");
         Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, stMultiplier2), "SELL2");
         Rule superTrendDown = trace(superTrendDown1.and(superTrendDown2), "All SELL");
-        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule priceReachedBollingerUpper = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
         Rule priceUnderLongDEMA = trace(new UnderIndicatorRule(closePrice, longIndicator), "DEMA over price");
         Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
 
         Rule gain1Percent = trace(new StopGainRule(closePrice, 1), "Gain > 1%");
         Rule anyGain = trace(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
+        Rule loss5Percent = trace(new StopLossRule(closePrice, 5), "Loss 5%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule exitRule = trace(
-                bollingerCrossUp                                                             // indicates high probability of a trend reversal
-                        .or(superTrendDown.and(chandelierOverPrice.and(priceUnderLongDEMA))) // downtrend and price under long double moving average
-                        .or(superTrendDown.and(market60MinLeft.and(gain1Percent)))           // or 60m to market close, trend is down, take profits >= 1%
+                priceReachedBollingerUpper                                                   // indicates high probability of a trend reversal
+                        .or(superTrendDown.and(chandelierOverPrice.and(priceUnderLongDEMA))) // or downtrend and price under long double moving average
+                        .or(superTrendDown.and(priceUnderLongDEMA.and(loss5Percent)))        // or downtrend and lost 5 percent (ref: CVNA_loss_tolerance.json)
+                        .or(superTrendDown.and(market60MinLeft.and(gain1Percent)))           // or downtrend and 60m to market close, take profits >= 1%
                         .or(market30MinLeft.and(anyGain))                                    // or 30m to market close, take any profits > 0%
                         .or(market10MinLeft)                                                 // or 10m to market close, force close position even in loss
-                        .or(stopTotalPercentLoss),                                           // or reached day max loss percent for a given symbol
+                        .or(stopTotalPercentLoss),                                           // or reached day max loss percent (ref: SYTA_loss_tolerance.json)
                 Type.EXIT);
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);

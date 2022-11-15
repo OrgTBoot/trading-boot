@@ -54,7 +54,7 @@ public class IndicatorsToChart {
         panel.setMouseWheelEnabled(true);
         panel.setPreferredSize(new java.awt.Dimension(500, 270));
         // Application frame
-        ApplicationFrame frame = new ApplicationFrame("Ta4j example - Indicators to chart");
+        ApplicationFrame frame = new ApplicationFrame("Indicators to chart");
         frame.setContentPane(panel);
         frame.pack();
         RefineryUtilities.centerFrameOnScreen(frame);
@@ -62,11 +62,10 @@ public class IndicatorsToChart {
     }
 
     public static void main(String[] args) {
-        String fileName = "tmp/TQQQ.json";
+        String fileName = "tmp/CVNA_loss_tolerance.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
         SuperTrend superTrend1 = new SuperTrend(series, 10,3);
-        SuperTrend superTrend2 = new SuperTrend(series, 9,2);
-        SuperTrend superTrend3 = new SuperTrend(series, 8,1);
+        SuperTrend superTrend2 = new SuperTrend(series, 20,6);
 //
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, 60);
@@ -78,9 +77,7 @@ public class IndicatorsToChart {
         dataset.addSeries(buildChartBarSeries(series, closePrice, fileName));
         dataset.addSeries(buildChartBarSeries(series, superTrend1, "ST1"));
         dataset.addSeries(buildChartBarSeries(series, superTrend2, "ST2"));
-        dataset.addSeries(buildChartBarSeries(series, superTrend3, "ST3"));
-//        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA 60"));
-//        dataset.addSeries(buildChartBarSeries(series, shortIndicator, "DEMA 10"));
+        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA 60"));
 //        dataset.addSeries(buildChartBarSeries(series, chandelierLong, "Chand"));
 
         JFreeChart chart = ChartFactory.createTimeSeriesChart(fileName, // title

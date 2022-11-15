@@ -48,8 +48,8 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_14_2022");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_14_2022");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
