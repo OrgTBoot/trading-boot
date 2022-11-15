@@ -48,72 +48,72 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_08_2022");
         List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_14_2022");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
 
-//        List<TradingStatement> statementsEMA = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
-//            statementsEMA.add(ema);
-//        });
-//        reportToTable("EMA", statementsEMA, table);
-//
-//
-//        List<TradingStatement> statementsDEMA = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
-//            statementsDEMA.add(dema);
-//        });
-//        reportToTable("DEMA", statementsDEMA, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
-//            statementsDEMAv2.add(demaV2);
-//        });
-//        reportToTable("DEMAv2", statementsDEMAv2, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
-//            statementsDEMAv3.add(demaV3);
-//        });
-//        reportToTable("DEMAv3", statementsDEMAv3, table);
-//
-//        List<TradingStatement> statementsDEMAv4 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
-//            statementsDEMAv4.add(demaV4);
-//        });
-//        reportToTable("DEMAv4", statementsDEMAv4, table);
+        List<TradingStatement> statementsEMA = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
+            statementsEMA.add(ema);
+        });
+        reportToTable("EMA", statementsEMA, table);
 
-//        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
-//            statementsDEMAv5.add(demaV5);
-//        });
-//        reportToTable("DEMAv5", statementsDEMAv5, table);
 
-//        List<TradingStatement> statementsDEMAv6 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
-//            statementsDEMAv6.add(demaV6);
-//        });
-//        reportToTable("DEMAv6", statementsDEMAv6, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv7 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV7 = testStrategy(s, new DEMAStrategyDefinitionV7(s.getName()));
-//            statementsDEMAv7.add(demaV7);
-//        });
-//        reportToTable("DEMAv7", statementsDEMAv7, table);
-//
+        List<TradingStatement> statementsDEMA = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
+            statementsDEMA.add(dema);
+        });
+        reportToTable("DEMA", statementsDEMA, table);
+
+
+        List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
+            statementsDEMAv2.add(demaV2);
+        });
+        reportToTable("DEMAv2", statementsDEMAv2, table);
+
+
+        List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
+            statementsDEMAv3.add(demaV3);
+        });
+        reportToTable("DEMAv3", statementsDEMAv3, table);
+
+        List<TradingStatement> statementsDEMAv4 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
+            statementsDEMAv4.add(demaV4);
+        });
+        reportToTable("DEMAv4", statementsDEMAv4, table);
+
+        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
+            statementsDEMAv5.add(demaV5);
+        });
+        reportToTable("DEMAv5", statementsDEMAv5, table);
+
+        List<TradingStatement> statementsDEMAv6 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
+            statementsDEMAv6.add(demaV6);
+        });
+        reportToTable("DEMAv6", statementsDEMAv6, table);
+
+
+        List<TradingStatement> statementsDEMAv7 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV7 = testStrategy(s, new DEMAStrategyDefinitionV7(s.getName()));
+            statementsDEMAv7.add(demaV7);
+        });
+        reportToTable("DEMAv7", statementsDEMAv7, table);
+
 
         List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
         quoteFiles.forEach(s -> {
@@ -156,16 +156,16 @@ public class StrategiesComparisonTest {
 
         if (table.getColNumber() == 0) {
             table.addRule();
-            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "GAIN %", "MAX GAIN %", "MIN GAIN %", "AVG GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN GAIN %", "AVG GAIN %", "MAX GAIN %", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
             table.addRule();
         }
         table.addRow(name,
                 statements.size(),
                 positions.apply(statements),
-                df.format(percent.apply(statements)) + "%",
-                df.format(maxGain.apply(statements)) + "%",
                 df.format(minGain.apply(statements)) + "%",
                 df.format(avgGain.apply(statements)) + "%",
+                df.format(maxGain.apply(statements)) + "%",
+                df.format(percent.apply(statements)) + "%",
                 df.format(winningRatio));
         table.addRule();
         table.getRenderer().setCWC(new CWC_LongestLine());
