@@ -36,7 +36,6 @@ public class StrategyExecutorService implements StrategyExecutor {
 
         Integer pullFrequency = strategyDef.getParams().getQuotesPullFrequencyInSec();
         log.info("Starting strategy {}...", strategyDef.getStrategy().getName());
-        log.info("\tParameters: {}", strategyDef.getParams());
         log.info("\tRange     : {}", strategyDef.getParams().getQuotesRange());
         log.info("\tInterval  : {}", strategyDef.getParams().getQuotesInterval());
         log.info("\tPull freq : {}", pullFrequency);
