@@ -58,8 +58,8 @@ public class CryptoStrategyDefinitionV8 extends AbstractStrategyDefinition {
         int stLength1 = params.getShortBarCount();
         int stLength2 = params.getShortBarCount() * 2;
 
-        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 3), "BUY1");
-        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 5), "BUY2");
+        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 3D), "BUY1");
+        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 5D), "BUY2");
         Rule superTrendUp = trace(superTrendUp1.and(superTrendUp2), "All BUY");
 
         Rule marketHours = trace(new MarketHoursRule(series).or(new MarketPreHoursRule(series)));
@@ -71,8 +71,8 @@ public class CryptoStrategyDefinitionV8 extends AbstractStrategyDefinition {
                 Type.ENTRY);
 
         //EXIT RULES
-        Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, 3), "SELL1");
-        Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, 5), "SELL2");
+        Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, 3D), "SELL1");
+        Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, 5D), "SELL2");
         Rule superTrendDown = trace(superTrendDown1.and(superTrendDown2), "All SELL");
         Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
         Rule priceUnderLongDEMA = trace(new UnderIndicatorRule(closePrice, longIndicator), "DEMA over price");

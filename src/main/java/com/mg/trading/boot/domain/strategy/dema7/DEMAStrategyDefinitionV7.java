@@ -62,9 +62,9 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         int stLength3 = params.getShortBarCount() + 3;
 
         Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
-        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 1), "BUY1");
-        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 2), "BUY2");
-        Rule superTrendUp3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3), "BUY3");
+        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, 1D), "BUY1");
+        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, 2D), "BUY2");
+        Rule superTrendUp3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3D), "BUY3");
         Rule superTrendUp = trace(superTrendUp1.and(superTrendUp2).and(superTrendUp3), "All BUY");
 
         Rule marketHours = trace(new MarketHoursRule(series));
@@ -79,9 +79,9 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
                 Type.ENTRY);
 
         //EXIT RULES
-        Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, 1), "SELL1");
-        Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, 2), "SELL2");
-        Rule superTrendDown3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.DOWN, 3), "SELL3");
+        Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, 1D), "SELL1");
+        Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, 2D), "SELL2");
+        Rule superTrendDown3 = trace(new SuperTrendTrendRule(series, stLength3, Trend.DOWN, 3D), "SELL3");
         Rule superTrendDown = trace(superTrendDown1.and(superTrendDown2).and(superTrendDown3), "All SELL");
         Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
         Rule priceUnderLongDEMA = trace(new UnderIndicatorRule(closePrice, longIndicator), "DEMA over price");

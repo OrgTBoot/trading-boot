@@ -20,10 +20,10 @@ public class SuperTrendRule extends AbstractRule implements Rule {
     public SuperTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend, Signal expectedSignal) {
         this.expectedTrend = expectedTrend;
         this.expectedSignal = expectedSignal;
-        this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, 3);
+        this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, 3D);
     }
 
-    public SuperTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend, Signal expectedSignal, Integer multiplier) {
+    public SuperTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend, Signal expectedSignal, Double multiplier) {
         this.expectedTrend = expectedTrend;
         this.expectedSignal = expectedSignal;
         this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, multiplier);

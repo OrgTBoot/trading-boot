@@ -18,11 +18,11 @@ public class SuperTrendTrendRule extends AbstractRule implements Rule {
 
     public SuperTrendTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend) {
         this.expectedTrend = expectedTrend;
-        this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, 3);
+        this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, 3D);
     }
 
 
-    public SuperTrendTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend, Integer multiplier) {
+    public SuperTrendTrendRule(BarSeries series, Integer barsCount, Trend expectedTrend, Double multiplier) {
         this.expectedTrend = expectedTrend;
         this.indicator = new SuperTrendWithTrendAndSignal(series, barsCount, multiplier);
     }

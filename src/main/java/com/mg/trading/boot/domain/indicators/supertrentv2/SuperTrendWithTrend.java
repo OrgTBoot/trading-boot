@@ -6,7 +6,7 @@ import org.ta4j.core.BarSeries;
 import org.ta4j.core.num.Num;
 
 public class SuperTrendWithTrend extends AbstractSuperTrend<Pair<Trend, Num>> {
-    public SuperTrendWithTrend(BarSeries series, int barCount, int multiplier) {
+    public SuperTrendWithTrend(BarSeries series, int barCount, Double multiplier) {
         super(series, barCount, multiplier);
     }
 

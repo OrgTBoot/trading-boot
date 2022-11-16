@@ -58,7 +58,7 @@ public class DEMAStrategyDefinitionV6 extends AbstractStrategyDefinition {
 
         //ENTRY RULES
         Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
-        Rule superTrendBuy = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP, 3), "BUY");
+        Rule superTrendBuy = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP, 3D), "BUY");
         Rule marketHours = trace(new MarketHoursRule(series));
         Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
         Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
@@ -74,7 +74,7 @@ public class DEMAStrategyDefinitionV6 extends AbstractStrategyDefinition {
         //EXIT RULES
         Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
         Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
-        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN, 3), "SELL");
+        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN, 3D), "SELL");
         Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
 
         Rule has2PercentLoss = trace(new StopLossRule(closePrice, 2), "Has -2%");

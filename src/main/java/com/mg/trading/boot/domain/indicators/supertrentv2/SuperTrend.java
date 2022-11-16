@@ -5,7 +5,7 @@ import org.ta4j.core.num.Num;
 
 public class SuperTrend extends AbstractSuperTrend<Num> {
 
-    public SuperTrend(BarSeries series, int barCount, int multiplier) {
+    public SuperTrend(BarSeries series, int barCount, Double multiplier) {
         super(series, barCount, multiplier);
     }
 

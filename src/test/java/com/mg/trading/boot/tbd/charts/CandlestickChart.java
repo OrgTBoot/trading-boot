@@ -142,7 +142,7 @@ public class CandlestickChart {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, 60);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, 10);
-        SuperTrend superTrend = new SuperTrend(series, 10,3);
+        SuperTrend superTrend = new SuperTrend(series, 10,3D);
 
         OHLCDataset ohlcDataset = createOHLCDataset(series);
         TimeSeriesCollection dataset = new TimeSeriesCollection();

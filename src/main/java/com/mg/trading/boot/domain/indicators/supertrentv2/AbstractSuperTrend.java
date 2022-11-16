@@ -56,7 +56,7 @@ public abstract class AbstractSuperTrend<T> extends AbstractIndicator<T> {
     private final Map<Integer, Pair<Num, Num>> prevUpper;
     private final Map<Integer, Pair<Trend, Num>> prevTrend;
 
-    protected AbstractSuperTrend(BarSeries series, int barCount, int multiplier) {
+    protected AbstractSuperTrend(BarSeries series, int barCount, Double multiplier) {
         super(series);
         this.barCount = barCount;
         this.barCountNum = this.numOf(barCount);

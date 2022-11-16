@@ -57,8 +57,8 @@ public class DEMAStrategyDefinitionV8 extends AbstractStrategyDefinition {
         Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         int stLength1 = params.getShortBarCount();
         int stLength2 = params.getShortBarCount() * 2;
-        int stMultiplier1 = 3;
-        int stMultiplier2 = 6;
+        Double stMultiplier1 = 3D;
+        Double stMultiplier2 = 6D;
 
         Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, stMultiplier1), "BUY1");
         Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, stMultiplier2), "BUY2");

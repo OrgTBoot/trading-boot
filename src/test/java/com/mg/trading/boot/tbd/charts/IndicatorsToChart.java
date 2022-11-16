@@ -64,8 +64,8 @@ public class IndicatorsToChart {
     public static void main(String[] args) {
         String fileName = "tmp/CVNA_loss_tolerance.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
-        SuperTrend superTrend1 = new SuperTrend(series, 10,3);
-        SuperTrend superTrend2 = new SuperTrend(series, 20,6);
+        SuperTrend superTrend1 = new SuperTrend(series, 10,3D);
+        SuperTrend superTrend2 = new SuperTrend(series, 20,6D);
 //
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, 60);
