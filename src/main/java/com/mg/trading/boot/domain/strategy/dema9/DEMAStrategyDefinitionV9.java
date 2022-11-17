@@ -76,7 +76,6 @@ public class DEMAStrategyDefinitionV9 extends AbstractStrategyDefinition {
         Rule zlEmaOverPrice = trace(new OverIndicatorRule(zlemaIndicator, closePrice));
 
         Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
-        Rule has5PercentLoss = trace(new StopLossRule(closePrice, 5), "Loss 5%");
         Rule has1PercentGain = trace(new StopGainRule(closePrice, 1), "Has > 1%");
         Rule hasAnyGain = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
         Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");

@@ -6,14 +6,16 @@ import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.order.QuoteChangeListener;
 import com.mg.trading.boot.integrations.BrokerProvider;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Log4j2
 public class QuoteExtractorTask implements Runnable {
     private final BrokerProvider broker;
     private final StrategyDefinition strategyDef;
-    private List<QuoteChangeListener> subscribers;
+    private final List<QuoteChangeListener> subscribers;
 
     public QuoteExtractorTask(final StrategyDefinition strategyDef, final BrokerProvider broker) {
         this.strategyDef = strategyDef;
@@ -23,13 +25,17 @@ public class QuoteExtractorTask implements Runnable {
 
     @Override
     public void run() {
-        String symbol = strategyDef.getSymbol();
-        Range range = strategyDef.getParams().getQuotesRange();
-        Interval interval = strategyDef.getParams().getQuotesInterval();
+        try {
+            String symbol = strategyDef.getSymbol();
+            Range range = strategyDef.getParams().getQuotesRange();
+            Interval interval = strategyDef.getParams().getQuotesInterval();
 
-        List<TickerQuote> quotes = broker.ticker().getTickerQuotes(symbol, range, interval);
-        strategyDef.updateSeries(quotes);
-        notifySubscribers();
+            List<TickerQuote> quotes = broker.ticker().getTickerQuotes(symbol, range, interval);
+            strategyDef.updateSeries(quotes);
+            notifySubscribers();
+        } catch (Exception e) {
+            log.error("Unexpected error in Quote extractor: {}", e.getMessage());
+        }
     }
 
     private void notifySubscribers() {
