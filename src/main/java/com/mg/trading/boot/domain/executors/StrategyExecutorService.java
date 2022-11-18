@@ -19,11 +19,11 @@ import static com.google.common.base.Preconditions.checkState;
 @Service
 public class StrategyExecutorService implements StrategyExecutor {
     private final BrokerProvider broker;
-    private final StrategyManagerCache strategyExecutorsCache;
+    private final StrategiesCacheManager strategyExecutorsCache;
     private final OrderManagementService orderManagementService;
 
     public StrategyExecutorService(final BrokerProvider broker,
-                                   final StrategyManagerCache strategyExecutorsCache,
+                                   final StrategiesCacheManager strategyExecutorsCache,
                                    final OrderManagementService orderManagementService) {
         this.broker = broker;
         this.strategyExecutorsCache = strategyExecutorsCache;

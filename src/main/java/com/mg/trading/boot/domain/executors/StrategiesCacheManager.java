@@ -12,7 +12,7 @@ import java.util.concurrent.ScheduledExecutorService;
 
 @Log4j2
 @Component
-public class StrategyManagerCache {
+public class StrategiesCacheManager {
     private final static Map<String, ScheduledExecutorService> cache = new HashMap<>();
 
 

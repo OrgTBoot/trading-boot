@@ -3,6 +3,7 @@ package com.mg.trading.boot.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mg.trading.boot.domain.exceptions.ValidationException;
 import com.mg.trading.boot.domain.executors.StrategyExecutor;
+import com.mg.trading.boot.domain.executors.StrategiesCacheManager;
 import com.mg.trading.boot.domain.models.Ticker;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.models.TradingLog;
@@ -49,12 +50,14 @@ public class GQLController {
     private final ScreenerProvider screener;
     private final StrategyExecutor strategyExecutor;
     private final LogsManagementService logsManagementService;
+    private final StrategiesCacheManager strategiesCacheManager;
 
-    public GQLController(final LogsManagementService logsManagementService, final BrokerProvider broker, final ScreenerProvider screener, final StrategyExecutor strategyExecutor) {
+    public GQLController(final LogsManagementService logsManagementService, final BrokerProvider broker, final ScreenerProvider screener, final StrategiesCacheManager strategiesCacheManager, final StrategyExecutor strategyExecutor) {
         this.broker = broker;
         this.screener = screener;
         this.strategyExecutor = strategyExecutor;
         this.logsManagementService = logsManagementService;
+        this.strategiesCacheManager = strategiesCacheManager;
     }
 
     @GraphQLQuery(description = "Run Screening with a predefined criteria.")
@@ -91,8 +94,7 @@ public class GQLController {
     }
 
     @GraphQLMutation
-    public String triggerSymbolsBackTracking(@GraphQLArgument(name = "symbols") @GraphQLNonNull final List<String> symbols,
-                                             @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
+    public String triggerSymbolsBackTracking(@GraphQLArgument(name = "symbols") @GraphQLNonNull final List<String> symbols, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
         for (String symbol : symbols) {
             triggerBackTracking(symbol, name);
         }
@@ -100,8 +102,7 @@ public class GQLController {
     }
 
     @GraphQLMutation
-    public String triggerBackTracking(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-                                      @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
+    public String triggerBackTracking(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
 
         StrategyDefinition strategyDef = selectStrategyDef(name, symbol);
         Parameters params = strategyDef.getParams();
@@ -119,11 +120,14 @@ public class GQLController {
     }
 
     @GraphQLMutation(description = "Start trading strategy for the given symbol. Strategy will run in background until stopped.")
-    public String triggerLiveTrading(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol,
-                                     @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
+    public String triggerLiveTrading(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
 
         log.info("Initializing {} strategy for {}...", name, symbol);
+
         StrategyDefinition strategyDef = selectStrategyDef(name, symbol);
+        if (strategiesCacheManager.contains(strategyDef)) {
+            return "This strategy is already running. Running keys: " + strategiesCacheManager.getRunningKeys();
+        }
         strategyExecutor.start(strategyDef);
 
         return "Strategy is running...";
