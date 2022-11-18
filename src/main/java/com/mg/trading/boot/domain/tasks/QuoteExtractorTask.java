@@ -31,7 +31,8 @@ public class QuoteExtractorTask implements Runnable {
             Interval interval = strategyDef.getParams().getQuotesInterval();
 
             List<TickerQuote> quotes = broker.ticker().getTickerQuotes(symbol, range, interval);
-            strategyDef.updateSeries(quotes);
+            List<TickerQuote> fullQuotes = quotes.subList(0, quotes.size() - 2); //we always want to ignore last quote as it is not full
+            strategyDef.updateSeries(fullQuotes);
             notifySubscribers();
         } catch (Exception e) {
             log.error("Unexpected error in Quote extractor: {}", e.getMessage());
