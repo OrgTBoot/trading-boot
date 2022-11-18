@@ -15,9 +15,9 @@ import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.rules.OverIndicatorRule;
 import org.ta4j.core.rules.StopGainRule;
-import org.ta4j.core.rules.StopLossRule;
 import org.ta4j.core.rules.UnderIndicatorRule;
 
+import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
@@ -56,32 +56,35 @@ public class DEMAStrategyDefinitionV9 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandelier = new ChandelierExitLongIndicator(series, params.getCndBarCount(), params.getCndMultiplier());
 
         //ENTRY RULES
-        Rule marketHours = trace(new MarketHoursRule(series));
-        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
-        Rule maxTotalLoss = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
-        Rule chandelierUnderPrice = trace(new UnderIndicatorRule(chandelier, closePrice));
-        Rule zlEmaUnderPrice = trace(new UnderIndicatorRule(zlemaIndicator, closePrice));
+        Rule marketHours = debug(new MarketHoursRule(series));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule maxTotalLoss = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
+        Rule chandelierUnderPrice = debug(new UnderIndicatorRule(chandelier, closePrice));
+        Rule zlEmaUnderPrice = debug(new UnderIndicatorRule(zlemaIndicator, closePrice));
 
-        Rule entryRule = trace(
+        Rule hasTotal4PercentLoss = debug(new StopTotalLossRule(series, BigDecimal.valueOf(4)));
+
+        Rule entryRule = debug(
                 marketHours
                         .and(market60MinLeft.negation())
-                        .and(maxTotalLoss.negation())
+//                        .and(maxTotalLoss.negation())
+                        .and(hasTotal4PercentLoss.negation())//TODO: this parameter was set based on results from data sets - we should not trust it yet. More testing TBD.
                         .and(chandelierUnderPrice)
                         .and(zlEmaUnderPrice)
                 , Type.ENTRY);
 
 
         //EXIT RULES
-        Rule chandelierOverPrice = trace(new OverIndicatorRule(chandelier, closePrice));
-        Rule zlEmaOverPrice = trace(new OverIndicatorRule(zlemaIndicator, closePrice));
+        Rule chandelierOverPrice = debug(new OverIndicatorRule(chandelier, closePrice));
+        Rule zlEmaOverPrice = debug(new OverIndicatorRule(zlemaIndicator, closePrice));
 
-        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
-        Rule has1PercentGain = trace(new StopGainRule(closePrice, 1), "Has > 1%");
-        Rule hasAnyGain = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
-        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
-        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
+        Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule has1PercentGain = debug(new StopGainRule(closePrice, 1), "Has > 1%");
+        Rule hasAnyGain = debug(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
+        Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
+        Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
-        Rule exitRule = trace(
+        Rule exitRule = debug(
                 bollingerCrossUp
                         .or(chandelierOverPrice.and(zlEmaOverPrice))
                         .or(market60MinLeft.and(has1PercentGain))
