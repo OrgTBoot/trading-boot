@@ -4,9 +4,16 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
+import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
+import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
 import com.mg.trading.boot.domain.strategy.dema5.DEMAStrategyDefinitionV5;
+import com.mg.trading.boot.domain.strategy.dema6.DEMAStrategyDefinitionV6;
+import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
+import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
@@ -40,6 +47,7 @@ public class StrategiesComparisonTest {
     @Test
     public void testStrategiesGain() {
         List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_17_2022");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_15_2022_red");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
@@ -82,14 +90,14 @@ public class StrategiesComparisonTest {
 //            statementsDEMAv4.add(demaV4);
 //        });
 //        reportToTable("DEMAv4", statementsDEMAv4, table);
-
-        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
-        quoteFiles.forEach(s -> {
-            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
-            statementsDEMAv5.add(demaV5);
-        });
-        reportToTable("DEMAv5", statementsDEMAv5, table);
-
+//
+//        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
+//        quoteFiles.forEach(s -> {
+//            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
+//            statementsDEMAv5.add(demaV5);
+//        });
+//        reportToTable("DEMAv5", statementsDEMAv5, table);
+//
 //        List<TradingStatement> statementsDEMAv6 = new ArrayList<>();
 //        quoteFiles.forEach(s -> {
 //            TradingStatement demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
@@ -105,13 +113,13 @@ public class StrategiesComparisonTest {
 //        });
 //        reportToTable("DEMAv7", statementsDEMAv7, table);
 //
-
-        List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
-        quoteFiles.forEach(s -> {
-            TradingStatement demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
-            statementsDEMAv8.add(demaV8);
-        });
-        reportToTable("DEMAv8", statementsDEMAv8, table);
+//
+//        List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
+//        quoteFiles.forEach(s -> {
+//            TradingStatement demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
+//            statementsDEMAv8.add(demaV8);
+//        });
+//        reportToTable("DEMAv8", statementsDEMAv8, table);
 
         List<TradingStatement> statementsDEMAv9 = new ArrayList<>();
         quoteFiles.forEach(s -> {
@@ -154,7 +162,7 @@ public class StrategiesComparisonTest {
 
         if (table.getColNumber() == 0) {
             table.addRule();
-            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN GAIN %", "MAX GAIN %", "AVG GAIN %", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN P.GAIN %", "MAX P.GAIN %", "AVG GAIN %", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
             table.addRule();
         }
         table.addRow(name,

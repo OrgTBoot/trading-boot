@@ -5,7 +5,6 @@ import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
 import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.dema4.DEMAParametersV4;
 import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
@@ -57,14 +56,14 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
         //ENTRY RULES
-        Rule priceOverLongDEMA = trace(new OverIndicatorRule(closePrice, longIndicator));
-        Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP), "BUY");
-        Rule marketHours = trace(new MarketHoursRule(series));
-        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
-        Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
+        Rule priceOverLongDEMA = debug(new OverIndicatorRule(closePrice, longIndicator));
+        Rule superTrendUpSignalUp = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP), "BUY");
+        Rule marketHours = debug(new MarketHoursRule(series));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule stopTotalLossRule = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
 
-        Rule entryRule = trace(priceOverLongDEMA
+        Rule entryRule = debug(priceOverLongDEMA
                         .and(superTrendUpSignalUp)
                         .and(marketHours)                         // 3. and enter only in marked hours
                         .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
@@ -73,19 +72,19 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
 
 
         //EXIT RULES
-        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
-        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
-        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "SELL");
-        Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
+        Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule crossedDownDEMA = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
+        Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "SELL");
+        Rule chandelierOverPrice = debug(new OverIndicatorRule(chandLong, closePrice));
 
-        Rule has5PercentLoss = trace(new StopLossRule(closePrice, 2), "Has -2%");
-        Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1), "Has > 1%");
-        Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
-        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
-        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
+        Rule has5PercentLoss = debug(new StopLossRule(closePrice, 2), "Has -2%");
+        Rule has1PercentProfit = debug(new StopGainRule(closePrice, 1), "Has > 1%");
+        Rule hasAnyProfit = debug(new StopGainRule(closePrice, 0.1), "Has > 0.1%");
+        Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
+        Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule priceCrossedDownDEMA = new CrossedDownIndicatorRule(closePrice, longIndicator);
-        Rule exitRule = trace(
+        Rule exitRule = debug(
                 bollingerCrossUp                                      // 1. trend reversal signal, reached upper line, market will start selling
                         .or(crossedDownDEMA.and(superTrendSell).and(chandelierOverPrice.or(priceCrossedDownDEMA))) // 2. confirmation
                         .or(has5PercentLoss.and(superTrendSell).and(chandelierOverPrice.or(priceCrossedDownDEMA))) // 3. position stop loss

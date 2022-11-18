@@ -19,7 +19,6 @@ import org.ta4j.core.rules.StopGainRule;
 
 import java.util.concurrent.TimeUnit;
 
-import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.AFTER_HOURS;
 import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
 
 
@@ -57,26 +56,26 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
 
         //entry
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
-        Rule crossedUpEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
-        Rule marketHours = trace(new MarketHoursRule(series));
-        Rule stopTotalLossRule = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
-        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES));
+        Rule crossedUpEMA = debug(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
+        Rule marketHours = debug(new MarketHoursRule(series));
+        Rule stopTotalLossRule = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES));
 
-        Rule entryRule = trace(crossedUpEMA
+        Rule entryRule = debug(crossedUpEMA
                 .and(marketHours)                         // and enter only in marked hours
                 .and(stopTotalLossRule.negation())        // and avoid entering again in a bearish stock
                 .and(market60MinLeft.negation()), Type.ENTRY);         // and avoid entering in 60 min before market close
 
         //exit
-        Rule bollingerCrossUp = trace(new OverIndicatorRule(closePrice, bollinger.upper()));
-        Rule crossedDownDEMA = trace(new CrossedDownIndicatorRule(shortIndicator, longIndicator));
-        Rule superTrendSell = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN));
-        Rule has1PercentProfit = trace(new StopGainRule(closePrice, 1));
-        Rule hasAnyProfit = trace(new StopGainRule(closePrice, 0.1));
-        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES));
-        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES));
+        Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()));
+        Rule crossedDownDEMA = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator));
+        Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN));
+        Rule has1PercentProfit = debug(new StopGainRule(closePrice, 1));
+        Rule hasAnyProfit = debug(new StopGainRule(closePrice, 0.1));
+        Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES));
+        Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES));
 
-        Rule exitRule = trace(bollingerCrossUp                // 1. trend reversal signal, reached upper line, market will start selling
+        Rule exitRule = debug(bollingerCrossUp                // 1. trend reversal signal, reached upper line, market will start selling
                 .or(crossedDownDEMA.and(superTrendSell))      // 2. or down-trend and sell confirmation
                 .or(market60MinLeft.and(has1PercentProfit))   // 3. or 60m to market close, take profits >= 1%
                 .or(market30MinLeft.and(hasAnyProfit))        // 4. or 30m to market close, take any profits > 0%

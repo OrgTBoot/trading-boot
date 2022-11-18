@@ -54,41 +54,41 @@ public class DEMAStrategyDefinitionV8 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
         //ENTRY RULES
-        Rule crossedUpDEMA = trace(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
+        Rule crossedUpDEMA = debug(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         int stLength1 = params.getShortBarCount();
         int stLength2 = params.getShortBarCount() * 2;
         Double stMultiplier1 = 3D;
         Double stMultiplier2 = 6D;
 
-        Rule superTrendUp1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.UP, stMultiplier1), "BUY1");
-        Rule superTrendUp2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.UP, stMultiplier2), "BUY2");
-        Rule superTrendUp = trace(superTrendUp1.and(superTrendUp2), "All BUY");
+        Rule superTrendUp1 = debug(new SuperTrendTrendRule(series, stLength1, Trend.UP, stMultiplier1), "BUY1");
+        Rule superTrendUp2 = debug(new SuperTrendTrendRule(series, stLength2, Trend.UP, stMultiplier2), "BUY2");
+        Rule superTrendUp = debug(superTrendUp1.and(superTrendUp2), "All BUY");
 
-        Rule marketHours = trace(new MarketHoursRule(series));
-        Rule market60MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
-        Rule stopTotalPercentLoss = trace(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
+        Rule marketHours = debug(new MarketHoursRule(series));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule stopTotalPercentLoss = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
-        Rule entryRule = trace(superTrendUp
+        Rule entryRule = debug(superTrendUp
                         .and(marketHours)                         // and enter only in marked hours
                         .and(market60MinLeft.negation())          // and avoid entering in 60 min before market close
                         .and(stopTotalPercentLoss.negation()),  // and avoid entering again in a bearish stock
                 Type.ENTRY);
 
         //EXIT RULES
-        Rule superTrendDown1 = trace(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, stMultiplier1), "SELL1");
-        Rule superTrendDown2 = trace(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, stMultiplier2), "SELL2");
-        Rule superTrendDown = trace(superTrendDown1.and(superTrendDown2), "All SELL");
-        Rule priceReachedBollingerUpper = trace(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
-        Rule priceUnderLongDEMA = trace(new UnderIndicatorRule(closePrice, longIndicator), "DEMA over price");
-        Rule chandelierOverPrice = trace(new OverIndicatorRule(chandLong, closePrice));
+        Rule superTrendDown1 = debug(new SuperTrendTrendRule(series, stLength1, Trend.DOWN, stMultiplier1), "SELL1");
+        Rule superTrendDown2 = debug(new SuperTrendTrendRule(series, stLength2, Trend.DOWN, stMultiplier2), "SELL2");
+        Rule superTrendDown = debug(superTrendDown1.and(superTrendDown2), "All SELL");
+        Rule priceReachedBollingerUpper = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule priceUnderLongDEMA = debug(new UnderIndicatorRule(closePrice, longIndicator), "DEMA over price");
+        Rule chandelierOverPrice = debug(new OverIndicatorRule(chandLong, closePrice));
 
-        Rule gain1Percent = trace(new StopGainRule(closePrice, 1), "Gain > 1%");
-        Rule anyGain = trace(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
-        Rule loss5Percent = trace(new StopLossRule(closePrice, 5), "Loss 5%");
-        Rule market30MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
-        Rule market10MinLeft = trace(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
+        Rule gain1Percent = debug(new StopGainRule(closePrice, 1), "Gain > 1%");
+        Rule anyGain = debug(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
+        Rule loss5Percent = debug(new StopLossRule(closePrice, 5), "Loss 5%");
+        Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
+        Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
-        Rule exitRule = trace(
+        Rule exitRule = debug(
                 priceReachedBollingerUpper                                                   // indicates high probability of a trend reversal
                         .or(superTrendDown.and(chandelierOverPrice.and(priceUnderLongDEMA))) // or downtrend and price under long double moving average
                         .or(superTrendDown.and(priceUnderLongDEMA.and(loss5Percent)))        // or downtrend and lost 5 percent (ref: CVNA_loss_tolerance.json)
