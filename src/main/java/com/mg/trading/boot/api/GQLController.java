@@ -137,7 +137,7 @@ public class GQLController {
     public String triggerLiveTradingStop(@GraphQLArgument(name = "strategyKey") @GraphQLNonNull final String strategyKey) {
 
         strategyExecutor.stop(strategyKey);
-        return "Strategy removed " + strategyKey;
+        return String.format("Strategy removed %s. Remaining keys: %s", strategyKey, fetchRunningStrategyKeys());
     }
 
     @GraphQLMutation(description = "Change log level")

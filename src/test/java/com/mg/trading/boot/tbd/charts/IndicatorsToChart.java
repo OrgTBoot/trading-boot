@@ -15,7 +15,9 @@ import org.jfree.ui.RefineryUtilities;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Indicator;
+import org.ta4j.core.indicators.ChandelierExitLongIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
+import org.ta4j.core.indicators.ZLEMAIndicator;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.num.Num;
 
@@ -62,23 +64,28 @@ public class IndicatorsToChart {
     }
 
     public static void main(String[] args) {
-        String fileName = "tmp/CVNA_loss_tolerance.json";
+        String fileName = "tmp/STAX.json_exc";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
         SuperTrend superTrend1 = new SuperTrend(series, 10,3D);
         SuperTrend superTrend2 = new SuperTrend(series, 20,6D);
 //
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, 60);
+        DoubleEMAIndicator dema60 = new DoubleEMAIndicator(closePrice, 60);
+        DoubleEMAIndicator dema10 = new DoubleEMAIndicator(closePrice, 60);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, 10);
 
-//        ChandelierExitLongIndicator chandelierLong = new ChandelierExitLongIndicator(series, 10, 3);
+//        ChandelierExitLongIndicator chandelierLong = new ChandelierExitLongIndicator(series, 60, 3);
+        ZLEMAIndicator zlema10 = new ZLEMAIndicator(dema60, 10);
+        ZLEMAIndicator zlema60 = new ZLEMAIndicator(dema60, 60);
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(buildChartBarSeries(series, closePrice, fileName));
         dataset.addSeries(buildChartBarSeries(series, superTrend1, "ST1"));
-        dataset.addSeries(buildChartBarSeries(series, superTrend2, "ST2"));
-        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA 60"));
-//        dataset.addSeries(buildChartBarSeries(series, chandelierLong, "Chand"));
+//        dataset.addSeries(buildChartBarSeries(series, superTrend2, "ST2"));
+//        dataset.addSeries(buildChartBarSeries(series, longIndicator, "DEMA 60"));
+//        dataset.addSeries(buildChartBarSeries(series, chandelierLong, "CHAND"));
+        dataset.addSeries(buildChartBarSeries(series, zlema10, "ZELMA10"));
+        dataset.addSeries(buildChartBarSeries(series, zlema60, "ZELMA60"));
 
         JFreeChart chart = ChartFactory.createTimeSeriesChart(fileName, // title
                 "Date", // x-axis label
