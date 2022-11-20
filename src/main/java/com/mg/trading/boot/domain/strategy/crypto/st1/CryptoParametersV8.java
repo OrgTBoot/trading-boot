@@ -22,6 +22,7 @@ public class CryptoParametersV8 extends AbstractParameters {
     private BigDecimal bollingerMultiplier;
     private Integer bollingerBarCount;
     private Integer chandelierBarCount;
+    private BigDecimal totalLossThresholdPercent;
 
     public static CryptoParametersV8 optimal() {
         return CryptoParametersV8.builder()

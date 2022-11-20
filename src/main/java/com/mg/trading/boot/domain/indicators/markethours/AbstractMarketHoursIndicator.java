@@ -30,7 +30,7 @@ public abstract class AbstractMarketHoursIndicator {
         int hour = getHour(bar);
         int minute = getMinute(bar);
 
-        return hour > 9 && hour < 16 || (hour == 9 && minute >= 30);
+        return hour > 9 && hour < 16 || (hour == 9 && minute > 30);
     }
 
     /**

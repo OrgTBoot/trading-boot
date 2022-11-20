@@ -21,6 +21,7 @@ public class DEMAParameters extends AbstractParameters {
     private Number positionStopGainPercent;
     private Number positionStopLossPercent;
     private BigDecimal bollingerMultiplier;
+    private BigDecimal totalLossThresholdPercent;
 
 
     public static DEMAParameters optimal() {

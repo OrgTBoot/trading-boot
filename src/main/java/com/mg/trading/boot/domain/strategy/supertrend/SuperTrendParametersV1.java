@@ -1,4 +1,4 @@
-package com.mg.trading.boot.domain.strategy.ema;
+package com.mg.trading.boot.domain.strategy.supertrend;
 
 import com.mg.trading.boot.domain.models.Interval;
 import com.mg.trading.boot.domain.models.Range;
@@ -15,21 +15,25 @@ import java.math.BigDecimal;
 @SuperBuilder(toBuilder = true)
 @EqualsAndHashCode(callSuper = true)
 @ToString(callSuper = true)
-public class EMAParameters extends AbstractParameters {
+public class SuperTrendParametersV1 extends AbstractParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
     private BigDecimal bollingerMultiplier;
-    private BigDecimal totalLossThresholdPercent;
+    private Integer bollingerBarCount;
+    private Integer cndBarCount;
+    private Double cndMultiplier;
 
-    public static EMAParameters optimal() {
-        return EMAParameters.builder()
-                .longBarCount(30)
-                .shortBarCount(5)
-                .totalLossThresholdPercent(BigDecimal.TEN)
+    public static SuperTrendParametersV1 optimal() {
+        return SuperTrendParametersV1.builder()
                 .quotesRange(Range.ONE_DAY)
                 .quotesInterval(Interval.ONE_MINUTE)
-                .quotesPullFrequencyInSec(10)
+                .quotesPullFrequencyInSec(5)
+                .longBarCount(60)
+                .shortBarCount(10)
+                .bollingerBarCount(60)
                 .bollingerMultiplier(BigDecimal.valueOf(3))
+                .cndBarCount(3)
+                .cndMultiplier(3D)
                 .build();
     }
 }

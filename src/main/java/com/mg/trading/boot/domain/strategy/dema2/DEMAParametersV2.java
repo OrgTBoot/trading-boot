@@ -20,6 +20,7 @@ public class DEMAParametersV2 extends AbstractParameters {
     private Integer shortBarCount;
     private BigDecimal bollingerMultiplier;
     private Integer chandelierBarCount;
+    private BigDecimal totalLossThresholdPercent;
 
     public static DEMAParametersV2 optimal() {
         return DEMAParametersV2.builder()

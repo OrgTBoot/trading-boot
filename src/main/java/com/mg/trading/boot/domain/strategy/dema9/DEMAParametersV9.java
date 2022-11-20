@@ -19,6 +19,7 @@ public class DEMAParametersV9 extends AbstractParameters {
     private Integer longBarCount;
     private Integer shortBarCount;
     private BigDecimal bollingerMultiplier;
+    private BigDecimal totalLossThresholdPercent;
     private Integer bollingerBarCount;
     private Integer cndBarCount;
     private Double cndMultiplier;

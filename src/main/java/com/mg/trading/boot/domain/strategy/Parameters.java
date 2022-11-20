@@ -16,11 +16,4 @@ public interface Parameters {
     Interval getQuotesInterval();
 
     Integer getQuotesPullFrequencyInSec();
-
-    /**
-     * Total loss percentage strategy should tolerate.
-     * Use for scenarios when you want to prevent entry in to a stock that performed poor for previous entries
-     * and reached X% loss.
-     */
-    Number getTotalLossThresholdPercent();
 }

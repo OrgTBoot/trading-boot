@@ -7,6 +7,8 @@ import org.ta4j.core.Rule;
 import org.ta4j.core.TradingRecord;
 import org.ta4j.core.rules.AbstractRule;
 
+import java.util.Date;
+
 @Log4j2
 public class TracingRule extends AbstractRule {
     private final Rule rule;
@@ -40,7 +42,10 @@ public class TracingRule extends AbstractRule {
 
         if (!Type.CHAIN.equals(type)) {
             Bar bar = series.getBar(index);
-            log.debug("{} Bar time={}, closePrice={}", index, bar.getEndTime(), bar.getClosePrice());
+            long timeStampMls = bar.getEndTime().toInstant().toEpochMilli();
+            Date date = Date.from(bar.getEndTime().toInstant());
+
+            log.debug("{} Bar time={} | {}, closePrice={}", index, date, timeStampMls, bar.getClosePrice());
             log.debug("-----------------------------------------------------");
         }
         return satisfied;

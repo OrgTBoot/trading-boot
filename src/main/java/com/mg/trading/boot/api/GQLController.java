@@ -52,7 +52,11 @@ public class GQLController {
     private final LogsManagementService logsManagementService;
     private final StrategiesCacheManager strategiesCacheManager;
 
-    public GQLController(final LogsManagementService logsManagementService, final BrokerProvider broker, final ScreenerProvider screener, final StrategiesCacheManager strategiesCacheManager, final StrategyExecutor strategyExecutor) {
+    public GQLController(final LogsManagementService logsManagementService,
+                         final BrokerProvider broker,
+                         final ScreenerProvider screener,
+                         final StrategiesCacheManager strategiesCacheManager,
+                         final StrategyExecutor strategyExecutor) {
         this.broker = broker;
         this.screener = screener;
         this.strategyExecutor = strategyExecutor;
@@ -67,7 +71,10 @@ public class GQLController {
 
 
     @GraphQLQuery(description = "Print trading records for a given symbol.")
-    public String fetchTradingRecords(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
+    public String fetchTradingRecords(@GraphQLArgument(name = "symbol")
+                                      @GraphQLNonNull final String symbol,
+                                      @GraphQLArgument(name = "daysRange")
+                                      @GraphQLNonNull final Integer daysRange) {
 
         TradingLog tradingLog = broker.account().getTradingLog(symbol, daysRange);
         ReportGenerator.printTradingRecords(tradingLog);
@@ -77,7 +84,8 @@ public class GQLController {
     }
 
     @GraphQLQuery(description = "Print trading records for all traded symbols.")
-    public String fetchAllTradingRecords(@GraphQLArgument(name = "daysRange") @GraphQLNonNull final Integer daysRange) {
+    public String fetchAllTradingRecords(@GraphQLArgument(name = "daysRange")
+                                         @GraphQLNonNull final Integer daysRange) {
 
         List<TradingLog> tradingLogs = broker.account().getTradingLogs(daysRange);
         tradingLogs.forEach(tradingLog -> {
@@ -94,7 +102,10 @@ public class GQLController {
     }
 
     @GraphQLMutation
-    public String triggerSymbolsBackTracking(@GraphQLArgument(name = "symbols") @GraphQLNonNull final List<String> symbols, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
+    public String triggerSymbolsBackTracking(@GraphQLArgument(name = "symbols")
+                                             @GraphQLNonNull final List<String> symbols,
+                                             @GraphQLArgument(name = "strategy")
+                                             @GraphQLNonNull final TradingStrategies name) throws Exception {
         for (String symbol : symbols) {
             triggerBackTracking(symbol, name);
         }
@@ -102,7 +113,10 @@ public class GQLController {
     }
 
     @GraphQLMutation
-    public String triggerBackTracking(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) throws Exception {
+    public String triggerBackTracking(@GraphQLArgument(name = "symbol")
+                                      @GraphQLNonNull final String symbol,
+                                      @GraphQLArgument(name = "strategy")
+                                      @GraphQLNonNull final TradingStrategies name) throws Exception {
 
         StrategyDefinition strategyDef = selectStrategyDef(name, symbol);
         Parameters params = strategyDef.getParams();
@@ -120,7 +134,10 @@ public class GQLController {
     }
 
     @GraphQLMutation(description = "Start trading strategy for the given symbol. Strategy will run in background until stopped.")
-    public String triggerLiveTrading(@GraphQLArgument(name = "symbol") @GraphQLNonNull final String symbol, @GraphQLArgument(name = "strategy") @GraphQLNonNull final TradingStrategies name) {
+    public String triggerLiveTrading(@GraphQLArgument(name = "symbol")
+                                     @GraphQLNonNull final String symbol,
+                                     @GraphQLArgument(name = "strategy")
+                                     @GraphQLNonNull final TradingStrategies name) {
 
         log.info("Initializing {} strategy for {}...", name, symbol);
 
@@ -141,7 +158,10 @@ public class GQLController {
     }
 
     @GraphQLMutation(description = "Change log level")
-    public String triggerLogLevelChange(@GraphQLArgument(name = "level") @GraphQLNonNull final LogLevel level, @GraphQLArgument(name = "package") @GraphQLNonNull final LogPackage logPackage) {
+    public String triggerLogLevelChange(@GraphQLArgument(name = "level")
+                                        @GraphQLNonNull final LogLevel level,
+                                        @GraphQLArgument(name = "package")
+                                        @GraphQLNonNull final LogPackage logPackage) {
 
         logsManagementService.updateLogLevel(logPackage, level);
         return "Log level updated to  " + level;

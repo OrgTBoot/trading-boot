@@ -5,6 +5,7 @@ import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
@@ -46,80 +47,80 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_17_2022");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_15_2022_red");
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_18_2022_red");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
 
-//        List<TradingStatement> statementsEMA = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
-//            statementsEMA.add(ema);
-//        });
-//        reportToTable("EMA", statementsEMA, table);
-//
-//
-//        List<TradingStatement> statementsDEMA = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
-//            statementsDEMA.add(dema);
-//        });
-//        reportToTable("DEMA", statementsDEMA, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
-//            statementsDEMAv2.add(demaV2);
-//        });
-//        reportToTable("DEMAv2", statementsDEMAv2, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
-//            statementsDEMAv3.add(demaV3);
-//        });
-//        reportToTable("DEMAv3", statementsDEMAv3, table);
-//
-//        List<TradingStatement> statementsDEMAv4 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
-//            statementsDEMAv4.add(demaV4);
-//        });
-//        reportToTable("DEMAv4", statementsDEMAv4, table);
-//
-//        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
-//            statementsDEMAv5.add(demaV5);
-//        });
-//        reportToTable("DEMAv5", statementsDEMAv5, table);
-//
-//        List<TradingStatement> statementsDEMAv6 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
-//            statementsDEMAv6.add(demaV6);
-//        });
-//        reportToTable("DEMAv6", statementsDEMAv6, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv7 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV7 = testStrategy(s, new DEMAStrategyDefinitionV7(s.getName()));
-//            statementsDEMAv7.add(demaV7);
-//        });
-//        reportToTable("DEMAv7", statementsDEMAv7, table);
-//
-//
-//        List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
-//        quoteFiles.forEach(s -> {
-//            TradingStatement demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
-//            statementsDEMAv8.add(demaV8);
-//        });
-//        reportToTable("DEMAv8", statementsDEMAv8, table);
+        List<TradingStatement> statementsEMA = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
+            statementsEMA.add(ema);
+        });
+        reportToTable("EMA", statementsEMA, table);
+
+
+        List<TradingStatement> statementsDEMA = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
+            statementsDEMA.add(dema);
+        });
+        reportToTable("DEMA", statementsDEMA, table);
+
+
+        List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
+            statementsDEMAv2.add(demaV2);
+        });
+        reportToTable("DEMAv2", statementsDEMAv2, table);
+
+
+        List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
+            statementsDEMAv3.add(demaV3);
+        });
+        reportToTable("DEMAv3", statementsDEMAv3, table);
+
+        List<TradingStatement> statementsDEMAv4 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
+            statementsDEMAv4.add(demaV4);
+        });
+        reportToTable("DEMAv4", statementsDEMAv4, table);
+
+        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
+            statementsDEMAv5.add(demaV5);
+        });
+        reportToTable("DEMAv5", statementsDEMAv5, table);
+
+        List<TradingStatement> statementsDEMAv6 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
+            statementsDEMAv6.add(demaV6);
+        });
+        reportToTable("DEMAv6", statementsDEMAv6, table);
+
+
+        List<TradingStatement> statementsDEMAv7 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV7 = testStrategy(s, new DEMAStrategyDefinitionV7(s.getName()));
+            statementsDEMAv7.add(demaV7);
+        });
+        reportToTable("DEMAv7", statementsDEMAv7, table);
+
+
+        List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
+            statementsDEMAv8.add(demaV8);
+        });
+        reportToTable("DEMAv8", statementsDEMAv8, table);
 
         List<TradingStatement> statementsDEMAv9 = new ArrayList<>();
         quoteFiles.forEach(s -> {
@@ -127,6 +128,14 @@ public class StrategiesComparisonTest {
             statementsDEMAv9.add(demaV9);
         });
         reportToTable("DEMAv9", statementsDEMAv9, table);
+
+
+        List<TradingStatement> statementsST1 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatement st1 = testStrategy(s, new SuperTrendStrategyV1(s.getName()));
+            statementsST1.add(st1);
+        });
+        reportToTable("ST1", statementsST1, table);
 
 
         print(table);
