@@ -11,5 +11,6 @@ public enum TradingStrategies {
     DEMA_V7,
     DEMA_V8,
     DEMA_V9,
+    ST_V1,
     CRYPTO_V8,
 }

@@ -24,36 +24,33 @@
 package com.mg.trading.boot.tbd.charts;
 
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
+import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.plot.DatasetRenderingOrder;
+import org.jfree.chart.plot.Marker;
+import org.jfree.chart.plot.ValueMarker;
 import org.jfree.chart.plot.XYPlot;
 import org.jfree.chart.renderer.xy.CandlestickRenderer;
 import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.time.Minute;
-import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.DefaultHighLowDataset;
 import org.jfree.data.xy.OHLCDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
-import org.ta4j.core.Bar;
-import org.ta4j.core.BarSeries;
-import org.ta4j.core.Indicator;
-import org.ta4j.core.indicators.ChandelierExitLongIndicator;
-import org.ta4j.core.indicators.ChandelierExitShortIndicator;
-import org.ta4j.core.indicators.DoubleEMAIndicator;
-import org.ta4j.core.indicators.ZLEMAIndicator;
+import org.ta4j.core.*;
+import org.ta4j.core.indicators.*;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.num.Num;
-import ta4jexamples.loaders.CsvTradesLoader;
 
 import java.awt.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * This class builds a traditional candlestick chart.
@@ -79,7 +76,6 @@ public class CandlestickChart {
         for (int i = 0; i < nbBars; i++) {
             Bar bar = series.getBar(i);
             dates[i] = Date.from(bar.getEndTime().toInstant());
-//            dates[i] = new Date(bar.getEndTime().toEpochSecond() * 1000);
             opens[i] = bar.getOpenPrice().doubleValue();
             highs[i] = bar.getHighPrice().doubleValue();
             lows[i] = bar.getLowPrice().doubleValue();
@@ -99,6 +95,40 @@ public class CandlestickChart {
         }
         return chartTimeSeries;
     }
+
+    /**
+     * Runs a strategy over a bar series and adds the value markers corresponding to
+     * buy/sell signals to the plot.
+     *
+     * @param series   the bar series
+     * @param strategy the trading strategy
+     * @param plot     the plot
+     */
+    private static void addBuySellSignals(BarSeries series, Strategy strategy, XYPlot plot) {
+        // Running the strategy
+        BarSeriesManager seriesManager = new BarSeriesManager(series);
+        List<Position> positions = seriesManager.run(strategy).getPositions();
+        // Adding markers to plot
+        for (Position position : positions) {
+            // Buy signal
+            double buySignalBarTime = new Minute(
+                    Date.from(series.getBar(position.getEntry().getIndex()).getEndTime().toInstant()))
+                    .getFirstMillisecond();
+            Marker buyMarker = new ValueMarker(buySignalBarTime);
+            buyMarker.setPaint(Color.GREEN);
+            buyMarker.setLabel("BUY");
+            plot.addDomainMarker(buyMarker);
+            // Sell signal
+            double sellSignalBarTime = new Minute(
+                    Date.from(series.getBar(position.getExit().getIndex()).getEndTime().toInstant()))
+                    .getFirstMillisecond();
+            Marker sellMarker = new ValueMarker(sellSignalBarTime);
+            sellMarker.setPaint(Color.RED);
+            sellMarker.setLabel("SELL");
+            plot.addDomainMarker(sellMarker);
+        }
+    }
+
 
     /**
      * Displays a chart in a frame.
@@ -121,21 +151,20 @@ public class CandlestickChart {
 
 
     public static void main(String[] args) {
-        String fileName = "tmp/TQQQ.json";
+        String fileName = "tmp/TQQQ.json_exc";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
 
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        ZLEMAIndicator zleam = new ZLEMAIndicator(closePrice, 60);
         SuperTrend superTrendShort = new SuperTrend(series, 10, 3D);
         SuperTrend superTrendMed = new SuperTrend(series, 15, 4D);
         SuperTrend superTrendLong = new SuperTrend(series, 20, 5D);
+        CCIIndicator shortCci = new CCIIndicator(series, 5);
 
         OHLCDataset ohlcDataset = createOHLCDataset("TQQQ", series);
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         dataset.addSeries(buildChartBarSeries(series, superTrendShort, "SS"));
         dataset.addSeries(buildChartBarSeries(series, superTrendMed, "SM"));
         dataset.addSeries(buildChartBarSeries(series, superTrendLong, "SL"));
-        dataset.addSeries(buildChartBarSeries(series, zleam, "ZLEMA"));
 
         JFreeChart chart = ChartFactory.createCandlestickChart("V5", "Time", "USD", ohlcDataset, true);
 
@@ -157,6 +186,9 @@ public class CandlestickChart {
         numberAxis.setAutoRangeIncludesZero(false);
         plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
 
+        SuperTrendStrategyV1 strategyDef = new SuperTrendStrategyV1("S");
+        strategyDef.setSeries(series);
+        addBuySellSignals(series, strategyDef.getStrategy(), plot);
         /*
          * Displaying the chart
          */

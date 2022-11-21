@@ -70,11 +70,11 @@ public class ReportGenerator {
         table.addRule();
         table.addRow("SYMBOL", "METRIC SUMMARY", "VALUE").setTextAlignment(TextAlignment.CENTER);
         table.addRule();
-        table.addRow(symbol, "Total return per share", totalInDollars(statement) + "$ | " + totalInPercent(statement) + "%");
+        table.addRow(symbol, "TOTAL RETURN", totalInDollars(statement) + "$ | " + totalInPercent(statement) + "%");
         table.addRule();
-        table.addRow(symbol, "Winning positions ratio", winningRatio(statement));
+        table.addRow(symbol, "WINNING POSITIONS RATIO", winningRatio(statement));
         table.addRule();
-        table.addRow(symbol, "Total positions | ↑ wins | ↓ losses | ~even ", totalPositionsCount(statement) + " | ↑" + winPositionsCount(statement) + " | ↓" + lossPositionsCount(statement) + " | ~" + breakEvenPositionsCount(statement));
+        table.addRow(symbol, "TOTAL POSITIONS | ↑ wins | ↓ losses | ~even ", totalPositionsCount(statement) + " | ↑" + winPositionsCount(statement) + " | ↓" + lossPositionsCount(statement) + " | ~" + breakEvenPositionsCount(statement));
         table.addRule();
 
         printTable(table);
@@ -191,6 +191,14 @@ public class ReportGenerator {
 
     public static Double totalInDollars(TradingStatement statement) {
         return toRndBigDecimal(statement.getPerformanceReport().getTotalProfitLoss()).doubleValue();
+    }
+
+    public static Double totalEntryPositionsAmountInDollars(TradingRecord record) {
+        return record.getPositions().stream().mapToDouble(position -> position.getEntry().getNetPrice().doubleValue()).sum();
+    }
+
+    public static Double totalExitPositionsAmountInDollars(TradingRecord record) {
+        return record.getPositions().stream().mapToDouble(position -> position.getExit().getNetPrice().doubleValue()).sum();
     }
 
     //--------------------------------------------------------

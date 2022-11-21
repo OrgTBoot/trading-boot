@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class AbstractStrategyDefinition implements StrategyDefinition {
     private final String symbol;
     private final String strategyPrefix;
-    protected final BarSeries series;
+    protected BarSeries series;
 
     public AbstractStrategyDefinition(String symbol, String strategyPrefix) {
         this.symbol = symbol.toUpperCase();
