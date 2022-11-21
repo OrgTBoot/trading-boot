@@ -71,9 +71,9 @@ public class SuperTrendStrategyV1 extends AbstractStrategyDefinition {
         Rule superTrendMedBuy = debug(new UnderIndicatorRule(superTrendMed, closePrice), "ST BUY M");
         Rule superTrendLongBuy = debug(new UnderIndicatorRule(superTrendLong, closePrice), "ST BUY L");
 
-        Rule totalLoss4Percent = debug(new StopTotalLossRule(series, BigDecimal.valueOf(4)), "LOSS 4%");
-        Rule totalLoss6Percent = debug(new StopTotalLossRule(series, BigDecimal.valueOf(6)), "LOSS 6%");
-        Rule has2ConsecutiveLosses = debug(new ConsecutiveLossPositionsRule(series, 3), "3 CONS LOSSES");
+        Rule totalLossPercent4 = debug(new StopTotalLossRule(series, BigDecimal.valueOf(4)), "LOSS 4%");
+        Rule totalLossPercent6 = debug(new StopTotalLossRule(series, BigDecimal.valueOf(6)), "LOSS 6%");
+        Rule consecutiveLosses3 = debug(new ConsecutiveLossPositionsRule(series, 3), "3 CONS LOSSES");
 
         Rule entryRule = debug(marketHours
                         .and(market60MinLeft.negation())
@@ -81,8 +81,8 @@ public class SuperTrendStrategyV1 extends AbstractStrategyDefinition {
                         .and(superTrendMedBuy)
                         .and(superTrendShortBuy)
                         .and(cciBuy)
-                        .and(has2ConsecutiveLosses.negation())
-                        .and(totalLoss4Percent.negation())
+                        .and(consecutiveLosses3.negation())
+                        .and(totalLossPercent4.negation())
                 , Type.ENTRY);
 
 
@@ -106,7 +106,7 @@ public class SuperTrendStrategyV1 extends AbstractStrategyDefinition {
                         .or(market30MinLeft.and(positionAnyGain))
                         .or(market10MinLeft)
                         .or(positionLoss3Percent)
-                        .or(totalLoss6Percent), Type.EXIT);
+                        .or(totalLossPercent6), Type.EXIT);
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }
