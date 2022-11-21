@@ -5,7 +5,6 @@ import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
-import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
 import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
@@ -15,10 +14,13 @@ import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import de.vandermeer.asciitable.AsciiTable;
 import de.vandermeer.asciitable.CWC_LongestLine;
 import de.vandermeer.skb.interfaces.transformers.textformat.TextAlignment;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.junit.Before;
 import org.junit.Test;
@@ -47,92 +49,93 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_15_2022_red");
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_18_2022_red");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_18_2022_red");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_17_2022");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
 
-        List<TradingStatement> statementsEMA = new ArrayList<>();
+        List<TradingStatementWrapper> statementsEMA = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
+            TradingStatementWrapper ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
             statementsEMA.add(ema);
         });
         reportToTable("EMA", statementsEMA, table);
 
 
-        List<TradingStatement> statementsDEMA = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMA = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
+            TradingStatementWrapper dema = testStrategy(s, new DEMAStrategyDefinition(s.getName()));
             statementsDEMA.add(dema);
         });
         reportToTable("DEMA", statementsDEMA, table);
 
 
-        List<TradingStatement> statementsDEMAv2 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv2 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
+            TradingStatementWrapper demaV2 = testStrategy(s, new DEMAStrategyDefinitionV2(s.getName()));
             statementsDEMAv2.add(demaV2);
         });
         reportToTable("DEMAv2", statementsDEMAv2, table);
 
 
-        List<TradingStatement> statementsDEMAv3 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv3 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
+            TradingStatementWrapper demaV3 = testStrategy(s, new DEMAStrategyDefinitionV3(s.getName()));
             statementsDEMAv3.add(demaV3);
         });
         reportToTable("DEMAv3", statementsDEMAv3, table);
 
-        List<TradingStatement> statementsDEMAv4 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv4 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
+            TradingStatementWrapper demaV4 = testStrategy(s, new DEMAStrategyDefinitionV4(s.getName()));
             statementsDEMAv4.add(demaV4);
         });
         reportToTable("DEMAv4", statementsDEMAv4, table);
 
-        List<TradingStatement> statementsDEMAv5 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv5 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
+            TradingStatementWrapper demaV5 = testStrategy(s, new DEMAStrategyDefinitionV5(s.getName()));
             statementsDEMAv5.add(demaV5);
         });
         reportToTable("DEMAv5", statementsDEMAv5, table);
 
-        List<TradingStatement> statementsDEMAv6 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv6 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
+            TradingStatementWrapper demaV6 = testStrategy(s, new DEMAStrategyDefinitionV6(s.getName()));
             statementsDEMAv6.add(demaV6);
         });
         reportToTable("DEMAv6", statementsDEMAv6, table);
 
 
-        List<TradingStatement> statementsDEMAv7 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv7 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV7 = testStrategy(s, new DEMAStrategyDefinitionV7(s.getName()));
+            TradingStatementWrapper demaV7 = testStrategy(s, new DEMAStrategyDefinitionV7(s.getName()));
             statementsDEMAv7.add(demaV7);
         });
         reportToTable("DEMAv7", statementsDEMAv7, table);
 
 
-        List<TradingStatement> statementsDEMAv8 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv8 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
+            TradingStatementWrapper demaV8 = testStrategy(s, new DEMAStrategyDefinitionV8(s.getName()));
             statementsDEMAv8.add(demaV8);
         });
         reportToTable("DEMAv8", statementsDEMAv8, table);
 
-        List<TradingStatement> statementsDEMAv9 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsDEMAv9 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement demaV9 = testStrategy(s, new DEMAStrategyDefinitionV9(s.getName()));
+            TradingStatementWrapper demaV9 = testStrategy(s, new DEMAStrategyDefinitionV9(s.getName()));
             statementsDEMAv9.add(demaV9);
         });
         reportToTable("DEMAv9", statementsDEMAv9, table);
 
 
-        List<TradingStatement> statementsST1 = new ArrayList<>();
+        List<TradingStatementWrapper> statementsST1 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatement st1 = testStrategy(s, new SuperTrendStrategyV1(s.getName()));
+            TradingStatementWrapper st1 = testStrategy(s, new SuperTrendStrategyV1(s.getName()));
             statementsST1.add(st1);
         });
         reportToTable("ST1", statementsST1, table);
@@ -141,37 +144,50 @@ public class StrategiesComparisonTest {
         print(table);
     }
 
-    private static TradingStatement testStrategy(File file, StrategyDefinition def) {
+    private static TradingStatementWrapper testStrategy(File file, StrategyDefinition def) {
         def.updateSeries(getQuotesFromFile(file));
 
         BarSeriesManager seriesManager = new BarSeriesManager(def.getSeries());
-        TradingRecord tradingRecord = seriesManager.run(def.getStrategy());
+        TradingRecord record = seriesManager.run(def.getStrategy());
 
         log.info(def.getClass().getSimpleName());
-        ReportGenerator.printTradingRecords(tradingRecord, file.getName());
-        ReportGenerator.printTradingSummary(tradingRecord, file.getName());
+        ReportGenerator.printTradingRecords(record, file.getName());
+        ReportGenerator.printTradingSummary(record, file.getName());
 
-        return ReportGenerator.buildTradingStatement(tradingRecord);
+        TradingStatement statement = ReportGenerator.buildTradingStatement(record);
+
+        return new TradingStatementWrapper(statement, record);
     }
 
-    private static void reportToTable(String name, List<TradingStatement> statements, AsciiTable table) {
+    @Data
+    @AllArgsConstructor
+    static class TradingStatementWrapper {
+        private TradingStatement statement;
+        private TradingRecord record;
+    }
+
+    private static void reportToTable(String name, List<TradingStatementWrapper> statements, AsciiTable table) {
         DecimalFormat df = new DecimalFormat("0.000");
-        Function<List<TradingStatement>, Double> percent = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).sum();
-        Function<List<TradingStatement>, Double> positions = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
-        Function<List<TradingStatement>, Double> winning = (s) -> s.stream().mapToDouble(ReportGenerator::winPositionsCount).sum();
-        Function<List<TradingStatement>, Double> total = (s) -> s.stream().mapToDouble(ReportGenerator::totalPositionsCount).sum();
+        Function<List<TradingStatementWrapper>, Double> percent = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalInPercent(it.statement)).sum();
+        Function<List<TradingStatementWrapper>, Double> dollarsEntry = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalEntryPositionsAmountInDollars(it.record)).sum();
+        Function<List<TradingStatementWrapper>, Double> dollarsExit = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalExitPositionsAmountInDollars(it.record)).sum();
+        Function<List<TradingStatementWrapper>, Double> dollarsGained = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalInDollars(it.statement)).sum();
+        Function<List<TradingStatementWrapper>, Double> positions = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalPositionsCount(it.statement)).sum();
+        Function<List<TradingStatementWrapper>, Double> winning = (s) -> s.stream().mapToDouble(it -> ReportGenerator.winPositionsCount(it.statement)).sum();
+        Function<List<TradingStatementWrapper>, Double> total = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalPositionsCount(it.statement)).sum();
 
         //from all traded symbols - get min, max, avg. This is useful when comparing with other strategies to identify the extremes.
-        Function<List<TradingStatement>, Double> maxGain = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).max().getAsDouble();
-        Function<List<TradingStatement>, Double> minGain = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).min().getAsDouble();
-        Function<List<TradingStatement>, Double> avgGain = (s) -> s.stream().mapToDouble(ReportGenerator::totalInPercent).average().getAsDouble();
+        Function<List<TradingStatementWrapper>, Double> maxGain = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalInPercent(it.statement)).max().getAsDouble();
+        Function<List<TradingStatementWrapper>, Double> minGain = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalInPercent(it.statement)).min().getAsDouble();
+        Function<List<TradingStatementWrapper>, Double> avgGain = (s) -> s.stream().mapToDouble(it -> ReportGenerator.totalInPercent(it.statement)).average().getAsDouble();
 
         Double winningRatio = winning.apply(statements) / total.apply(statements);
-
+        Double percent4 = dollarsGained.apply(statements) * 100 / dollarsEntry.apply(statements);
+        Double percent5 = percent.apply(statements) / positions.apply(statements);
 
         if (table.getColNumber() == 0) {
             table.addRule();
-            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN P.GAIN %", "MAX P.GAIN %", "AVG GAIN %", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
+            table.addRow("STRATEGY", "DATA SETS", "POSITIONS", "MIN P.GAIN %", "MAX P.GAIN %", "AVG GAIN %", "GAIN $", "GAIN %", "WINS RATIO").setTextAlignment(TextAlignment.CENTER);
             table.addRule();
         }
         table.addRow(name,
@@ -180,7 +196,9 @@ public class StrategiesComparisonTest {
                 df.format(minGain.apply(statements)) + "%",
                 df.format(maxGain.apply(statements)) + "%",
                 df.format(avgGain.apply(statements)) + "%",
+                df.format(dollarsGained.apply(statements)) + "$",
                 df.format(percent.apply(statements)) + "%",
+//                df.format(percent4) + "%",
                 df.format(winningRatio));
         table.addRule();
         table.getRenderer().setCWC(new CWC_LongestLine());
