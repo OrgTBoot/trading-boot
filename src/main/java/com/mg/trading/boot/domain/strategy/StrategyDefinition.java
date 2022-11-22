@@ -1,5 +1,6 @@
 package com.mg.trading.boot.domain.strategy;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import org.ta4j.core.BarSeries;
 import org.ta4j.core.Strategy;
@@ -12,6 +13,10 @@ public interface StrategyDefinition {
     Parameters getParams();
 
     BarSeries getSeries();
+
+
+    @VisibleForTesting
+    void setSeries(BarSeries series);
 
     BarSeries updateSeries(List<TickerQuote> quotes);
 

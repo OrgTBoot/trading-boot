@@ -6,6 +6,7 @@ import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -42,6 +43,11 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
     }
 
     @Override
+    public void setSeries(BarSeries series) {
+        this.series = series;
+    }
+
+    @Override
     public Strategy getStrategy() {
         if (strategy == null) {
             this.strategy = initStrategy();
@@ -59,15 +65,14 @@ public class DEMAStrategyDefinition extends AbstractStrategyDefinition {
 
         //ENTRY RULES
         Rule crossedUp = debug(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
-        Rule marketHours = debug(new MarketHoursRule(series));
         Rule stopTotalLossRule = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
-        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
 
         //todo: crossedUp needs a confirmation - we need second indicator that can act as a confirmation
         Rule entryRule = debug(crossedUp
                 .and(marketHours)
-                .and(stopTotalLossRule.negation())
-                .and(market60MinLeft.negation()), Type.ENTRY);
+                .and(stopTotalLossRule.negation()), Type.ENTRY);
 
         //EXIT RULES
         Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bandFacade.upper()));

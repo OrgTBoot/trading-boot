@@ -6,6 +6,7 @@ import com.mg.trading.boot.domain.rules.StopTotalLossRule;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -41,6 +42,11 @@ public class DEMAStrategyDefinitionV9 extends AbstractStrategyDefinition {
     }
 
     @Override
+    public void setSeries(BarSeries series) {
+        this.series = series;
+    }
+
+    @Override
     public Strategy getStrategy() {
         if (strategy == null) {
             this.strategy = initStrategy();
@@ -56,8 +62,8 @@ public class DEMAStrategyDefinitionV9 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandelier = new ChandelierExitLongIndicator(series, params.getCndBarCount(), params.getCndMultiplier());
 
         //ENTRY RULES
-        Rule marketHours = debug(new MarketHoursRule(series));
         Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
         Rule maxTotalLoss = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
         Rule chandelierUnderPrice = debug(new UnderIndicatorRule(chandelier, closePrice));
         Rule zlEmaUnderPrice = debug(new UnderIndicatorRule(zlemaIndicator, closePrice));
@@ -66,7 +72,6 @@ public class DEMAStrategyDefinitionV9 extends AbstractStrategyDefinition {
 
         Rule entryRule = debug(
                 marketHours
-                        .and(market60MinLeft.negation())
 //                        .and(maxTotalLoss.negation())
                         .and(hasTotal4PercentLoss.negation())//TODO: this parameter was set based on results from data sets - we should not trust it yet. More testing TBD.
                         .and(chandelierUnderPrice)

@@ -4,7 +4,6 @@ import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.domain.rules.TracingRule;
 import com.mg.trading.boot.utils.BarSeriesUtils;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.Level;
 import org.springframework.util.CollectionUtils;
 import org.ta4j.core.Bar;
 import org.ta4j.core.BarSeries;

@@ -6,6 +6,7 @@ import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -40,6 +41,11 @@ public class DEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
     }
 
     @Override
+    public void setSeries(BarSeries series) {
+        this.series = series;
+    }
+
+    @Override
     public Strategy getStrategy() {
         if (strategy == null) {
             this.strategy = initStrategy();
@@ -56,11 +62,12 @@ public class DEMAStrategyDefinitionV4 extends AbstractStrategyDefinition {
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
         //ENTRY RULES
-        Rule marketHours = debug(new MarketHoursRule(series));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
+
         Rule crossedUpDEMA = debug(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
         Rule chandelierUnderPrice = debug(new UnderIndicatorRule(chandLong, closePrice));
         Rule stopTotalLossRule = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
-        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
 //        Rule superTrendUpSignalUp = trace(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP));
 
         Rule entryRule = debug(

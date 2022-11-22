@@ -24,6 +24,8 @@
 package com.mg.trading.boot.tbd.charts;
 
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
+import com.mg.trading.boot.domain.strategy.StrategyDefinition;
+import com.mg.trading.boot.domain.strategy.dema5.DEMAStrategyDefinitionV5;
 import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import org.jfree.chart.ChartFactory;
@@ -57,6 +59,40 @@ import java.util.List;
  */
 public class CandlestickChart {
 
+    public void display(BarSeries series,
+                        TimeSeriesCollection dataset,
+                        StrategyDefinition strategyDefinition) {
+
+        OHLCDataset ohlcDataset = createOHLCDataset(strategyDefinition.getSymbol(), series);
+
+        JFreeChart chart = ChartFactory.createCandlestickChart("Chart", "Time", "USD", ohlcDataset, true);
+
+        CandlestickRenderer renderer = new CandlestickRenderer();
+        renderer.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
+        XYPlot plot = chart.getXYPlot();
+        plot.setRenderer(renderer);
+        // Additional dataset
+        int index = 1;
+        plot.setDataset(index, dataset);
+        plot.mapDatasetToRangeAxis(index, 0);
+        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer(true, false);
+        renderer2.setSeriesPaint(index, Color.blue);
+        plot.setRenderer(index, renderer2);
+        // Misc
+        plot.setRangeGridlinePaint(Color.lightGray);
+        plot.setBackgroundPaint(Color.white);
+        NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();
+        numberAxis.setAutoRangeIncludesZero(false);
+        plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
+
+        // Strategy buy/sell signals
+        strategyDefinition.setSeries(series);
+        addBuySellSignals(series, strategyDefinition.getStrategy(), plot);
+
+        displayChart(chart);
+    }
+
+
     /**
      * Builds a JFreeChart OHLC dataset from a ta4j bar series.
      *
@@ -86,7 +122,7 @@ public class CandlestickChart {
         return new DefaultHighLowDataset(stock, dates, highs, lows, opens, closes, volumes);
     }
 
-    private static TimeSeries buildChartBarSeries(BarSeries barSeries, Indicator<Num> indicator, String name) {
+    public static TimeSeries buildChartBarSeries(BarSeries barSeries, Indicator<Num> indicator, String name) {
         TimeSeries chartTimeSeries = new TimeSeries(name);
         for (int i = 0; i < barSeries.getBarCount(); i++) {
             Bar bar = barSeries.getBar(i);
@@ -116,7 +152,7 @@ public class CandlestickChart {
                     .getFirstMillisecond();
             Marker buyMarker = new ValueMarker(buySignalBarTime);
             buyMarker.setPaint(Color.GREEN);
-            buyMarker.setLabel("BUY");
+            buyMarker.setLabel("B");
             plot.addDomainMarker(buyMarker);
             // Sell signal
             double sellSignalBarTime = new Minute(
@@ -124,7 +160,7 @@ public class CandlestickChart {
                     .getFirstMillisecond();
             Marker sellMarker = new ValueMarker(sellSignalBarTime);
             sellMarker.setPaint(Color.RED);
-            sellMarker.setLabel("SELL");
+            sellMarker.setLabel("S");
             plot.addDomainMarker(sellMarker);
         }
     }
@@ -147,51 +183,5 @@ public class CandlestickChart {
         frame.pack();
         RefineryUtilities.centerFrameOnScreen(frame);
         frame.setVisible(true);
-    }
-
-
-    public static void main(String[] args) {
-        String fileName = "tmp/TQQQ.json_exc";
-        BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
-
-        ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
-        SuperTrend superTrendShort = new SuperTrend(series, 10, 3D);
-        SuperTrend superTrendMed = new SuperTrend(series, 15, 4D);
-        SuperTrend superTrendLong = new SuperTrend(series, 20, 5D);
-        CCIIndicator shortCci = new CCIIndicator(series, 5);
-
-        OHLCDataset ohlcDataset = createOHLCDataset("TQQQ", series);
-        TimeSeriesCollection dataset = new TimeSeriesCollection();
-        dataset.addSeries(buildChartBarSeries(series, superTrendShort, "SS"));
-        dataset.addSeries(buildChartBarSeries(series, superTrendMed, "SM"));
-        dataset.addSeries(buildChartBarSeries(series, superTrendLong, "SL"));
-
-        JFreeChart chart = ChartFactory.createCandlestickChart("V5", "Time", "USD", ohlcDataset, true);
-
-        CandlestickRenderer renderer = new CandlestickRenderer();
-        renderer.setAutoWidthMethod(CandlestickRenderer.WIDTHMETHOD_SMALLEST);
-        XYPlot plot = chart.getXYPlot();
-        plot.setRenderer(renderer);
-        // Additional dataset
-        int index = 1;
-        plot.setDataset(index, dataset);
-        plot.mapDatasetToRangeAxis(index, 0);
-        XYLineAndShapeRenderer renderer2 = new XYLineAndShapeRenderer(true, false);
-        renderer2.setSeriesPaint(index, Color.blue);
-        plot.setRenderer(index, renderer2);
-        // Misc
-        plot.setRangeGridlinePaint(Color.lightGray);
-        plot.setBackgroundPaint(Color.white);
-        NumberAxis numberAxis = (NumberAxis) plot.getRangeAxis();
-        numberAxis.setAutoRangeIncludesZero(false);
-        plot.setDatasetRenderingOrder(DatasetRenderingOrder.FORWARD);
-
-        SuperTrendStrategyV1 strategyDef = new SuperTrendStrategyV1("S");
-        strategyDef.setSeries(series);
-        addBuySellSignals(series, strategyDef.getStrategy(), plot);
-        /*
-         * Displaying the chart
-         */
-        displayChart(chart);
     }
 }

@@ -1,10 +1,9 @@
 package com.mg.trading.boot.domain.strategy.supertrend;
 
+import com.mg.trading.boot.domain.indicators.supertrentv2.Signal;
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
-import com.mg.trading.boot.domain.rules.ConsecutiveLossPositionsRule;
-import com.mg.trading.boot.domain.rules.MarketHoursRule;
-import com.mg.trading.boot.domain.rules.MarketTimeLeftRule;
-import com.mg.trading.boot.domain.rules.StopTotalLossRule;
+import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
+import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
@@ -13,12 +12,10 @@ import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
 import org.ta4j.core.indicators.CCIIndicator;
+import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
-import org.ta4j.core.rules.OverIndicatorRule;
-import org.ta4j.core.rules.StopGainRule;
-import org.ta4j.core.rules.StopLossRule;
-import org.ta4j.core.rules.UnderIndicatorRule;
+import org.ta4j.core.rules.*;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;

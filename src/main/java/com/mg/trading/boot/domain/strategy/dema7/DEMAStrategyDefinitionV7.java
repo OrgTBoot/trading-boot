@@ -5,6 +5,7 @@ import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -39,6 +40,11 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
     }
 
     @Override
+    public void setSeries(BarSeries series) {
+        this.series = series;
+    }
+
+    @Override
     public Strategy getStrategy() {
         if (strategy == null) {
             this.strategy = initStrategy();
@@ -66,14 +72,13 @@ public class DEMAStrategyDefinitionV7 extends AbstractStrategyDefinition {
         Rule superTrendUp3 = debug(new SuperTrendTrendRule(series, stLength3, Trend.UP, 3D), "BUY3");
         Rule superTrendUp = debug(superTrendUp1.and(superTrendUp2).and(superTrendUp3), "All BUY");
 
-        Rule marketHours = debug(new MarketHoursRule(series));
         Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
         Rule stopTotalLossRule = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
 
         Rule entryRule = debug(priceOverLongDEMA
                         .and(superTrendUp)
                         .and(marketHours)                         // 3. and enter only in marked hours
-                        .and(market60MinLeft.negation())          // 4. and avoid entering in 60 min before market close
                         .and(stopTotalLossRule.negation()),       // 5. and avoid entering again in a bearish stock
                 Type.ENTRY);
 

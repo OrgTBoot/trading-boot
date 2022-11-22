@@ -6,6 +6,7 @@ import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -37,6 +38,11 @@ public class DEMAStrategyDefinitionV2 extends AbstractStrategyDefinition {
     @Override
     public DEMAParametersV2 getParams() {
         return params;
+    }
+
+    @Override
+    public void setSeries(BarSeries series) {
+        this.series = series;
     }
 
     @Override

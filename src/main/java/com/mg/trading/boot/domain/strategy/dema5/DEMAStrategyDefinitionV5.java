@@ -6,6 +6,7 @@ import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -15,6 +16,7 @@ import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.rules.*;
 
+import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
 import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
@@ -47,13 +49,17 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         return strategy;
     }
 
+    public void setSeries(BarSeries series) {
+        super.series = series;
+    }
+
     private Strategy initStrategy() {
         //INDICATORS
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, params.getLongBarCount());
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getBollingerBarCount(), params.getBollingerMultiplier());
-        ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
+//        ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
 
         //ENTRY RULES
         Rule priceOverLongDEMA = debug(new OverIndicatorRule(closePrice, longIndicator));
@@ -75,7 +81,7 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
         Rule crossedDownDEMA = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
         Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN), "SELL");
-        Rule chandelierOverPrice = debug(new OverIndicatorRule(chandLong, closePrice));
+//        Rule chandelierOverPrice = debug(new OverIndicatorRule(chandLong, closePrice));
 
         Rule has5PercentLoss = debug(new StopLossRule(closePrice, 2), "Has -2%");
         Rule has1PercentProfit = debug(new StopGainRule(closePrice, 1), "Has > 1%");
@@ -86,8 +92,8 @@ public class DEMAStrategyDefinitionV5 extends AbstractStrategyDefinition {
         Rule priceCrossedDownDEMA = new CrossedDownIndicatorRule(closePrice, longIndicator);
         Rule exitRule = debug(
                 bollingerCrossUp                                      // 1. trend reversal signal, reached upper line, market will start selling
-                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierOverPrice.or(priceCrossedDownDEMA))) // 2. confirmation
-                        .or(has5PercentLoss.and(superTrendSell).and(chandelierOverPrice.or(priceCrossedDownDEMA))) // 3. position stop loss
+                        .or(crossedDownDEMA.and(superTrendSell).and((priceCrossedDownDEMA))) // 2. confirmation
+                        .or(has5PercentLoss.and(superTrendSell).and((priceCrossedDownDEMA))) // 3. position stop loss
                         .or(market60MinLeft.and(has1PercentProfit))   // 4. or 60m to market close, take profits >= 1%
                         .or(market30MinLeft.and(hasAnyProfit))        // 5. or 30m to market close, take any profits > 0%
                         .or(market10MinLeft)                          // 6. or 10m to market close, force close position even in loss

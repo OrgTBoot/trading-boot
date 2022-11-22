@@ -6,6 +6,7 @@ import com.mg.trading.boot.domain.rules.*;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
+import org.ta4j.core.BarSeries;
 import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
@@ -42,6 +43,11 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
     }
 
     @Override
+    public void setSeries(BarSeries series) {
+        this.series = series;
+    }
+
+    @Override
     public Strategy getStrategy() {
         if (strategy == null) {
             this.strategy = initStrategy();
@@ -57,14 +63,13 @@ public class EMAStrategyDefinition extends AbstractStrategyDefinition {
         //entry
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getLongBarCount(), params.getBollingerMultiplier());
         Rule crossedUpEMA = debug(new CrossedUpIndicatorRule(shortIndicator, longIndicator));
-        Rule marketHours = debug(new MarketHoursRule(series));
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
         Rule stopTotalLossRule = debug(new StopTotalLossRule(series, params.getTotalLossThresholdPercent()));
-        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES));
 
         Rule entryRule = debug(crossedUpEMA
-                .and(marketHours)                         // and enter only in marked hours
-                .and(stopTotalLossRule.negation())        // and avoid entering again in a bearish stock
-                .and(market60MinLeft.negation()), Type.ENTRY);         // and avoid entering in 60 min before market close
+                .and(marketHours)
+                .and(stopTotalLossRule.negation()), Type.ENTRY);
 
         //exit
         Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()));
