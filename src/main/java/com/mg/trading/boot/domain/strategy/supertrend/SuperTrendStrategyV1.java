@@ -1,9 +1,10 @@
 package com.mg.trading.boot.domain.strategy.supertrend;
 
-import com.mg.trading.boot.domain.indicators.supertrentv2.Signal;
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
-import com.mg.trading.boot.domain.indicators.supertrentv2.Trend;
-import com.mg.trading.boot.domain.rules.*;
+import com.mg.trading.boot.domain.rules.ConsecutiveLossPositionsRule;
+import com.mg.trading.boot.domain.rules.MarketHoursRule;
+import com.mg.trading.boot.domain.rules.MarketTimeLeftRule;
+import com.mg.trading.boot.domain.rules.StopTotalLossRule;
 import com.mg.trading.boot.domain.rules.TracingRule.Type;
 import com.mg.trading.boot.domain.strategy.AbstractStrategyDefinition;
 import lombok.extern.log4j.Log4j2;
@@ -12,10 +13,12 @@ import org.ta4j.core.BaseStrategy;
 import org.ta4j.core.Rule;
 import org.ta4j.core.Strategy;
 import org.ta4j.core.indicators.CCIIndicator;
-import org.ta4j.core.indicators.DoubleEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
-import org.ta4j.core.rules.*;
+import org.ta4j.core.rules.OverIndicatorRule;
+import org.ta4j.core.rules.StopGainRule;
+import org.ta4j.core.rules.StopLossRule;
+import org.ta4j.core.rules.UnderIndicatorRule;
 
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
@@ -94,11 +97,13 @@ public class SuperTrendStrategyV1 extends AbstractStrategyDefinition {
         Rule positionLoss3Percent = debug(new StopLossRule(closePrice, 3), "LOSS 6%");
         Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
-        Rule superTrendSell = debug(superTrendLongSell.and(superTrendShortSell).and(superTrendMedSell), "SELL");
 
         Rule exitRule = debug(
                 bollingerCrossUp
-                        .or(superTrendSell.and(cciSell))
+                        .or(superTrendLongSell
+                                .and(superTrendShortSell)
+                                .and(superTrendMedSell)
+                                .and(cciSell))
                         .or(market60MinLeft.and(position1PercentGain))
                         .or(market30MinLeft.and(positionAnyGain))
                         .or(market10MinLeft)
