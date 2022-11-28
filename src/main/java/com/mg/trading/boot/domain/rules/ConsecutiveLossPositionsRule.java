@@ -16,11 +16,9 @@ import java.math.BigDecimal;
 
 @Log4j2
 public class ConsecutiveLossPositionsRule extends AbstractRule implements Rule {
-    private final BarSeries series;
     private final int lossPositionsThreshold;
 
-    public ConsecutiveLossPositionsRule(BarSeries series, int lossPositionsThreshold) {
-        this.series = series;
+    public ConsecutiveLossPositionsRule(int lossPositionsThreshold) {
         this.lossPositionsThreshold = lossPositionsThreshold;
     }
 
@@ -49,7 +47,7 @@ public class ConsecutiveLossPositionsRule extends AbstractRule implements Rule {
         }
 
         if (satisfied) {
-            log.warn("You've reached total consecutive lost positions: {}", counter);
+            log.debug("You've reached total consecutive lost positions: {}", counter);
         }
 
         traceIsSatisfied(index, satisfied);

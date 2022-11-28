@@ -1,4 +1,4 @@
-package com.mg.trading.boot.api;
+package com.mg.trading.boot.domain.strategy;
 
 public enum TradingStrategies {
     EMA,
@@ -8,6 +8,7 @@ public enum TradingStrategies {
     DEMA_V4,
     DEMA_V5,
     DEMA_V6,
+    DEMA_V6_1,
     DEMA_V7,
     DEMA_V8,
     DEMA_V9,

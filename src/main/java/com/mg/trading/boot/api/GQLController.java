@@ -10,6 +10,7 @@ import com.mg.trading.boot.domain.models.TradingLog;
 import com.mg.trading.boot.domain.reporting.ReportGenerator;
 import com.mg.trading.boot.domain.strategy.Parameters;
 import com.mg.trading.boot.domain.strategy.StrategyDefinition;
+import com.mg.trading.boot.domain.strategy.TradingStrategies;
 import com.mg.trading.boot.domain.strategy.crypto.st1.CryptoStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema1.DEMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.dema2.DEMAStrategyDefinitionV2;
@@ -17,6 +18,7 @@ import com.mg.trading.boot.domain.strategy.dema3.DEMAStrategyDefinitionV3;
 import com.mg.trading.boot.domain.strategy.dema4.DEMAStrategyDefinitionV4;
 import com.mg.trading.boot.domain.strategy.dema5.DEMAStrategyDefinitionV5;
 import com.mg.trading.boot.domain.strategy.dema6.DEMAStrategyDefinitionV6;
+import com.mg.trading.boot.domain.strategy.dema6_1.DEMAStrategyDefinitionV6_1;
 import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
@@ -185,6 +187,8 @@ public class GQLController {
                 return new DEMAStrategyDefinitionV5(symbol);
             case DEMA_V6:
                 return new DEMAStrategyDefinitionV6(symbol);
+            case DEMA_V6_1:
+                return new DEMAStrategyDefinitionV6_1(symbol);
             case DEMA_V7:
                 return new DEMAStrategyDefinitionV7(symbol);
             case DEMA_V8:
