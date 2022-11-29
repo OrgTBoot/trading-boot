@@ -4,7 +4,6 @@ import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
 import com.mg.trading.boot.domain.strategy.dema6_1.DEMAStrategyDefinitionV6_1;
-import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.slf4j.LoggerFactory;
@@ -27,7 +26,10 @@ public class StrategyCandlestickChart {
 
         String symbol = "Stock";
 //        String fileName = "tmp/10_24_2022_FRPT.json";
-        String fileName = "tmp/AMD.json";
+//        String fileName = "tmp/AMD.json";
+        String fileName = "11_28_2022/AMD.json";
+//        String fileName = "tmp/TNA.json";
+//        String fileName = "tmp/AXSM.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();

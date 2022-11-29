@@ -23,6 +23,7 @@ import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.etf1.ETFStrategyV1;
 import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
@@ -173,6 +174,8 @@ public class GQLController {
 
     private StrategyDefinition selectStrategyDef(TradingStrategies name, String symbol) {
         switch (name) {
+            case ETF_V1:
+                return new ETFStrategyV1(symbol);
             case EMA:
                 return new EMAStrategyDefinition(symbol);
             case DEMA:
