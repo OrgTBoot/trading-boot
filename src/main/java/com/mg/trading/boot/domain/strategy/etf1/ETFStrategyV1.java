@@ -54,57 +54,62 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, params.getLongBarCount());
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
-
-        //ENTRY RULES
-        Rule priceOverLongDEMA = debug(new OverIndicatorRule(closePrice, longIndicator));
-        Rule superTrendBuy = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP, 3D), "BUY");
-        Rule superTrendSlowBuy = debug(new UnderIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "BUY");
-        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
-        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
-        Rule stopTotalLossRule = debug(new StopTotalLossRule(series, BigDecimal.valueOf(4)));
-        Rule lastExit60BarsAgo = new IntervalFromLastTradeRule(60, Trade.TradeType.SELL);
-        Rule oneTransaction = new PositionsCountRule(1);
-
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getBollingerBarCount(), params.getBollingerMultiplier());
 
-        Rule lastEntry15BarsAgo = debug(new IntervalFromLastTradeRule(5, Trade.TradeType.BUY), "ENTRY 10 BARS AGO");
-        Rule bollingerSell = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "BOLLINGER CROSS UP");
-        Rule spikeSell = debug(bollingerSell.and(lastEntry15BarsAgo), "SPIKE SELL");
+        //SHARED RULES
+        Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
+        Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+
+        //ENTRY RULES
+        Rule priceOverLongDEMABuy = debug(new OverIndicatorRule(closePrice, longIndicator));
+        Rule superTrendBuy = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP, 3D), "BUY");
+        Rule superTrendSlowBuy = debug(new UnderIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "BUY SLOW");
+        Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
+        Rule stopTotalLossRule = debug(new StopTotalLossRule(series, BigDecimal.valueOf(4)));
+        Rule lastExit60BarsAgo = new IntervalFromLastTradeRule(30, Trade.TradeType.SELL);
+        Rule oneTransaction = new PositionsCountRule(1);
 
         Rule entryRule = debug(marketHours
-                        .and(priceOverLongDEMA)
+                        .and(priceOverLongDEMABuy)
                         .and(superTrendBuy)
                         .and(superTrendSlowBuy)
-//                        .and(oneTransaction.negation())
                         .and(lastExit60BarsAgo)
                         .and(stopTotalLossRule.negation()),
                 Type.ENTRY);
 
 
         //EXIT RULES
-        Rule priceOverDEMA = debug(new OverIndicatorRule(closePrice, longIndicator), "DEMA cross Down");
-        Rule crossedDownDEMA = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
+        Rule priceOverDEMASell = debug(new OverIndicatorRule(closePrice, longIndicator), "DEMA cross Down");
+        Rule crossedDownDEMASell = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
         Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN, 3D), "SELL");
-        Rule chandelierOverPrice = debug(new OverIndicatorRule(chandLong, closePrice));
+        Rule superTrendSlowSell = debug(new OverIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "SELL SLOW");
+        Rule chandelierOverPriceSell = debug(new OverIndicatorRule(chandLong, closePrice));
+
+        Rule lastEntry5BarsAgo = debug(new IntervalFromLastTradeRule(5, Trade.TradeType.BUY), "ENTRY 5 BARS AGO");
+        Rule bollingerSell = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "BOLLINGER CROSS UP");
+        Rule spikeSell = debug(bollingerSell.and(lastEntry5BarsAgo), "SPIKE SELL");
+
 
         Rule loss2Percent = debug(new StopLossRule(closePrice, 2), "LOSS 2%");
+        Rule loss05Percent = debug(new StopLossRule(closePrice, 0.5), "LOSS 2%");
         Rule gain3Percent = debug(new StopGainRule(closePrice, 3), "GAIN 3%");
         Rule gain1Percent = debug(new StopGainRule(closePrice, 1), "GAIN 1%");
         Rule gain05Percent = debug(new StopGainRule(closePrice, 0.5), "GAIN 0.5%");
-        Rule gainAny = debug(new StopGainRule(closePrice, 0.1), "GAIN 0.1%");
-        Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
-        Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
+        Rule gainAny = debug(new StopGainRule(closePrice, 0.01), "GAIN 0.1%");
 
-        Rule downTrendWith3PercentGain = priceOverDEMA.and(gain3Percent);
-        Rule downTrendWith05Gain = crossedDownDEMA.and(gain05Percent);
-        Rule downTrendWithGain = priceOverLongDEMA.and(superTrendSell).and(gainAny);
+        Rule downTrendWith3PercentGain = priceOverDEMASell.and(gain3Percent);
+        Rule downTrendWith05Gain = crossedDownDEMASell.and(gain05Percent);
+        Rule downTrendWithGain = crossedDownDEMASell.and(superTrendSlowSell).and(gainAny);
+        Rule downTrendLoss05 = loss05Percent.and(crossedDownDEMASell).and(chandelierOverPriceSell);
+        Rule downTrend = crossedDownDEMASell.and(superTrendSell).and(chandelierOverPriceSell);
 
         Rule exitRule = debug(spikeSell
                         .or(downTrendWith3PercentGain)
                         .or(downTrendWith05Gain)
-//                        .or(downTrendWithGain)
-                        .or(crossedDownDEMA.and(superTrendSell).and(chandelierOverPrice))
-                        .or(loss2Percent.and(superTrendSell).and(chandelierOverPrice))
+                        .or(downTrendLoss05)
+                        .or(downTrend)
+//                        .or(loss2Percent.and(superTrendSell).and(chandelierOverPriceSell))
                         .or(market60MinLeft.and(gain1Percent))
                         .or(market30MinLeft.and(gainAny))
                         .or(market10MinLeft)
