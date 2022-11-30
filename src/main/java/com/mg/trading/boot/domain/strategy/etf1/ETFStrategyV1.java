@@ -80,7 +80,7 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
 
 
         //EXIT RULES
-        Rule priceOverDEMASell = debug(new OverIndicatorRule(closePrice, longIndicator), "DEMA cross Down");
+        Rule priceUnderDEMASell = debug(new UnderIndicatorRule(closePrice, longIndicator), "DEMA cross Down");
         Rule crossedDownDEMASell = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
         Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN, 3D), "SELL");
         Rule superTrendSlowSell = debug(new OverIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "SELL SLOW");
@@ -98,7 +98,7 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         Rule gain05Percent = debug(new StopGainRule(closePrice, 0.5), "GAIN 0.5%");
         Rule gainAny = debug(new StopGainRule(closePrice, 0.01), "GAIN 0.1%");
 
-        Rule downTrendWith3PercentGain = priceOverDEMASell.and(gain3Percent);
+        Rule downTrendWith3PercentGain = priceUnderDEMASell.and(gain3Percent);
         Rule downTrendWith05Gain = crossedDownDEMASell.and(gain05Percent);
         Rule downTrendWithGain = crossedDownDEMASell.and(superTrendSlowSell).and(gainAny);
         Rule downTrendLoss05 = loss05Percent.and(crossedDownDEMASell).and(chandelierOverPriceSell);
