@@ -137,6 +137,15 @@ public class GQLController {
         return "Completed. Please see details in console.";
     }
 
+    @GraphQLMutation(description = "Start trading strategy for the given list of symbols. Strategy will run in background until stopped.")
+    public String triggerSymbolsLiveTrading(@GraphQLArgument(name = "symbols")
+                                            @GraphQLNonNull final List<String> symbols,
+                                            @GraphQLArgument(name = "strategy")
+                                            @GraphQLNonNull final TradingStrategies strategy) {
+        symbols.forEach(it -> triggerLiveTrading(it, strategy));
+        return "Running...";
+    }
+
     @GraphQLMutation(description = "Start trading strategy for the given symbol. Strategy will run in background until stopped.")
     public String triggerLiveTrading(@GraphQLArgument(name = "symbol")
                                      @GraphQLNonNull final String symbol,

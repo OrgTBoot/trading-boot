@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 import static com.mg.trading.boot.domain.rules.MarketTimeLeftRule.Market.MARKET_HOURS;
 import static com.mg.trading.boot.domain.strategy.TradingStrategies.DEMA_V6_1;
+import static com.mg.trading.boot.domain.strategy.TradingStrategies.ETF_V1;
 
 @Log4j2
 public class ETFStrategyV1 extends AbstractStrategyDefinition {
@@ -27,7 +28,7 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
     private Strategy strategy;
 
     public ETFStrategyV1(String symbol) {
-        super(symbol, DEMA_V6_1.name());
+        super(symbol, ETF_V1.name());
     }
 
     @Override
