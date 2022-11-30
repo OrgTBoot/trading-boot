@@ -102,14 +102,15 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         Rule downTrendWith05Gain = crossedDownDEMASell.and(gain05Percent);
         Rule downTrendWithGain = crossedDownDEMASell.and(superTrendSlowSell).and(gainAny);
         Rule downTrendLoss05 = loss05Percent.and(crossedDownDEMASell).and(chandelierOverPriceSell);
-        Rule downTrend = crossedDownDEMASell.and(superTrendSell).and(chandelierOverPriceSell);
+//        Rule downTrend = crossedDownDEMASell.and(superTrendSell).and(chandelierOverPriceSell);
+        Rule downTrend = priceUnderDEMASell.and(superTrendSell).and(chandelierOverPriceSell);
 
         Rule exitRule = debug(spikeSell
                         .or(downTrendWith3PercentGain)
                         .or(downTrendWith05Gain)
                         .or(downTrendLoss05)
-                        .or(downTrend)
-//                        .or(loss2Percent.and(superTrendSell).and(chandelierOverPriceSell))
+//                        .or(downTrend)
+                        .or(loss2Percent.and(priceUnderDEMASell))
                         .or(market60MinLeft.and(gain1Percent))
                         .or(market30MinLeft.and(gainAny))
                         .or(market10MinLeft)
