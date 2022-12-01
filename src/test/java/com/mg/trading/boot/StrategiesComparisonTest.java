@@ -15,6 +15,7 @@ import com.mg.trading.boot.domain.strategy.dema7.DEMAStrategyDefinitionV7;
 import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
+import com.mg.trading.boot.domain.strategy.etf1.ETFStrategyV1;
 import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import de.vandermeer.asciitable.AsciiTable;
@@ -52,7 +53,10 @@ public class StrategiesComparisonTest {
     public void testStrategiesGain() {
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_21_2022_red");
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_28_2022_ETF");
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_29_2022_ETF");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
 //
@@ -108,14 +112,14 @@ public class StrategiesComparisonTest {
 //            statementsDEMAv6.add(demaV6);
 //        });
 //        reportToTable("DEMAv6", statementsDEMAv6, table);
-
-        List<TradingStatementWrapper> statementsDEMAv61 = new ArrayList<>();
-        quoteFiles.forEach(s -> {
-            TradingStatementWrapper demaV61 = testStrategy(s, new DEMAStrategyDefinitionV6_1(s.getName()));
-            statementsDEMAv61.add(demaV61);
-        });
-        reportToTable("DEMAv6_1", statementsDEMAv61, table);
-
+//
+//        List<TradingStatementWrapper> statementsDEMAv61 = new ArrayList<>();
+//        quoteFiles.forEach(s -> {
+//            TradingStatementWrapper demaV61 = testStrategy(s, new DEMAStrategyDefinitionV6_1(s.getName()));
+//            statementsDEMAv61.add(demaV61);
+//        });
+//        reportToTable("DEMAv6_1", statementsDEMAv61, table);
+//
 //
 //        List<TradingStatementWrapper> statementsDEMAv7 = new ArrayList<>();
 //        quoteFiles.forEach(s -> {
@@ -146,6 +150,14 @@ public class StrategiesComparisonTest {
 //            statementsST1.add(st1);
 //        });
 //        reportToTable("ST1", statementsST1, table);
+
+
+        List<TradingStatementWrapper> statementsETF1 = new ArrayList<>();
+        quoteFiles.forEach(s -> {
+            TradingStatementWrapper etf1 = testStrategy(s, new ETFStrategyV1(s.getName()));
+            statementsETF1.add(etf1);
+        });
+        reportToTable("ETF1", statementsETF1, table);
 
 
         print(table);

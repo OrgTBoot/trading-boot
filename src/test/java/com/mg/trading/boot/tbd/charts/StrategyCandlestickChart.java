@@ -3,7 +3,7 @@ package com.mg.trading.boot.tbd.charts;
 import ch.qos.logback.classic.Level;
 import ch.qos.logback.classic.Logger;
 import com.mg.trading.boot.domain.indicators.supertrentv2.SuperTrend;
-import com.mg.trading.boot.domain.strategy.dema6_1.DEMAStrategyDefinitionV6_1;
+import com.mg.trading.boot.domain.strategy.etf1.ETFStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.slf4j.LoggerFactory;
@@ -25,11 +25,7 @@ public class StrategyCandlestickChart {
         logger.setLevel(Level.DEBUG);
 
         String symbol = "Stock";
-//        String fileName = "tmp/10_24_2022_FRPT.json";
-//        String fileName = "tmp/AMD.json";
-        String fileName = "11_28_2022/AMD.json";
-//        String fileName = "tmp/TNA.json";
-//        String fileName = "tmp/AXSM.json";
+        String fileName = "ETF/11_30_2022_ETF/SOXS.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
@@ -49,6 +45,7 @@ public class StrategyCandlestickChart {
         SuperTrend st10_10Ind = new SuperTrend(series, 10, 10D);
         SuperTrend st15_4Ind = new SuperTrend(series, 15, 4D);
         SuperTrend st20_4Ind = new SuperTrend(series, 20, 4D);
+        SuperTrend st60_4Ind = new SuperTrend(series, 60, 4D);
         SuperTrend st20_5Ind = new SuperTrend(series, 20, 5D);
 
 //        dataset.addSeries(buildChartBarSeries(series, bollinger.lower(), "B_L"));
@@ -59,6 +56,7 @@ public class StrategyCandlestickChart {
         dataset.addSeries(buildChartBarSeries(series, st10_3Ind, "st10_3Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st10_4Ind, "st10_4Ind"));
         dataset.addSeries(buildChartBarSeries(series, st20_4Ind, "st20_4Ind"));
+//        dataset.addSeries(buildChartBarSeries(series, st60_4Ind, "st60_4Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st15_4Ind, "st15_4Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st20_5Ind, "st20_5Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st20_4Ind, "st20_4Ind"));
@@ -67,7 +65,8 @@ public class StrategyCandlestickChart {
 
         CandlestickChart chart = new CandlestickChart();
 //        chart.display(series, dataset, new DEMAStrategyDefinitionV3(symbol));
-        chart.display(series, dataset, new DEMAStrategyDefinitionV6_1(symbol));
+//        chart.display(series, dataset, new DEMAStrategyDefinitionV6_1(symbol));
+        chart.display(series, dataset, new ETFStrategyV1(symbol));
 //        chart.display(series, dataset, new SuperTrendStrategyV1(symbol));
     }
 

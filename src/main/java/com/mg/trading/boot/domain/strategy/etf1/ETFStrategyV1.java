@@ -10,6 +10,7 @@ import lombok.extern.log4j.Log4j2;
 import org.ta4j.core.*;
 import org.ta4j.core.indicators.ChandelierExitLongIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
+import org.ta4j.core.indicators.ZLEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 import org.ta4j.core.rules.*;
@@ -54,6 +55,7 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator shortIndicator = new DoubleEMAIndicator(closePrice, params.getShortBarCount());
         DoubleEMAIndicator longIndicator = new DoubleEMAIndicator(closePrice, params.getLongBarCount());
+        ZLEMAIndicator zlemaIndicator = new ZLEMAIndicator(closePrice, params.getLongBarCount());
         ChandelierExitLongIndicator chandLong = new ChandelierExitLongIndicator(series, params.getChandelierBarCount(), 3);
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getBollingerBarCount(), params.getBollingerMultiplier());
 
@@ -63,6 +65,7 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
 
         //ENTRY RULES
+        Rule priceOverLongZELMABuy = debug(new OverIndicatorRule(closePrice, zlemaIndicator));
         Rule priceOverLongDEMABuy = debug(new OverIndicatorRule(closePrice, longIndicator));
         Rule superTrendBuy = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP, 3D), "BUY");
         Rule superTrendSlowBuy = debug(new UnderIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "BUY SLOW");
@@ -72,7 +75,7 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         Rule oneTransaction = new PositionsCountRule(1);
 
         Rule entryRule = debug(marketHours
-                        .and(priceOverLongDEMABuy)
+                        .and(priceOverLongZELMABuy)
                         .and(superTrendBuy)
                         .and(superTrendSlowBuy)
                         .and(lastExit60BarsAgo)
@@ -84,6 +87,8 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         Rule priceUnderDEMASell = debug(new UnderIndicatorRule(closePrice, longIndicator), "DEMA cross Down");
         Rule crossedDownDEMASell = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
         Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN, 3D), "SELL");
+        Rule superTrendShortSell = debug(new OverIndicatorRule(new SuperTrend(series, 5, 3D), closePrice), "SELL SLOW");
+        Rule superTrendMedSell = debug(new OverIndicatorRule(new SuperTrend(series, 10, 3D), closePrice), "SELL SLOW");
         Rule superTrendSlowSell = debug(new OverIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "SELL SLOW");
         Rule chandelierOverPriceSell = debug(new OverIndicatorRule(chandLong, closePrice));
 
@@ -95,24 +100,27 @@ public class ETFStrategyV1 extends AbstractStrategyDefinition {
         Rule loss2Percent = debug(new StopLossRule(closePrice, 2), "LOSS 2%");
         Rule loss05Percent = debug(new StopLossRule(closePrice, 0.5), "LOSS 2%");
         Rule gain3Percent = debug(new StopGainRule(closePrice, 3), "GAIN 3%");
-        Rule gain1Percent = debug(new StopGainRule(closePrice, 1), "GAIN 1%");
         Rule gain05Percent = debug(new StopGainRule(closePrice, 0.5), "GAIN 0.5%");
         Rule gainAny = debug(new StopGainRule(closePrice, 0.01), "GAIN 0.1%");
 
-        Rule downTrendWith3PercentGain = priceUnderDEMASell.and(gain3Percent);
-        Rule downTrendWith05Gain = crossedDownDEMASell.and(gain05Percent);
-        Rule downTrendWithGain = crossedDownDEMASell.and(superTrendSlowSell).and(gainAny);
-        Rule downTrendLoss05 = loss05Percent.and(crossedDownDEMASell).and(chandelierOverPriceSell);
+        Rule zlEmaOverPriceSell = debug(new OverIndicatorRule(zlemaIndicator, closePrice));
+
+
+//        Rule downTrendWith3PercentGain = debug(priceUnderDEMASell.and(gain3Percent), "DT 3% GAIN");
+//        Rule downTrendWith05Gain = debug(crossedDownDEMASell.and(gain05Percent), "DT 0.5% GAIN");
 //        Rule downTrend = crossedDownDEMASell.and(superTrendSell).and(chandelierOverPriceSell);
-        Rule downTrend = priceUnderDEMASell.and(superTrendSell).and(chandelierOverPriceSell);
+        Rule downTrendWith3PercentGain = debug(zlEmaOverPriceSell.and(gain3Percent), "DT 3% GAIN");
+        Rule downTrendWith05Gain = debug(zlEmaOverPriceSell.and(gain05Percent), "DT 0.5% GAIN");
+        Rule downTrendLoss05 = debug(loss05Percent.and(crossedDownDEMASell).and(chandelierOverPriceSell), "DT 0.5% LOSS");
 
         Rule exitRule = debug(spikeSell
                         .or(downTrendWith3PercentGain)
                         .or(downTrendWith05Gain)
                         .or(downTrendLoss05)
+                        .or(loss2Percent.and(zlEmaOverPriceSell))
 //                        .or(downTrend)
-                        .or(loss2Percent.and(priceUnderDEMASell))
-                        .or(market60MinLeft.and(gain1Percent))
+//                        .or(market60MinLeft.and(gainAny)) // todo: P2: once we have more data sets test with this param, might be more profitable
+                        .or(market60MinLeft.and(gain05Percent))
                         .or(market30MinLeft.and(gainAny))
                         .or(market10MinLeft)
                         .or(stopTotalLossRule),
