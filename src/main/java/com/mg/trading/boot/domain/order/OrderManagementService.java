@@ -74,6 +74,14 @@ public class OrderManagementService implements QuoteChangeListener {
         AccountProvider account = broker.account();
         List<Order> openOrders = account.getOpenOrders(symbol);
 
+        List<Order> openBuyOrders = filter(openOrders, BUY);
+        if (notEmpty(openBuyOrders)) {
+            log.warn("Received {} SELL signal while there are {} open orders. Canceling buy orders...", symbol, openBuyOrders.size());
+            openBuyOrders.forEach(it -> account.cancelOrder(it.getId()));
+
+            openOrders = account.getOpenOrders(symbol);
+        }
+
         if (notEmpty(openOrders)) {
             log.warn("Skipping {} SELL. There are {} open orders.", symbol, openOrders.size());
             return;
