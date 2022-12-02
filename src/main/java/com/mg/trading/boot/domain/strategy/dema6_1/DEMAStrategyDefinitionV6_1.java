@@ -65,27 +65,30 @@ public class DEMAStrategyDefinitionV6_1 extends AbstractStrategyDefinition {
         //ENTRY RULES
         Rule priceOverLongDEMA = debug(new OverIndicatorRule(closePrice, longIndicator));
         Rule superTrendBuy = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.UP, Signal.UP, 3D), "BUY");
+        Rule superTrendSlowBuy = debug(new UnderIndicatorRule(new SuperTrend(series, 20, 4D), closePrice), "BUY");
         Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
         Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
         Rule stopTotalLossRule = debug(new StopTotalLossRule(series, BigDecimal.valueOf(4)));
         Rule lastExit60BarsAgo = new IntervalFromLastTradeRule(60, Trade.TradeType.SELL);
+        Rule oneTransaction = new PositionsCountRule(1);
+
+        BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getBollingerBarCount(), params.getBollingerMultiplier());
+
+        Rule lastEntry15BarsAgo = debug(new IntervalFromLastTradeRule(5, Trade.TradeType.BUY), "ENTRY 10 BARS AGO");
+        Rule bollingerSell = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "BOLLINGER CROSS UP");
+        Rule spikeSell = debug(bollingerSell.and(lastEntry15BarsAgo), "SPIKE SELL");
 
         Rule entryRule = debug(marketHours
                         .and(priceOverLongDEMA)
                         .and(superTrendBuy)
+                        .and(superTrendSlowBuy)
+//                        .and(oneTransaction.negation())
                         .and(lastExit60BarsAgo)
                         .and(stopTotalLossRule.negation()),
                 Type.ENTRY);
 
 
         //EXIT RULES
-        BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getBollingerBarCount(), params.getBollingerMultiplier());
-
-        Rule lastEntry15BarsAgo = debug(new IntervalFromLastTradeRule(15, Trade.TradeType.BUY), "ENTRY 10 BARS AGO");
-        Rule bollingerSell = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "BOLLINGER CROSS UP");
-        Rule spikeSell = debug(bollingerSell.and(lastEntry15BarsAgo), "SPIKE SELL");
-
-
         Rule priceOverDEMA = debug(new OverIndicatorRule(closePrice, longIndicator), "DEMA cross Down");
         Rule crossedDownDEMA = debug(new CrossedDownIndicatorRule(shortIndicator, longIndicator), "DEMA cross Down");
         Rule superTrendSell = debug(new SuperTrendRule(series, params.getShortBarCount(), Trend.DOWN, Signal.DOWN, 3D), "SELL");
@@ -100,11 +103,13 @@ public class DEMAStrategyDefinitionV6_1 extends AbstractStrategyDefinition {
         Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
 
         Rule downTrendWith3PercentGain = priceOverDEMA.and(gain3Percent);
-        Rule downTrendWithGain = crossedDownDEMA.and(gain05Percent);
+        Rule downTrendWith05Gain = crossedDownDEMA.and(gain05Percent);
+        Rule downTrendWithGain = priceOverLongDEMA.and(superTrendSell).and(gainAny);
 
         Rule exitRule = debug(spikeSell
                         .or(downTrendWith3PercentGain)
-                        .or(downTrendWithGain)
+                        .or(downTrendWith05Gain)
+//                        .or(downTrendWithGain)
                         .or(crossedDownDEMA.and(superTrendSell).and(chandelierOverPrice))
                         .or(loss2Percent.and(superTrendSell).and(chandelierOverPrice))
                         .or(market60MinLeft.and(gain1Percent))
