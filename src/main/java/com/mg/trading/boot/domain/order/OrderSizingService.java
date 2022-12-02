@@ -74,9 +74,9 @@ public class OrderSizingService {
         TickerQuote latestQuote = broker.ticker().getLatestTickerQuote(symbol);
         BigDecimal price = latestQuote.getClosePrice();
 
-        BigDecimal percent = OrderAction.BUY.equals(action) ? orderPricePercentAdd : orderSizePercent.negate();
-        BigDecimal amount = price.multiply(percent).divide(HUNDRED, RoundingMode.HALF_EVEN);
+        BigDecimal amount = price.multiply(orderPricePercentAdd).divide(HUNDRED, RoundingMode.HALF_EVEN);
 
+        amount = OrderAction.BUY.equals(action) ? amount : amount.negate();
         return price.add(amount);
     }
 }
