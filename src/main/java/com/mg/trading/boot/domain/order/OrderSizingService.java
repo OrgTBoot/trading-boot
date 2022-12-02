@@ -1,6 +1,7 @@
 package com.mg.trading.boot.domain.order;
 
 
+import com.mg.trading.boot.domain.models.OrderAction;
 import com.mg.trading.boot.domain.models.TickerQuote;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import lombok.extern.log4j.Log4j2;
@@ -69,11 +70,12 @@ public class OrderSizingService {
      * <p>
      * In other words price calibration is key when placing limit orders.
      */
-    public BigDecimal getCalculateMarketPrice(String symbol) {
+    public BigDecimal getCalculateMarketPrice(String symbol, OrderAction action) {
         TickerQuote latestQuote = broker.ticker().getLatestTickerQuote(symbol);
         BigDecimal price = latestQuote.getClosePrice();
 
-        BigDecimal amount = price.multiply(orderPricePercentAdd).divide(HUNDRED, RoundingMode.HALF_EVEN);
+        BigDecimal percent = OrderAction.BUY.equals(action) ? orderPricePercentAdd : orderSizePercent.negate();
+        BigDecimal amount = price.multiply(percent).divide(HUNDRED, RoundingMode.HALF_EVEN);
 
         return price.add(amount);
     }
