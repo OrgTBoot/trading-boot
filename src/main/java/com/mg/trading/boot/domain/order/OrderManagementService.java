@@ -93,8 +93,7 @@ public class OrderManagementService implements QuoteChangeListener {
 
     private void place(StrategyDefinition strategyDef, BrokerProvider broker, OrderAction action, BigDecimal quantity) {
         String symbol = strategyDef.getSymbol();
-        TickerQuote latestQuote = broker.ticker().getLatestTickerQuote(symbol);
-        BigDecimal price = latestQuote.getClosePrice();
+        BigDecimal price = this.orderSizingService.getCalculateMarketPrice(symbol);
 
         OrderRequest orderRequest = OrderRequest.builder()
                 .symbol(symbol)

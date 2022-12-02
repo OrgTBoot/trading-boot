@@ -25,6 +25,7 @@ graphql:
 account:
   order:
     size-percent: 3
+    price-percent-add: 0.1
     stale-ttl-sec: 60
 ##------------------------------------------------------------------
 ##------FEATURES CONFIGURATION--------------------------------------
