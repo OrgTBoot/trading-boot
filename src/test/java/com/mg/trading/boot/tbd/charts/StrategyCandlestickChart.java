@@ -8,7 +8,9 @@ import com.mg.trading.boot.tbd.TestDataProvider;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.slf4j.LoggerFactory;
 import org.ta4j.core.BarSeries;
+import org.ta4j.core.indicators.CCIIndicator;
 import org.ta4j.core.indicators.DoubleEMAIndicator;
+import org.ta4j.core.indicators.ZLEMAIndicator;
 import org.ta4j.core.indicators.bollinger.BollingerBandFacade;
 import org.ta4j.core.indicators.helpers.ClosePriceIndicator;
 
@@ -25,7 +27,7 @@ public class StrategyCandlestickChart {
         logger.setLevel(Level.DEBUG);
 
         String symbol = "Stock";
-        String fileName = "ETF/11_30_2022_ETF/SOXS.json";
+        String fileName = "ETF/12_02_2022_ETF/QID.json";
         BarSeries series = TestDataProvider.getBarSeriesFromFile(fileName);
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
@@ -33,7 +35,9 @@ public class StrategyCandlestickChart {
         ClosePriceIndicator closePrice = new ClosePriceIndicator(series);
         DoubleEMAIndicator shortDEMA = new DoubleEMAIndicator(closePrice, 10);
         DoubleEMAIndicator longDEMA = new DoubleEMAIndicator(closePrice, 60);
+        ZLEMAIndicator zlemaIndicator = new ZLEMAIndicator(closePrice, 60);
         BollingerBandFacade bollinger = new BollingerBandFacade(series, 60, 3.5);
+        CCIIndicator shortCci = new CCIIndicator(series, 5);
 
 
         SuperTrend st1_1Ind = new SuperTrend(series, 1, 1D);
@@ -46,21 +50,24 @@ public class StrategyCandlestickChart {
         SuperTrend st15_4Ind = new SuperTrend(series, 15, 4D);
         SuperTrend st20_4Ind = new SuperTrend(series, 20, 4D);
         SuperTrend st60_4Ind = new SuperTrend(series, 60, 4D);
+        SuperTrend st60_3Ind = new SuperTrend(series, 60, 3D);
         SuperTrend st20_5Ind = new SuperTrend(series, 20, 5D);
 
 //        dataset.addSeries(buildChartBarSeries(series, bollinger.lower(), "B_L"));
         dataset.addSeries(buildChartBarSeries(series, shortDEMA, "ShortDEMA"));
         dataset.addSeries(buildChartBarSeries(series, longDEMA, "LongDEMA"));
 //        dataset.addSeries(buildChartBarSeries(series, st1_1Ind, "st1_1Ind"));
-        dataset.addSeries(buildChartBarSeries(series, st5_3Ind, "st5_3Ind"));
+//        dataset.addSeries(buildChartBarSeries(series, st5_3Ind, "st5_3Ind"));
         dataset.addSeries(buildChartBarSeries(series, st10_3Ind, "st10_3Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st10_4Ind, "st10_4Ind"));
         dataset.addSeries(buildChartBarSeries(series, st20_4Ind, "st20_4Ind"));
-//        dataset.addSeries(buildChartBarSeries(series, st60_4Ind, "st60_4Ind"));
+        dataset.addSeries(buildChartBarSeries(series, st60_3Ind, "st60_3Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st15_4Ind, "st15_4Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st20_5Ind, "st20_5Ind"));
 //        dataset.addSeries(buildChartBarSeries(series, st20_4Ind, "st20_4Ind"));
         dataset.addSeries(buildChartBarSeries(series, bollinger.upper(), "B_U"));
+//        dataset.addSeries(buildChartBarSeries(series, shortCci, "cci"));
+        dataset.addSeries(buildChartBarSeries(series, zlemaIndicator, "ZLEMA60"));
 
 
         CandlestickChart chart = new CandlestickChart();

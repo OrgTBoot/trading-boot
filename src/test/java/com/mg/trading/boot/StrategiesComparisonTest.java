@@ -55,11 +55,12 @@ public class StrategiesComparisonTest {
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_21_2022_red");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_28_2022_ETF");
         List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF");
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_29_2022_ETF");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF/12_01_2022_ETF");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF/12_02_2022_ETF");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
-//
+
 //        List<TradingStatementWrapper> statementsEMA = new ArrayList<>();
 //        quoteFiles.forEach(s -> {
 //            TradingStatementWrapper ema = testStrategy(s, new EMAStrategyDefinition(s.getName()));
@@ -150,7 +151,7 @@ public class StrategiesComparisonTest {
 //            statementsST1.add(st1);
 //        });
 //        reportToTable("ST1", statementsST1, table);
-
+//
 
         List<TradingStatementWrapper> statementsETF1 = new ArrayList<>();
         quoteFiles.forEach(s -> {
