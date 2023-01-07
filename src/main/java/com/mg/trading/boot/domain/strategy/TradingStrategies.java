@@ -2,6 +2,8 @@ package com.mg.trading.boot.domain.strategy;
 
 public enum TradingStrategies {
     ETF_V1,
+    ETF_V2,
+    ETF_V3,
     EMA,
     DEMA,
     DEMA_V2,

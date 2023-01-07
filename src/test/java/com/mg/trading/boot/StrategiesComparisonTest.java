@@ -16,6 +16,8 @@ import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.etf1.ETFStrategyV1;
+import com.mg.trading.boot.domain.strategy.etf2.ETFStrategyV2;
+import com.mg.trading.boot.domain.strategy.etf3.ETFStrategyV3;
 import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.tbd.TestDataProvider;
 import de.vandermeer.asciitable.AsciiTable;
@@ -51,12 +53,9 @@ public class StrategiesComparisonTest {
 
     @Test
     public void testStrategiesGain() {
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_21_2022_red");
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/11_28_2022_ETF");
-        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF");
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF/12_01_2022_ETF");
-//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF/12_02_2022_ETF");
+        List<File> quoteFiles = TestDataProvider.getQuoteFiles();
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF");
+//        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/ETF/12_30_2022_ETF");
 //        List<File> quoteFiles = TestDataProvider.getQuoteFiles("./src/test/resources/tmp");
 
         AsciiTable table = new AsciiTable();
@@ -152,13 +151,29 @@ public class StrategiesComparisonTest {
 //        });
 //        reportToTable("ST1", statementsST1, table);
 //
+//
+//        List<TradingStatementWrapper> statementsETF1 = new ArrayList<>();
+//        quoteFiles.forEach(s -> {
+//            TradingStatementWrapper etf1 = testStrategy(s, new ETFStrategyV1(s.getName()));
+//            statementsETF1.add(etf1);
+//        });
+//        reportToTable("ETF1", statementsETF1, table);
+//
+//        List<TradingStatementWrapper> statementsETF2 = new ArrayList<>();
+//        quoteFiles.forEach(s -> {
+//            TradingStatementWrapper etf2 = testStrategy(s, new ETFStrategyV2(s.getName()));
+//            statementsETF2.add(etf2);
+//        });
+//        reportToTable("ETF2", statementsETF2, table);
 
-        List<TradingStatementWrapper> statementsETF1 = new ArrayList<>();
+
+        List<TradingStatementWrapper> statementsETF3 = new ArrayList<>();
         quoteFiles.forEach(s -> {
-            TradingStatementWrapper etf1 = testStrategy(s, new ETFStrategyV1(s.getName()));
-            statementsETF1.add(etf1);
+            TradingStatementWrapper etf3 = testStrategy(s, new ETFStrategyV3(s.getName()));
+            statementsETF3.add(etf3);
         });
-        reportToTable("ETF1", statementsETF1, table);
+        reportToTable("ETF3", statementsETF3, table);
+
 
 
         print(table);

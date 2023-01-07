@@ -24,6 +24,8 @@ import com.mg.trading.boot.domain.strategy.dema8.DEMAStrategyDefinitionV8;
 import com.mg.trading.boot.domain.strategy.dema9.DEMAStrategyDefinitionV9;
 import com.mg.trading.boot.domain.strategy.ema.EMAStrategyDefinition;
 import com.mg.trading.boot.domain.strategy.etf1.ETFStrategyV1;
+import com.mg.trading.boot.domain.strategy.etf2.ETFStrategyV2;
+import com.mg.trading.boot.domain.strategy.etf3.ETFStrategyV3;
 import com.mg.trading.boot.domain.strategy.supertrend.SuperTrendStrategyV1;
 import com.mg.trading.boot.integrations.BrokerProvider;
 import com.mg.trading.boot.integrations.ScreenerProvider;
@@ -126,7 +128,7 @@ public class GQLController {
         Parameters params = strategyDef.getParams();
 
         List<TickerQuote> quotes = broker.ticker().getTickerQuotes(symbol, params.getQuotesRange(), params.getQuotesInterval());
-        log.info("{} Quotes: {}", symbol, new ObjectMapper().writeValueAsString(quotes));
+        log.info("{} Quotes: \n{}", symbol, new ObjectMapper().writeValueAsString(quotes));
         strategyDef.updateSeries(quotes); // load series in to strategy
 
         BarSeriesManager seriesManager = new BarSeriesManager(strategyDef.getSeries());
@@ -185,6 +187,10 @@ public class GQLController {
         switch (name) {
             case ETF_V1:
                 return new ETFStrategyV1(symbol);
+            case ETF_V2:
+                return new ETFStrategyV2(symbol);
+            case ETF_V3:
+                return new ETFStrategyV3(symbol);
             case EMA:
                 return new EMAStrategyDefinition(symbol);
             case DEMA:

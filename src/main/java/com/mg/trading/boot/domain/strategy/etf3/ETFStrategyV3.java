@@ -60,38 +60,39 @@ public class ETFStrategyV3 extends AbstractStrategyDefinition {
         BollingerBandFacade bollinger = new BollingerBandFacade(series, params.getBollingerBarCount(), params.getBollingerMultiplier());
 
         //COMMON RULES
-        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60min left");
+        Rule market60MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 60, TimeUnit.MINUTES), "MKT 60MIN LEFT");
         Rule marketHours = debug(new MarketHoursRule(series).and(market60MinLeft.negation()), "MKT HOURS");
         Rule stopTotalLossRule = debug(new StopTotalLossRule(series, BigDecimal.valueOf(3)));
-        Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
 
         //ENTRY RULES
         Rule demaBuy = debug(new OverIndicatorRule(shortEmaInd, longEmaInd), "DEMA BUY");
         Rule stochasticBuy = debug(new CrossedDownIndicatorRule(stochasticInd, 20), "STOCHASTIC BUY");
         Rule macdBuy = debug(new OverIndicatorRule(macdInd, emaMacdInd), "MACD BUY");
 
-        Rule entryRule = marketHours
-                .and(demaBuy)       // Trend
-                .and(stochasticBuy) // Signal 1
-                .and(macdBuy);      // Signal 2
+        Rule entryRule = debug(
+                marketHours
+                        .and(demaBuy)       // Trend
+                        .and(stochasticBuy) // Signal 1
+                        .and(macdBuy),
+                Type.ENTRY);      // Signal 2
 
         //EXIT RULES
-        Rule has1PercentGain = debug(new StopGainRule(closePrice, 1), "Has > 1%");
         Rule hasAnyGain = debug(new StopGainRule(closePrice, 0.1), "Gain > 0.1%");
         Rule market30MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 30, TimeUnit.MINUTES), "MKT 30min left");
         Rule market10MinLeft = debug(new MarketTimeLeftRule(series, MARKET_HOURS, 10, TimeUnit.MINUTES), "MKT 10min left");
         Rule trailingLoss1 = debug(new TrailingStopLossRule(closePrice, series.numOf(1)), "TRAILING LOSS SELL");
-        Rule trailingLoss05 = debug(new TrailingStopLossRule(closePrice, series.numOf(0.25)), "TRAILING LOSS SELL");
-        Rule demaSell = new UnderIndicatorRule(shortEmaInd, longEmaInd);
-        Rule stochasticSell = new CrossedUpIndicatorRule(stochasticInd, 80);
-        Rule macdSell = new UnderIndicatorRule(macdInd, emaMacdInd);
+        Rule bollingerCrossUp = debug(new OverIndicatorRule(closePrice, bollinger.upper()), "Bollinger cross Up");
+        Rule demaSell = debug(new UnderIndicatorRule(shortEmaInd, longEmaInd), "DEMA SELL");
+        Rule stochasticSell = debug(new CrossedUpIndicatorRule(stochasticInd, 80), "STOCHASTIC SELL");
+        Rule macdSell = debug(new UnderIndicatorRule(macdInd, emaMacdInd), "MACD SELL");
 
-        Rule exitRule = demaSell     // Trend
-                .and(stochasticSell) // Signal 1
-                .and(macdSell)       // Signal 2
-                .or(hasAnyGain.and(bollingerCrossUp.or(trailingLoss1).or(market30MinLeft)))
-                .or(market10MinLeft)
-                .or(stopTotalLossRule);
+        Rule exitRule = debug(demaSell       // Trend
+                        .and(stochasticSell) // Signal 1
+                        .and(macdSell)       // Signal 2
+                        .or(hasAnyGain.and(bollingerCrossUp.or(trailingLoss1).or(market30MinLeft)))
+                        .or(market10MinLeft)
+                        .or(stopTotalLossRule),
+                Type.EXIT);
 
         return new BaseStrategy(getStrategyName(), entryRule, exitRule);
     }
